@@ -1,13 +1,72 @@
 'use client';
 
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
-  // Intersection observers for each step
+  // Intersection observers for each section
+  const painPointsHeader = useIntersectionObserver({ threshold: 0.2 });
+  const painPoint1 = useIntersectionObserver({ threshold: 0.3 });
+  const painPoint2 = useIntersectionObserver({ threshold: 0.3 });
+  const painPoint3 = useIntersectionObserver({ threshold: 0.3 });
+  const solutionsHeader = useIntersectionObserver({ threshold: 0.2 });
+  const solution1 = useIntersectionObserver({ threshold: 0.3 });
+  const solution2 = useIntersectionObserver({ threshold: 0.3 });
+  const solution3 = useIntersectionObserver({ threshold: 0.3 });
+  const howItWorksHeader = useIntersectionObserver({ threshold: 0.2 });
   const step1 = useIntersectionObserver({ threshold: 0.2 });
   const step2 = useIntersectionObserver({ threshold: 0.2 });
   const step3 = useIntersectionObserver({ threshold: 0.2 });
   const ctaSection = useIntersectionObserver({ threshold: 0.2 });
+  const statsSection = useIntersectionObserver({ threshold: 0.3 });
+
+  // Counting animations for stats
+  const [propertiesCount, setPropertiesCount] = useState(0);
+  const [setupTime, setSetupTime] = useState(0);
+  const [questionsPercent, setQuestionsPercent] = useState(0);
+
+  useEffect(() => {
+    if (statsSection.isIntersecting) {
+      // Properties count animation (0 to 200)
+      const propertiesInterval = setInterval(() => {
+        setPropertiesCount(prev => {
+          if (prev >= 200) {
+            clearInterval(propertiesInterval);
+            return 200;
+          }
+          return prev + 5;
+        });
+      }, 20);
+
+      // Setup time animation (0 to 24)
+      const setupInterval = setInterval(() => {
+        setSetupTime(prev => {
+          if (prev >= 24) {
+            clearInterval(setupInterval);
+            return 24;
+          }
+          return prev + 1;
+        });
+      }, 50);
+
+      // Questions percentage animation (0 to 95)
+      const questionsInterval = setInterval(() => {
+        setQuestionsPercent(prev => {
+          if (prev >= 95) {
+            clearInterval(questionsInterval);
+            return 95;
+          }
+          return prev + 2;
+        });
+      }, 25);
+
+      return () => {
+        clearInterval(propertiesInterval);
+        clearInterval(setupInterval);
+        clearInterval(questionsInterval);
+      };
+    }
+  }, [statsSection.isIntersecting]);
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -120,7 +179,14 @@ export default function Home() {
       <section className="py-32 px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-24 animate-on-load animate-fade-in-up delay-200">
+          <div 
+            ref={painPointsHeader.targetRef}
+            className={`text-center mb-24 transition-all duration-800 ${
+              painPointsHeader.isIntersecting 
+                ? 'animate-fade-in-up opacity-100' 
+                : 'opacity-0 translate-y-8'
+            }`}
+          >
             <h2 className="text-5xl lg:text-6xl font-light text-white mb-8 tracking-tight">
               Stop losing money on
               <span className="block bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent font-medium">
@@ -137,7 +203,14 @@ export default function Home() {
           <div className="grid lg:grid-cols-3 gap-16 mb-24">
             
             {/* Pain Point 1 - Time Loss */}
-            <div className="text-center group animate-on-load animate-fade-in-up delay-300">
+            <div 
+              ref={painPoint1.targetRef}
+              className={`text-center group transition-all duration-800 ${
+                painPoint1.isIntersecting 
+                  ? 'animate-slide-in-left opacity-100' 
+                  : 'opacity-0 -translate-x-12'
+              }`}
+            >
               <div className="w-1 h-16 bg-gradient-to-b from-red-400 to-transparent mx-auto mb-8"></div>
               <h3 className="text-2xl font-medium text-white mb-6 tracking-tight">
                 "WiFi password?" at 2AM
@@ -152,7 +225,14 @@ export default function Home() {
             </div>
 
             {/* Pain Point 2 - Revenue Loss */}
-            <div className="text-center group animate-on-load animate-fade-in-up delay-400">
+            <div 
+              ref={painPoint2.targetRef}
+              className={`text-center group transition-all duration-800 ${
+                painPoint2.isIntersecting 
+                  ? 'animate-fade-in-up opacity-100' 
+                  : 'opacity-0 translate-y-8'
+              }`}
+            >
               <div className="w-1 h-16 bg-gradient-to-b from-orange-400 to-transparent mx-auto mb-8"></div>
               <h3 className="text-2xl font-medium text-white mb-6 tracking-tight">
                 Bad reviews = lost revenue
@@ -167,7 +247,14 @@ export default function Home() {
             </div>
 
             {/* Pain Point 3 - Operational Stress */}
-            <div className="text-center group animate-on-load animate-fade-in-up delay-500">
+            <div 
+              ref={painPoint3.targetRef}
+              className={`text-center group transition-all duration-800 ${
+                painPoint3.isIntersecting 
+                  ? 'animate-slide-in-right opacity-100' 
+                  : 'opacity-0 translate-x-12'
+              }`}
+            >
               <div className="w-1 h-16 bg-gradient-to-b from-yellow-400 to-transparent mx-auto mb-8"></div>
               <h3 className="text-2xl font-medium text-white mb-6 tracking-tight">
                 Always on, never off
@@ -185,7 +272,14 @@ export default function Home() {
 
           {/* Solution Section */}
           <div className="mt-32 mb-24">
-            <div className="text-center mb-16 animate-on-load animate-fade-in-up delay-600">
+            <div 
+              ref={solutionsHeader.targetRef}
+              className={`text-center mb-16 transition-all duration-800 ${
+                solutionsHeader.isIntersecting 
+                  ? 'animate-fade-in-up opacity-100' 
+                  : 'opacity-0 translate-y-8'
+              }`}
+            >
               <h3 className="text-4xl lg:text-5xl font-light text-white mb-6 tracking-tight">
                 SmartStay solves this
                 <span className="block bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent font-medium">
@@ -200,7 +294,14 @@ export default function Home() {
             <div className="grid lg:grid-cols-3 gap-16">
               
               {/* Solution 1 */}
-              <div className="text-center group animate-on-load animate-fade-in-up delay-700">
+              <div 
+                ref={solution1.targetRef}
+                className={`text-center group transition-all duration-800 ${
+                  solution1.isIntersecting 
+                    ? 'animate-slide-in-left opacity-100' 
+                    : 'opacity-0 -translate-x-12'
+                }`}
+              >
                 <div className="w-1 h-16 bg-gradient-to-b from-green-400 to-transparent mx-auto mb-8"></div>
                 <h4 className="text-2xl font-medium text-white mb-6 tracking-tight">
                   Instant answers, 24/7
@@ -215,7 +316,14 @@ export default function Home() {
               </div>
 
               {/* Solution 2 */}
-              <div className="text-center group animate-on-load animate-fade-in-up delay-800">
+              <div 
+                ref={solution2.targetRef}
+                className={`text-center group transition-all duration-800 ${
+                  solution2.isIntersecting 
+                    ? 'animate-fade-in-up opacity-100' 
+                    : 'opacity-0 translate-y-8'
+                }`}
+              >
                 <div className="w-1 h-16 bg-gradient-to-b from-blue-400 to-transparent mx-auto mb-8"></div>
                 <h4 className="text-2xl font-medium text-white mb-6 tracking-tight">
                   Focus on what matters
@@ -230,7 +338,14 @@ export default function Home() {
               </div>
 
               {/* Solution 3 */}
-              <div className="text-center group animate-on-load animate-fade-in-up delay-900">
+              <div 
+                ref={solution3.targetRef}
+                className={`text-center group transition-all duration-800 ${
+                  solution3.isIntersecting 
+                    ? 'animate-slide-in-right opacity-100' 
+                    : 'opacity-0 translate-x-12'
+                }`}
+              >
                 <div className="w-1 h-16 bg-gradient-to-b from-violet-400 to-transparent mx-auto mb-8"></div>
                 <h4 className="text-2xl font-medium text-white mb-6 tracking-tight">
                   Set it and forget it
@@ -248,18 +363,31 @@ export default function Home() {
           </div>
 
           {/* Simple Stats */}
-          <div className="border-t border-gray-800 pt-16 animate-on-load animate-fade-in-up delay-1000">
+          <div 
+            ref={statsSection.targetRef}
+            className={`border-t border-gray-800 pt-16 transition-all duration-800 ${
+              statsSection.isIntersecting 
+                ? 'animate-fade-in-up opacity-100' 
+                : 'opacity-0 translate-y-8'
+            }`}
+          >
             <div className="grid md:grid-cols-3 gap-12 text-center">
               <div>
-                <div className="text-4xl font-light text-white mb-3">200+</div>
+                <div className="text-4xl font-light text-white mb-3">
+                  {propertiesCount}+
+                </div>
                 <div className="text-gray-500 font-light">Properties served</div>
               </div>
               <div>
-                <div className="text-4xl font-light text-white mb-3">24h</div>
+                <div className="text-4xl font-light text-white mb-3">
+                  {setupTime}h
+                </div>
                 <div className="text-gray-500 font-light">Setup time</div>
               </div>
               <div>
-                <div className="text-4xl font-light text-white mb-3">95%</div>
+                <div className="text-4xl font-light text-white mb-3">
+                  {questionsPercent}%
+                </div>
                 <div className="text-gray-500 font-light">Questions eliminated</div>
               </div>
             </div>
