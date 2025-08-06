@@ -74,27 +74,17 @@ function createRecoveryBranch() {
     executeCommand(`git branch -D ${RECOVERY_BRANCH}`, { allowFailure: true });
   }
   
-  // Create new recovery branch from oldest commit we want to keep
-  const oldestCommitToKeep = lastCommits[lastCommits.length - 1];
-  log(`Creating recovery branch from commit: ${oldestCommitToKeep.substring(0, 8)}`);
+  // Create new recovery branch from current HEAD without switching to it
+  log(`Creating recovery branch with last ${MAX_RECOVERY_COMMITS} commits`);
   
-  executeCommand(`git checkout -b ${RECOVERY_BRANCH} ${oldestCommitToKeep}`);
+  executeCommand(`git branch ${RECOVERY_BRANCH} HEAD`);
   
-  // Cherry-pick all commits in order (oldest to newest)
-  for (let i = lastCommits.length - 2; i >= 0; i--) {
-    const commitHash = lastCommits[i];
-    log(`Cherry-picking commit: ${commitHash.substring(0, 8)}`);
-    executeCommand(`git cherry-pick ${commitHash}`, { allowFailure: true });
-  }
-  
-  // Switch back to original branch
-  executeCommand(`git checkout ${currentBranch}`);
-  
-  // Push recovery branch to remote
+  // Push recovery branch to remote without switching
   log('Pushing recovery branch to remote...');
   executeCommand(`git push -f origin ${RECOVERY_BRANCH}`, { allowFailure: true });
   
   log(`✅ Recovery backup complete! Last ${lastCommits.length} commits saved to '${RECOVERY_BRANCH}' branch`);
+  log(`✅ Stayed on original branch: ${currentBranch}`);
 }
 
 function createGitHook() {
