@@ -80,9 +80,9 @@ function createRecoveryBranch() {
   
   executeCommand(`git branch ${RECOVERY_BRANCH} HEAD`);
   
-  // Push recovery branch to remote without switching
+  // Push recovery branch to remote without switching (skip hooks to avoid loop)
   log('Pushing recovery branch to remote...');
-  executeCommand(`git push -f origin ${RECOVERY_BRANCH}`, { allowFailure: true });
+  executeCommand(`git push --no-verify -f origin ${RECOVERY_BRANCH}`, { allowFailure: true });
   
   log(`✅ Recovery backup complete! Last ${lastCommits.length} commits saved to '${RECOVERY_BRANCH}' branch`);
   log(`✅ Stayed on original branch: ${currentBranch}`);
