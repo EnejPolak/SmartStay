@@ -1,10 +1,12 @@
 'use client';
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const navItems = [
     { name: 'Home', href: '#' },
@@ -13,9 +15,62 @@ export default function Navbar() {
     { name: 'Contact', href: '#' }
   ];
 
+  // Scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 100); // Hide navbar after scrolling 100px
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Determine navbar visibility
+  const shouldShowNavbar = !isScrolled || isHovered;
+
   return (
-    <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl px-4 py-3 animate-on-load animate-navbar-drop">
+    <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+      {/* iPhone-style Trigger Indicator - shown when scrolled and navbar is hidden */}
+      {isScrolled && !isHovered && (
+        <div 
+          className="flex justify-center mb-3 animate-fade-in"
+          onMouseEnter={() => setIsHovered(true)}
+        >
+          {/* iPhone-style pill indicator */}
+          <div className="bg-white/15 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/20 hover:bg-white/25 transition-all duration-300 cursor-pointer group">
+            <div className="flex items-center space-x-1">
+              {/* Three dots indicator like iPhone */}
+              <div className="flex space-x-1">
+                <div className="w-1 h-1 bg-white/70 rounded-full group-hover:bg-white transition-colors duration-300"></div>
+                <div className="w-1 h-1 bg-white/70 rounded-full group-hover:bg-white transition-colors duration-300"></div>
+                <div className="w-1 h-1 bg-white/70 rounded-full group-hover:bg-white transition-colors duration-300"></div>
+              </div>
+              {/* Small chevron */}
+              <svg 
+                className="w-3 h-3 text-white/70 group-hover:text-white transition-colors duration-300" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main Navbar */}
+      <nav 
+        className={`transition-all duration-500 ease-in-out ${
+          shouldShowNavbar 
+            ? 'transform translate-y-0 opacity-100' 
+            : 'transform -translate-y-full opacity-0 pointer-events-none'
+        }`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl px-4 py-3 animate-on-load animate-navbar-drop">
         <div className="flex items-center justify-between w-full">
           
           {/* Logo Section */}
@@ -84,7 +139,8 @@ export default function Navbar() {
             ))}
           </div>
         </div>
-      </div>
-    </nav>
+        </div>
+      </nav>
+    </div>
   );
 }
