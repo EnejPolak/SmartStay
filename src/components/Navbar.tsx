@@ -15,7 +15,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl px-4 py-3">
+      <div className="bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl px-4 py-3 animate-on-load animate-navbar-drop">
         <div className="flex items-center justify-between w-full">
           
           {/* Logo Section */}
