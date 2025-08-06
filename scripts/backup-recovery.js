@@ -19,18 +19,19 @@ function log(message) {
 
 function executeCommand(command, options = {}) {
   try {
-    return execSync(command, { 
+    const result = execSync(command, { 
       encoding: 'utf8', 
       stdio: options.silent ? 'pipe' : 'inherit',
       ...options 
-    }).trim();
+    });
+    return result ? result.toString().trim() : '';
   } catch (error) {
     if (!options.allowFailure) {
       console.error(`❌ Command failed: ${command}`);
       console.error(error.message);
       process.exit(1);
     }
-    return null;
+    return '';
   }
 }
 
