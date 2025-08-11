@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
@@ -9,9 +10,9 @@ export default function Navbar() {
   const [isHovered, setIsHovered] = useState(false);
 
   const navItems = [
-    { name: 'Home', href: '#' },
+    { name: 'Home', href: '/' },
     { name: 'Demo', href: '/demo' },
-    { name: 'Blog', href: '#' },
+    { name: 'Blog', href: '/blog' },
     { name: 'About Us', href: '#' },
     { name: 'Contact', href: '#' }
   ];
@@ -88,7 +89,7 @@ export default function Navbar() {
           {/* Desktop Navigation - pushed more to the right */}
                                            <div className="hidden md:flex items-center space-x-1 ml-12 ">
             {navItems.map((item, index) => (
-              <a
+              <Link
                 key={index}
                 href={item.href}
                 className="relative group px-3 py-2 font-semibold text-gray-400 hover:text-white transition-all duration-500 ease-out"
@@ -100,7 +101,7 @@ export default function Navbar() {
                 
                 {/* Sliding underline from center */}
                 <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-violet-400 to-transparent group-hover:w-full transition-all duration-700 ease-out"></div>
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -124,11 +125,10 @@ export default function Navbar() {
         <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-64 opacity-100 mt-4' : 'max-h-0 opacity-0'} overflow-hidden`}>
           <div className="space-y-1 border-t border-white/10 pt-3">
             {navItems.map((item, index) => (
-              <a
+              <Link
                 key={index}
                 href={item.href}
                 className="relative group block px-4 py-2 text-gray-300 hover:text-white rounded-lg font-semibold transition-all duration-300 overflow-hidden"
-                onClick={() => setIsMenuOpen(false)}
               >
                 {/* Mobile background fill */}
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-600/10 to-blue-600/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-400 ease-out rounded-lg"></div>
@@ -136,7 +136,7 @@ export default function Navbar() {
                 <span className="relative z-10 text-sm uppercase font-bold tracking-wide">
                   {item.name}
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

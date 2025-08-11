@@ -243,3 +243,135 @@ button, a {
 .animate-on-load {
   opacity: 0;
 }
+
+/* =======================
+   Footer Styles (only)
+   ======================= */
+.footer {
+  /* Match Home background: bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900 */
+  background: linear-gradient(to bottom right, #020617 0%, #0f172a 50%, #111827 100%);
+  position: relative;
+  padding: 3rem 0 1.5rem;
+  margin-top: auto;
+  width: 100%;
+  min-height: 200px;
+}
+
+.footer-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-violet), var(--primary-blue), transparent);
+  box-shadow: 0 0 12px rgba(139, 124, 223, 0.35);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.footer-section { display: flex; flex-direction: column; }
+.logo-section { align-items: flex-start; }
+.logo-container { margin-bottom: 1rem; }
+
+.footer-logo { filter: brightness(1.1); transition: filter 0.3s ease; }
+.footer-logo:hover { filter: brightness(1.25); }
+
+.brand-tagline {
+  color: #9CA3AF;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 400;
+  max-width: 280px;
+}
+
+/* Center - Navigation */
+.nav-section { align-items: center; text-align: center; }
+
+.section-title {
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.footer-nav { display: flex; justify-content: center; gap: 3rem; }
+.nav-column { display: flex; flex-direction: column; gap: 0.75rem; }
+
+/* Link styles + column-specific hovers (left = purple, right = blue) */
+.nav-link {
+  color: #C6DCFF;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.25s ease;
+  padding: 0.25rem 0;
+}
+.nav-link:hover { transform: translateY(-1px); }
+.nav-column:first-child .nav-link:hover { color: var(--violet-400); text-shadow: 0 2px 8px rgba(165, 153, 232, 0.35); }
+.nav-column:last-child .nav-link:hover { color: var(--blue-400); text-shadow: 0 2px 8px rgba(107, 166, 240, 0.35); }
+
+/* Right - Social */
+.social-section { align-items: flex-end; text-align: right; }
+.social-icons { display: flex; gap: 1rem; justify-content: flex-end; }
+
+.social-link {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: rgba(198, 220, 255, 0.08);
+  border: 1px solid rgba(198, 220, 255, 0.18);
+  color: #C6DCFF; backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+}
+.social-link:hover { transform: translateY(-2px); }
+.social-link.facebook:hover,
+.social-link.linkedin:hover {
+  background: rgba(198, 220, 255, 0.18);
+  color: #C6DCFF; border-color: #C6DCFF;
+  box-shadow: 0 4px 12px rgba(198, 220, 255, 0.28);
+}
+.social-link.instagram:hover {
+  background: rgba(214, 200, 255, 0.18);
+  color: #D6C8FF; border-color: #D6C8FF;
+  box-shadow: 0 4px 12px rgba(214, 200, 255, 0.28);
+}
+
+/* Bottom copyright */
+.footer-bottom {
+  border-top: 1px solid rgba(198, 220, 255, 0.1);
+  margin-top: 2.5rem; padding-top: 1.5rem; text-align: center;
+}
+.copyright {
+  color: #6B7280; font-size: 0.875rem; margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+  .logo-section, .social-section { align-items: center; text-align: center; }
+  .social-icons { justify-content: center; }
+  .brand-tagline { max-width: 100%; }
+  .footer { padding: 2rem 0 1.5rem; }
+  .footer-container { padding: 0 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .footer-container { gap: 2rem; }
+  .social-link { width: 40px; height: 40px; }
+  .brand-tagline { font-size: 0.9rem; }
+  .nav-link { font-size: 0.9rem; }
+  .footer-nav { gap: 2rem; }
+  .nav-column { gap: 0.5rem; }
+}
