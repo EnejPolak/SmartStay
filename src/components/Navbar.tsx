@@ -14,7 +14,7 @@ export default function Navbar() {
     { name: 'Demo', href: '/demo' },
     { name: 'Blog', href: '/blog' },
     { name: 'About Us', href: '#' },
-    { name: 'Contact', href: '#' }
+    { name: 'Contact', href: '/Contact' }
   ];
 
   // Scroll detection
