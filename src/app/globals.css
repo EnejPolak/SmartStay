@@ -77,7 +77,8 @@ body {
   color: var(--foreground);
   font-family: system-ui, -apple-system, sans-serif;
   line-height: 1.6;
-  scroll-behavior: smooth;
+  /* Let Lenis control smooth scrolling to avoid conflicts */
+  scroll-behavior: auto;
 }
 
 /* Smooth gradients and shadows */
@@ -374,4 +375,39 @@ button, a {
   .nav-link { font-size: 0.9rem; }
   .footer-nav { gap: 2rem; }
   .nav-column { gap: 0.5rem; }
+}
+
+/* Marquee Animation for MadEmotionsSection */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.animate-marquee-scroll {
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.animate-marquee-paused {
+  animation-play-state: paused;
+}
+
+/* Hover pause functionality */
+.marquee-container:hover .animate-marquee-scroll {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .animate-marquee-scroll {
+    animation-duration: 60s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-scroll {
+    animation: none;
+  }
 }

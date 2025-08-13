@@ -2,11 +2,70 @@
 import React from 'react';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
+const painPoints = [
+  {
+    id: 1,
+    title: '"WiFi password?" at 2AM',
+    copy: "Midnight calls about basic info destroy your work–life balance. You shouldn't repeat the same answers every stay.",
+    stat: "270+ hours wasted per season",
+    color: "#dc2626" // red-600
+  },
+  {
+    id: 2,
+    title: "Bad reviews = lost revenue",
+    copy: "Frustrated guests leave poor reviews when they can't find information. One 1-star review can cost you future bookings.",
+    stat: "€3,000+ lost per bad review",
+    color: "#ea580c" // orange-600
+  },
+  {
+    id: 3,
+    title: "Always on, never off",
+    copy: "Being available 24/7 for guest questions creates constant stress. Your property business should be passive, not draining.",
+    stat: "Zero work–life balance",
+    color: "#d97706" // amber-600
+  },
+  {
+    id: 4,
+    title: "Guests don't read emails",
+    copy: "Pre-arrival emails have low open rates. Guests still arrive asking the same questions.",
+    stat: "Information doesn't reach guests",
+    color: "#e11d48" // rose-600
+  },
+  {
+    id: 5,
+    title: "Check-in / check-out confusion",
+    copy: "Unclear steps trigger avoidable calls and delays. Clear guidance reduces friction for everyone.",
+    stat: "Avoidable handover delays",
+    color: "#b91c1c" // red-700
+  },
+  {
+    id: 6,
+    title: "Where is parking / trash / AC?",
+    copy: "Micro-questions interrupt your day and multiply with each booking. Centralize answers once.",
+    stat: "Constant micro-interruptions",
+    color: "#c2410c" // orange-700
+  },
+  {
+    id: 7,
+    title: "Local recommendations?",
+    copy: "Unstructured tips lead to mediocre experiences and more follow-up questions. Curate what truly matters nearby.",
+    stat: "Lower guest satisfaction",
+    color: "#b45309" // amber-700
+  },
+  {
+    id: 8,
+    title: "Maintenance & emergencies",
+    copy: "Without simple instructions, small issues become urgent calls. Standardize fixes before problems escalate.",
+    stat: "Unnecessary support calls",
+    color: "#be185d" // rose-700
+  }
+];
+
 const MadEmotionsSection: React.FC = () => {
   const painPointsHeader = useIntersectionObserver({ threshold: 0.2 });
-  const painPoint1 = useIntersectionObserver({ threshold: 0.3 });
-  const painPoint2 = useIntersectionObserver({ threshold: 0.3 });
-  const painPoint3 = useIntersectionObserver({ threshold: 0.3 });
+  
+  // Duplicate cards for seamless loop
+  const duplicatedPainPoints = [...painPoints, ...painPoints];
 
   return (
     <section id="mad-emotions" className="py-32 px-6 lg:px-8">
@@ -31,68 +90,48 @@ const MadEmotionsSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-16 mb-24">
+        {/* Marquee Container */}
+        <div className="relative overflow-hidden marquee-container mb-24">
+          {/* Left fade mask */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-900 to-transparent z-10 pointer-events-none"></div>
+          {/* Right fade mask */}
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-gray-900 to-transparent z-10 pointer-events-none"></div>
+          
+          {/* Scrolling Track */}
           <div 
-            ref={painPoint1.targetRef}
-            className={`text-center group transition-all duration-800 ${
-              painPoint1.isIntersecting 
-                ? 'animate-slide-in-left opacity-100' 
-                : 'opacity-0 -translate-x-12'
-            }`}
+            className="flex gap-8 animate-marquee-scroll"
+            style={{ 
+              width: `${duplicatedPainPoints.length * 320}px`,
+              willChange: 'transform'
+            }}
           >
-            <div className="w-1 h-16 bg-gradient-to-b from-red-400 to-transparent mx-auto mb-8"></div>
-            <h3 className="text-2xl font-medium text-white mb-6 tracking-tight">
-              "WiFi password?" at 2AM
-            </h3>
-            <p className="text-gray-400 text-lg leading-relaxed font-light">
-              Midnight calls about basic information destroy your work-life balance. 
-              49% of property managers are considering career changes due to burnout.
-            </p>
-            <div className="mt-6 pt-6 border-t border-gray-800">
-              <span className="text-red-400 font-medium">270+ hours wasted per season</span>
-            </div>
-          </div>
-
-          <div 
-            ref={painPoint2.targetRef}
-            className={`text-center group transition-all duration-800 ${
-              painPoint2.isIntersecting 
-                ? 'animate-fade-in-up opacity-100' 
-                : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <div className="w-1 h-16 bg-gradient-to-b from-orange-400 to-transparent mx-auto mb-8"></div>
-            <h3 className="text-2xl font-medium text-white mb-6 tracking-tight">
-              Bad reviews = lost revenue
-            </h3>
-            <p className="text-gray-400 text-lg leading-relaxed font-light">
-              Frustrated guests leave poor reviews when they can't find information. 
-              Each 1-star review costs you thousands in future bookings.
-            </p>
-            <div className="mt-6 pt-6 border-t border-gray-800">
-              <span className="text-orange-400 font-medium">€3,000+ lost per bad review</span>
-            </div>
-          </div>
-
-          <div 
-            ref={painPoint3.targetRef}
-            className={`text-center group transition-all duration-800 ${
-              painPoint3.isIntersecting 
-                ? 'animate-slide-in-right opacity-100' 
-                : 'opacity-0 translate-x-12'
-            }`}
-          >
-            <div className="w-1 h-16 bg-gradient-to-b from-yellow-400 to-transparent mx-auto mb-8"></div>
-            <h3 className="text-2xl font-medium text-white mb-6 tracking-tight">
-              Always on, never off
-            </h3>
-            <p className="text-gray-400 text-lg leading-relaxed font-light">
-              Being available 24/7 for guest questions creates constant stress. 
-              Your property business should generate passive income, not anxiety.
-            </p>
-            <div className="mt-6 pt-6 border-t border-gray-800">
-              <span className="text-yellow-400 font-medium">Zero work-life balance</span>
-            </div>
+            {duplicatedPainPoints.map((point, index) => (
+              <div 
+                key={`${point.id}-${index}`}
+                className="flex-shrink-0 w-80 text-center"
+              >
+                <div 
+                  className="w-1 h-16 mx-auto mb-8"
+                  style={{ 
+                    background: `linear-gradient(to bottom, ${point.color}, transparent)` 
+                  }}
+                ></div>
+                <h3 className="text-2xl font-medium text-white mb-6 tracking-tight">
+                  {point.title}
+                </h3>
+                <p className="text-gray-400 text-lg leading-relaxed font-light">
+                  {point.copy}
+                </p>
+                <div className="mt-6 pt-6 border-t border-gray-800">
+                  <span 
+                    className="font-medium"
+                    style={{ color: point.color }}
+                  >
+                    {point.stat}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
