@@ -1,75 +1,814 @@
-import React from 'react';
-import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+"use client";
 
-const DemoPage: React.FC = () => {
-  const publishedAt = new Date('2025-05-10').toLocaleDateString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric'
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import Head from "next/head";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+type Feature = { id: string; title: string; desc: string; bullets?: string[] };
+
+// Minimal helper: check reduced motion once on mount
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
+  return reduced;
+}
+
+// Register GSAP plugins once
+let gsapRegistered = false;
+function ensureGsapRegistered() {
+  if (!gsapRegistered && typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    gsapRegistered = true;
+  }
+}
+
+const FEATURES: Feature[] = [
+  { id: "welcome", title: "Welcome Message", desc: "A warm, personal greeting upon arrival. The perfect first impression without extra effort.", bullets: ["Personalised hello", "Arrival tips", "Instant comfort"] },
+  { id: "checkin", title: "Check-in / Check-out & Wi-Fi", desc: "Clear arrival/departure instructions and Wi-Fi details in one place (including copy button).", bullets: ["One-tap Wi‑Fi copy", "Directions & times", "No confusion"] },
+  { id: "rules", title: "House Rules & Instructions", desc: "Simple, practical guidelines for a peaceful stay without misunderstandings.", bullets: ["Quiet hours", "Appliance guides", "No guesswork"] },
+  { id: "info", title: "Additional Information", desc: "Breakfast, sauna, parking… little details that make a big difference.", bullets: ["Breakfast times", "Parking & sauna", "Small but vital"] },
+  { id: "reservations", title: "Reservations & Extras", desc: "Book a massage, bike rental, restaurant table, or purchase local goods – in one click.", bullets: ["One‑click add‑ons", "Upsell ready", "Instant booking"] },
+  { id: "food", title: "Local Cuisine & Bars", desc: "Closest and best places with direct links and directions.", bullets: ["Top picks", "Open hours", "Quick directions"] },
+  { id: "activities", title: "Activities & Attractions", desc: "Tours, events, landmarks, and parking – all with navigation.", bullets: ["Tours & tickets", "Parking info", "Maps ready"] },
+  { id: "routes", title: "Hiking & Cycling Routes", desc: "Google Maps integration; guests always know where and how to get there.", bullets: ["GPX / Maps", "Clear difficulty", "Offline friendly"] },
+  { id: "services", title: "Nearby Services", desc: "Bakeries, shops, pharmacies, taxis, emergency contacts – quickly and safely accessible.", bullets: ["Essentials nearby", "Emergency ready", "Trustworthy"] },
+  { id: "contact", title: "Contact", desc: "Host just one click away. Call or message without hassle.", bullets: ["One-tap call", "WhatsApp/SMS", "Always reachable"] },
+  { id: "reviews", title: "Reviews", desc: "End-of-stay reminder; get more reviews with less effort.", bullets: ["Smart reminder", "Direct links", "More 5★"] },
+];
+
+// Page shell
+function PageShell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900 text-white">
+      <Head>
+        <title>Smart Stay – Interactive Demo</title>
+        <meta name="description" content="Smart Stay features with smooth, accessible GSAP animations." />
+      </Head>
+      {children}
+    </div>
+  );
+}
+
+// Pinned phone
+type PinnedPhoneApi = { setPhoneScreen: (stage: string) => void };
+function PinnedPhone({
+  screen,
+  onReady,
+  pinScope,
+  reduced,
+}: {
+  screen: string;
+  onReady?: (api: PinnedPhoneApi) => void;
+  pinScope: React.RefObject<HTMLElement>;
+  reduced: boolean;
+}) {
+  const phoneRef = useRef<HTMLDivElement | null>(null);
+  const mountRef = useRef<HTMLDivElement | null>(null);
+  const [internalScreen, setInternalScreen] = useState<string>(screen);
+
+  useEffect(() => setInternalScreen(screen), [screen]);
+
+  useEffect(() => {
+    onReady?.({ setPhoneScreen: (stage: string) => setInternalScreen(stage) });
+  }, [onReady]);
+
+  useEffect(() => {
+    if (reduced) return; // respect reduced motion
+    ensureGsapRegistered();
+    if (!phoneRef.current || !pinScope.current) return;
+
+    // Pin only on large screens
+    const mm = ScrollTrigger.matchMedia({
+      "(min-width: 1024px)": () => {
+        const st = ScrollTrigger.create({
+          trigger: pinScope.current!,
+          start: "top top+=96",
+          end: "bottom bottom-=120",
+          pin: phoneRef.current!,
+          pinSpacing: false,
+          anticipatePin: 1,
+        });
+        return () => st.kill();
+      },
+    }) as unknown as { revert?: () => void } | void;
+    return () => {
+      if (mm && typeof (mm as any).revert === "function") {
+        (mm as any).revert();
+      }
+    };
+  }, [pinScope, reduced]);
+
+  // Placeholder phone with 3D mount
+  return (
+    <div ref={phoneRef} className="lg:sticky lg:top-24">
+      <div className="rounded-3xl shadow-xl ring-1 ring-white/10 overflow-hidden aspect-[9/19.5] bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-center justify-center relative">
+        {/* TODO: Replace this mount with your 3D phone/canvas. */}
+        <div id="phone-3d-mount" ref={mountRef} className="absolute inset-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/0 pointer-events-none" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xs tracking-wide text-zinc-300">Your 3D phone goes here</span>
+        </div>
+        {/* Screen overlay based on current step */}
+        <div className="absolute inset-0 p-4">
+          <div className="h-full w-full rounded-2xl bg-black/40 backdrop-blur-sm border border-white/10 flex items-center justify-center">
+            <span className="text-[11px] font-medium text-zinc-200">Screen: {internalScreen}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () => void; onSecondaryClick: () => void; phone?: React.ReactNode }) {
+  return (
+    <section aria-labelledby="hero-heading" className="py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          {/* Kicker - top left for F-pattern */}
+          <div className="mb-8">
+            <span className="inline-flex items-center rounded-full bg-violet-600/10 px-4 py-1.5 text-sm font-medium text-violet-400 ring-1 ring-inset ring-violet-600/20">
+              Smart Stay Platform
+            </span>
+          </div>
+          
+          {/* Main headline - scannable hierarchy */}
+          <h1 id="hero-heading" className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+            Clear guest guides.
+            <span className="text-violet-400"> Fewer questions.</span>
+            <br />
+            <span className="text-zinc-300">Happier stays.</span>
+          </h1>
+          
+          {/* Supporting copy - increased line height for better scanning */}
+          <p className="mt-8 text-xl leading-8 text-zinc-300 max-w-2xl mx-auto">
+            Share everything guests need to know — from Wi‑Fi to local tips — in a beautiful, mobile‑first guide that reduces support requests and improves guest satisfaction.
+          </p>
+          
+          {/* Action buttons - prominent primary action */}
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button 
+              aria-label="Book a Demo" 
+              onClick={onPrimaryClick} 
+              className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl bg-violet-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-violet-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-colors"
+            >
+              Book a Call
+              <svg className="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+              </svg>
+            </button>
+            <button 
+              aria-label="See Features" 
+              onClick={onSecondaryClick} 
+              className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-zinc-600 bg-transparent px-8 py-4 text-lg font-medium text-zinc-300 hover:border-zinc-500 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-colors"
+            >
+              See Features
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeatureRail({ activeIndex, total, ids, filledIds, features, onJump, reduced }: { activeIndex: number; total: number; ids: string[]; filledIds: Set<string>; features: Feature[]; onJump: (index: number) => void; reduced: boolean; }) {
+  const stickyRef = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const dotRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [displayedIndex, setDisplayedIndex] = useState<number>(activeIndex);
+
+  let highestFilledIndex = -1;
+  ids.forEach((id, i) => {
+    if (filledIds.has(id)) highestFilledIndex = Math.max(highestFilledIndex, i);
   });
+  const progress = total > 1 && highestFilledIndex >= 0 ? highestFilledIndex / (total - 1) : 0;
+
+  const computePanelTop = (): number => {
+    const sticky = stickyRef.current;
+    const dot = dotRefs.current[activeIndex];
+    if (!sticky || !dot) return 0;
+    const sRect = sticky.getBoundingClientRect();
+    const dRect = dot.getBoundingClientRect();
+    return dRect.top - sRect.top + dRect.height / 2; // center align
+  };
+
+  useEffect(() => {
+    // Initialize position and content
+    if (!panelRef.current) return;
+    const top = computePanelTop();
+    panelRef.current.style.top = `${top}px`;
+    setDisplayedIndex(activeIndex);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!panelRef.current) return;
+    const newTop = computePanelTop();
+    if (reduced) {
+      panelRef.current.style.top = `${newTop}px`;
+      setDisplayedIndex(activeIndex);
+      return;
+    }
+    ensureGsapRegistered();
+    const tl = gsap.timeline();
+    tl.to(panelRef.current, { top: newTop, duration: 0.35, ease: "power2.out" }, 0)
+      .to(contentRef.current, { opacity: 0, y: 8, duration: 0.2, ease: "power2.out" }, 0)
+      .add(() => setDisplayedIndex(activeIndex))
+      .fromTo(contentRef.current, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, "+=0.01");
+    return () => {
+      tl.kill();
+    };
+  }, [activeIndex, reduced]);
 
   return (
-    <>
-      <Head>
-        <title>Demo Article – SmartStay</title>
-        <meta name="description" content="A demo blog article showcasing SmartStay's design system." />
-      </Head>
+    <nav aria-label="Feature progress" className="hidden lg:block lg:col-span-1" aria-orientation="vertical">
+      <div ref={stickyRef} className="sticky top-28 h-[calc(100vh-7rem)] relative">
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-0.5 bg-white/10 rounded" />
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 w-0.5 bg-violet-500 rounded" style={{ height: `${progress * 100}%` }} />
+        <ul className="absolute inset-0 flex flex-col justify-between py-1">
+          {ids.map((id, i) => (
+            <li key={id} className="flex items-center justify-center">
+              <button
+                ref={(el) => { dotRefs.current[i] = el; }}
+                aria-label={`Go to ${features[i]?.title || `step ${i + 1}`}`}
+                aria-current={activeIndex === i ? "step" : undefined}
+                onClick={() => onJump(i)}
+                className={`h-3 w-3 rounded-full ring-2 transition-all duration-300 cursor-pointer hover:scale-110 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-2 focus:ring-offset-transparent ${filledIds.has(id) ? "bg-violet-500 ring-violet-300/40 hover:bg-violet-400" : "bg-transparent ring-white/25 hover:bg-white/10 hover:ring-white/40"}`}
+              />
+            </li>
+          ))}
+        </ul>
 
-      {/* Reuse existing layout header/footer for consistent UI */}
-      <Navbar />
-      <main className="pt-28 pb-16 px-4">
-        <article className="max-w-3xl mx-auto">
-          {/* Breadcrumbs / Back link */}
-          <div className="mb-6 text-sm text-gray-400">
-            <Link href="/" className="hover:text-white transition-colors">← Back to home</Link>
+        {/* Text panel aligned to active dot */}
+        <div ref={panelRef} className="absolute left-12 -translate-y-1/2 pr-8" style={{ width: "36rem" }}>
+          <div ref={contentRef} className="relative">
+            <div className="p-4">
+              {/* Feature number for scanning */}
+              <div className="mb-4">
+                <span className="inline-flex items-center rounded-full bg-violet-600/20 px-3 py-1 text-sm font-medium text-violet-300">
+                  {String(displayedIndex + 1).padStart(2, '0')}
+                </span>
+              </div>
+              
+              {/* Main title - optimized for F-pattern scanning */}
+              <h3 className="text-2xl font-bold text-white leading-tight mb-4">
+                {features[displayedIndex]?.title}
+              </h3>
+              
+              {/* Description with better line height */}
+              <p className="text-lg text-zinc-200 leading-7 mb-6 max-w-lg">
+                {features[displayedIndex]?.desc}
+              </p>
+              
+              {/* Key points with improved visual hierarchy */}
+              {features[displayedIndex]?.bullets && features[displayedIndex]?.bullets!.length > 0 && (
+                <div className="space-y-3">
+                  <h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide">Key Benefits</h4>
+                  <ul className="space-y-3">
+                    {features[displayedIndex]!.bullets!.map((b, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <div className="mt-2 h-1.5 w-1.5 rounded-full bg-violet-400 flex-shrink-0"></div>
+                        <span className="text-base text-zinc-300 leading-6">{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
 
-          {/* Title */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
-            Designing Seamless Digital Guides for Modern Guests
-          </h1>
+function FeatureStep({ id, title, kicker, bullets, desc, onEnter, onFill, onUnfill, reduced, visuallyHidden }: { id: string; title: string; kicker?: string; bullets?: string[]; desc: string; onEnter?: (id: string) => void; onFill?: (id: string) => void; onUnfill?: (id: string) => void; reduced: boolean; visuallyHidden?: boolean; }) {
+  const ref = useRef<HTMLDivElement | null>(null);
 
-          {/* Meta */}
-          <div className="flex items-center gap-3 text-gray-400 mb-8">
-            <span>By <span className="text-gray-200 font-medium">SmartStay Editorial</span></span>
-            <span className="opacity-50">•</span>
-            <time dateTime="2025-05-10">{publishedAt}</time>
+  useEffect(() => {
+    ensureGsapRegistered();
+    if (!ref.current) return;
+    const tl = reduced ? null : gsap.timeline({ paused: true });
+    if (tl) {
+      tl.fromTo(ref.current.querySelectorAll("[data-anim]") as NodeListOf<HTMLElement>, { y: 24, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.08, duration: 0.6, ease: "power2.out" });
+    }
+
+    const st = ScrollTrigger.create({
+      trigger: ref.current,
+      start: "top 70%",
+      onEnter: () => {
+        tl?.play();
+        onEnter?.(id);
+        onFill?.(id);
+      },
+      onEnterBack: () => {
+        tl?.play(0);
+        onEnter?.(id);
+      },
+      onLeaveBack: () => {
+        onUnfill?.(id);
+      },
+    });
+    return () => {
+      tl?.kill();
+      st.kill();
+    };
+  }, [id, onEnter, onFill, onUnfill, reduced]);
+
+  return (
+    <section ref={ref} aria-labelledby={`${id}-title`} className="py-10">
+      <div className={`space-y-3 ${visuallyHidden ? "invisible" : ""}`} aria-hidden={visuallyHidden ? true : undefined}>
+        {kicker && (
+          <p data-anim className="text-sm font-semibold text-violet-300">{kicker}</p>
+        )}
+        <h3 id={`${id}-title`} data-anim className="text-2xl font-bold text-white">{title}</h3>
+        <p data-anim className="text-zinc-300 max-w-prose">{desc}</p>
+        {bullets && bullets.length > 0 && (
+          <ul className="list-disc pl-5 space-y-1 text-zinc-200">
+            {bullets.map((b, i) => (
+              <li data-anim key={i} className="">{b}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function FeatureTextSwitcher({ features, activeIndex, reduced }: { features: Feature[]; activeIndex: number; reduced: boolean; }) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lastIndexRef = useRef<number>(-1);
+  const [containerHeight, setContainerHeight] = useState<number>(0);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      const heights = panelRefs.current.map((el) => (el ? el.scrollHeight : 0));
+      const max = Math.max(0, ...heights);
+      setContainerHeight(max);
+    };
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, [features.length]);
+
+  useEffect(() => {
+    const current = panelRefs.current[activeIndex];
+    const prev = lastIndexRef.current >= 0 ? panelRefs.current[lastIndexRef.current] : null;
+    if (!current || current === prev) {
+      lastIndexRef.current = activeIndex;
+      return;
+    }
+    if (reduced) {
+      if (prev) {
+        prev.style.opacity = "0";
+        prev.style.transform = "translateY(24px)";
+        prev.style.pointerEvents = "none";
+      }
+      current.style.opacity = "1";
+      current.style.transform = "translateY(0px)";
+      current.style.pointerEvents = "auto";
+      lastIndexRef.current = activeIndex;
+      return;
+    }
+    ensureGsapRegistered();
+    if (prev) {
+      gsap.to(prev, { opacity: 0, y: 24, duration: 0.35, ease: "power2.out", onComplete: () => { if (prev) prev.style.pointerEvents = "none"; } });
+    }
+    gsap.fromTo(current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out", onStart: () => { current.style.pointerEvents = "auto"; } });
+    lastIndexRef.current = activeIndex;
+  }, [activeIndex, reduced]);
+
+  return (
+    <div ref={containerRef} className="relative" style={{ height: containerHeight ? `${containerHeight}px` : undefined }}>
+      {features.map((f, i) => (
+        <div
+          key={f.id}
+          ref={(el) => { panelRefs.current[i] = el; }}
+          className="absolute inset-0"
+          style={{ opacity: i === activeIndex ? 1 : 0, transform: i === activeIndex ? "translateY(0px)" : "translateY(24px)", pointerEvents: i === activeIndex ? "auto" : "none" }}
+          aria-hidden={i === activeIndex ? undefined : true}
+        >
+          <div className="space-y-3">
+            <h3 className="text-2xl font-bold text-white">{f.title}</h3>
+            <p className="text-zinc-300 max-w-prose">{f.desc}</p>
+            {f.bullets && f.bullets.length > 0 && (
+              <ul className="list-disc pl-5 space-y-1 text-zinc-200">
+                {f.bullets.map((b, idx) => (
+                  <li key={idx}>{b}</li>
+                ))}
+              </ul>
+            )}
           </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
-          {/* Cover Image */}
-          <div className="relative w-full h-64 sm:h-80 md:h-96 mb-8 rounded-2xl overflow-hidden border border-white/10">
-            <Image 
-              src="/pictures/logo/smartStay_logo.png" 
-              alt="SmartStay demo cover"
-              fill
-              className="object-contain p-8 bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900"
-              priority
+function MobileActiveText({ feature, reduced }: { feature: Feature; reduced: boolean; }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const featureIndex = FEATURES.findIndex(f => f.id === feature.id);
+  
+  useEffect(() => {
+    if (reduced || !ref.current) return;
+    ensureGsapRegistered();
+    gsap.fromTo(ref.current, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" });
+  }, [feature.id, reduced]);
+  
+  return (
+    <div ref={ref} className="relative">
+      <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-sm rounded-2xl border border-zinc-700/50 p-6">
+        {/* Feature number badge */}
+        <div className="mb-4">
+          <span className="inline-flex items-center rounded-full bg-violet-600/20 px-3 py-1.5 text-sm font-medium text-violet-300">
+            {String(featureIndex + 1).padStart(2, '0')}
+          </span>
+        </div>
+        
+        {/* Title with better hierarchy */}
+        <h3 className="text-xl font-bold text-white leading-tight mb-3">
+          {feature.title}
+        </h3>
+        
+        {/* Description with optimal line height */}
+        <p className="text-base text-zinc-200 leading-7 mb-5">
+          {feature.desc}
+        </p>
+        
+        {/* Benefits with improved scanning */}
+        {feature.bullets && feature.bullets.length > 0 && (
+          <div className="space-y-3">
+            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wide">Key Benefits</h4>
+            <ul className="space-y-2.5">
+              {feature.bullets.map((b, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <div className="mt-2 h-1.5 w-1.5 rounded-full bg-violet-400 flex-shrink-0"></div>
+                  <span className="text-sm text-zinc-300 leading-6">{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function MobileProgressBar({ progress, features, onStepClick, reduced }: { progress: number; features: Feature[]; onStepClick: (index: number) => void; reduced: boolean; }) {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percentage = clickX / rect.width;
+    const stepIndex = Math.round(percentage * (features.length - 1));
+    const clampedIndex = Math.max(0, Math.min(features.length - 1, stepIndex));
+    onStepClick(clampedIndex);
+  };
+
+  return (
+    <div className="lg:hidden w-full py-2">
+      <div 
+        className="h-1.5 w-full bg-white/10 rounded cursor-pointer relative"
+        onClick={handleClick}
+        role="progressbar"
+        aria-label="Feature progress - click to navigate"
+        aria-valuenow={Math.round(progress * 100)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+      >
+        <div className="h-full bg-violet-500 rounded transition-[width] duration-300" style={{ width: `${Math.max(0, Math.min(100, progress * 100))}%` }} />
+        
+        {/* Invisible click targets for each step */}
+        <div className="absolute inset-0 flex">
+          {features.map((_, i) => (
+            <div
+              key={i}
+              className="flex-1 h-full"
+              onClick={(e) => {
+                e.stopPropagation();
+                onStepClick(i);
+              }}
+              aria-label={`Go to ${features[i]?.title || `step ${i + 1}`}`}
             />
-          </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-          {/* Content */}
-          <div className="prose prose-invert prose-slate max-w-none">
-            <p>
-              Great hospitality is proactive, not reactive. At SmartStay, we help property owners
-              deliver clear, mobile‑first information that answers 95% of guest questions before
-              they are even asked. From WiFi and house rules to curated local tips, our digital
-              guides ensure every stay feels smooth and stress‑free.
-            </p>
-            <p>
-              In this demo article, we outline a simple approach to crafting a high‑impact guide:
-              prioritize clarity, design for small screens, and keep content up‑to‑date. The result is
-              fewer interruptions for you and a consistently delightful experience for your guests.
-            </p>
+function FinalCTA() {
+  return (
+    <section aria-labelledby="cta-title" className="py-20">
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-zinc-900/60 shadow-sm ring-1 ring-white/10 p-10 md:p-14 text-center">
+          <h2 id="cta-title" className="text-3xl md:text-4xl font-bold text-white">Book a Free Demo</h2>
+          <p className="mt-3 text-zinc-300 max-w-2xl mx-auto">See how Smart Stay reduces questions and elevates guest experience in minutes.</p>
+          <div className="mt-6">
+            <a href="#" aria-label="Book a Free Demo" className="inline-flex items-center rounded-lg bg-violet-600 px-6 py-3 text-white font-medium shadow-sm hover:bg-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500">Book a Demo</a>
           </div>
-        </article>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function Demo() {
+  const reduced = usePrefersReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [screen, setScreen] = useState<string>(FEATURES[0].id);
+  const featuresRef = useRef<HTMLElement | null>(null);
+  const [filled, setFilled] = useState<Set<string>>(new Set());
+  const currentIndexRef = useRef<number>(0);
+  const cooldownRef = useRef<boolean>(false);
+  const tickCountRef = useRef<number>(0);
+  const lastDirectionRef = useRef<1 | -1 | 0>(0);
+  const touchStartYRef = useRef<number | null>(null);
+
+  const ids = useMemo(() => FEATURES.map((f) => f.id), []);
+
+  const handleEnter = (id: string) => {
+    const idx = FEATURES.findIndex((f) => f.id === id);
+    if (idx !== -1) {
+      setScreen(id);
+    }
+  };
+
+  const handleFill = (id: string) => {
+    setFilled((prev) => {
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+  };
+
+  const handleUnfill = (id: string) => {
+    setFilled((prev) => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
+  };
+
+  const highestFilledIndex = useMemo(() => {
+    let max = -1;
+    FEATURES.forEach((f, i) => {
+      if (filled.has(f.id)) max = Math.max(max, i);
+    });
+    return max;
+  }, [filled]);
+
+  const mobileProgress = useMemo(() => {
+    return FEATURES.length > 1 && highestFilledIndex >= 0 ? highestFilledIndex / (FEATURES.length - 1) : 0;
+  }, [highestFilledIndex]);
+
+  useEffect(() => {
+    if (highestFilledIndex >= 0) {
+      setActiveIndex(highestFilledIndex);
+    }
+  }, [highestFilledIndex]);
+
+  // Keep a ref of the current active index for non-react listeners
+  useEffect(() => {
+    currentIndexRef.current = activeIndex;
+  }, [activeIndex]);
+
+  // Helper to scroll to a specific section aligned with the trigger position
+  const scrollToSection = (index: number) => {
+    const clamped = Math.max(0, Math.min(FEATURES.length - 1, index));
+    const el = document.getElementById(`${FEATURES[clamped].id}-section`);
+    if (!el) return;
+    const stickyHeader = 0; // adjust if needed
+    const offsetY = window.innerHeight * 0.7 - stickyHeader; // align element top to 70% viewport line
+    gsap.to(window, {
+      duration: reduced ? 0 : 0.45,
+      ease: "power1.out",
+      scrollTo: { y: el, offsetY },
+      onComplete: () => {
+        ScrollTrigger.refresh();
+      },
+    });
+  };
+
+  // Gesture gate: require 2 ticks to advance, never skip more than one
+  useEffect(() => {
+    ensureGsapRegistered();
+    ScrollTrigger.normalizeScroll(true);
+
+    // Snap to nearest section to avoid half states
+    let snapTrigger: ScrollTrigger | null = null;
+    if (featuresRef.current) {
+      snapTrigger = ScrollTrigger.create({
+        trigger: featuresRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        anticipatePin: 1,
+        snap: {
+          snapTo: (value: number) => {
+            const idx = Math.round(value * (FEATURES.length - 1));
+            return idx / (FEATURES.length - 1);
+          },
+          duration: { min: 0.2, max: 0.5 },
+          delay: 0.05,
+          ease: "power1.out",
+          inertia: false,
+        },
+      });
+    }
+
+    const TICKS_TO_ADVANCE = 2;
+    const COOLDOWN_MS = 380;
+
+    const resetGate = () => {
+      tickCountRef.current = 0;
+      lastDirectionRef.current = 0;
+    };
+
+    const triggerAdvance = (direction: 1 | -1) => {
+      if (cooldownRef.current) return;
+      const nextIndex = currentIndexRef.current + direction;
+      if (nextIndex < 0 || nextIndex > FEATURES.length - 1) {
+        resetGate();
+        return;
+      }
+      scrollToSection(nextIndex);
+      cooldownRef.current = true;
+      setTimeout(() => {
+        cooldownRef.current = false;
+        resetGate();
+      }, COOLDOWN_MS);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const dir: 1 | -1 = e.deltaY > 0 ? 1 : -1;
+      if (lastDirectionRef.current !== dir) {
+        lastDirectionRef.current = dir;
+        tickCountRef.current = 1;
+        return;
+      }
+      tickCountRef.current += 1;
+      if (tickCountRef.current >= TICKS_TO_ADVANCE) {
+        triggerAdvance(dir);
+      }
+    };
+
+    const onKey = (e: KeyboardEvent) => {
+      const downKeys = ["ArrowDown", "PageDown", " ", "Spacebar"]; // spacebar legacy
+      const upKeys = ["ArrowUp", "PageUp"];
+      let dir: 1 | -1 | 0 = 0;
+      if (downKeys.includes(e.key)) dir = 1;
+      else if (upKeys.includes(e.key)) dir = -1;
+      if (dir === 0) return;
+      e.preventDefault();
+      if (lastDirectionRef.current !== dir) {
+        lastDirectionRef.current = dir;
+        tickCountRef.current = 1;
+        return;
+      }
+      tickCountRef.current += 1;
+      if (tickCountRef.current >= TICKS_TO_ADVANCE) {
+        triggerAdvance(dir as 1 | -1);
+      }
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartYRef.current = e.touches[0]?.clientY ?? null;
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      if (touchStartYRef.current == null) return;
+      const endY = e.changedTouches[0]?.clientY ?? touchStartYRef.current;
+      const delta = touchStartYRef.current - endY;
+      const dir: 1 | -1 = delta > 0 ? 1 : -1;
+      if (lastDirectionRef.current !== dir) {
+        lastDirectionRef.current = dir;
+        tickCountRef.current = 1;
+      } else {
+        tickCountRef.current += 1;
+      }
+      if (tickCountRef.current >= TICKS_TO_ADVANCE) {
+        triggerAdvance(dir);
+      }
+      touchStartYRef.current = null;
+    };
+
+    // Passive false so we can preventDefault and fully control the scroll
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKey, { passive: false } as AddEventListenerOptions);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", onWheel as EventListener);
+      window.removeEventListener("keydown", onKey as EventListener);
+      window.removeEventListener("touchstart", onTouchStart as EventListener);
+      window.removeEventListener("touchend", onTouchEnd as EventListener);
+      if (snapTrigger) snapTrigger.kill();
+    };
+  }, [reduced]);
+
+  useEffect(() => {
+    if (reduced) return;
+    ensureGsapRegistered();
+    // Subtle fade-up on hero content
+    const hero = document.getElementById("hero-root");
+    if (hero) {
+      gsap.fromTo(hero.querySelectorAll("[data-hero]") as NodeListOf<HTMLElement>, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power2.out" });
+    }
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+  }, [reduced]);
+
+  return (
+    <PageShell>
+      <Navbar />
+      <main>
+        <div id="hero-root">
+          <Hero
+            onPrimaryClick={() => { /* no-op: route or modal in real app */ }}
+            onSecondaryClick={() => featuresRef.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" })}
+          />
+        </div>
+
+        <section ref={featuresRef} aria-label="Features" className="py-32 lg:py-40">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            {/* Section header for F-pattern - positioned lower */}
+            <div className="pt-48 pb-50">
+              <div className="mx-auto max-w-2xl text-center">
+                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  Complete Guest Experience
+                </h2>
+                <p className="mt-4 text-lg leading-8 text-zinc-300">
+                  Everything your guests need, organized and accessible in one beautiful interface
+                </p>
+              </div>
+            </div>
+            <MobileProgressBar 
+              progress={mobileProgress} 
+              features={FEATURES} 
+              reduced={reduced}
+              onStepClick={(i) => {
+                const el = document.getElementById(`${FEATURES[i].id}-section`);
+                if (el) {
+                  // Calculate precise offset to match ScrollTrigger "start: top 70%" exactly
+                  const rect = el.getBoundingClientRect();
+                  const absoluteTop = rect.top + window.pageYOffset;
+                  const targetScroll = absoluteTop - (window.innerHeight * 0.3); // 70% from top = 30% from top
+                  
+                  window.scrollTo({
+                    top: Math.max(0, targetScroll),
+                    behavior: reduced ? "auto" : "smooth"
+                  });
+                }
+              }} 
+            />
+            <div className="lg:hidden mt-3">
+              <MobileActiveText feature={FEATURES[activeIndex] || FEATURES[0]} reduced={reduced} />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mt-8">
+              <FeatureRail activeIndex={activeIndex} total={FEATURES.length} ids={ids} filledIds={filled} features={FEATURES} reduced={reduced} onJump={(i) => {
+                const el = document.getElementById(`${FEATURES[i].id}-section`);
+                if (el) {
+                  // Calculate precise offset to match ScrollTrigger "start: top 70%" exactly
+                  const rect = el.getBoundingClientRect();
+                  const absoluteTop = rect.top + window.pageYOffset;
+                  const targetScroll = absoluteTop - (window.innerHeight * 0.3); // 70% from top = 30% from top
+                  
+                  window.scrollTo({
+                    top: Math.max(0, targetScroll),
+                    behavior: reduced ? "auto" : "smooth"
+                  });
+                }
+              }} />
+
+              {/* Invisible scroll triggers */}
+              <div className="lg:col-span-4">
+                {FEATURES.map((f) => (
+                  <div id={`${f.id}-section`} key={f.id}>
+                    <FeatureStep id={f.id} title={f.title} desc={f.desc} bullets={f.bullets} onEnter={handleEnter} onFill={handleFill} onUnfill={handleUnfill} reduced={reduced} visuallyHidden />
+                  </div>
+                ))}
+              </div>
+
+              {/* Pinned phone on the right */}
+              <div className="lg:col-span-7 lg:block hidden" />
+            </div>
+          </div>
+        </section>
+
+        <FinalCTA />
       </main>
       <Footer />
-    </>
+    </PageShell>
   );
-};
-
-export default DemoPage;
-
-
+}

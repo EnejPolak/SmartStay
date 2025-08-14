@@ -9,7 +9,7 @@ import { CSS } from "@dnd-kit/utilities";
 import Link from "next/link";
 import { useAuthStore } from "@/admin/store/auth";
 import { usePostsStore, type BlogPost } from "@/admin/store/posts";
-import MultiImageUploader, { type UploadImage } from "@/components/MultiImageUploader";
+import MultiImageUploader, { type UploadImage } from "@/app/admin/dashboard/MultiImageUploader";
 
 function SortablePostItem({ post, index, onDelete }: { post: BlogPost; index: number; onDelete: (id: string) => void }) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: post.id });
