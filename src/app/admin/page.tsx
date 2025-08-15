@@ -1,27 +1,55 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/admin/store/auth";
 import { useEffect, useState } from "react";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const { isAuthenticated, login, error, clearError } = useAuthStore();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  // If already authenticated (httpOnly cookie exists), /api/auth/me will return 200
   useEffect(() => {
-    if (isAuthenticated) router.replace("/admin/dashboard");
-  }, [isAuthenticated, router]);
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch('/api/auth/me', { credentials: 'include' });
+        if (res.ok && !cancelled) router.replace('/admin/dashboard');
+      } catch {}
+    })();
+    return () => { cancelled = true; };
+  }, [router]);
+
+  // No auto redirect; after login we'll navigate manually
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const ok = await login(username, password);
-    setLoading(false);
-    if (ok) router.replace("/admin/dashboard");
+    setError(null);
+    try {
+      const payload = {
+        email: email.trim(),
+        // Remove only trailing spaces that can sneak in by copy/paste
+        password: password.replace(/\s+$/, ""),
+      };
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      setLoading(false);
+      if (!res.ok) {
+        setError('Invalid credentials');
+        return;
+      }
+      await router.replace('/admin/dashboard');
+    } catch (err) {
+      setLoading(false);
+      setError('Login failed');
+    }
   };
 
   return (
@@ -47,8 +75,8 @@ export default function AdminLoginPage() {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z" fill="currentColor"/></svg>
               </span>
               <input
-                value={username}
-                onChange={(e) => { setUsername(e.target.value); if (error) clearError(); }}
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); if (error) setError(null); }}
                 className="w-full rounded-xl border border-white/20 bg-white/10 px-10 py-3 text-sm text-white placeholder-gray-400 shadow-inner outline-none focus:ring-2 focus:ring-violet-400/50"
                 placeholder="Enter username"
               />
@@ -63,7 +91,7 @@ export default function AdminLoginPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
-                onChange={(e) => { setPassword(e.target.value); if (error) clearError(); }}
+                onChange={(e) => { setPassword(e.target.value); if (error) setError(null); }}
                 className="w-full rounded-xl border border-white/20 bg-white/10 px-10 py-3 pr-12 text-sm text-white placeholder-gray-400 shadow-inner outline-none focus:ring-2 focus:ring-violet-400/50"
                 placeholder="Enter password"
               />

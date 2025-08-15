@@ -10,6 +10,9 @@ export type BlogPost = {
   subtitle?: string;
   tag?: string;
   description?: string;
+  content?: string;
+  category?: string;
+  isDraft?: boolean;
   createdAt: number;
   updatedAt: number;
 };

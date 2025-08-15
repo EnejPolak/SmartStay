@@ -1,0 +1,8 @@
+export const runtime = 'edge';
+
+export default function Icon() {
+  const svg = `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B7CDF"/><stop offset="1" stop-color="#60A5FA"/></linearGradient></defs><rect width="64" height="64" rx="12" fill="#0b0f1e"/><path d="M18 40l14-20 14 20h-6l-8-12-8 12z" fill="url(#g)"/></svg>`;
+  return new Response(svg, { headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=31536000, immutable' } });
+}
+
+
