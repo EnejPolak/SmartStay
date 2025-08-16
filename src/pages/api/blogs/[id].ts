@@ -2,92 +2,273 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 import sanitizeHtml from 'sanitize-html';
 import { supabaseAdmin } from '../_lib/supabase';
-import { toSlug } from '../_lib/slug';
 
-const payloadSchema = z.object({
-  title: z.string().min(2).max(120),
+// Validation schemas
+const blogPayloadSchema = z.object({
+  title: z.string().min(2).max(120).transform(s => s.trim()),
   subtitle: z.string().max(160).nullable().optional(),
   description: z.string().max(160).nullable().optional(),
   excerpt: z.string().max(240).nullable().optional(),
-  slug: z.string().min(2).max(160),
-  status: z.enum(['draft', 'published']),
+  slug: z.string().min(2).max(140).regex(/^[a-z0-9-]+$/, 'Slug must be kebab-case'),
+  status: z.enum(['draft', 'published', 'scheduled', 'archived']),
   category_id: z.string().uuid().nullable().optional(),
-  cover_image_id: z.string().uuid().nullable().optional(),
+  cover_photo: z.string().max(2048).url().nullable().optional(),
   content_html: z.string().default(''),
   content_delta: z.any().nullable().optional(),
   tags: z.array(z.string().uuid()).max(5).default([]),
 });
 
+// HTML sanitization options
+const sanitizeOptions = {
+  allowedTags: [
+    'a', 'p', 'h1', 'h2', 'h3', 'h4', 'ul', 'ol', 'li', 'img', 'video', 'code', 'pre', 
+    'blockquote', 'strong', 'em', 'u', 'span', 'figure', 'figcaption', 'br', 'hr'
+  ],
+  allowedAttributes: {
+    'a': ['href', 'target', 'rel'],
+    'img': ['src', 'alt', 'class', 'style'],
+    'video': ['src', 'controls'],
+    'span': ['style'],
+  },
+  allowedStyles: {
+    'span': {
+      'color': [/^#(0x)?[0-9a-f]+$/i, /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/],
+      'font-size': [/^\d+(?:px|em|%)$/],
+      'text-decoration': [/^none$/, /^underline$/, /^line-through$/],
+    }
+  },
+  allowedSchemes: ['http', 'https'],
+  allowProtocolRelative: false,
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'PUT') return res.status(405).end();
   const id = String(req.query.id);
 
-  const parsed = payloadSchema.safeParse(req.body);
-  if (!parsed.success) return res.status(400).json({ error: 'Invalid payload' });
+  if (req.method === 'GET') {
+    return handleGet(req, res, id);
+  }
+  
+  if (req.method === 'PUT') {
+    return handleUpdate(req, res, id);
+  }
+
+  return res.status(405).end();
+}
+
+async function handleGet(req: NextApiRequest, res: NextApiResponse, id: string) {
+  const { data: blog, error } = await supabaseAdmin
+    .from('blogs')
+    .select(`
+      id, slug, status, published_at, title, subtitle, description, excerpt,
+      content_html, cover_photo, updated_at, author,
+      category:categories(id, name, slug),
+      tags:blog_tags(tag:tags(id, name, slug))
+    `)
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    if (error.code === 'PGRST116') {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+    console.error('[blogs/get] Query error:', error);
+    return res.status(500).json({ error: error.message });
+  }
+
+  // Transform the response to match expected format
+  const response = {
+    ...blog,
+    tags: blog.tags?.map((t: any) => t.tag) || []
+  };
+
+  return res.status(200).json(response);
+}
+
+async function handleUpdate(req: NextApiRequest, res: NextApiResponse, id: string) {
+  const parsed = blogPayloadSchema.safeParse(req.body);
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {};
+    parsed.error.issues.forEach((err: any) => {
+      const field = err.path.join('.');
+      fieldErrors[field] = err.message;
+    });
+    return res.status(400).json({ fieldErrors });
+  }
+
   const body = parsed.data;
 
-  // Ensure slug is unique for other posts
-  let unique = toSlug(body.slug || body.title);
-  for (let i = 2; i < 50; i++) {
-    const { data: exists } = await supabaseAdmin
-      .from('blogs')
+  // Check if blog exists
+  const { data: existingBlog, error: fetchError } = await supabaseAdmin
+    .from('blogs')
+    .select('id, status, published_at')
+    .eq('id', id)
+    .single();
+
+  if (fetchError) {
+    if (fetchError.code === 'PGRST116') {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+    console.error('[blogs/update] Fetch error:', fetchError);
+    return res.status(500).json({ error: fetchError.message });
+  }
+
+  // Validate published status requirements
+  if (body.status === 'published') {
+    if (!body.title || !body.content_html || !body.cover_photo) {
+      return res.status(400).json({
+        fieldErrors: {
+          status: 'Published posts require title, content, and cover photo'
+        }
+      });
+    }
+  }
+
+  // Check slug uniqueness (excluding current blog)
+  const { data: existingSlug } = await supabaseAdmin
+    .from('blogs')
+    .select('id')
+    .eq('slug', body.slug)
+    .neq('id', id)
+    .maybeSingle();
+
+  if (existingSlug) {
+    // Generate suggestion
+    let suggestion = body.slug;
+    for (let i = 2; i < 50; i++) {
+      const testSlug = `${body.slug}-${i}`;
+      const { data: exists } = await supabaseAdmin
+        .from('blogs')
+        .select('id')
+        .eq('slug', testSlug)
+        .neq('id', id)
+        .maybeSingle();
+      if (!exists) {
+        suggestion = testSlug;
+        break;
+      }
+    }
+    return res.status(409).json({ 
+      error: 'Slug already exists',
+      suggestion 
+    });
+  }
+
+  // Validate category exists
+  if (body.category_id) {
+    const { data: category } = await supabaseAdmin
+      .from('categories')
       .select('id')
-      .eq('slug', unique)
-      .neq('id', id)
+      .eq('id', body.category_id)
       .maybeSingle();
-    if (!exists) break;
-    unique = `${unique}-${i}`;
+    if (!category) {
+      return res.status(400).json({
+        fieldErrors: { category_id: 'Category not found' }
+      });
+    }
+  }
+
+  // Validate tags exist and are distinct
+  const uniqueTags = [...new Set(body.tags)];
+  if (uniqueTags.length !== body.tags.length) {
+    return res.status(400).json({
+      fieldErrors: { tags: 'Tags must be distinct' }
+    });
+  }
+
+  if (uniqueTags.length > 0) {
+    const { data: existingTags } = await supabaseAdmin
+      .from('tags')
+      .select('id')
+      .in('id', uniqueTags);
+    
+    if (!existingTags || existingTags.length !== uniqueTags.length) {
+      return res.status(400).json({
+        fieldErrors: { tags: 'One or more tags not found' }
+      });
+    }
   }
 
   const now = new Date().toISOString();
-  const { data: blog, error: blogErr } = await supabaseAdmin
+  
+  // Determine if we need to set published_at
+  let publishedAt = existingBlog.published_at;
+  if (body.status === 'published' && !existingBlog.published_at) {
+    publishedAt = now;
+  }
+
+  // Update blog
+  const { data: blog, error: blogError } = await supabaseAdmin
     .from('blogs')
     .update({
       title: body.title,
-      subtitle: body.subtitle ?? null,
-      description: body.description ?? null,
-      excerpt: body.excerpt ?? null,
-      slug: unique,
+      subtitle: body.subtitle || null,
+      description: body.description || null,
+      excerpt: body.excerpt || null,
+      slug: body.slug,
       status: body.status,
-      category_id: body.category_id ?? null,
-      cover_image_id: body.cover_image_id ?? null,
-      content_html: sanitizeHtml(body.content_html || '', {
-        allowedTags: [
-          'a','p','h1','h2','h3','h4','ul','ol','li','img','video','code','pre','blockquote','strong','em','u','span','br','hr','table','thead','tbody','tr','th','td'
-        ],
-        allowedAttributes: {
-          a: ['href','target','rel'],
-          img: ['src','alt','width','height'],
-          video: ['src','controls','poster','width','height'],
-          span: ['style'],
-          '*': ['style']
-        },
-        allowedSchemes: ['http','https','data','mailto'],
-        allowProtocolRelative: false,
-      }),
-      content_delta: body.content_delta ?? null,
+      category_id: body.category_id || null,
+      cover_photo: body.cover_photo || null,
+      content_html: sanitizeHtml(body.content_html, sanitizeOptions),
+      content_delta: body.content_delta || null,
+      published_at: publishedAt,
       updated_at: now,
     })
     .eq('id', id)
-    .select('id, slug, status, published_at, title, subtitle, description, excerpt, content_html, category:categories(id, name, slug), cover_image:images!blogs_cover_image_id_fkey(id, url), created_at, updated_at')
+    .select(`
+      id, slug, status, published_at, title, subtitle, description, excerpt,
+      content_html, cover_photo, updated_at, author,
+      category:categories(id, name, slug)
+    `)
     .single();
-  if (blogErr) return res.status(500).json({ error: blogErr.message });
 
-  // Replace tags
-  await supabaseAdmin.from('blog_tags').delete().eq('blog_id', id);
-  if (body.tags?.length) {
-    const rows = body.tags.map((tagId) => ({ blog_id: id, tag_id: tagId }));
-    const { error: tagErr } = await supabaseAdmin.from('blog_tags').insert(rows);
-    if (tagErr) return res.status(500).json({ error: tagErr.message });
+  if (blogError) {
+    console.error('[blogs/update] Update error:', blogError);
+    return res.status(500).json({ error: blogError.message });
   }
 
-  const { data: tags, error: tagsErr } = await supabaseAdmin
-    .from('tags')
-    .select('id, name, slug, blog_tags!inner(blog_id)')
-    .eq('blog_tags.blog_id', id);
-  if (tagsErr) return res.status(500).json({ error: tagsErr.message });
+  // Replace blog_tags (delete all, then insert new)
+  const { error: deleteError } = await supabaseAdmin
+    .from('blog_tags')
+    .delete()
+    .eq('blog_id', id);
 
-  return res.status(200).json({ ...blog, tags });
+  if (deleteError) {
+    console.error('[blogs/update] Tag delete error:', deleteError);
+    return res.status(500).json({ error: deleteError.message });
+  }
+
+  // Insert new blog_tags
+  if (uniqueTags.length > 0) {
+    const blogTags = uniqueTags.map(tagId => ({
+      blog_id: id,
+      tag_id: tagId
+    }));
+
+    const { error: tagError } = await supabaseAdmin
+      .from('blog_tags')
+      .insert(blogTags);
+
+    if (tagError) {
+      console.error('[blogs/update] Tag insert error:', tagError);
+      return res.status(500).json({ error: tagError.message });
+    }
+  }
+
+  // Fetch tags for response
+  const { data: tags, error: tagsError } = await supabaseAdmin
+    .from('tags')
+    .select('id, name, slug')
+    .in('id', uniqueTags);
+
+  if (tagsError) {
+    console.error('[blogs/update] Tags fetch error:', tagsError);
+    return res.status(500).json({ error: tagsError.message });
+  }
+
+  return res.status(200).json({
+    ...blog,
+    tags: tags || []
+  });
 }
 
 

@@ -86,7 +86,7 @@ export default function DashboardPage() {
   const [slugState, setSlugState] = useState<{ value: string; available: boolean }>({ value: '', available: true });
 
   // Backend wiring refs
-  const coverImageIdRef = useRef<string | null>(null);
+  const coverImageUrlRef = useRef<string | null>(null);
   const coverImageFileRef = useRef<File | null>(null);
   const currentBlogIdRef = useRef<string | null>(null);
   const slugCheckTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -161,17 +161,17 @@ export default function DashboardPage() {
     e.preventDefault();
     if (!form.title.trim()) return;
 
-    // Upload cover when saving if not uploaded yet
-    if (!coverImageIdRef.current && coverImageFileRef.current) {
-      const fd = new FormData();
-      fd.append('file', coverImageFileRef.current);
-      const up = await fetch('/api/images/cover', { method: 'POST', body: fd });
-      if (up.ok) {
-        const img = await up.json();
-        coverImageIdRef.current = img.id as string;
-        if (!form.imageUrl) setForm((f) => ({ ...f, imageUrl: img.url as string }));
-      }
-    }
+                  // Upload cover when saving if not uploaded yet
+              if (!coverImageUrlRef.current && coverImageFileRef.current) {
+                const fd = new FormData();
+                fd.append('file', coverImageFileRef.current);
+                const up = await fetch('/api/images/cover', { method: 'POST', body: fd });
+                if (up.ok) {
+                  const img = await up.json();
+                  coverImageUrlRef.current = img.url as string;
+                  if (!form.imageUrl) setForm((f) => ({ ...f, imageUrl: img.url as string }));
+                }
+              }
 
     // Build payload
     // Resolve new tags (create them) only at submit time
@@ -202,7 +202,7 @@ export default function DashboardPage() {
       slug: slugState.value || slugify(form.title),
       status: asDraft ? 'draft' : 'published',
       category_id: null as string | null, // will resolve below via categories API if needed
-      cover_image_id: coverImageIdRef.current || null,
+      cover_photo: coverImageUrlRef.current || null,
       content_html: form.content || '',
       content_delta: null as any,
       tags: Array.from(new Set(tagIds)).slice(0, 5),
