@@ -55,46 +55,58 @@ export default function Pricing() {
             </div>
             
             {/* Plan Details */}
-            <div className="mb-6">
-              <h3 className="mb-2 text-2xl font-bold text-white">SmartxStart</h3>
-              <p className="text-sm text-zinc-400 mb-4">(1 – 3 units)</p>
-              <p className="text-zinc-300 text-sm mb-4">For small property owners with 1 to 3 units</p>
+            <div className="mb-8">
+              <h3 className="mb-3 text-3xl font-bold text-white">SmartxStart</h3>
+              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">(1 – 3 units)</p>
+              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">For small property owners with 1 to 3 units</p>
               
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Setup:</span>
-                  <span className="text-white font-semibold">from €450</span>
+              {/* Pricing Section */}
+              <div className="bg-white/5 rounded-xl p-6 mb-6 border border-white/10">
+                {/* Monthly Price - Main Focus */}
+                <div className="text-center mb-6">
+                  <div className="mb-2">
+                    <span className="text-4xl font-bold text-white">15€</span>
+                    <span className="text-lg font-normal text-zinc-400 ml-1">/month</span>
+                  </div>
+                  <p className="text-zinc-300 text-sm font-medium">Monthly subscription</p>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Annual hosting:</span>
-                  <span className="text-white font-semibold">€180</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Monthly:</span>
-                  <span className="text-2xl font-black text-white">€15<span className="text-sm font-normal text-zinc-400">/month</span></span>
+                
+                {/* Other Costs */}
+                <div className="border-t border-white/10 pt-4 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-400 text-sm font-medium">One-time setup:</span>
+                    <span className="text-zinc-100 font-semibold text-base">from 450€</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-400 text-sm font-medium">Annual hosting:</span>
+                    <span className="text-zinc-100 font-semibold text-lg">180€</span>
+                  </div>
                 </div>
               </div>
             </div>
             
             {/* Features */}
-            <ul className="mb-8 space-y-3">
-              {[
-                "Secure hosting on fast servers",
-                "Regular backups & updates",
-                "Uninterrupted platform operation without ads",
-                "Technical support from our team",
-                "Continuous improvements and new features"
-              ].map((feature, i) => (
-                <li key={i} className="flex items-start text-sm text-zinc-200">
-                  <div className="mr-3 mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
-                    <svg className="h-2.5 w-2.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+            <div className="mb-8">
+              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">What's included:</h4>
+              <ul className="space-y-3">
+                {[
+                  "Secure hosting on fast servers",
+                  "Regular backups & updates",
+                  "Uninterrupted platform operation without ads",
+                  "Technical support from our team",
+                  "Continuous improvements and new features"
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-start text-sm font-normal text-zinc-200">
+                    <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
+                      <svg className="h-3 w-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="leading-relaxed">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             
             <Link href="/Contact" className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40">
               Request a Quote
@@ -112,51 +124,63 @@ export default function Pricing() {
             {/* Icon */}
             <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#8B7CDF]/30 to-[#60A5FA]/30 border border-[#8B7CDF]/40">
               <svg className="h-8 w-8 text-[#8B7CDF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
             
             {/* Plan Details */}
-            <div className="mb-6">
-              <h3 className="mb-2 text-2xl font-bold text-white">SmartxPlus</h3>
-              <p className="text-sm text-zinc-400 mb-4">(4 – 7 units)</p>
-              <p className="text-zinc-300 text-sm mb-4">Ideal for medium-sized providers with multiple units</p>
+            <div className="mb-8">
+              <h3 className="mb-3 text-3xl font-bold text-white">SmartxPlus</h3>
+              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">(4 – 7 units)</p>
+              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">Ideal for medium-sized providers with multiple units</p>
               
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Setup:</span>
-                  <span className="text-white font-semibold">from €590</span>
+              {/* Pricing Section */}
+              <div className="bg-white/5 rounded-xl p-6 mb-6 border border-[#8B7CDF]/20">
+                {/* Monthly Price - Main Focus */}
+                <div className="text-center mb-6">
+                  <div className="mb-2">
+                    <span className="text-4xl font-bold text-white">25€</span>
+                    <span className="text-lg font-normal text-zinc-400 ml-1">/month</span>
+                  </div>
+                  <p className="text-zinc-300 text-sm font-medium">Monthly subscription</p>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Annual hosting:</span>
-                  <span className="text-white font-semibold">€300</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Monthly:</span>
-                  <span className="text-2xl font-black text-white">€25<span className="text-sm font-normal text-zinc-400">/month</span></span>
+                
+                {/* Other Costs */}
+                <div className="border-t border-[#8B7CDF]/20 pt-4 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-400 text-sm font-medium">One-time setup:</span>
+                    <span className="text-zinc-100 font-semibold text-base">from 590€</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-400 text-sm font-medium">Annual hosting:</span>
+                    <span className="text-zinc-100 font-semibold text-lg">300€</span>
+                  </div>
                 </div>
               </div>
             </div>
             
             {/* Features */}
-            <ul className="mb-8 space-y-3">
-              {[
-                "Everything in SmartxStart",
-                "Extended scalability for more guests",
-                "More storage and capacity",
-                "Customizable features depending on needs",
-                "License for up to 7 units"
-              ].map((feature, i) => (
-                <li key={i} className="flex items-start text-sm text-zinc-200">
-                  <div className="mr-3 mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
-                    <svg className="h-2.5 w-2.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+            <div className="mb-8">
+              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">What's included:</h4>
+              <ul className="space-y-3">
+                {[
+                  "Everything in SmartxStart",
+                  "Extended scalability for more guests",
+                  "More storage and capacity",
+                  "Customizable features depending on needs",
+                  "License for up to 7 units"
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-start text-sm font-normal text-zinc-200">
+                    <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
+                      <svg className="h-3 w-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="leading-relaxed">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             
             <Link href="/Contact" className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40">
               Request a Quote
@@ -175,46 +199,58 @@ export default function Pricing() {
             </div>
             
             {/* Plan Details */}
-            <div className="mb-6">
-              <h3 className="mb-2 text-2xl font-bold text-white">SmartxPro</h3>
-              <p className="text-sm text-zinc-400 mb-4">(8 – 10 units)</p>
-              <p className="text-zinc-300 text-sm mb-4">For larger property owners with 8 to 10 units</p>
+            <div className="mb-8">
+              <h3 className="mb-3 text-3xl font-bold text-white">SmartxPro</h3>
+              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">(8 – 10 units)</p>
+              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">For larger property owners with 8 to 10 units</p>
               
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Setup:</span>
-                  <span className="text-white font-semibold">from €790</span>
+              {/* Pricing Section */}
+              <div className="bg-white/5 rounded-xl p-6 mb-6 border border-white/10">
+                {/* Monthly Price - Main Focus */}
+                <div className="text-center mb-6">
+                  <div className="mb-2">
+                    <span className="text-4xl font-bold text-white">35€</span>
+                    <span className="text-lg font-normal text-zinc-400 ml-1">/month</span>
+                  </div>
+                  <p className="text-zinc-300 text-sm font-medium">Monthly subscription</p>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Annual hosting:</span>
-                  <span className="text-white font-semibold">€420</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Monthly:</span>
-                  <span className="text-2xl font-black text-white">€35<span className="text-sm font-normal text-zinc-400">/month</span></span>
+                
+                {/* Other Costs */}
+                <div className="border-t border-white/10 pt-4 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-400 text-sm font-medium">One-time setup:</span>
+                    <span className="text-zinc-100 font-semibold text-base">from 790€</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-400 text-sm font-medium">Annual hosting:</span>
+                    <span className="text-zinc-100 font-semibold text-lg">420€</span>
+                  </div>
                 </div>
               </div>
             </div>
             
             {/* Features */}
-            <ul className="mb-8 space-y-3">
-              {[
-                "Everything in SmartxPlus",
-                "Optimized performance for higher usage",
-                "Priority support",
-                "Advanced management and analytics features",
-                "License for up to 10 units"
-              ].map((feature, i) => (
-                <li key={i} className="flex items-start text-sm text-zinc-200">
-                  <div className="mr-3 mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
-                    <svg className="h-2.5 w-2.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+            <div className="mb-8">
+              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">What's included:</h4>
+              <ul className="space-y-3">
+                {[
+                  "Everything in SmartxPlus",
+                  "Optimized performance for higher usage",
+                  "Priority support",
+                  "Advanced management and analytics features",
+                  "License for up to 10 units"
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-start text-sm font-normal text-zinc-200">
+                    <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
+                      <svg className="h-3 w-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="leading-relaxed">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             
             <Link href="/Contact" className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40">
               Request a Quote
@@ -237,43 +273,54 @@ export default function Pricing() {
             </div>
             
             {/* Plan Details */}
-            <div className="mb-6">
-              <h3 className="mb-2 text-2xl font-bold text-white">SmartxEnterprise</h3>
-              <p className="text-sm text-zinc-400 mb-4">(more than 10 units)</p>
-              <p className="text-zinc-300 text-sm mb-4">For hotels and large accommodation providers</p>
+            <div className="mb-8">
+              <h3 className="mb-3 text-3xl font-bold text-white">SmartxEnterprise</h3>
+              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">(more than 10 units)</p>
+              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">For hotels and large accommodation providers</p>
               
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Setup:</span>
-                  <span className="text-white font-semibold">custom</span>
+              {/* Pricing Section */}
+              <div className="bg-white/5 rounded-xl p-6 mb-6 border border-white/10">
+                {/* Custom Price - Main Focus */}
+                <div className="text-center mb-6">
+                  <div className="mb-2">
+                    <span className="text-4xl font-bold text-white">custom</span>
+                  </div>
+                  <p className="text-zinc-300 text-sm font-medium">Total investment</p>
+                  <p className="text-xs text-zinc-500 mt-2 italic">(based on scope and requirements)</p>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 text-sm">Price:</span>
-                  <span className="text-2xl font-black text-white">custom</span>
+                
+                {/* Other Details */}
+                <div className="border-t border-white/10 pt-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-400 text-sm font-medium">Setup & Implementation:</span>
+                    <span className="text-zinc-100 font-semibold text-base">custom</span>
+                  </div>
                 </div>
-                <p className="text-xs text-zinc-500 mt-2">(based on scope and requirements)</p>
               </div>
             </div>
             
             {/* Features */}
-            <ul className="mb-8 space-y-3">
-              {[
-                "All benefits of SmartxPro",
-                "Tailored integrations",
-                "Dedicated account manager",
-                "Unlimited scalability",
-                "Fully customized licensing and pricing"
-              ].map((feature, i) => (
-                <li key={i} className="flex items-start text-sm text-zinc-200">
-                  <div className="mr-3 mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
-                    <svg className="h-2.5 w-2.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+            <div className="mb-8">
+              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">What's included:</h4>
+              <ul className="space-y-3">
+                {[
+                  "All benefits of SmartxPro",
+                  "Tailored integrations",
+                  "Dedicated account manager",
+                  "Unlimited scalability",
+                  "Fully customized licensing and pricing"
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-start text-sm font-normal text-zinc-200">
+                    <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
+                      <svg className="h-3 w-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="leading-relaxed">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             
                 <Link href="/Contact" className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40">
                   Request a Quote
@@ -286,7 +333,7 @@ export default function Pricing() {
         {/* Trust Section */}
         <section className="mt-20 text-center">
           <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-8 backdrop-blur-xl">
-            <h3 className="mb-4 text-2xl font-bold text-white">Still have questions?</h3>
+            <h3 className="mb-4 text-3xl font-bold text-white">Still have questions?</h3>
             <p className="mb-6 text-zinc-300">Our team is here to help you choose the perfect plan and answer any questions.</p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Link href="/Contact" className="rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] px-6 py-3 font-semibold text-white transition-all hover:scale-105">
