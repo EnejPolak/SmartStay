@@ -32,8 +32,6 @@ const Footer: React.FC = () => {
             <div className="nav-column">
               <Link href="/" className="nav-link">Home</Link>
               <Link href="/About_us" className="nav-link">About Us</Link>
-              <Link href="/features" className="nav-link">Features</Link>
-              {/* Added Demo link to footer navigation */}
               <Link href="/demo" className="nav-link">Demo</Link>
             </div>
             <div className="nav-column">

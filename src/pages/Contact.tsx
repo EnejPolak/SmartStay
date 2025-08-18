@@ -308,7 +308,7 @@ const ContactPage: React.FC = () => {
                 <div className="grid gap-4">
                   
                   {/* Phone - Green theme with tap-to-call */}
-                  <a href="tel:+38640123456" className="bg-gradient-to-br from-gray-900/40 to-slate-900/40 backdrop-blur-xl rounded-2xl border border-white/10 p-5 group hover:border-green-500/30 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 cursor-pointer opacity-0 animate-fade-in-up" style={{ animationDelay: '1.2s', animationFillMode: 'forwards' }}>
+                  <a href="tel:+38669415493" className="bg-gradient-to-br from-gray-900/40 to-slate-900/40 backdrop-blur-xl rounded-2xl border border-white/10 p-5 group hover:border-green-500/30 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 cursor-pointer opacity-0 animate-fade-in-up" style={{ animationDelay: '1.2s', animationFillMode: 'forwards' }}>
                     <div className="flex items-center">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mr-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -317,14 +317,14 @@ const ContactPage: React.FC = () => {
                       </div>
                       <div>
                         <h4 className="text-white font-bold text-lg group-hover:text-green-400 transition-colors duration-300">Phone</h4>
-                        <p className="text-gray-300 font-medium">+386 40 123 456</p>
+                        <p className="text-gray-300 font-medium">+386 69 415 493</p>
                         <p className="text-sm text-gray-400">Mon-Fri: 9:00 - 17:00</p>
                       </div>
                     </div>
                   </a>
 
                   {/* Email - Blue theme with tap-to-email */}
-                  <a href="mailto:info@smartstay.si" className="bg-gradient-to-br from-gray-900/40 to-slate-900/40 backdrop-blur-xl rounded-2xl border border-white/10 p-5 group hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 cursor-pointer opacity-0 animate-fade-in-up" style={{ animationDelay: '1.4s', animationFillMode: 'forwards' }}>
+                  <a href="mailto:info@qr-space.si" className="bg-gradient-to-br from-gray-900/40 to-slate-900/40 backdrop-blur-xl rounded-2xl border border-white/10 p-5 group hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 cursor-pointer opacity-0 animate-fade-in-up" style={{ animationDelay: '1.4s', animationFillMode: 'forwards' }}>
                     <div className="flex items-center">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mr-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -333,7 +333,7 @@ const ContactPage: React.FC = () => {
                       </div>
                       <div>
                         <h4 className="text-white font-bold text-lg group-hover:text-blue-400 transition-colors duration-300">Email</h4>
-                        <p className="text-gray-300 font-medium">info@smartstay.si</p>
+                        <p className="text-gray-300 font-medium">info@qr-space.si</p>
                         <p className="text-sm text-gray-400">Response within 24h</p>
                       </div>
                     </div>

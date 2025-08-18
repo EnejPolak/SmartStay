@@ -5,68 +5,66 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+type BlogItem = {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string | null;
+  summary: string | null;
+  content_html?: string | null;
+  cover_photo: string | null;
+  published_at: string;
+  category_name: string | null;
+  category_slug: string | null;
+  read_minutes?: number;
+};
+
+type BlogListResponse = {
+  hero: BlogItem | null;
+  latest: BlogItem[];
+  pagination: { limit: number; offset: number; total: number };
+};
+
+function formatDatePretty(dateString: string) {
+  const d = new Date(dateString);
+  const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  return fmt.format(d);
+}
+
+function stripHtmlToText(html: string): string {
+  return html
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const FALLBACK_IMAGE = "/pictures/logo/smartStay_logo.png";
+
 const BlogPage: React.FC = () => {
-  const blogPosts = [
-    {
-      id: 1,
-      title: "How Digital Guides Reduce Guest Questions by 95%",
-      excerpt: "Clear, accessible information transforms the guest experience. With SmartStay, hosts provide everything from WiFi details to curated local recommendations in one clean, mobile-first guide.",
-      author: "SmartStay Team",
-      publishedAt: "2025-01-15",
-      readTime: "5 min read",
-      category: "Guest Experience",
-      featured: true,
-      image: "/pictures/logo/smartStay_logo.png"
-    },
-    {
-      id: 2,
-      title: "The Future of Hospitality: AI-Powered Guest Services",
-      excerpt: "Discover how artificial intelligence is revolutionizing the hospitality industry, from personalized recommendations to predictive maintenance.",
-      author: "Sarah Johnson",
-      publishedAt: "2025-01-10",
-      readTime: "7 min read",
-      category: "Technology",
-      featured: false,
-      image: "/pictures/logo/smartStay_logo.png"
-    },
-    {
-      id: 3,
-      title: "Maximizing Revenue with Smart Pricing Strategies",
-      excerpt: "Learn advanced pricing techniques that can increase your property revenue by up to 30% while maintaining high guest satisfaction.",
-      author: "Michael Chen",
-      publishedAt: "2025-01-05",
-      readTime: "6 min read",
-      category: "Revenue Management",
-      featured: false,
-      image: "/pictures/logo/smartStay_logo.png"
-    },
-    {
-      id: 4,
-      title: "Sustainable Tourism: Building Eco-Friendly Properties",
-      excerpt: "Explore practical ways to make your property more sustainable while attracting environmentally conscious travelers.",
-      author: "Emma Rodriguez",
-      publishedAt: "2024-12-28",
-      readTime: "8 min read",
-      category: "Sustainability",
-      featured: false,
-      image: "/pictures/logo/smartStay_logo.png"
-    }
-  ];
+  const [data, setData] = React.useState<BlogListResponse | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-  const categories = ["All", "Guest Experience", "Technology", "Revenue Management", "Sustainability"];
-  const [selectedCategory, setSelectedCategory] = React.useState("All");
-
-  const filteredPosts = selectedCategory === "All" 
-    ? blogPosts 
-    : blogPosts.filter(post => post.category === selectedCategory);
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+  React.useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      try {
+        const res = await fetch('/api/blogs');
+        if (!res.ok) throw new Error('Failed to load blogs');
+        const json: BlogListResponse = await res.json();
+        if (isMounted) setData(json);
+      } catch (e: any) {
+        if (isMounted) setError(e?.message || 'Unexpected error');
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    })();
+    return () => { isMounted = false; };
+  }, []);
 
   return (
     <>
@@ -107,157 +105,170 @@ const BlogPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Category Filter with animation */}
-        <section className="px-4 mb-12 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}>
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-wrap justify-center gap-3">
-              {categories.map((category, index) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-3 rounded-full font-medium transition-all duration-300 opacity-0 animate-fade-in-up hover:transform hover:scale-105 ${
-                    selectedCategory === category
-                      ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-lg shadow-violet-500/25'
-                      : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white border border-white/10'
-                  }`}
-                  style={{ 
-                    animationDelay: `${1.0 + index * 0.1}s`, 
-                    animationFillMode: 'forwards' 
-                  }}
-                >
-                  {category}
-                </button>
-              ))}
+        {/* Loader / Error */}
+        <section className="px-4 mb-8">
+          {loading && (
+            <div className="max-w-6xl mx-auto flex items-center justify-center py-12">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
             </div>
-          </div>
+          )}
+          {error && (
+            <div className="max-w-6xl mx-auto text-center text-red-400 py-6">{error}</div>
+          )}
         </section>
 
-        {/* Featured Post with animation */}
-        {selectedCategory === "All" && (
+        {/* Hero article */}
+        {data?.hero && (
           <section className="px-4 mb-16">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-2xl font-bold text-white mb-8 text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '1.6s', animationFillMode: 'forwards' }}>Featured Article</h2>
-              {filteredPosts.filter(post => post.featured).map((post) => (
-                <article key={post.id} className="group relative overflow-hidden rounded-3xl bg-gradient-to-r from-gray-900/50 to-slate-900/50 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 opacity-0 animate-fade-in-up hover:transform hover:scale-[1.02]" style={{ animationDelay: '1.8s', animationFillMode: 'forwards' }}>
-                  <div className="grid lg:grid-cols-2 gap-8 p-8 lg:p-12">
-                    <div className="space-y-6">
-                      <div className="flex items-center gap-3">
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-violet-600/20 text-violet-300 border border-violet-500/30">
-                          {post.category}
-                        </span>
-                        <span className="text-gray-400 text-sm">{post.readTime}</span>
-                      </div>
-                      
-                      <h3 className="text-3xl lg:text-4xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-500">
-                        {post.title}
-                      </h3>
-                      
-                      <p className="text-gray-300 text-lg leading-relaxed">
-                        {post.excerpt}
-                      </p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 flex items-center justify-center text-white font-bold text-sm">
-                            {post.author.charAt(0)}
-                          </div>
-                          <div>
-                            <p className="text-gray-200 font-medium text-sm">{post.author}</p>
-                            <p className="text-gray-400 text-xs">{formatDate(post.publishedAt)}</p>
-                          </div>
-                        </div>
-                        
-                        <Link 
-                          href={`/Previewblog?id=${post.id}`}
-                          className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 text-white font-medium hover:shadow-lg hover:shadow-violet-500/25 hover:scale-105 transition-all duration-300 group"
-                        >
-                          Read More
-                          <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </Link>
-                      </div>
-                    </div>
-                    
-                    <div className="relative h-64 lg:h-full rounded-2xl overflow-hidden">
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        className="object-contain bg-gradient-to-br from-slate-900 to-gray-800 p-8"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Blog Posts Grid with staggered animations */}
-        <section className="px-4 pb-20">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-8 text-center opacity-0 animate-fade-in-up" style={{ animationDelay: selectedCategory === "All" ? '2.0s' : '1.6s', animationFillMode: 'forwards' }}>
-              {selectedCategory === "All" ? "Latest Articles" : `${selectedCategory} Articles`}
-            </h2>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredPosts.filter(post => !post.featured || selectedCategory !== "All").map((post, index) => (
-                <article key={post.id} className="group relative overflow-hidden rounded-2xl bg-gradient-to-b from-gray-900/50 to-slate-900/50 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:transform hover:-translate-y-2 hover:scale-105 opacity-0 animate-fade-in-up" style={{ animationDelay: `${selectedCategory === "All" ? 2.2 + index * 0.1 : 1.8 + index * 0.1}s`, animationFillMode: 'forwards' }}>
-                  <div className="relative h-48 overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-contain bg-gradient-to-br from-slate-900 to-gray-800 p-6 group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-violet-600/20 text-violet-300 border border-violet-500/30 backdrop-blur-sm">
-                        {post.category}
+              <article className="group relative overflow-hidden rounded-3xl bg-gradient-to-r from-gray-900/50 to-slate-900/50 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 opacity-0 animate-fade-in-up hover:transform hover:scale-[1.02]" style={{ animationDelay: '1.8s', animationFillMode: 'forwards' }}>
+                <div className="grid lg:grid-cols-2 gap-8 p-8 lg:p-12">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-violet-600/20 text-violet-300 border border-violet-500/30">
+                        {data.hero.category_name || 'General'}
                       </span>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6 space-y-4">
-                    <div className="flex items-center gap-2 text-gray-400 text-xs">
-                      <span>{formatDate(post.publishedAt)}</span>
-                      <span className="opacity-50">•</span>
-                      <span>{post.readTime}</span>
+                      <span className="text-gray-400 text-sm">{(data.hero.read_minutes || 1)} min read</span>
                     </div>
                     
-                    <h3 className="text-xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-500 line-clamp-2">
-                      {post.title}
+                    <h3 className="text-3xl lg:text-4xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-500">
+                      {data.hero.title}
                     </h3>
                     
-                    <p className="text-gray-300 text-sm leading-relaxed line-clamp-3">
-                      {post.excerpt}
+                    <p className="text-gray-300 text-lg leading-relaxed">
+                      {data.hero.summary || (data.hero.content_html ? stripHtmlToText(data.hero.content_html).slice(0, 200) : '')}
                     </p>
                     
-                    <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 flex items-center justify-center text-white font-bold text-xs">
-                          {post.author.charAt(0)}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                          S
                         </div>
-                        <span className="text-gray-300 text-sm font-medium">{post.author}</span>
+                        <div>
+                          <p className="text-gray-200 font-medium text-sm">SmartStay Team</p>
+                          <p className="text-gray-400 text-xs">{formatDatePretty(data.hero.published_at)}</p>
+                        </div>
                       </div>
                       
                       <Link 
-                        href={`/Previewblog?id=${post.id}`}
-                        className="inline-flex items-center text-violet-400 hover:text-violet-300 font-medium text-sm group/link"
+                        href={`/blog/${data.hero.slug}`}
+                        className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 text-white font-medium hover:shadow-lg hover:shadow-violet-500/25 hover:scale-105 transition-all duration-300 group"
                       >
                         Read More
-                        <svg className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </Link>
                     </div>
                   </div>
-                </article>
+                  
+                  <div className="relative h-64 lg:h-full rounded-2xl overflow-hidden">
+                    <Image
+                      src={data.hero.cover_photo || FALLBACK_IMAGE}
+                      alt={data.hero.title}
+                      fill
+                      className="object-contain bg-gradient-to-br from-slate-900 to-gray-800 p-8"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+        )}
+
+        {/* Blog Posts Grid */}
+        <section className="px-4 pb-20">
+          <div className="max-w-6xl mx-auto">
+            {data?.latest && data.latest.length > 0 && (
+              <h2 className="text-center mb-8 md:mb-12 text-2xl md:text-3xl font-semibold text-white opacity-0 animate-fade-in-up" style={{ animationDelay: '1.6s', animationFillMode: 'forwards' }}>
+                Latest Articles
+              </h2>
+            )}
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+              {data?.latest?.map((post, index) => (
+                <Link 
+                  key={post.id} 
+                  href={`/blog/${post.slug}`}
+                  className="group h-full flex flex-col relative overflow-hidden rounded-2xl bg-gradient-to-b from-gray-900/50 to-slate-900/50 backdrop-blur-xl ring-1 ring-white/10 hover:ring-white/20 hover:bg-white/[0.07] transition-all duration-500 hover:-translate-y-0.5 opacity-0 animate-fade-in-up focus:outline-none focus:ring-2 focus:ring-violet-400/60 after:absolute after:inset-0 after:rounded-2xl after:pointer-events-none after:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" 
+                  style={{ animationDelay: `${1.8 + index * 0.1}s`, animationFillMode: 'forwards' }}
+                >
+                  {/* Image Container */}
+                  <div className="relative w-full h-56 md:h-64 lg:h-72 overflow-hidden rounded-2xl ring-1 ring-white/10 bg-white/5">
+                    {post.cover_photo ? (
+                      <Image
+                        src={post.cover_photo}
+                        alt={post.title}
+                        fill
+                        priority={false}
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover object-center w-full h-full"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center">
+                        <svg className="w-12 h-12 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    )}
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-3 left-3 z-10">
+                      <span 
+                        className="inline-flex items-center gap-2 rounded-full bg-violet-600/90 text-white px-3 py-1 text-xs font-medium ring-1 ring-white/20 backdrop-blur shadow-sm"
+                        aria-label={`Category: ${post.category_name || 'General'}`}
+                      >
+                        {post.category_name || 'General'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Content Wrapper */}
+                  <div className="p-5 md:p-6 flex flex-col flex-grow">
+                    {/* Meta Info */}
+                    <div className="flex items-center gap-2 text-sm text-white/60 tracking-tight">
+                      <span>{formatDatePretty(post.published_at)}</span>
+                      <span className="opacity-50">•</span>
+                      <span>{(post.read_minutes || 1)} min read</span>
+                    </div>
+                    
+                    {/* Title */}
+                    <h3 className="mt-3 text-2xl md:text-3xl font-semibold text-white leading-tight group-hover:text-violet-300 transition-colors">
+                      {post.title}
+                    </h3>
+                    
+                    {/* Excerpt */}
+                    <p className="mt-2 text-white/70 line-clamp-3">
+                      {post.summary || (post.content_html ? stripHtmlToText(post.content_html).slice(0, 200) : '')}
+                    </p>
+                    
+                    {/* Separator */}
+                    <div className="my-5 h-px bg-white/10"></div>
+                    
+                    {/* Footer */}
+                    <div className="flex items-center justify-between gap-3 mt-auto">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 flex items-center justify-center text-white font-bold text-xs">
+                          S
+                        </div>
+                        <span className="text-white/80 text-sm font-medium">SmartStay Team</span>
+                      </div>
+                      
+                      <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 text-white px-4 py-2 text-sm font-medium shadow-sm hover:shadow-md active:scale-[0.98] transition-all">
+                        Read More
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
               ))}
             </div>
             
-            {filteredPosts.length === 0 && (
+            {(!data || (!loading && !error && (!data.hero && (!data.latest || data.latest.length === 0)))) && (
               <div className="text-center py-16">
                 <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-violet-600/20 to-blue-600/20 flex items-center justify-center">
                   <svg className="w-12 h-12 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -265,7 +276,7 @@ const BlogPage: React.FC = () => {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">No articles found</h3>
-                <p className="text-gray-400">Try selecting a different category or check back later for new content.</p>
+                <p className="text-gray-400">Try again later. New content is coming soon.</p>
               </div>
             )}
           </div>
