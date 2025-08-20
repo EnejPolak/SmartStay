@@ -57,6 +57,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return handleUpdate(req, res, id);
   }
 
+  if (req.method === 'DELETE') {
+    return handleDelete(req, res, id);
+  }
+
   return res.status(405).end();
 }
 
@@ -148,6 +152,23 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse, id: string) 
   };
 
   return res.status(200).json(response);
+}
+
+function extractBucketAndPathFromPublicUrl(url: string): { bucket: string; path: string } | null {
+  try {
+    const marker = '/storage/v1/object/public/';
+    const idx = url.indexOf(marker);
+    if (idx === -1) return null;
+    const remainder = url.slice(idx + marker.length);
+    const slash = remainder.indexOf('/');
+    if (slash === -1) return null;
+    const bucket = remainder.slice(0, slash);
+    const path = remainder.slice(slash + 1);
+    if (!bucket || !path) return null;
+    return { bucket, path };
+  } catch {
+    return null;
+  }
 }
 
 async function handleUpdate(req: NextApiRequest, res: NextApiResponse, id: string) {
@@ -335,6 +356,132 @@ async function handleUpdate(req: NextApiRequest, res: NextApiResponse, id: strin
     ...blog,
     tags: tags || []
   });
+}
+
+
+async function handleDelete(_req: NextApiRequest, res: NextApiResponse, id: string) {
+  // Ensure blog exists
+  const { data: existing, error: fetchError } = await supabaseAdmin
+    .from('blogs')
+    .select('id, cover_photo, category_id')
+    .eq('id', id)
+    .single();
+
+  if (fetchError) {
+    if ((fetchError as any).code === 'PGRST116') {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+    // eslint-disable-next-line no-console
+    console.error('[blogs/delete] Fetch error:', fetchError);
+    return res.status(500).json({ error: fetchError.message });
+  }
+
+  if (!existing) {
+    return res.status(404).json({ error: 'Blog not found' });
+  }
+
+  // Find related tag_ids before deleting join rows
+  const { data: blogTagRows, error: blogTagsFetchError } = await supabaseAdmin
+    .from('blog_tags')
+    .select('tag_id')
+    .eq('blog_id', id);
+
+  if (blogTagsFetchError) {
+    // eslint-disable-next-line no-console
+    console.warn('[blogs/delete] blog_tags fetch warning:', blogTagsFetchError.message);
+  }
+
+  // Delete related blog_tags
+  const { error: tagDeleteError } = await supabaseAdmin
+    .from('blog_tags')
+    .delete()
+    .eq('blog_id', id);
+
+  if (tagDeleteError) {
+    // eslint-disable-next-line no-console
+    console.error('[blogs/delete] Tag delete error:', tagDeleteError);
+    return res.status(500).json({ error: tagDeleteError.message });
+  }
+
+  // Best-effort: delete cover image from storage if we have a public URL
+  const coverUrl = (existing as any)?.cover_photo as string | null;
+  if (coverUrl && typeof coverUrl === 'string') {
+    const parsed = extractBucketAndPathFromPublicUrl(coverUrl);
+    if (parsed) {
+      const { error: storageDeleteError } = await supabaseAdmin.storage
+        .from(parsed.bucket)
+        .remove([parsed.path]);
+      if (storageDeleteError) {
+        // eslint-disable-next-line no-console
+        console.warn('[blogs/delete] Storage delete warning:', storageDeleteError.message);
+      }
+    }
+  }
+
+  // Best-effort: delete orphan tags that were only used by this blog
+  const tagIds = (blogTagRows || []).map((r: any) => r.tag_id).filter(Boolean);
+  for (const tagId of tagIds) {
+    try {
+      const { count, error: refCountError } = await supabaseAdmin
+        .from('blog_tags')
+        .select('blog_id', { count: 'exact', head: true })
+        .eq('tag_id', tagId);
+      if (refCountError) {
+        // eslint-disable-next-line no-console
+        console.warn('[blogs/delete] tag ref count warning:', refCountError.message);
+        continue;
+      }
+      if (!count || count === 0) {
+        const { error: tagDelete } = await supabaseAdmin
+          .from('tags')
+          .delete()
+          .eq('id', tagId);
+        if (tagDelete) {
+          // eslint-disable-next-line no-console
+          console.warn('[blogs/delete] tag delete warning:', tagDelete.message);
+        }
+      }
+    } catch (e: any) {
+      // eslint-disable-next-line no-console
+      console.warn('[blogs/delete] tag cleanup exception:', e?.message || e);
+    }
+  }
+
+  // Delete the blog itself
+  const { error: blogDeleteError } = await supabaseAdmin
+    .from('blogs')
+    .delete()
+    .eq('id', id);
+
+  if (blogDeleteError) {
+    // eslint-disable-next-line no-console
+    console.error('[blogs/delete] Blog delete error:', blogDeleteError);
+    return res.status(500).json({ error: blogDeleteError.message });
+  }
+
+  // Best-effort: delete orphan category if no other blog references it
+  const categoryId = (existing as any)?.category_id as string | null;
+  if (categoryId) {
+    const { count: otherBlogsCount, error: catRefErr } = await supabaseAdmin
+      .from('blogs')
+      .select('id', { count: 'exact', head: true })
+      .eq('category_id', categoryId);
+    if (catRefErr) {
+      // eslint-disable-next-line no-console
+      console.warn('[blogs/delete] category ref count warning:', catRefErr.message);
+    } else if (!otherBlogsCount || otherBlogsCount === 0) {
+      const { error: catDeleteErr } = await supabaseAdmin
+        .from('categories')
+        .delete()
+        .eq('id', categoryId);
+      if (catDeleteErr) {
+        // eslint-disable-next-line no-console
+        console.warn('[blogs/delete] category delete warning:', catDeleteErr.message);
+      }
+    }
+  }
+
+  return res.status(200).json({ success: true });
 }
 
 

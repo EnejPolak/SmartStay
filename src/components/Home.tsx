@@ -6,6 +6,7 @@ import MadEmotionsSection from '@/components/MadEmotionsSection';
 import SolutionSection from '@/components/SolutionSection';
 import DemoFeaturesSection from './DemoFeaturesSection';
 import HowItWorksSection from './HowItWorksSection';
+import ReviewsSection from './reviews';
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
       <SolutionSection />
       <DemoFeaturesSection />
       <HowItWorksSection />
+      <ReviewsSection />
     </div>
   );
 }
