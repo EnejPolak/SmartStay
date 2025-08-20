@@ -57,7 +57,12 @@ const sanitizeOptions = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    // Check if this is a slug-based request
+    // Public read-only list (hero + latest) if only limit/offset are present (or nothing)
+    const onlyPaginationParams = Object.keys(req.query).every((k) => k === 'limit' || k === 'offset');
+    if (onlyPaginationParams) {
+      return handlePublicList(req, res);
+    }
+    // Check if this is a slug-based request used by admin for validation
     if (req.query.slug && !req.query.status && !req.query.q && !req.query.category && !req.query.tag && !req.query.limit && !req.query.offset) {
       return handleGetBySlug(req, res);
     }
@@ -69,6 +74,101 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   return res.status(405).end();
+}
+
+function stripHtmlToText(html: string): string {
+  return html
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function estimateReadMinutesFromHtml(html: string | null | undefined): number | undefined {
+  if (!html) return undefined;
+  const text = stripHtmlToText(html);
+  if (!text) return 1;
+  const words = text.split(/\s+/).filter(Boolean).length;
+  const minutes = Math.ceil(words / 200);
+  return Math.max(1, minutes);
+}
+
+async function handlePublicList(req: NextApiRequest, res: NextApiResponse) {
+  // Validate and clamp pagination
+  const limitRaw = Array.isArray(req.query.limit) ? req.query.limit[0] : req.query.limit;
+  const offsetRaw = Array.isArray(req.query.offset) ? req.query.offset[0] : req.query.offset;
+  let limit = 10;
+  let offset = 0;
+  if (limitRaw !== undefined) {
+    const n = parseInt(String(limitRaw), 10);
+    if (Number.isNaN(n) || n < 1) return res.status(400).json({ error: 'Invalid limit' });
+    limit = Math.min(24, n);
+  }
+  if (offsetRaw !== undefined) {
+    const n = parseInt(String(offsetRaw), 10);
+    if (Number.isNaN(n) || n < 0) return res.status(400).json({ error: 'Invalid offset' });
+    offset = n;
+  }
+
+  // Fetch total published count
+  const { count: totalCount, error: countError } = await supabaseAdmin
+    .from('blogs')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'published');
+  if (countError) {
+    // eslint-disable-next-line no-console
+    console.error('[blogs/publicList] Count error:', countError);
+    return res.status(500).json({ error: countError.message });
+  }
+
+  // Fetch published blogs ordered by published_at DESC NULLS LAST, then updated_at DESC
+  const { data, error } = await supabaseAdmin
+    .from('blogs')
+    .select(`
+      id, slug, title, subtitle, description, excerpt,
+      cover_photo, published_at, content_html,
+      category:categories(name, slug)
+    `)
+    .eq('status', 'published')
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .range(offset, offset + limit - 1);
+
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.error('[blogs/publicList] Query error:', error);
+    return res.status(500).json({ error: error.message });
+  }
+
+  const items = (data ?? []).map((b: any) => {
+    const summary = b.excerpt ?? b.description ?? null;
+    const readMinutes = estimateReadMinutesFromHtml(b.content_html);
+    const cat = Array.isArray(b?.category) ? b.category[0] : b?.category;
+    return {
+      id: b.id,
+      slug: b.slug,
+      title: b.title,
+      subtitle: b.subtitle ?? null,
+      summary,
+      content_html: b.content_html ?? null,
+      cover_photo: b.cover_photo ?? null,
+      published_at: b.published_at,
+      category_name: cat?.name ?? null,
+      category_slug: cat?.slug ?? null,
+      read_minutes: readMinutes,
+    };
+  });
+
+  const hero = items[0] ?? null;
+  const latest = hero ? items.slice(1) : items;
+
+  return res.status(200).json({
+    hero,
+    latest,
+    pagination: { limit, offset, total: totalCount || 0 },
+  });
 }
 
 async function handleGetBySlug(req: NextApiRequest, res: NextApiResponse) {

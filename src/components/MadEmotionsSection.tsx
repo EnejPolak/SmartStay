@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 const painPoints = [
@@ -90,8 +90,53 @@ const MadEmotionsSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Marquee Container */}
-        <div className="relative overflow-hidden marquee-container mb-24">
+        {/* Mobile Vertical Scroll Container */}
+        <div className="md:hidden relative overflow-hidden h-[500px] mb-24">
+          {/* Top fade mask */}
+          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-gray-900 to-transparent z-10 pointer-events-none"></div>
+          {/* Bottom fade mask */}
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-900 to-transparent z-10 pointer-events-none"></div>
+          
+          {/* Vertical Scrolling Track */}
+          <div 
+            className="flex flex-col gap-8 animate-marquee-vertical-scroll"
+            style={{ 
+              height: `${duplicatedPainPoints.length * 280}px`,
+              willChange: 'transform'
+            }}
+          >
+            {duplicatedPainPoints.map((point, index) => (
+              <div 
+                key={`${point.id}-${index}`}
+                className="flex-shrink-0 h-64 text-center flex flex-col justify-center px-6"
+              >
+                <div 
+                  className="w-1 h-16 mx-auto mb-6"
+                  style={{ 
+                    background: `linear-gradient(to bottom, ${point.color}, transparent)` 
+                  }}
+                ></div>
+                <h3 className="text-xl font-medium text-white mb-6 tracking-tight">
+                  {point.title}
+                </h3>
+                <p className="text-gray-400 text-base leading-relaxed font-light mb-6">
+                  {point.copy}
+                </p>
+                <div className="pt-4 border-t border-gray-800">
+                  <span 
+                    className="font-medium text-sm"
+                    style={{ color: point.color }}
+                  >
+                    {point.stat}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Marquee Container */}
+        <div className="hidden md:block relative overflow-hidden marquee-container mb-24">
           {/* Left fade mask */}
           <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-900 to-transparent z-10 pointer-events-none"></div>
           {/* Right fade mask */}

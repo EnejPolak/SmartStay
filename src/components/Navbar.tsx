@@ -29,13 +29,25 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Determine navbar visibility
+  // Determine navbar visibility - always show on mobile
   const shouldShowNavbar = !isScrolled || isHovered;
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
-      {/* iPhone-style Trigger Indicator - shown when scrolled and navbar is hidden */}
-      {isScrolled && !isHovered && (
+      {/* iPhone-style Trigger Indicator - shown when scrolled and navbar is hidden (desktop only) */}
+      {isScrolled && !isHovered && !isMobile && (
         <div 
           className="flex justify-center mb-3 animate-fade-in"
           onMouseEnter={() => setIsHovered(true)}
@@ -66,7 +78,7 @@ export default function Navbar() {
       {/* Main Navbar */}
       <nav 
         className={`transition-all duration-500 ease-in-out ${
-          shouldShowNavbar 
+          shouldShowNavbar || isMobile
             ? 'transform translate-y-0 opacity-100' 
             : 'transform -translate-y-full opacity-0 pointer-events-none'
         }`}
@@ -123,7 +135,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-64 opacity-100 mt-4' : 'max-h-0 opacity-0'} overflow-hidden`}>
+        <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'} overflow-hidden`}>
           <div className="space-y-1 border-t border-white/10 pt-3">
             {navItems.map((item, index) => (
               <Link

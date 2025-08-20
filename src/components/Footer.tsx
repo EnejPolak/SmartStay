@@ -32,14 +32,12 @@ const Footer: React.FC = () => {
             <div className="nav-column">
               <Link href="/" className="nav-link">Home</Link>
               <Link href="/About_us" className="nav-link">About Us</Link>
-              <Link href="/features" className="nav-link">Features</Link>
-              {/* Added Demo link to footer navigation */}
               <Link href="/demo" className="nav-link">Demo</Link>
             </div>
             <div className="nav-column">
               <Link href="/Prices" className="nav-link">Pricing</Link>
               <Link href="/blog" className="nav-link">Blog</Link>
-              <Link href="/contact" className="nav-link">Contact</Link>
+              <Link href="/Contact" className="nav-link">Contact</Link>
             </div>
           </nav>
         </div>
@@ -49,7 +47,7 @@ const Footer: React.FC = () => {
           <h4 className="section-title">Connect With Us</h4>
           <div className="social-icons">
             <a 
-              href="https://facebook.com" 
+              href="https://www.facebook.com/SmartxStay/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="social-link facebook"
@@ -61,7 +59,7 @@ const Footer: React.FC = () => {
             </a>
             
             <a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/smartxstay/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="social-link instagram"
@@ -73,7 +71,7 @@ const Footer: React.FC = () => {
             </a>
             
             <a 
-              href="https://linkedin.com" 
+              href="https://www.linkedin.com/company/smartxstay/posts/?feedView=all" 
               target="_blank" 
               rel="noopener noreferrer"
               className="social-link linkedin"

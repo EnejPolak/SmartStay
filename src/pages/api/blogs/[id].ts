@@ -45,6 +45,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const id = String(req.query.id);
 
   if (req.method === 'GET') {
+    // If id looks like a slug (contains a dash and not a UUID), treat as public slug read
+    const isUuid = /^[0-9a-fA-F-]{36}$/.test(id);
+    if (!isUuid) {
+      return handlePublicGetBySlug(req, res, id);
+    }
     return handleGet(req, res, id);
   }
   
@@ -53,6 +58,67 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   return res.status(405).end();
+}
+
+function stripHtmlToText(html: string): string {
+  return html
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function estimateReadMinutesFromHtml(html: string | null | undefined): number | undefined {
+  if (!html) return undefined;
+  const text = stripHtmlToText(html);
+  if (!text) return 1;
+  const words = text.split(/\s+/).filter(Boolean).length;
+  const minutes = Math.ceil(words / 200);
+  return Math.max(1, minutes);
+}
+
+async function handlePublicGetBySlug(_req: NextApiRequest, res: NextApiResponse, slug: string) {
+  const { data: b, error } = await supabaseAdmin
+    .from('blogs')
+    .select(`
+      id, slug, title, subtitle,
+      cover_photo, published_at, content_html,
+      description, excerpt,
+      category:categories(name, slug)
+    `)
+    .eq('status', 'published')
+    .eq('slug', slug)
+    .single();
+
+  if (error) {
+    if (error.code === 'PGRST116') {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+    // eslint-disable-next-line no-console
+    console.error('[blogs/publicGetBySlug] Query error:', error);
+    return res.status(500).json({ error: error.message });
+  }
+
+  const summary = b?.excerpt ?? b?.description ?? null;
+  const readMinutes = estimateReadMinutesFromHtml(b?.content_html);
+  const cat = Array.isArray((b as any)?.category) ? (b as any).category[0] : (b as any).category;
+
+  return res.status(200).json({
+    id: b.id,
+    slug: b.slug,
+    title: b.title,
+    subtitle: b.subtitle ?? null,
+    summary,
+    cover_photo: b.cover_photo ?? null,
+    published_at: b.published_at,
+    category_name: cat?.name ?? null,
+    category_slug: cat?.slug ?? null,
+    content_html: b.content_html ?? '',
+    read_minutes: readMinutes,
+  });
 }
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse, id: string) {

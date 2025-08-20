@@ -79,6 +79,20 @@ body {
   line-height: 1.6;
   /* Let Lenis control smooth scrolling to avoid conflicts */
   scroll-behavior: auto;
+  /* Optimize for smooth scrolling performance */
+  overflow-x: hidden;
+}
+
+/* Improve scrolling performance */
+* {
+  will-change: auto;
+}
+
+/* Optimize hero section for smooth scrolling */
+.hero-section {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* Smooth gradients and shadows */
@@ -387,8 +401,22 @@ button, a {
   }
 }
 
+/* Vertical Marquee Animation for Mobile */
+@keyframes marquee-vertical-scroll {
+  0% {
+    transform: translate3d(0, -50%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0%, 0);
+  }
+}
+
 .animate-marquee-scroll {
   animation: marquee-scroll 40s linear infinite;
+}
+
+.animate-marquee-vertical-scroll {
+  animation: marquee-vertical-scroll 30s linear infinite;
 }
 
 .animate-marquee-paused {
@@ -404,11 +432,245 @@ button, a {
   .animate-marquee-scroll {
     animation-duration: 60s;
   }
+  
+  .animate-marquee-vertical-scroll {
+    animation-duration: 25s;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee-scroll {
     animation: none;
+  }
+  
+  .animate-marquee-vertical-scroll {
+    animation: none;
+  }
+}
+
+/* =======================
+   HeroSection Mobile Styles
+   ======================= */
+
+/* Mobile-first hero section improvements */
+@media (max-width: 768px) {
+  .hero-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to bottom, transparent 0%, rgba(67, 56, 202, 0.1) 50%, rgba(0, 0, 0, 0.3) 100%);
+  }
+
+  .hero-container {
+    max-width: 100%;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin: 0 auto;
+  }
+
+  .hero-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem; /* Further reduced spacing */
+  }
+
+  /* Mobile title styling */
+  .hero-title {
+    font-size: 4rem; /* 64px - Much larger */
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    color: white;
+    margin-bottom: 0.25rem; /* Further reduced spacing */
+    text-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .hero-title-gradient {
+    background: linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.3));
+  }
+
+  /* Mobile subtitle styling */
+  .hero-subtitle {
+    font-size: 1.125rem; /* 18px */
+    font-weight: 600;
+    color: white;
+    line-height: 1.4;
+    margin-bottom: 0.5rem; /* Further reduced spacing */
+  }
+
+  .hero-subtitle-gradient {
+    background: linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Mobile description styling */
+  .hero-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    max-width: 20rem;
+    margin: 0 auto 1rem auto; /* Further reduced spacing */
+  }
+
+  /* Mobile CTA buttons */
+  .hero-cta-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Reduced button spacing */
+    width: 100%;
+    max-width: 20rem;
+    margin: 0 auto;
+  }
+
+  .hero-cta-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%);
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .hero-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(167, 139, 250, 0.4);
+  }
+
+  .hero-cta-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #A78BFA;
+    background: transparent;
+    border: 1px solid rgba(167, 139, 250, 0.5);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .hero-cta-secondary:hover {
+    background: rgba(167, 139, 250, 0.1);
+    border-color: rgba(167, 139, 250, 0.7);
+  }
+
+  /* Animation for mobile hero elements */
+  .hero-animate-title {
+    animation: heroFadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .hero-animate-subtitle {
+    animation: heroFadeInUp 0.8s ease-out 0.4s both;
+  }
+
+  .hero-animate-description {
+    animation: heroFadeInUp 0.8s ease-out 0.6s both;
+  }
+
+  .hero-animate-cta {
+    animation: heroScaleIn 0.7s ease-out 0.8s both;
+  }
+}
+
+/* Hero-specific animations */
+@keyframes heroFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .hero-title {
+    font-size: 4rem; /* 64px */
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem; /* 20px */
+  }
+  
+  .hero-cta-container {
+    flex-direction: row;
+    justify-content: center;
+    max-width: 28rem;
+  }
+}
+
+/* Ensure desktop styles remain unchanged */
+@media (min-width: 1024px) {
+  .hero-content {
+    text-align: left;
+  }
+  
+  .hero-description {
+    margin: 0;
+    max-width: 32rem;
+  }
+  
+  .hero-cta-container {
+    margin: 0;
+    max-width: none;
+  }
+}
+
+/* =======================
+   Contact Page Mobile Styles
+   ======================= */
+
+@media (max-width: 768px) {
+  /* Mobile Contact Hero - Larger title */
+  .contact-hero h1 {
+    font-size: 3.5rem !important; /* Much larger on mobile */
+    line-height: 1 !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Mobile Submit Button - Smaller */
+  .contact-submit-mobile {
+    width: 100% !important;
+    padding: 0.875rem 1.25rem !important; /* Reduced from 1rem */
+    font-size: 0.95rem !important; /* Slightly smaller */
+    border-radius: 0.75rem !important;
+    margin-top: 1rem !important;
   }
 }
 

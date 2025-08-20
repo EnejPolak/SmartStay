@@ -41,7 +41,6 @@ const BlogPage: React.FC<Props> = ({ posts }) => {
         })
       : "";
 
-  // If you don’t have a `featured` flag, treat newest (first) as featured
   const featured =
     selectedCategory === "All" && filteredPosts.length > 0
       ? filteredPosts[0]
