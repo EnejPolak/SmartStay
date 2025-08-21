@@ -508,6 +508,124 @@ function MobileProgressBar({ progress, features, onStepClick, reduced }: { progr
   );
 }
 
+function MobileZigZagBlocks({ reduced }: { reduced: boolean }) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (reduced) return;
+    ensureGsapRegistered();
+
+    const mm = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      mm.add("(max-width: 767px)", () => {
+        const elements = gsap.utils.toArray<HTMLElement>("[data-zigzag]");
+        elements.forEach((el, i) => {
+          // Prvi blok (i=0) iz leve, drugi (i=1) iz desne, tretji (i=2) iz leve...
+          const dir = i % 2 === 0 ? -1 : 1; // -1 = leva, 1 = desna
+          
+          // Postavimo starting position izven ekrana
+          const startPosition = dir * (window.innerWidth + 100);
+          
+          // Končna pozicija za zig-zag efekt - ne v sredino
+          const finalPosition = dir * 30; // levi bloki ostanejo levo (-30px), desni desno (+30px)
+          
+          gsap.set(el, { 
+            x: startPosition, 
+            opacity: 0,
+            scale: 0.9
+          });
+          
+          // Animacija se sproži šele ko scrollamo do elementa
+          gsap.to(el, {
+            x: finalPosition,
+            opacity: 1,
+            scale: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              once: true,
+              invalidateOnRefresh: true,
+              anticipatePin: 1,
+            },
+          });
+        });
+      });
+    }, containerRef);
+
+    return () => {
+      ctx.revert();
+      mm.kill();
+    };
+  }, [reduced]);
+
+  const blocks = useMemo(() => Array.from({ length: 11 }, (_, i) => i + 1), []);
+
+  return (
+    <section aria-label="Mobile ZigZag" className="md:hidden py-8 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="mb-6 text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Complete Guest Experience</h2>
+        </div>
+        <div ref={containerRef} className="space-y-4">
+          {blocks.map((num) => {
+            const label = String(num).padStart(2, "0");
+            const feature = FEATURES[num - 1];
+            return (
+              <div
+                key={label}
+                data-zigzag
+                className="w-full rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm shadow-lg flex transform-gpu will-change-transform"
+              >
+                <div className="w-full p-4">
+                  {feature ? (
+                    <div className="space-y-3">
+                      {/* Number and title in one line */}
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                          <span className="text-xs font-mono font-semibold text-violet-300">{label}</span>
+                        </div>
+                        <h3 className="text-base font-semibold text-white tracking-tight leading-tight">
+                          {feature.title}
+                        </h3>
+                      </div>
+                      
+                      {/* Minimal description */}
+                      <p className="text-sm text-zinc-300 leading-snug">
+                        {feature.desc}
+                      </p>
+                      
+                      {/* Clean benefits list */}
+                      {feature.bullets && feature.bullets.length > 0 && (
+                        <div className="space-y-1">
+                          {feature.bullets.map((b, idx) => (
+                            <div key={idx} className="flex items-start gap-2">
+                              <div className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0"></div>
+                              <span className="text-xs text-zinc-400 leading-snug">{b}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                        <span className="text-xs font-mono font-semibold text-violet-300">{label}</span>
+                      </div>
+                      <div className="text-sm text-zinc-300">Block {label} content</div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCTA() {
   return (
     <section aria-labelledby="cta-title" className="py-20">
@@ -740,7 +858,10 @@ export default function Demo() {
           />
         </div>
 
-        <section ref={featuresRef} aria-label="Features" className="py-32 lg:py-40">
+        {/* Mobile-only zig-zag animated blocks */}
+        <MobileZigZagBlocks reduced={reduced} />
+
+        <section ref={featuresRef} aria-label="Features" className="hidden lg:block lg:py-40">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             {/* Section header for F-pattern - positioned lower */}
             <div className="pt-48 pb-50">
@@ -753,28 +874,7 @@ export default function Demo() {
                 </p>
               </div>
             </div>
-            <MobileProgressBar 
-              progress={mobileProgress} 
-              features={FEATURES} 
-              reduced={reduced}
-              onStepClick={(i) => {
-                const el = document.getElementById(`${FEATURES[i].id}-section`);
-                if (el) {
-                  // Calculate precise offset to match ScrollTrigger "start: top 70%" exactly
-                  const rect = el.getBoundingClientRect();
-                  const absoluteTop = rect.top + window.pageYOffset;
-                  const targetScroll = absoluteTop - (window.innerHeight * 0.3); // 70% from top = 30% from top
-                  
-                  window.scrollTo({
-                    top: Math.max(0, targetScroll),
-                    behavior: reduced ? "auto" : "smooth"
-                  });
-                }
-              }} 
-            />
-            <div className="lg:hidden mt-3">
-              <MobileActiveText feature={FEATURES[activeIndex] || FEATURES[0]} reduced={reduced} />
-            </div>
+            {/* Mobile progress bar removed as requested */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mt-8">
               <FeatureRail activeIndex={activeIndex} total={FEATURES.length} ids={ids} filledIds={filled} features={FEATURES} reduced={reduced} onJump={(i) => {
                 const el = document.getElementById(`${FEATURES[i].id}-section`);
@@ -806,6 +906,7 @@ export default function Demo() {
           </div>
         </section>
 
+        <div className="py-8 lg:py-0" />
         <FinalCTA />
       </main>
       <Footer />
