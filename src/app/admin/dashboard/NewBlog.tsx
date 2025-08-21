@@ -35,13 +35,8 @@ export default function NewBlog({ editId, onPostCreated }: NewBlogProps) {
   const [selectedTags, setSelectedTags] = useState<{ id: string; name: string }[]>([]);
   const [newTagNames, setNewTagNames] = useState<string[]>([]);
 
-  // Category management
-  const [categories, setCategories] = useState([
-    "Guest Experience",
-    "Technology", 
-    "Hospitality",
-    "Tips & Tricks"
-  ]);
+  // Category management (loaded dynamically from API)
+  const [categories, setCategories] = useState<string[]>([]);
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [slugState, setSlugState] = useState<{ value: string; available: boolean }>({ value: '', available: true });
@@ -57,6 +52,23 @@ export default function NewBlog({ editId, onPostCreated }: NewBlogProps) {
     (async () => {
       const r = await fetch('/api/tags');
       if (r.ok) setAllTags(await r.json());
+    })();
+  }, []);
+
+  // Load categories from database for dropdown
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await fetch('/api/categories');
+        if (!r.ok) return;
+        const json = await r.json();
+        const names: string[] = Array.isArray(json)
+          ? Array.from(new Set(json.map((c: any) => String(c?.name || '')).filter((n: string) => n.trim().length > 0)))
+          : [];
+        setCategories(names);
+      } catch {
+        // ignore
+      }
     })();
   }, []);
 
@@ -78,11 +90,7 @@ export default function NewBlog({ editId, onPostCreated }: NewBlogProps) {
         category: b.category?.name || "",
         isDraft: b.status === 'draft',
       }));
-      // Ensure current category is present in dropdown options
-      const catName: string | undefined = b.category?.name;
-      if (catName) {
-        setCategories((prev) => (prev.includes(catName) ? prev : [catName, ...prev]));
-      }
+      // Keep dropdown strictly DB-backed: do not inject non-DB category names
       // Prefill tags
       const existingTagList: { id: string; name: string }[] = (b.tags || []).map((t: any) => ({ id: t.id, name: t.name }));
       setSelectedTags(existingTagList);
