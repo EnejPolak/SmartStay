@@ -66,6 +66,57 @@ const BlogPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
+  const [heroImageStyle, setHeroImageStyle] = React.useState<string>('object-cover object-center');
+
+  // Function to analyze image and determine optimal positioning
+  const analyzeHeroImage = React.useCallback((imageUrl: string) => {
+    if (!imageUrl || imageUrl === FALLBACK_IMAGE) {
+      setHeroImageStyle('object-contain object-center');
+      return;
+    }
+
+    if (typeof window === 'undefined') {
+      setHeroImageStyle('object-cover object-center');
+      return;
+    }
+
+    const img = new window.Image();
+    img.onload = () => {
+      const aspectRatio = img.width / img.height;
+      
+      // Aspect ratio analysis for optimal positioning
+      if (aspectRatio > 2.5) {
+        // Very wide images (panoramic) - show center
+        setHeroImageStyle('object-cover object-center');
+      } else if (aspectRatio > 1.8) {
+        // Wide landscape images - show center-top  
+        setHeroImageStyle('object-cover object-[center_top_25%]');
+      } else if (aspectRatio > 1.2) {
+        // Standard landscape - show top
+        setHeroImageStyle('object-cover object-top');
+      } else if (aspectRatio > 0.9) {
+        // Square-ish images - show center
+        setHeroImageStyle('object-cover object-center');
+      } else {
+        // Portrait images - show top center
+        setHeroImageStyle('object-cover object-[center_top_15%]');
+      }
+    };
+    img.onerror = () => {
+      // Fallback for broken images
+      setHeroImageStyle('object-contain object-center');
+    };
+    img.src = imageUrl;
+  }, []);
+
+  // Analyze hero image when data changes
+  React.useEffect(() => {
+    if (data?.hero?.cover_photo) {
+      analyzeHeroImage(data.hero.cover_photo);
+    } else {
+      setHeroImageStyle('object-contain object-center');
+    }
+  }, [data?.hero?.cover_photo, analyzeHeroImage]);
 
   // Fetch categories on mount
   React.useEffect(() => {
@@ -324,9 +375,9 @@ const BlogPage: React.FC = () => {
                       src={data.hero.cover_photo || FALLBACK_IMAGE}
                       alt={data.hero.title}
                       fill
-                      className="object-contain bg-gradient-to-br from-slate-900 to-gray-800 p-8"
+                      className={heroImageStyle}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent"></div>
                   </div>
                 </div>
               </article>
