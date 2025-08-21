@@ -1,5 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
+import { SEO, buildOrganizationJsonLd } from '@/lib/seo.tsx';
+import { buildCanonical } from '@/lib/site';
 import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
@@ -242,10 +244,13 @@ const BlogPage: React.FC = () => {
 
   return (
     <>
-      <Head>
-        <title>SmartStay Blog - Hospitality Insights & Tips</title>
-        <meta name="description" content="Stay updated with the latest trends, tips, and insights in hospitality and property management from the SmartStay team." />
-      </Head>
+      <SEO
+        title="SmartStay Blog - Hospitality Insights & Tips"
+        description="Stay updated with the latest trends, tips, and insights in hospitality and property management from the SmartStay team."
+        slug="/blog"
+        jsonLd={buildOrganizationJsonLd()}
+        keywords={["smartxstay", "hospitality blog", "guest experience", "digital guide"]}
+      />
       
       <div className="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950">
         <Navbar />

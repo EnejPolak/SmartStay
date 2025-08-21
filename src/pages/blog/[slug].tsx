@@ -1,5 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
+import { SEO, buildBlogPostingJsonLd, buildOrganizationJsonLd } from '@/lib/seo.tsx';
+import { buildCanonical } from '@/lib/site';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -148,13 +150,29 @@ const BlogArticlePage: React.FC = () => {
     );
   }
 
+  const canonical = buildCanonical(`/blog/${post.slug}`);
+  const jsonLd = [
+    buildOrganizationJsonLd(),
+    buildBlogPostingJsonLd({
+      title: post.title,
+      description: post.summary || undefined,
+      image: post.cover_photo || undefined,
+      datePublished: post.published_at,
+      url: canonical,
+    }),
+  ];
+
   return (
     <>
-      <Head>
-        <title>{post.title} - SmartStay Blog</title>
-        {post.summary && <meta name="description" content={post.summary} />}
-        {post.cover_photo && <meta property="og:image" content={post.cover_photo} />}
-      </Head>
+      <SEO
+        title={`${post.title} - SmartStay Blog`}
+        description={post.summary || undefined}
+        image={post.cover_photo || undefined}
+        slug={`/blog/${post.slug}`}
+        type="article"
+        keywords={[post.category_name || 'hospitality', 'guest experience', 'smartxstay']}
+        jsonLd={jsonLd}
+      />
 
       <div className="min-h-screen relative overflow-hidden">
         <div className="absolute inset-0">
