@@ -19,10 +19,17 @@ type BlogItem = {
   read_minutes?: number;
 };
 
+type Category = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
 type BlogListResponse = {
   hero: BlogItem | null;
   latest: BlogItem[];
   pagination: { limit: number; offset: number; total: number };
+  categories?: Category[];
 };
 
 function formatDatePretty(dateString: string) {
@@ -42,21 +49,137 @@ function stripHtmlToText(html: string): string {
     .trim();
 }
 
+function computeReadMinutes(html?: string | null): number {
+  if (!html) return 1;
+  const text = stripHtmlToText(html);
+  if (!text) return 1;
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
 const FALLBACK_IMAGE = "/pictures/logo/smartStay_logo.png";
 
 const BlogPage: React.FC = () => {
   const [data, setData] = React.useState<BlogListResponse | null>(null);
+  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [filteredCategories, setFilteredCategories] = React.useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
 
+  // Fetch categories on mount
   React.useEffect(() => {
     let isMounted = true;
     (async () => {
       try {
-        const res = await fetch('/api/blogs');
-        if (!res.ok) throw new Error('Failed to load blogs');
+        const res = await fetch('/api/categories');
+        if (res.ok) {
+          const categoriesData = await res.json();
+          if (isMounted && Array.isArray(categoriesData)) {
+            setCategories(categoriesData);
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load categories:', e);
+      }
+    })();
+    return () => { isMounted = false; };
+  }, []);
+
+  // After categories load, determine which categories actually have published blogs
+  React.useEffect(() => {
+    if (!categories || categories.length === 0) {
+      setFilteredCategories([]);
+      return;
+    }
+
+    let isMounted = true;
+    (async () => {
+      try {
+        // Use public list to gather categories with posts (increase limit to cover most cases)
+        const res = await fetch('/api/blogs?limit=200');
+        if (!res.ok) throw new Error('Failed to inspect blog categories');
         const json: BlogListResponse = await res.json();
-        if (isMounted) setData(json);
+        const presentSlugs = new Set<string>();
+        if (json.hero?.category_slug) presentSlugs.add(json.hero.category_slug);
+        (json.latest || []).forEach((it) => {
+          if (it.category_slug) presentSlugs.add(it.category_slug);
+        });
+
+        const filtered = categories.filter((c) => presentSlugs.has(c.slug));
+        if (!isMounted) return;
+        setFilteredCategories(filtered);
+
+        // If current selection is not available anymore, reset to All
+        if (selectedCategory && !filtered.some((c) => c.id === selectedCategory)) {
+          setSelectedCategory(null);
+        }
+      } catch (e) {
+        console.error('Failed to compute filtered categories:', e);
+        // Fallback: show none rather than all to avoid empty categories
+        if (isMounted) setFilteredCategories([]);
+      }
+    })();
+    return () => { isMounted = false; };
+  }, [categories]);
+
+  // Fetch blogs based on selected category
+  React.useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // If no category selected, use the public list endpoint
+        if (!selectedCategory) {
+          const res = await fetch('/api/blogs');
+          if (!res.ok) throw new Error('Failed to load blogs');
+          const json: BlogListResponse = await res.json();
+          if (isMounted) setData(json);
+          return;
+        }
+
+        // When filtering by category, use the list endpoint and transform the result
+        const params = new URLSearchParams({
+          status: 'published',
+          category: selectedCategory,
+          limit: '24',
+          offset: '0',
+        });
+
+        const res = await fetch(`/api/blogs?${params.toString()}`);
+        if (!res.ok) throw new Error('Failed to load blogs');
+        const json: any = await res.json();
+
+        const items = Array.isArray(json.items) ? json.items : [];
+        const mapped: BlogItem[] = items.map((b: any) => {
+          const catObj = Array.isArray(b?.category) ? b.category[0] : b?.category;
+          const summary = b.excerpt ?? b.description ?? (b.content_html ? stripHtmlToText(b.content_html).slice(0, 200) : null);
+          return {
+            id: b.id,
+            slug: b.slug,
+            title: b.title,
+            subtitle: b.subtitle ?? null,
+            summary,
+            content_html: b.content_html ?? null,
+            cover_photo: b.cover_photo ?? null,
+            published_at: b.published_at,
+            category_name: catObj?.name ?? null,
+            category_slug: catObj?.slug ?? null,
+            read_minutes: computeReadMinutes(b.content_html),
+          } as BlogItem;
+        });
+
+        const hero = mapped[0] ?? null;
+        const latest = hero ? mapped.slice(1) : mapped;
+        const transformed: BlogListResponse = {
+          hero,
+          latest,
+          pagination: { limit: mapped.length, offset: 0, total: typeof json.total === 'number' ? json.total : mapped.length },
+        };
+
+        if (isMounted) setData(transformed);
       } catch (e: any) {
         if (isMounted) setError(e?.message || 'Unexpected error');
       } finally {
@@ -64,7 +187,7 @@ const BlogPage: React.FC = () => {
       }
     })();
     return () => { isMounted = false; };
-  }, []);
+  }, [selectedCategory]);
 
   return (
     <>
@@ -104,6 +227,39 @@ const BlogPage: React.FC = () => {
             </p>
           </div>
         </section>
+
+        {/* Category Filter */}
+        {filteredCategories.length > 0 && (
+          <section className="px-4 mb-12">
+            <div className="max-w-6xl mx-auto">
+              <div className="flex flex-wrap items-center justify-center gap-3 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}>
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    selectedCategory === null
+                      ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-lg'
+                      : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white border border-white/10'
+                  }`}
+                >
+                  All Articles
+                </button>
+                {filteredCategories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                      selectedCategory === category.id
+                        ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-lg'
+                        : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white border border-white/10'
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Loader / Error */}
         <section className="px-4 mb-8">
@@ -183,7 +339,10 @@ const BlogPage: React.FC = () => {
           <div className="max-w-6xl mx-auto">
             {data?.latest && data.latest.length > 0 && (
               <h2 className="text-center mb-8 md:mb-12 text-2xl md:text-3xl font-semibold text-white opacity-0 animate-fade-in-up" style={{ animationDelay: '1.6s', animationFillMode: 'forwards' }}>
-                Latest Articles
+                {selectedCategory 
+                  ? `${categories.find(cat => cat.id === selectedCategory)?.name || 'Category'} Articles`
+                  : 'Latest Articles'
+                }
               </h2>
             )}
             
@@ -275,8 +434,26 @@ const BlogPage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">No articles found</h3>
-                <p className="text-gray-400">Try again later. New content is coming soon.</p>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {selectedCategory 
+                    ? `No articles found in ${categories.find(cat => cat.id === selectedCategory)?.name || 'this category'}`
+                    : 'No articles found'
+                  }
+                </h3>
+                <p className="text-gray-400 mb-4">
+                  {selectedCategory 
+                    ? 'Try selecting a different category or check back later.'
+                    : 'Try again later. New content is coming soon.'
+                  }
+                </p>
+                {selectedCategory && (
+                  <button
+                    onClick={() => setSelectedCategory(null)}
+                    className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-violet-600 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300"
+                  >
+                    View All Articles
+                  </button>
+                )}
               </div>
             )}
           </div>
