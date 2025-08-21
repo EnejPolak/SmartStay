@@ -14,6 +14,9 @@ export const supabaseAdmin = createClient(SUPABASE_URL || '', SERVICE_ROLE_KEY |
   auth: { persistSession: false, autoRefreshToken: false },
 });
 
+// Legacy export for backward compatibility
+export const supabase = supabaseAdmin;
+
 export function getPublicUrl(path: string): string {
   const { data } = supabaseAdmin.storage.from(DEFAULT_BUCKET).getPublicUrl(path);
   return data.publicUrl;

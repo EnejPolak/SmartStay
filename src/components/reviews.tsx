@@ -2,35 +2,16 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-const reviews = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    role: "Hotel Manager",
-    hotel: "Grand Hotel Vienna",
-    rating: 5,
-    review: "SmartStay completely transformed how we manage our hotel operations. The automation saved us countless hours and dramatically improved guest satisfaction. I recommend it to every hotelier!",
-    avatar: "SJ"
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    role: "Property Owner",
-    hotel: "Alpine Apartments",
-    rating: 5,
-    review: "Fantastic solution for managing reservations! The interface is intuitive, integration with other platforms is seamless. Our guests love the personalized experience.",
-    avatar: "MC"
-  },
-  {
-    id: 3,
-    name: "Emma Rodriguez",
-    role: "Director",
-    hotel: "Boutique Hotel Barcelona",
-    rating: 5,
-    review: "With SmartStay we increased occupancy by 35% while reducing operational costs. The analytics help us make the right business decisions. Excellent ROI!",
-    avatar: "ER"
-  }
-];
+interface Review {
+  id: string;
+  name: string;
+  surname: string;
+  profile_picture?: string;
+  company: string;
+  rating: number;
+  description: string;
+  status: 'visible' | 'hidden';
+}
 
 const StarRating = ({ rating }: { rating: number }) => {
   return (
@@ -52,7 +33,35 @@ const StarRating = ({ rating }: { rating: number }) => {
 export default function ReviewsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  // Fetch reviews from API
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/reviews/public');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch reviews');
+        }
+
+        const data = await response.json();
+        setReviews(data.reviews);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load reviews');
+        console.error('Error fetching reviews:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
+  // Intersection observer for animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -76,6 +85,11 @@ export default function ReviewsSection() {
       }
     };
   }, []);
+
+  // Helper function to get initials for avatar
+  const getInitials = (name: string, surname: string) => {
+    return `${name.charAt(0)}${surname.charAt(0)}`.toUpperCase();
+  };
 
   return (
     <section 
@@ -129,58 +143,94 @@ export default function ReviewsSection() {
           </p>
         </div>
 
-        {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {reviews.map((review, index) => (
-            <div
-              key={review.id}
-              className={`group relative transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-95'
-              }`}
-              style={{ transitionDelay: `${1200 + index * 200}ms` }}
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center py-16">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-400"></div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-16">
+            <p className="text-red-400 mb-4">{error}</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors"
             >
-              {/* Card */}
-              <div className="relative h-full p-8 bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl hover:border-violet-500/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-violet-500/10 hover:-translate-y-2">
-                {/* Quote Icon */}
-                <div className="absolute top-6 right-6 opacity-20 group-hover:opacity-40 transition-all duration-300 group-hover:scale-110">
-                  <svg className="w-8 h-8 text-violet-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
-                  </svg>
-                </div>
+              Try Again
+            </button>
+          </div>
+        )}
 
-                {/* Rating */}
-                <div className="mb-6">
-                  <StarRating rating={review.rating} />
-                </div>
+        {/* Empty State */}
+        {!loading && !error && reviews.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-gray-400 text-lg">No reviews available at the moment.</p>
+          </div>
+        )}
 
-                {/* Review Text */}
-                <p className="text-gray-300 text-lg leading-relaxed mb-8 italic">
-                  "{review.review}"
-                </p>
+        {/* Reviews Grid */}
+        {!loading && !error && reviews.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {reviews.map((review, index) => (
+              <div
+                key={review.id}
+                className={`group relative transition-all duration-700 ${
+                  isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-95'
+                }`}
+                style={{ transitionDelay: `${1200 + index * 200}ms` }}
+              >
+                {/* Card */}
+                <div className="relative p-6 bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-xl hover:border-violet-500/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1">
+                  {/* Quote Icon */}
+                  <div className="absolute top-4 right-4 opacity-15 group-hover:opacity-30 transition-all duration-300">
+                    <svg className="w-6 h-6 text-violet-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                    </svg>
+                  </div>
 
-                {/* Reviewer Info */}
-                <div className="flex items-center space-x-4">
-                  {/* Avatar */}
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-sm group-hover:scale-110 transition-all duration-300">
-                      {review.avatar}
+                  {/* Rating */}
+                  <div className="mb-4">
+                    <StarRating rating={review.rating} />
+                  </div>
+
+                  {/* Review Text */}
+                  <p className="text-gray-300 leading-relaxed mb-6 italic min-h-[3rem] flex items-center">
+                    &ldquo;{review.description}&rdquo;
+                  </p>
+
+                  {/* Reviewer Info */}
+                  <div className="flex items-center space-x-4 pt-4 border-t border-slate-700/50">
+                    {/* Avatar */}
+                    <div className="flex-shrink-0">
+                      {review.profile_picture ? (
+                        <img
+                          src={review.profile_picture}
+                          alt={`${review.name} ${review.surname}`}
+                          className="w-14 h-14 rounded-full object-cover border-2 border-violet-500/20 group-hover:scale-110 group-hover:border-violet-500/40 transition-all duration-300 shadow-lg"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 bg-gradient-to-br from-violet-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm border-2 border-violet-500/20 group-hover:scale-110 group-hover:border-violet-500/40 transition-all duration-300 shadow-lg">
+                          {getInitials(review.name, review.surname)}
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Info */}
+                    <div className="min-w-0 flex-1">
+                      <h4 className="text-white font-semibold text-base truncate">{review.name} {review.surname}</h4>
+                      <p className="text-gray-400 text-sm truncate">{review.company}</p>
                     </div>
                   </div>
-                  
-                  {/* Info */}
-                  <div>
-                    <h4 className="text-white font-semibold text-lg">{review.name}</h4>
-                    <p className="text-violet-300 text-sm font-medium">{review.role}</p>
-                    <p className="text-gray-400 text-sm">{review.hotel}</p>
-                  </div>
-                </div>
 
-                {/* Hover Effect Border */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/0 via-violet-500/0 to-blue-500/0 group-hover:from-violet-500/20 group-hover:via-transparent group-hover:to-blue-500/20 transition-all duration-500 pointer-events-none"></div>
+                  {/* Hover Effect Border */}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500/0 via-violet-500/0 to-blue-500/0 group-hover:from-violet-500/10 group-hover:via-transparent group-hover:to-blue-500/10 transition-all duration-500 pointer-events-none"></div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

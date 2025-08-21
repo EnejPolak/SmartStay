@@ -1,8 +1,11 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useState } from "react";
 
 export default function Pricing() {
+  const [isAnnual, setIsAnnual] = useState(false);
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900 text-white">
       {/* Enhanced background effects */}
@@ -36,6 +39,30 @@ export default function Pricing() {
                 💡 <span className="font-semibold">Fair & Flexible:</span> All prices are starting points. We customize every solution to fit your exact needs.
               </p>
             </div>
+            
+            {/* Billing Toggle */}
+            <div className="mx-auto mt-8 flex w-fit items-center rounded-xl border border-white/10 bg-white/5 p-1 backdrop-blur-sm">
+              <button
+                onClick={() => setIsAnnual(false)}
+                className={`rounded-lg px-6 py-2 text-sm font-semibold transition-all ${
+                  !isAnnual 
+                    ? "bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] text-white shadow-lg" 
+                    : "text-zinc-300 hover:text-white"
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setIsAnnual(true)}
+                className={`rounded-lg px-6 py-2 text-sm font-semibold transition-all ${
+                  isAnnual 
+                    ? "bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] text-white shadow-lg" 
+                    : "text-zinc-300 hover:text-white"
+                }`}
+              >
+                Annual <span className="text-xs text-green-400 ml-1">(Save 15%)</span>
+              </button>
+            </div>
           </div>
         </section>
 
@@ -62,24 +89,29 @@ export default function Pricing() {
               
               {/* Pricing Section */}
               <div className="bg-white/5 rounded-xl p-6 mb-6 border border-white/10">
-                {/* Monthly Price - Main Focus */}
+                {/* Subscription Price - Main Focus */}
                 <div className="text-center mb-6">
                   <div className="mb-2">
-                    <span className="text-4xl font-bold text-white">15€</span>
-                    <span className="text-lg font-normal text-zinc-400 ml-1">/month</span>
+                    <span className="text-4xl font-bold text-white">
+                      {isAnnual ? "153€" : "15€"}
+                    </span>
+                    <span className="text-lg font-normal text-zinc-400 ml-1">
+                      {isAnnual ? "/year" : "/month"}
+                    </span>
                   </div>
-                  <p className="text-zinc-300 text-sm font-medium">Monthly subscription</p>
+                  <p className="text-zinc-300 text-sm font-medium">
+                    {isAnnual ? "Annual subscription" : "Monthly subscription"}
+                  </p>
+                  {isAnnual && (
+                    <p className="text-green-400 text-xs mt-1">Save 27€ annually</p>
+                  )}
                 </div>
                 
                 {/* Other Costs */}
-                <div className="border-t border-white/10 pt-4 space-y-3">
+                <div className="border-t border-white/10 pt-4">
                   <div className="flex justify-between items-center">
                     <span className="text-zinc-400 text-sm font-medium">One-time setup:</span>
                     <span className="text-zinc-100 font-semibold text-base">from 450€</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-zinc-400 text-sm font-medium">Annual hosting:</span>
-                    <span className="text-zinc-100 font-semibold text-lg">180€</span>
                   </div>
                 </div>
               </div>
@@ -136,24 +168,29 @@ export default function Pricing() {
               
               {/* Pricing Section */}
               <div className="bg-white/5 rounded-xl p-6 mb-6 border border-[#8B7CDF]/20">
-                {/* Monthly Price - Main Focus */}
+                {/* Subscription Price - Main Focus */}
                 <div className="text-center mb-6">
                   <div className="mb-2">
-                    <span className="text-4xl font-bold text-white">25€</span>
-                    <span className="text-lg font-normal text-zinc-400 ml-1">/month</span>
+                    <span className="text-4xl font-bold text-white">
+                      {isAnnual ? "255€" : "25€"}
+                    </span>
+                    <span className="text-lg font-normal text-zinc-400 ml-1">
+                      {isAnnual ? "/year" : "/month"}
+                    </span>
                   </div>
-                  <p className="text-zinc-300 text-sm font-medium">Monthly subscription</p>
+                  <p className="text-zinc-300 text-sm font-medium">
+                    {isAnnual ? "Annual subscription" : "Monthly subscription"}
+                  </p>
+                  {isAnnual && (
+                    <p className="text-green-400 text-xs mt-1">Save 45€ annually</p>
+                  )}
                 </div>
                 
                 {/* Other Costs */}
-                <div className="border-t border-[#8B7CDF]/20 pt-4 space-y-3">
+                <div className="border-t border-[#8B7CDF]/20 pt-4">
                   <div className="flex justify-between items-center">
                     <span className="text-zinc-400 text-sm font-medium">One-time setup:</span>
                     <span className="text-zinc-100 font-semibold text-base">from 590€</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-zinc-400 text-sm font-medium">Annual hosting:</span>
-                    <span className="text-zinc-100 font-semibold text-lg">300€</span>
                   </div>
                 </div>
               </div>
@@ -206,24 +243,29 @@ export default function Pricing() {
               
               {/* Pricing Section */}
               <div className="bg-white/5 rounded-xl p-6 mb-6 border border-white/10">
-                {/* Monthly Price - Main Focus */}
+                {/* Subscription Price - Main Focus */}
                 <div className="text-center mb-6">
                   <div className="mb-2">
-                    <span className="text-4xl font-bold text-white">35€</span>
-                    <span className="text-lg font-normal text-zinc-400 ml-1">/month</span>
+                    <span className="text-4xl font-bold text-white">
+                      {isAnnual ? "357€" : "35€"}
+                    </span>
+                    <span className="text-lg font-normal text-zinc-400 ml-1">
+                      {isAnnual ? "/year" : "/month"}
+                    </span>
                   </div>
-                  <p className="text-zinc-300 text-sm font-medium">Monthly subscription</p>
+                  <p className="text-zinc-300 text-sm font-medium">
+                    {isAnnual ? "Annual subscription" : "Monthly subscription"}
+                  </p>
+                  {isAnnual && (
+                    <p className="text-green-400 text-xs mt-1">Save 63€ annually</p>
+                  )}
                 </div>
                 
                 {/* Other Costs */}
-                <div className="border-t border-white/10 pt-4 space-y-3">
+                <div className="border-t border-white/10 pt-4">
                   <div className="flex justify-between items-center">
                     <span className="text-zinc-400 text-sm font-medium">One-time setup:</span>
                     <span className="text-zinc-100 font-semibold text-base">from 790€</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-zinc-400 text-sm font-medium">Annual hosting:</span>
-                    <span className="text-zinc-100 font-semibold text-lg">420€</span>
                   </div>
                 </div>
               </div>

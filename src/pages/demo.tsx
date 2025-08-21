@@ -132,7 +132,7 @@ function PinnedPhone({
 
 function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () => void; onSecondaryClick: () => void; phone?: React.ReactNode }) {
   return (
-    <section aria-labelledby="hero-heading" className="py-24 lg:py-32">
+    <section aria-labelledby="hero-heading" className="py-32 lg:py-70">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           {/* Kicker - top left for F-pattern */}
@@ -143,7 +143,7 @@ function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () 
           </div>
           
           {/* Main headline - scannable hierarchy */}
-          <h1 id="hero-heading" className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 id="hero-heading" className="text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
             Clear guest guides.
             <span className="text-violet-400"> Fewer questions.</span>
             <br />
@@ -160,7 +160,7 @@ function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () 
             <button 
               aria-label="Book a Demo" 
               onClick={onPrimaryClick} 
-              className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl bg-violet-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-violet-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-colors"
+              className="w-64 sm:w-auto inline-flex items-center justify-center rounded-xl bg-violet-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-violet-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-colors"
             >
               Book a Call
               <svg className="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -170,7 +170,7 @@ function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () 
             <button 
               aria-label="See Features" 
               onClick={onSecondaryClick} 
-              className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-zinc-600 bg-transparent px-8 py-4 text-lg font-medium text-zinc-300 hover:border-zinc-500 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-colors"
+              className="w-64 sm:w-auto inline-flex items-center justify-center rounded-xl border border-zinc-600 bg-transparent px-8 py-4 text-lg font-medium text-zinc-300 hover:border-zinc-500 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-colors"
             >
               See Features
             </button>
@@ -565,10 +565,11 @@ function MobileZigZagBlocks({ reduced }: { reduced: boolean }) {
   return (
     <section aria-label="Mobile ZigZag" className="md:hidden py-8 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-6 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Complete Guest Experience</h2>
+        <div className="mb-10 text-center px-4">
+          <h2 className="text-2xl font-bold tracking-tight text-white leading-tight">Complete Guest Experience</h2>
+          <p className="mt-3 text-base leading-7 text-zinc-300 max-w-md mx-auto">Everything your guests need, organized and accessible in one beautiful interface</p>
         </div>
-        <div ref={containerRef} className="space-y-4">
+        <div ref={containerRef} className="space-y-5">
           {blocks.map((num) => {
             const label = String(num).padStart(2, "0");
             const feature = FEATURES[num - 1];
@@ -578,31 +579,31 @@ function MobileZigZagBlocks({ reduced }: { reduced: boolean }) {
                 data-zigzag
                 className="w-full rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm shadow-lg flex transform-gpu will-change-transform"
               >
-                <div className="w-full p-4">
+                <div className="w-full p-5">
                   {feature ? (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {/* Number and title in one line */}
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-violet-500/20 flex items-center justify-center flex-shrink-0">
-                          <span className="text-xs font-mono font-semibold text-violet-300">{label}</span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-7 h-7 rounded-full bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                          <span className="text-xs font-mono font-bold text-violet-300">{label}</span>
                         </div>
-                        <h3 className="text-base font-semibold text-white tracking-tight leading-tight">
+                        <h3 className="text-lg font-bold text-white tracking-tight leading-tight">
                           {feature.title}
                         </h3>
                       </div>
                       
                       {/* Minimal description */}
-                      <p className="text-sm text-zinc-300 leading-snug">
+                      <p className="text-sm text-zinc-200 leading-relaxed pl-10">
                         {feature.desc}
                       </p>
                       
                       {/* Clean benefits list */}
                       {feature.bullets && feature.bullets.length > 0 && (
-                        <div className="space-y-1">
+                        <div className="space-y-2 pl-10">
                           {feature.bullets.map((b, idx) => (
-                            <div key={idx} className="flex items-start gap-2">
-                              <div className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0"></div>
-                              <span className="text-xs text-zinc-400 leading-snug">{b}</span>
+                            <div key={idx} className="flex items-start gap-3">
+                              <div className="mt-2 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0"></div>
+                              <span className="text-xs text-zinc-300 leading-relaxed">{b}</span>
                             </div>
                           ))}
                         </div>

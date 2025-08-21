@@ -294,13 +294,13 @@ const ContactPage: React.FC = () => {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-white">SmartStay</h3>
-                      <p className="text-violet-300 font-medium">Digital Hospitality Solutions</p>
+                      <h3 className="text-2xl font-bold text-white">SmartxStay</h3>
+                      <p className="text-violet-300 font-medium">Digital Solutions for Rental Properties</p>
                     </div>
                   </div>
                   <p className="text-gray-300 leading-relaxed text-lg">
-                    We transform the hospitality industry with advanced digital solutions. 
-                    Our mission is to improve guest experiences and make life easier for hosts.
+                    We help apartment and house rental owners create better guest experiences with smart digital guides. 
+                    Our mission is to reduce guest questions and make property management effortless for owners.
                   </p>
                 </div>
 
