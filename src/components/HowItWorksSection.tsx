@@ -17,7 +17,7 @@ const HowItWorksSection: React.FC = () => {
           <h2 className="text-5xl lg:text-6xl font-light text-white mb-8 tracking-tight">
             From setup to success
             <span className="block bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent font-medium">
-              in under 24 hours
+              in under a month
             </span>
           </h2>
           <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light">
@@ -52,7 +52,7 @@ const HowItWorksSection: React.FC = () => {
               </p>
               <div className="inline-flex items-center text-violet-400 font-medium text-lg">
                 <span className="w-3 h-3 bg-violet-400 rounded-full mr-3"></span>
-                10 minutes of your time
+                30 minutes of your time
               </div>
             </div>
           </div>
@@ -84,7 +84,7 @@ const HowItWorksSection: React.FC = () => {
               </p>
               <div className="inline-flex items-center text-blue-400 font-medium text-lg">
                 <span className="w-3 h-3 bg-blue-400 rounded-full mr-3"></span>
-                Built in 24 hours
+                Built in under a month
               </div>
             </div>
 
@@ -99,7 +99,7 @@ const HowItWorksSection: React.FC = () => {
               </p>
               <div className="inline-flex items-center text-blue-400 font-medium text-lg">
                 <span className="w-3 h-3 bg-blue-400 rounded-full mr-3"></span>
-                Built in 24 hours
+                Built in under a month
               </div>
             </div>
             <div className="justify-center lg:justify-start lg:order-2 hidden lg:flex">
