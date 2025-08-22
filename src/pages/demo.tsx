@@ -7,6 +7,10 @@ import Footer from "@/components/Footer";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import Spline from "@splinetool/react-spline";
+
+// Disable GSAP snap/auto-advance for Spline sync
+const ENABLE_TIMELINE_SNAP = false;
 
 type Feature = { id: string; title: string; desc: string; bullets?: string[] };
 
@@ -47,6 +51,21 @@ const FEATURES: Feature[] = [
   { id: "reviews", title: "Reviews", desc: "End-of-stay reminder; get more reviews with less effort.", bullets: ["Smart reminder", "Direct links", "More 5★"] },
 ];
 
+// Mapping from feature IDs to exact Spline state names
+const STATE_NAME_BY_ID: Record<string, string> = {
+  welcome: "Base State",
+  checkin: "check in",
+  rules: "House rules",
+  info: "breakfast",
+  reservations: "e bikes",
+  food: "cusine",
+  activities: "tours",
+  routes: "cycling",
+  services: "shops",
+  contact: "contact",
+  reviews: "end",
+};
+
 // Page shell
 function PageShell({ children }: { children: React.ReactNode }) {
   return (
@@ -56,6 +75,35 @@ function PageShell({ children }: { children: React.ReactNode }) {
         <meta name="description" content="Smart Stay features with smooth, accessible GSAP animations." />
       </Head>
       {children}
+    </div>
+  );
+}
+
+// Sticky Spline container rendered only on desktop
+function StickySpline({ onAppReady }: { onAppReady: (app: any) => void }) {
+  return (
+    <div className="sticky top-0 h-screen w-full">
+      <Spline
+        scene="https://prod.spline.design/2D8q-Cf9i0LO6Ei2/scene.splinecode"
+        onLoad={(app) => {
+          // log za potrditev API-ja
+          // (v dev konzoli preveri, če obstaja setState in setVariable)
+          // @ts-ignore
+          console.log('[Spline onLoad] methods:', Object.keys(app || {}));
+          try {
+            // nekateri builde potrebujejo microtask delay
+            setTimeout(() => {
+              // poskusi state po imenu
+              // @ts-ignore
+              if (typeof app.setState === 'function') app.setState('Base State');
+              // varnostni fallback (če setState ni na voljo)
+              // @ts-ignore
+              else if (typeof app.setVariable === 'function') app.setVariable('Progress', 0);
+            }, 0);
+          } catch {}
+          onAppReady(app);
+        }}
+      />
     </div>
   );
 }
@@ -112,7 +160,7 @@ function PinnedPhone({
   // Placeholder phone with 3D mount
   return (
     <div ref={phoneRef} className="lg:sticky lg:top-24">
-      <div className="rounded-3xl shadow-xl ring-1 ring-white/10 overflow-hidden aspect-[9/19.5] bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-center justify-center relative">
+      <div className="rounded-3xl shadow-xl ring-1 ring-white/10 overflow-hidden aspect-[9/19.5] max-w-[320px] bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-center justify-center relative">
         {/* TODO: Replace this mount with your 3D phone/canvas. */}
         <div id="phone-3d-mount" ref={mountRef} className="absolute inset-0" />
         <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/0 pointer-events-none" />
@@ -654,13 +702,24 @@ export default function Demo() {
   const tickCountRef = useRef<number>(0);
   const lastDirectionRef = useRef<1 | -1 | 0>(0);
   const touchStartYRef = useRef<number | null>(null);
+  // Desktop Spline sync state
+  const appRef = useRef<any>(null);
+  const [isDesktop, setIsDesktop] = useState<boolean>(false);
+  const sectionsRef = useRef<HTMLElement[]>([]);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const ids = useMemo(() => FEATURES.map((f) => f.id), []);
 
   const handleEnter = (id: string) => {
-    const idx = FEATURES.findIndex((f) => f.id === id);
-    if (idx !== -1) {
-      setScreen(id);
+    // Always update the UI screen label
+    setScreen(id);
+
+    // Switch Spline state directly on desktop
+    const stateName = STATE_NAME_BY_ID[id];
+    if (isDesktop && appRef.current && stateName) {
+      try {
+        appRef.current.setState(stateName);
+      } catch {}
     }
   };
 
@@ -703,6 +762,78 @@ export default function Demo() {
     currentIndexRef.current = activeIndex;
   }, [activeIndex]);
 
+  // Desktop-only switch with resize listener
+  useEffect(() => {
+    const evaluate = () => setIsDesktop(window.innerWidth >= 1024);
+    evaluate();
+    window.addEventListener("resize", evaluate);
+    return () => window.removeEventListener("resize", evaluate);
+  }, []);
+
+  // Annotate sections and wire observers/clicks
+  useEffect(() => {
+    if (!featuresRef.current) return;
+    const container = featuresRef.current;
+    const sectionNodes = Array.from(container.querySelectorAll<HTMLElement>("[id$='-section']"));
+    sectionNodes.forEach((el, idx) => {
+      el.setAttribute("data-section", "");
+    });
+    sectionsRef.current = sectionNodes;
+
+    // Click-to-jump on bullets/cards (FeatureRail buttons)
+    const dotButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("nav[aria-label='Feature progress'] button"));
+    dotButtons.forEach((btn, idx) => {
+      const handler = () => {
+        const section = sectionsRef.current[idx];
+        if (!section) return;
+        section.scrollIntoView({ behavior: "smooth", block: "center" });
+        updateActiveDot(idx);
+      };
+      btn.addEventListener("click", handler);
+      (btn as any).__demoHandler = handler;
+    });
+
+    const io = new IntersectionObserver(() => {
+      const viewportCenter = window.innerHeight / 2;
+      let bestIdx = -1;
+      let bestDist = Infinity;
+      sectionsRef.current.forEach((el, idx) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+        const elCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(elCenter - viewportCenter);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = idx;
+        }
+      });
+      if (bestIdx >= 0) {
+        updateActiveDot(bestIdx);
+      }
+    }, { threshold: [0.6], rootMargin: "-35% 0px -35% 0px" });
+
+    sectionsRef.current.forEach((el) => io.observe(el));
+    observerRef.current = io;
+
+    return () => {
+      io.disconnect();
+      dotButtons.forEach((btn) => {
+        const h = (btn as any).__demoHandler;
+        if (h) btn.removeEventListener("click", h);
+      });
+    };
+  }, []);
+
+  // Removed rAF lerp and mutation observer: direct Spline state switching is used
+
+  function updateActiveDot(activeIdx: number) {
+    const dotButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("nav[aria-label='Feature progress'] button"));
+    dotButtons.forEach((btn, idx) => {
+      if (idx === activeIdx) btn.classList.add("is-active");
+      else btn.classList.remove("is-active");
+    });
+  }
+
   // Helper to scroll to a specific section aligned with the trigger position
   const scrollToSection = (index: number) => {
     const clamped = Math.max(0, Math.min(FEATURES.length - 1, index));
@@ -720,8 +851,9 @@ export default function Demo() {
     });
   };
 
-  // Gesture gate: require 2 ticks to advance, never skip more than one
+  // Gesture gate (disabled when ENABLE_TIMELINE_SNAP=false)
   useEffect(() => {
+    if (!ENABLE_TIMELINE_SNAP) return;
     ensureGsapRegistered();
     ScrollTrigger.normalizeScroll(true);
 
@@ -901,8 +1033,16 @@ export default function Demo() {
                 ))}
               </div>
 
-              {/* Pinned phone on the right */}
-              <div className="lg:col-span-7 lg:block hidden" />
+              {/* Desktop-only: sticky Spline on the right; mobile fallback */}
+              <div className="lg:col-span-7 hidden lg:block">
+                {isDesktop ? (
+                  <StickySpline onAppReady={(app) => { appRef.current = app; try { app.setState("Base State"); } catch {} }} />
+                ) : (
+                  <div className="sticky top-0 h-screen w-full flex items-center justify-center text-zinc-300">
+                    Demo is available on desktop 💻
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </section>
