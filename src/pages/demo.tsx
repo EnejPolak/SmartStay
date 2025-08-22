@@ -181,6 +181,7 @@ function PinnedPhone({
 }
 
 function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () => void; onSecondaryClick: () => void; phone?: React.ReactNode }) {
+  const { getBookingLink } = useCountryDetection();
   return (
     <section aria-labelledby="hero-heading" className="py-32 lg:py-70">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -207,16 +208,18 @@ function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () 
           
           {/* Action buttons - prominent primary action */}
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button 
+            <a 
+              href={getBookingLink()} 
+              target="_blank" 
+              rel="noopener noreferrer"
               aria-label="Book a Demo" 
-              onClick={onPrimaryClick} 
               className="w-64 sm:w-auto inline-flex items-center justify-center rounded-xl bg-violet-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-violet-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-colors"
             >
               Book a Call
               <svg className="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
               </svg>
-            </button>
+            </a>
             <button 
               aria-label="See Features" 
               onClick={onSecondaryClick} 
@@ -1001,7 +1004,6 @@ export default function Demo() {
           <Hero
             onPrimaryClick={() => { 
               trackViewContent({ content_name: 'Request Demo' });
-              window.open(getBookingLink(), '_blank');
             }}
             onSecondaryClick={() => featuresRef.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" })}
           />
