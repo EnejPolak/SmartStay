@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
+import { useCountryDetection } from '../hooks/useCountryDetection';
 
 const HeroSection: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -7,6 +8,7 @@ const HeroSection: React.FC = () => {
   const subtitleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
+  const { getBookingLink } = useCountryDetection();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -110,7 +112,10 @@ const HeroSection: React.FC = () => {
             </div>
             <div className="space-y-6">
               <div ref={buttonsRef} className="hero-cta-container hero-animate-cta flex flex-col sm:flex-row gap-4 animate-on-load animate-scale-in delay-600">
-                <button 
+                <a 
+                  href={getBookingLink()} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="hero-cta-primary group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white rounded-2xl shadow-2xl hover:shadow-violet-500/25 transition-all duration-300 ease-out overflow-hidden transform hover:scale-105"
                   style={{background: 'var(--gradient-primary)'}}
                 >
@@ -119,7 +124,7 @@ const HeroSection: React.FC = () => {
                     <span>SCHEDULE CALL</span>
                     <span className="text-2xl group-hover:translate-x-1 transition-transform duration-300">→</span>
                   </span>
-                </button>
+                </a>
                 <button className="hero-cta-secondary inline-flex items-center justify-center px-8 py-5 text-lg font-semibold text-violet-300 border-2 border-violet-400/30 rounded-2xl hover:bg-violet-400/10 hover:border-violet-400/50 transition-all duration-300">
                   <span className="flex items-center space-x-2">
                     <span>▶</span>

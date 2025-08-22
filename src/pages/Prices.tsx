@@ -2,9 +2,11 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useState } from "react";
+import { useCountryDetection } from "../hooks/useCountryDetection";
 
 export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false);
+  const { getBookingLink } = useCountryDetection();
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900 text-white">
@@ -26,7 +28,7 @@ export default function Pricing() {
           <div className="mx-auto max-w-4xl animate-fade-in-up">
             <div className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 backdrop-blur-sm">
               <span className="mr-2 h-2 w-2 rounded-full bg-green-400"></span>
-              Trusted by 500+ Properties Worldwide
+              Trusted by 200+ Properties Worldwide
             </div>
             <h1 className="mb-6 bg-gradient-to-r from-[#8B7CDF] via-white to-[#60A5FA] bg-clip-text text-6xl font-black leading-tight tracking-tight text-transparent md:text-7xl">
               Simple, Transparent<br />Pricing
@@ -60,7 +62,7 @@ export default function Pricing() {
                     : "text-zinc-300 hover:text-white"
                 }`}
               >
-                Annual <span className="text-xs text-green-400 ml-1">(Save 15%)</span>
+                Annual <span className="text-xs text-green-400 ml-1">(Save 10%)</span>
               </button>
             </div>
           </div>
@@ -93,7 +95,7 @@ export default function Pricing() {
                 <div className="text-center mb-6">
                   <div className="mb-2">
                     <span className="text-4xl font-bold text-white">
-                      {isAnnual ? "153€" : "15€"}
+                      {isAnnual ? "162€" : "15€"}
                     </span>
                     <span className="text-lg font-normal text-zinc-400 ml-1">
                       {isAnnual ? "/year" : "/month"}
@@ -103,7 +105,7 @@ export default function Pricing() {
                     {isAnnual ? "Annual subscription" : "Monthly subscription"}
                   </p>
                   {isAnnual && (
-                    <p className="text-green-400 text-xs mt-1">Save 27€ annually</p>
+                    <p className="text-green-400 text-xs mt-1">Save 18€ annually</p>
                   )}
                 </div>
                 
@@ -140,9 +142,14 @@ export default function Pricing() {
               </ul>
             </div>
             
-            <Link href="/Contact" className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40">
+            <a 
+              href={getBookingLink()} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40"
+            >
               Request a Quote
-            </Link>
+            </a>
           </div>
 
             {/* SmartxPlus Plan - Featured */}
@@ -172,7 +179,7 @@ export default function Pricing() {
                 <div className="text-center mb-6">
                   <div className="mb-2">
                     <span className="text-4xl font-bold text-white">
-                      {isAnnual ? "255€" : "25€"}
+                      {isAnnual ? "270€" : "25€"}
                     </span>
                     <span className="text-lg font-normal text-zinc-400 ml-1">
                       {isAnnual ? "/year" : "/month"}
@@ -182,7 +189,7 @@ export default function Pricing() {
                     {isAnnual ? "Annual subscription" : "Monthly subscription"}
                   </p>
                   {isAnnual && (
-                    <p className="text-green-400 text-xs mt-1">Save 45€ annually</p>
+                    <p className="text-green-400 text-xs mt-1">Save 30€ annually</p>
                   )}
                 </div>
                 
@@ -247,7 +254,7 @@ export default function Pricing() {
                 <div className="text-center mb-6">
                   <div className="mb-2">
                     <span className="text-4xl font-bold text-white">
-                      {isAnnual ? "357€" : "35€"}
+                      {isAnnual ? "378€" : "35€"}
                     </span>
                     <span className="text-lg font-normal text-zinc-400 ml-1">
                       {isAnnual ? "/year" : "/month"}
@@ -257,7 +264,7 @@ export default function Pricing() {
                     {isAnnual ? "Annual subscription" : "Monthly subscription"}
                   </p>
                   {isAnnual && (
-                    <p className="text-green-400 text-xs mt-1">Save 63€ annually</p>
+                    <p className="text-green-400 text-xs mt-1">Save 42€ annually</p>
                   )}
                 </div>
                 
@@ -294,9 +301,14 @@ export default function Pricing() {
               </ul>
             </div>
             
-            <Link href="/Contact" className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40">
+            <a 
+              href={getBookingLink()} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40"
+            >
               Request a Quote
-            </Link>
+            </a>
           </div>
           </div>
 
@@ -364,9 +376,14 @@ export default function Pricing() {
               </ul>
             </div>
             
-                <Link href="/Contact" className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40">
+                <a 
+                  href={getBookingLink()} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40"
+                >
                   Request a Quote
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -378,9 +395,14 @@ export default function Pricing() {
             <h3 className="mb-4 text-3xl font-bold text-white">Still have questions?</h3>
             <p className="mb-6 text-zinc-300">Our team is here to help you choose the perfect plan and answer any questions.</p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Link href="/Contact" className="rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] px-6 py-3 font-semibold text-white transition-all hover:scale-105">
+              <a 
+                href={getBookingLink()} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] px-6 py-3 font-semibold text-white transition-all hover:scale-105"
+              >
                 Schedule Free Consultation
-              </Link>
+              </a>
               <a href="mailto:hello@smartxstay.com" className="rounded-xl border border-white/20 bg-white/5 px-6 py-3 font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10">
                 Email Us Directly
               </a>

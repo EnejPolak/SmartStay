@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/scrool-animations/SmoothScrollProvider";
+import CookieBanner from "@/components/CookieBanner";
+import RouteTrackingProvider from "@/components/RouteTrackingProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +39,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SmoothScrollProvider>
-          {children}
+          <RouteTrackingProvider>
+            {children}
+            <CookieBanner />
+          </RouteTrackingProvider>
         </SmoothScrollProvider>
       </body>
     </html>

@@ -1,12 +1,14 @@
 "use client";
 import React from 'react';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useCountryDetection } from '../hooks/useCountryDetection';
 
 const HowItWorksSection: React.FC = () => {
   const step1 = useIntersectionObserver({ threshold: 0.2 });
   const step2 = useIntersectionObserver({ threshold: 0.2 });
   const step3 = useIntersectionObserver({ threshold: 0.2 });
   const ctaSection = useIntersectionObserver({ threshold: 0.2 });
+  const { getBookingLink } = useCountryDetection();
 
   return (
     <section className="py-32 px-6 lg:px-8 bg-gray-900/30">
@@ -150,12 +152,17 @@ const HowItWorksSection: React.FC = () => {
               : 'opacity-0 translate-y-8'
           }`}
         >
-          <button className="inline-flex items-center justify-center px-8 py-5 text-lg font-semibold text-violet-300 border-2 border-violet-400/30 rounded-2xl hover:bg-violet-400/10 hover:border-violet-400/50 transition-all duration-300">
+          <a 
+            href={getBookingLink()} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-8 py-5 text-lg font-semibold text-violet-300 border-2 border-violet-400/30 rounded-2xl hover:bg-violet-400/10 hover:border-violet-400/50 transition-all duration-300"
+          >
             <span className="flex items-center space-x-2">
               <span className="w-3 h-3 bg-violet-400 rounded-full"></span>
               <span>Schedule a Call</span>
             </span>
-          </button>
+          </a>
         </div>
       </div>
     </section>

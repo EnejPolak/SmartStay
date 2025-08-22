@@ -8,6 +8,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import Spline from "@splinetool/react-spline";
+import { trackViewContent } from "../../lib/marketing/metaPixel";
+import { useCountryDetection } from "../hooks/useCountryDetection";
 
 // Disable GSAP snap/auto-advance for Spline sync
 const ENABLE_TIMELINE_SNAP = false;
@@ -676,14 +678,24 @@ function MobileZigZagBlocks({ reduced }: { reduced: boolean }) {
 }
 
 function FinalCTA() {
+  const { getBookingLink } = useCountryDetection();
+  
   return (
     <section aria-labelledby="cta-title" className="py-20">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-zinc-900/60 shadow-sm ring-1 ring-white/10 p-10 md:p-14 text-center">
-          <h2 id="cta-title" className="text-3xl md:text-4xl font-bold text-white">Book a Free Demo</h2>
+          <h2 id="cta-title" className="text-3xl md:text-4xl font-bold text-white">Book a Free Call</h2>
           <p className="mt-3 text-zinc-300 max-w-2xl mx-auto">See how Smart Stay reduces questions and elevates guest experience in minutes.</p>
           <div className="mt-6">
-            <a href="#" aria-label="Book a Free Demo" className="inline-flex items-center rounded-lg bg-violet-600 px-6 py-3 text-white font-medium shadow-sm hover:bg-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500">Book a Demo</a>
+            <a 
+              href={getBookingLink()} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Book a Free Demo" 
+              className="inline-flex items-center rounded-lg bg-violet-600 px-6 py-3 text-white font-medium shadow-sm hover:bg-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+            >
+              Book a Call
+            </a>
           </div>
         </div>
       </div>
@@ -707,6 +719,7 @@ export default function Demo() {
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
   const sectionsRef = useRef<HTMLElement[]>([]);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const { getBookingLink } = useCountryDetection();
 
   const ids = useMemo(() => FEATURES.map((f) => f.id), []);
 
@@ -986,7 +999,10 @@ export default function Demo() {
       <main>
         <div id="hero-root">
           <Hero
-            onPrimaryClick={() => { /* no-op: route or modal in real app */ }}
+            onPrimaryClick={() => { 
+              trackViewContent({ content_name: 'Request Demo' });
+              window.open(getBookingLink(), '_blank');
+            }}
             onSecondaryClick={() => featuresRef.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" })}
           />
         </div>
