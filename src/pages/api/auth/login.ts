@@ -1,99 +1,82 @@
 // src/pages/api/auth/login.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { createClient } from '@supabase/supabase-js';
-import bcrypt from 'bcryptjs';
+import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
-import { RateLimiterMemory } from 'rate-limiter-flexible';
-import { z } from 'zod';
+import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
+const supabaseAdmin = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { persistSession: false } }
+  { auth: { persistSession: false, autoRefreshToken: false } }
 );
 
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
-});
-
-const rateLimiter = new RateLimiterMemory({ points: 5, duration: 60 });
-
-function dbg(msg: string, extra?: unknown) {
-  if (process.env.AUTH_DEBUG === 'true') console.warn(`[auth/login] ${msg}`, extra ?? '');
-}
-const isLocal = (req: NextApiRequest) => /^(localhost|127\.0\.0\.1)(:|$)/.test(req.headers.host || '');
-
-function buildDebug(req: NextApiRequest, email: string, password: string) {
-  if (process.env.AUTH_DEBUG === 'true' && isLocal(req)) {
-    return { email, passwordEcho: password, length: password.length };
-  }
-  return undefined;
+function isLocal(req: NextApiRequest): boolean {
+  const host = req.headers.host || '';
+  return host.includes('localhost') || host.includes('127.0.0.1') || host.includes('0.0.0.0');
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') return res.status(405).end();
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
-    const key = (req.headers['x-forwarded-for'] as string) || req.socket.remoteAddress || 'unknown';
-    await rateLimiter.consume(key);
-  } catch {
-    return res.status(429).json({ error: 'Too many requests' });
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    // For local development, allow some debug logging
+    if (isLocal(req)) {
+      console.log(`[auth/login] Login attempt for ${email}`);
+    }
+
+    const { data: { user }, error } = await supabaseAdmin.auth.signInWithPassword({
+      email: email.trim().toLowerCase(),
+      password: password,
+    });
+
+    if (error || !user) {
+      if (isLocal(req)) {
+        console.log(`[auth/login] Login failed for ${email}:`, error?.message);
+      }
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Check if user has admin role (you can customize this logic)
+    const { data: profile } = await supabaseAdmin
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+
+    // For now, allow any authenticated user to access admin
+    // You can add role-based checks here later
+    if (!profile) {
+      // Create a default profile if none exists
+      await supabaseAdmin
+        .from('profiles')
+        .insert([{ id: user.id, role: 'admin' }])
+        .single();
+    }
+
+    if (isLocal(req)) {
+      console.log(`[auth/login] Login successful for ${email}`);
+    }
+
+    const token = jwt.sign({ sub: user.id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '7d' });
+
+    res.setHeader('Set-Cookie', `auth-token=${token}; Path=/; HttpOnly; SameSite=Lax; ${
+      process.env.NODE_ENV === 'production' ? 'Secure;' : ''
+    } Max-Age=${7 * 24 * 60 * 60}`);
+
+    return res.status(200).json({ 
+      message: 'Login successful',
+      user: { id: user.id, email: user.email }
+    });
+
+  } catch (error) {
+    console.error('[auth/login] Error:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
-  const parsed = loginSchema.safeParse(req.body);
-  if (!parsed.success) return res.status(400).json({ error: 'Invalid input' });
-  const { email, password } = parsed.data;
-  const em = email.trim();
-  const pw = password.replace(/\s+$/, ''); // remove trailing whitespace that might sneak in
-
-  if (isLocal(req) && process.env.AUTH_DEBUG === 'true') dbg('Incoming credentials', { email: em, password: pw, length: pw.length });
-
-  let user: any = null;
-  let error: any = null;
-  let hash: string | undefined;
-
-  let resp = await supabase
-    .from('users')
-    .select('id, email, password')
-    .ilike('email', em)
-    .maybeSingle();
-  user = resp.data; error = resp.error;
-  if (error?.message) dbg('Supabase error (password column select)', error);
-
-  if (!user || user?.password == null) {
-    resp = await supabase
-      .from('users')
-      .select('id, email, password_hash')
-      .ilike('email', em)
-      .maybeSingle();
-    if (resp.error?.message) dbg('Supabase error (password_hash column select)', resp.error);
-    user = resp.data ?? user;
-  }
-
-  if (!user) {
-    dbg('User not found for email', em);
-    return res.status(401).json({ error: 'Invalid credentials', debug: buildDebug(req, em, pw) });
-  }
-
-  hash = user.password_hash ?? user.password;
-  if (!hash) {
-    dbg('No password column present for user id', user.id);
-    return res.status(401).json({ error: 'Invalid credentials', debug: buildDebug(req, em, pw) });
-  }
-
-  const valid = await bcrypt.compare(pw, hash);
-  if (!valid) {
-    dbg('Password mismatch for user id', user.id);
-    return res.status(401).json({ error: 'Invalid credentials', debug: buildDebug(req, em, pw) });
-  }
-
-  const token = jwt.sign({ sub: user.id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '7d' });
-  res.setHeader('Set-Cookie', cookie.serialize('token', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    path: '/',
-    maxAge: 7 * 24 * 60 * 60,
-  }));
-  return res.status(200).json({ id: user.id, email: user.email, debug: buildDebug(req, em, pw) });
 }

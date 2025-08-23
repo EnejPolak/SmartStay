@@ -1,5 +1,5 @@
 export const SITE_NAME = 'SmartxStay';
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://smartxstay.com';
+export const SITE_URL = 'https://smartxstay.com';
 export const SITE_TWITTER = '@smartxstay';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/pictures/logo/smartStay_logo.png`;
 

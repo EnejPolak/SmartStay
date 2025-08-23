@@ -2,30 +2,21 @@
 
 import { useEffect } from 'react';
 import { useConsentStore } from '../stores/consent';
-import { initMetaPixel, trackPageView } from '../../lib/marketing/metaPixel';
 
 const MARKETING_ROUTES = ['/', '/pricing', '/features', '/demo', '/contact', '/thank-you'];
 
 export default function CookieBanner() {
   const { hasConsented, setConsent, setBannerSeen } = useConsentStore();
-  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
   // Check if we're on a marketing route
   const isMarketingRoute = typeof window !== 'undefined' && 
     MARKETING_ROUTES.includes(window.location.pathname);
 
-  useEffect(() => {
-    if (hasConsented === true && pixelId) {
-      initMetaPixel(pixelId);
-      trackPageView();
-    }
-  }, [hasConsented, pixelId]);
-
   // Don't show banner if:
   // - User has already made a decision
   // - Not on marketing route
   // - No pixel ID configured
-  if (hasConsented !== null || !isMarketingRoute || !pixelId) {
+  if (hasConsented !== null || !isMarketingRoute) {
     return null;
   }
 
