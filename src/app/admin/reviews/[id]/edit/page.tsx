@@ -17,8 +17,8 @@ interface Review {
 }
 
 export default function EditReviewPage() {
-  const params = useParams();
-  const reviewId = params.id as string;
+  const params = useParams() as Record<string, string> | null;
+  const reviewId = (params?.id ?? '') as string;
   const [review, setReview] = useState<Review | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
