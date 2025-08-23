@@ -18,7 +18,9 @@ const ReviewFormSchema = z.object({
   status: z.enum(['visible', 'hidden']).default('visible'),
 });
 
-type ReviewFormData = z.infer<typeof ReviewFormSchema>;
+// Distinguish input vs output to satisfy react-hook-form Resolver generics
+type ReviewFormInput = z.input<typeof ReviewFormSchema>;   // what RHF receives (allows undefined for defaults)
+type ReviewFormData = z.output<typeof ReviewFormSchema>;   // parsed values from resolver
 
 interface ReviewFormProps {
   initialData?: Partial<ReviewFormData>;
@@ -39,9 +41,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ initialData, reviewId, onSucces
     setValue,
     watch,
     formState: { errors }
-  } = useForm<ReviewFormData>({
-    // Cast to any to avoid resolver generic mismatch across RHF/Zod versions during build
-    resolver: zodResolver(ReviewFormSchema) as any,
+  } = useForm<ReviewFormInput, any, ReviewFormData>({
+    resolver: zodResolver(ReviewFormSchema),
     defaultValues: {
       name: initialData?.name || '',
       surname: initialData?.surname || '',
