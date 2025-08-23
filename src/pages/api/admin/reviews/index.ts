@@ -95,7 +95,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (validationError instanceof z.ZodError) {
           return res.status(400).json({
             error: 'Validation failed',
-            details: validationError.errors
+            details: validationError.issues,
           });
         }
         throw validationError;

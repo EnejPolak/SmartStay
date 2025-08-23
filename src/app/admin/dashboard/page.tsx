@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import DashboardLayout from "./DashboardLayout";
 import TabNavigation from "./TabNavigation";
@@ -8,6 +8,14 @@ import NewBlog from "./NewBlog";
 import AllPosts from "./AllPosts";
 
 export default function DashboardPage() {
+  return (
+    <Suspense fallback={null}>
+      <DashboardPageContent />
+    </Suspense>
+  );
+}
+
+function DashboardPageContent() {
   const router = useRouter();
   const params = useSearchParams();
   const [activeTab, setActiveTab] = useState<"new" | "all">("new");
