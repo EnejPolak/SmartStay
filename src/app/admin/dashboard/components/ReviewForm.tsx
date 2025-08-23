@@ -40,7 +40,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ initialData, reviewId, onSucces
     watch,
     formState: { errors }
   } = useForm<ReviewFormData>({
-    resolver: zodResolver(ReviewFormSchema),
+    // Cast to any to avoid resolver generic mismatch across RHF/Zod versions during build
+    resolver: zodResolver(ReviewFormSchema) as any,
     defaultValues: {
       name: initialData?.name || '',
       surname: initialData?.surname || '',
