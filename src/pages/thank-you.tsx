@@ -3,7 +3,14 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { trackCustom } from '../lib/marketing/metaPixel';
+// Safe no-op fallback to avoid build errors if marketing lib is absent on some envs
+const trackCustom = (event: string, _payload?: Record<string, any>) => {
+  if (typeof window === 'undefined') return;
+  try {
+    // @ts-ignore optional global fbq
+    if (typeof fbq === 'function') fbq('trackCustom', event, _payload || {});
+  } catch {}
+};
 
 export default function ThankYouPage() {
   useEffect(() => {
