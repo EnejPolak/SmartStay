@@ -1,6 +1,7 @@
 // src/pages/api/auth/login.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseAdmin = createClient(
@@ -31,33 +32,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log(`[auth/login] Login attempt for ${email}`);
     }
 
-    const { data: { user }, error } = await supabaseAdmin.auth.signInWithPassword({
-      email: email.trim().toLowerCase(),
-      password: password,
-    });
+    // Get user from custom users table
+    const { data: users, error: fetchError } = await supabaseAdmin
+      .from('users')
+      .select('*')
+      .eq('email', email.trim().toLowerCase())
+      .limit(1);
 
-    if (error || !user) {
+    if (fetchError) {
+      console.error('[auth/login] Database error:', fetchError);
+      return res.status(500).json({ error: 'Database error' });
+    }
+
+    if (!users || users.length === 0) {
       if (isLocal(req)) {
-        console.log(`[auth/login] Login failed for ${email}:`, error?.message);
+        console.log(`[auth/login] User not found: ${email}`);
       }
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Check if user has admin role (you can customize this logic)
-    const { data: profile } = await supabaseAdmin
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
+    const user = users[0];
 
-    // For now, allow any authenticated user to access admin
-    // You can add role-based checks here later
-    if (!profile) {
-      // Create a default profile if none exists
-      await supabaseAdmin
-        .from('profiles')
-        .insert([{ id: user.id, role: 'admin' }])
-        .single();
+    // Verify password using bcrypt
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    
+    if (!isValidPassword) {
+      if (isLocal(req)) {
+        console.log(`[auth/login] Invalid password for ${email}`);
+      }
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     if (isLocal(req)) {

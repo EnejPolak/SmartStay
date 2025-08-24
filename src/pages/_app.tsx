@@ -2,7 +2,6 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import '@/app/globals.css';
 import SmoothScrollProvider from '@/components/scrool-animations/SmoothScrollProvider';
-import Analytics from '@/components/Analytics';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -10,7 +9,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Analytics />
       <Component {...pageProps} />
     </SmoothScrollProvider>
   );
