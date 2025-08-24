@@ -36,6 +36,7 @@ export default function ReviewsSection() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [expandedReviews, setExpandedReviews] = useState<Set<string>>(new Set());
 
   // Fetch reviews from API
   useEffect(() => {
@@ -90,6 +91,23 @@ export default function ReviewsSection() {
   const getInitials = (name: string, surname: string) => {
     return `${name.charAt(0)}${surname.charAt(0)}`.toUpperCase();
   };
+
+  // Helper functions for text expansion
+  const toggleExpanded = (reviewId: string) => {
+    setExpandedReviews(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(reviewId)) {
+        newSet.delete(reviewId);
+      } else {
+        newSet.add(reviewId);
+      }
+      return newSet;
+    });
+  };
+
+  const isExpanded = (reviewId: string) => expandedReviews.has(reviewId);
+
+
 
   return (
     <section 
@@ -172,7 +190,8 @@ export default function ReviewsSection() {
 
         {/* Reviews Grid */}
         {!loading && !error && reviews.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start"
+          >
             {reviews.map((review, index) => (
               <div
                 key={review.id}
@@ -182,7 +201,7 @@ export default function ReviewsSection() {
                 style={{ transitionDelay: `${1200 + index * 200}ms` }}
               >
                 {/* Card */}
-                <div className="relative p-6 bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-xl hover:border-violet-500/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1">
+                <div className="relative flex flex-col p-6 bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-xl hover:border-violet-500/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1">
                   {/* Quote Icon */}
                   <div className="absolute top-4 right-4 opacity-15 group-hover:opacity-30 transition-all duration-300">
                     <svg className="w-6 h-6 text-violet-400" fill="currentColor" viewBox="0 0 24 24">
@@ -196,12 +215,44 @@ export default function ReviewsSection() {
                   </div>
 
                   {/* Review Text */}
-                  <p className="text-gray-300 leading-relaxed mb-6 italic min-h-[3rem] flex items-center">
-                    &ldquo;{review.description}&rdquo;
-                  </p>
+                  <div className="mb-1">
+                    <div 
+                      className="transition-all duration-300 ease-in-out"
+                      style={{
+                        display: '-webkit-box',
+                        WebkitLineClamp: isExpanded(review.id) ? 'unset' : 4,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: isExpanded(review.id) ? 'visible' : 'hidden'
+                      }}
+                    >
+                      <p className="text-gray-300 leading-relaxed italic">
+                        &ldquo;{review.description}&rdquo;
+                      </p>
+                    </div>
+                    
+                    {/* More/Less Button */}
+                    {review.description.length > 200 && (
+                      <button
+                        onClick={() => toggleExpanded(review.id)}
+                        className="mt-1 text-sm text-violet-400 hover:text-violet-300 transition-colors duration-200 font-medium flex items-center gap-1 group/btn"
+                      >
+                        <span>{isExpanded(review.id) ? 'Show Less' : 'Show More'}</span>
+                        <svg 
+                          className={`w-3 h-3 transition-transform duration-200 group-hover/btn:scale-110 ${
+                            isExpanded(review.id) ? 'rotate-180' : ''
+                          }`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
 
                   {/* Reviewer Info */}
-                  <div className="flex items-center space-x-4 pt-4 border-t border-slate-700/50">
+                  <div className="flex items-center space-x-4 pt-3 border-t border-slate-700/50 mt-4">
                     {/* Avatar */}
                     <div className="flex-shrink-0">
                       {review.profile_picture ? (

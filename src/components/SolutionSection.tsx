@@ -75,11 +75,11 @@ const SolutionSection: React.FC = () => {
             <h4 className="text-2xl font-medium text-white mb-6 tracking-tight">
               Instant answers, 24/7
             </h4>
-            <p className="text-gray-400 text-lg leading-relaxed font-light">
+            <p className="text-gray-400 text-lg leading-relaxed font-light min-h-[112px] flex items-center">
               Guests find WiFi passwords, house rules, and local recommendations instantly. 
               No more 2AM interruptions to your family time.
             </p>
-            <div className="mt-6 pt-6 border-t border-gray-800">
+            <div className="mt-8 pt-6 border-t border-gray-800">
               <span className="text-green-400 font-medium">Get your life back</span>
             </div>
           </div>
@@ -89,11 +89,11 @@ const SolutionSection: React.FC = () => {
             <h4 className="text-2xl font-medium text-white mb-6 tracking-tight">
               Focus on what matters
             </h4>
-            <p className="text-gray-400 text-lg leading-relaxed font-light">
+            <p className="text-gray-400 text-lg leading-relaxed font-light min-h-[112px] flex items-center">
               Stop answering the same questions repeatedly. Spend time growing your business 
               or enjoying life while guests help themselves.
             </p>
-            <div className="mt-6 pt-6 border-t border-gray-800">
+            <div className="mt-8 pt-6 border-t border-gray-800">
               <span className="text-blue-400 font-medium">Work smarter, not harder</span>
             </div>
           </div>
@@ -103,11 +103,11 @@ const SolutionSection: React.FC = () => {
             <h4 className="text-2xl font-medium text-white mb-6 tracking-tight">
               Set it and forget it
             </h4>
-            <p className="text-gray-400 text-lg leading-relaxed font-light">
+            <p className="text-gray-400 text-lg leading-relaxed font-light min-h-[112px] flex items-center">
               Once set up, SmartStay runs automatically. No maintenance, no updates, 
               no technical headaches. Pure passive income.
             </p>
-            <div className="mt-6 pt-6 border-t border-gray-800">
+            <div className="mt-8 pt-6 border-t border-gray-800">
               <span className="text-violet-400 font-medium">True automation</span>
             </div>
           </div>

@@ -68,7 +68,7 @@ const MadEmotionsSection: React.FC = () => {
   const duplicatedPainPoints = [...painPoints, ...painPoints];
 
   return (
-    <section id="mad-emotions" className="py-32 px-6 lg:px-8">
+    <section id="mad-emotions" className="pt-32 pb-16 px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div 
           ref={painPointsHeader.targetRef}
@@ -91,7 +91,7 @@ const MadEmotionsSection: React.FC = () => {
         </div>
 
         {/* Mobile Vertical Scroll Container */}
-        <div className="md:hidden relative overflow-hidden h-[500px] mb-24">
+        <div className="md:hidden relative overflow-hidden h-[500px] mb-24 -mt-12">
           {/* Top fade mask */}
           <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-gray-900 to-transparent z-10 pointer-events-none"></div>
           {/* Bottom fade mask */}
