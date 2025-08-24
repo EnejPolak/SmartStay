@@ -28,7 +28,7 @@ export default function Pricing() {
           <div className="mx-auto max-w-4xl animate-fade-in-up">
             <div className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 backdrop-blur-sm">
               <span className="mr-2 h-2 w-2 rounded-full bg-green-400"></span>
-              Trusted by 200+ Properties Worldwide
+              Trusted by 120+ Properties Worldwide
             </div>
             <h1 className="mb-6 bg-gradient-to-r from-[#8B7CDF] via-white to-[#60A5FA] bg-clip-text text-6xl font-black leading-tight tracking-tight text-transparent md:text-7xl">
               Simple, Transparent<br />Pricing
