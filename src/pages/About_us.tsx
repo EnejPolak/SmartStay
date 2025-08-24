@@ -26,13 +26,6 @@ export default function AboutUs() {
       description: "Creative force behind our brand identity and user experience, with an exceptional eye for aesthetics and compelling communication.",
       isDesigner: true,
     },
-    {
-      name: "Peter",
-      role: "Lead Developer",
-      image: "/pictures/persons/peter.png",
-      description: "Technical architect and backbone of the platform, ensuring everything runs seamlessly, reliably, and securely.",
-      isDeveloper: true,
-    },
   ];
 
   return (
@@ -54,7 +47,7 @@ export default function AboutUs() {
         <section className="mb-20 text-center">
           <div className="mx-auto max-w-4xl animate-fade-in-up">
             <h1 className="mb-6 bg-gradient-to-r from-[#8B7CDF] via-white to-[#60A5FA] bg-clip-text text-6xl font-black leading-tight tracking-tight text-transparent md:text-7xl">
-              Meet the SmartStay Team
+              Meet the SmartxStay Team
             </h1>
             <p className="mx-auto max-w-2xl text-xl text-zinc-300 leading-relaxed">
               The people behind your next-level guest experience.
@@ -64,13 +57,13 @@ export default function AboutUs() {
 
         {/* Team Grid */}
         <section className="mb-20">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3 justify-items-center max-w-6xl mx-auto">
             {teamMembers.map((member, index) => (
               <div
                 key={member.name}
-                className={`group animate-fade-in-up rounded-3xl backdrop-blur-xl transition-all duration-500 hover:scale-105 ${
+                className={`group animate-fade-in-up rounded-3xl backdrop-blur-xl transition-all duration-500 hover:scale-[1.02] w-full max-w-sm ${
                   member.isFounder
-                    ? "border-2 border-[#8B7CDF]/30 bg-gradient-to-b from-white/[0.12] to-white/[0.04] shadow-2xl hover:border-[#8B7CDF]/50 hover:shadow-violet-500/30 lg:scale-110"
+                    ? "border-2 border-[#8B7CDF]/30 bg-gradient-to-b from-white/[0.12] to-white/[0.04] shadow-2xl hover:border-[#8B7CDF]/50 hover:shadow-violet-500/30"
                     : member.isDesigner
                     ? "border border-pink-400/30 bg-gradient-to-b from-pink-500/[0.08] to-purple-500/[0.04] shadow-xl hover:border-pink-400/50 hover:shadow-pink-500/20"
                     : member.isDeveloper
