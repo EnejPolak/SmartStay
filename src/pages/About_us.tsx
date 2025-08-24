@@ -49,9 +49,9 @@ export default function AboutUs() {
             <h1 className="mb-6 bg-gradient-to-r from-[#8B7CDF] via-white to-[#60A5FA] bg-clip-text text-6xl font-black leading-tight tracking-tight text-transparent md:text-7xl">
               Meet the SmartxStay Team
             </h1>
-            <p className="mx-auto max-w-2xl text-xl text-zinc-300 leading-relaxed">
-              The people behind your next-level guest experience.
-            </p>
+                          <p className="mx-auto max-w-2xl text-xl text-zinc-300 leading-relaxed">
+                The people behind your next-level guest experience!
+              </p>
           </div>
         </section>
 
