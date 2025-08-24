@@ -16,9 +16,9 @@ const SolutionSection: React.FC = () => {
     if (statsSection.isIntersecting) {
       const propertiesInterval = setInterval(() => {
         setPropertiesCount(prev => {
-          if (prev >= 200) {
+          if (prev >= 120) {
             clearInterval(propertiesInterval);
-            return 200;
+            return 120;
           }
           return prev + 5;
         });
