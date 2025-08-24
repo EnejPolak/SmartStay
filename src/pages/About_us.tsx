@@ -66,8 +66,6 @@ export default function AboutUs() {
                     ? "border-2 border-[#8B7CDF]/30 bg-gradient-to-b from-white/[0.12] to-white/[0.04] shadow-2xl hover:border-[#8B7CDF]/50 hover:shadow-violet-500/30"
                     : member.isDesigner
                     ? "border border-pink-400/30 bg-gradient-to-b from-pink-500/[0.08] to-purple-500/[0.04] shadow-xl hover:border-pink-400/50 hover:shadow-pink-500/20"
-                    : member.isDeveloper
-                    ? "border border-white/10 bg-gradient-to-b from-slate-800/[0.6] to-slate-900/[0.4] shadow-xl hover:border-cyan-400/30 hover:shadow-cyan-500/20"
                     : "border border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.02] shadow-xl hover:border-white/20 hover:shadow-violet-500/20"
                 } p-6`}
                 style={{ animationDelay: `${index * 100}ms` }}
@@ -79,18 +77,7 @@ export default function AboutUs() {
                   </div>
                 )}
 
-                {/* Developer Pattern Overlay */}
-                {member.isDeveloper && (
-                  <div className="absolute inset-0 rounded-3xl opacity-5 overflow-hidden">
-                    <div
-                      className="h-full w-full"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300ffff' fill-opacity='0.4'%3E%3Ctext x='2' y='8' font-family='monospace' font-size='6'%3E01%3C/text%3E%3Ctext x='2' y='16' font-family='monospace' font-size='6'%3E10%3C/text%3E%3C/g%3E%3C/svg%3E")`,
-                        backgroundSize: "20px 20px",
-                      }}
-                    />
-                  </div>
-                )}
+
 
                 <div className="relative z-10">
                   {/* Photo */}
@@ -116,8 +103,6 @@ export default function AboutUs() {
                           ? "bg-gradient-to-r from-[#8B7CDF]/20 to-[#60A5FA]/20 text-[#8B7CDF] border border-[#8B7CDF]/30"
                           : member.isDesigner
                           ? "bg-gradient-to-r from-pink-500/20 to-purple-500/20 text-pink-300 border border-pink-400/30"
-                          : member.isDeveloper
-                          ? "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-400/30"
                           : "bg-white/10 text-zinc-300 border border-white/20"
                       }`}
                     >
