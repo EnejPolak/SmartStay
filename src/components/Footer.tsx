@@ -43,14 +43,14 @@ const Footer: React.FC = () => {
           <h4 className="section-title">{t.footer.quickLinks}</h4>
           <nav className="footer-nav">
             <div className="nav-column">
-              <Link href="/" className="nav-link">Home</Link>
-              <Link href="/About_us" className="nav-link">About Us</Link>
-              <Link href="/demo" className="nav-link">Demo</Link>
+              <Link href="/" className="nav-link">{t.navbar.home}</Link>
+              <Link href="/About_us" className="nav-link">{t.navbar.about}</Link>
+              <Link href="/demo" className="nav-link">{t.navbar.demo}</Link>
             </div>
             <div className="nav-column">
-              <Link href="/Prices" className="nav-link">Pricing</Link>
-              <Link href="/blog" className="nav-link">Blog</Link>
-              <Link href="/Contact" className="nav-link">Contact</Link>
+              <Link href="/Prices" className="nav-link">{t.navbar.pricing}</Link>
+              <Link href="/blog" className="nav-link">{t.navbar.blog}</Link>
+              <Link href="/Contact" className="nav-link">{t.navbar.contact}</Link>
             </div>
           </nav>
         </div>
