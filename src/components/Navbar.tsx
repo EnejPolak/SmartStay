@@ -150,20 +150,22 @@ export default function Navbar() {
                 </button>
 
                 {isLanguageDropdownOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                    <div className="py-1">
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-50">
+                    <div className="py-2">
                       {languages.map((language) => (
                         <button
                           key={language.code}
                           onClick={() => handleLanguageSelect(language.code)}
-                          className={`w-full flex items-center gap-3 px-4 py-2 text-sm text-left hover:bg-gray-50 transition-colors ${
-                            selectedLanguage === language.code ? 'bg-violet-50 text-violet-700' : 'text-gray-700'
+                          className={`w-full flex items-center gap-3 px-4 py-3 text-sm text-left rounded-lg mx-2 mb-1 transition-all duration-200 ${
+                            selectedLanguage === language.code 
+                              ? 'bg-violet-600/30 text-white border border-violet-500/50 shadow-lg' 
+                              : 'text-gray-300 hover:text-white hover:bg-white/10'
                           }`}
                         >
                           <span className="text-lg">{language.flag}</span>
-                          <span>{language.name}</span>
+                          <span className="font-medium">{language.name}</span>
                           {selectedLanguage === language.code && (
-                            <svg className="w-4 h-4 ml-auto text-violet-600" fill="currentColor" viewBox="0 0 20 20">
+                            <svg className="w-4 h-4 ml-auto text-violet-300" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
                           )}
@@ -192,7 +194,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu */}
-          <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'} overflow-hidden`} suppressHydrationWarning>
+          <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-[600px] opacity-100 mt-4' : 'max-h-0 opacity-0'} overflow-hidden`} suppressHydrationWarning>
             <div className="space-y-1 border-t border-white/10 pt-3">
               {navItems.map((item, index) => (
                 <Link
@@ -210,24 +212,40 @@ export default function Navbar() {
               ))}
 
               {/* Mobile Language Selector */}
-              <div className="px-4 py-2">
-                <div className="flex items-center gap-2 text-gray-300 mb-2">
-                  <span className="text-lg">{currentLanguage.flag}</span>
-                  <span className="text-sm font-medium">{currentLanguage.name}</span>
+              <div className="px-4 py-3 border-t border-white/10 mt-3">
+                <div className="mb-3">
+                  <h4 className="text-sm font-semibold text-white mb-2">Language / Jezik / Jezik</h4>
+                  <div className="flex items-center gap-2 text-gray-300">
+                    <span className="text-lg">{currentLanguage.flag}</span>
+                    <span className="text-sm font-medium">{currentLanguage.name}</span>
+                    <span className="text-xs text-gray-500">(Selected)</span>
+                  </div>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   {languages.map((language) => (
                     <button
                       key={language.code}
                       onClick={() => handleLanguageSelect(language.code)}
-                      className={`w-full flex items-center gap-3 px-3 py-2 text-sm text-left rounded-lg transition-colors ${
+                      className={`w-full flex items-center gap-3 px-4 py-3 text-sm text-left rounded-lg transition-all duration-200 border ${
                         selectedLanguage === language.code 
-                          ? 'bg-violet-600/20 text-violet-300' 
-                          : 'text-gray-400 hover:text-white hover:bg-white/10'
+                          ? 'bg-violet-600/30 text-white border-violet-500/50 shadow-lg' 
+                          : 'text-gray-300 hover:text-white hover:bg-white/10 border-white/10'
                       }`}
                     >
-                      <span className="text-lg">{language.flag}</span>
-                      <span>{language.name}</span>
+                      <span className="text-xl">{language.flag}</span>
+                      <div className="flex flex-col">
+                        <span className="font-medium">{language.name}</span>
+                        <span className="text-xs opacity-70">
+                          {language.code === 'EN' ? 'English' : 
+                           language.code === 'SL' ? 'Slovenščina' : 
+                           language.code === 'HR' ? 'Hrvatski' : language.name}
+                        </span>
+                      </div>
+                      {selectedLanguage === language.code && (
+                        <svg className="w-5 h-5 ml-auto text-violet-300" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
                     </button>
                   ))}
                 </div>
