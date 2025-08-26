@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { trackLead } from '../../lib/marketing/metaPixel';
+import { useLanguageStore } from '../stores/language';
 
 interface ContactFormData {
   name: string;
@@ -19,6 +20,8 @@ export default function ContactForm() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { getTranslation } = useLanguageStore();
+  const t = getTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,8 +61,8 @@ export default function ContactForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-white mb-2">Thank You!</h3>
-        <p className="text-zinc-300">We&apos;ll get back to you within 24 hours.</p>
+        <h3 className="text-xl font-semibold text-white mb-2">{t.contactForm.thankYou}</h3>
+        <p className="text-zinc-300">{t.contactForm.responseTime}</p>
       </div>
     );
   }
@@ -68,7 +71,7 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-zinc-300 mb-2">
-          Name *
+          {t.contactForm.name}
         </label>
         <input
           type="text"
@@ -78,13 +81,13 @@ export default function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-          placeholder="Your name"
+          placeholder={t.contactForm.placeholders.name}
         />
       </div>
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-2">
-          Email *
+          {t.contactForm.email}
         </label>
         <input
           type="email"
@@ -94,13 +97,13 @@ export default function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-          placeholder="your@email.com"
+          placeholder={t.contactForm.placeholders.email}
         />
       </div>
 
       <div>
         <label htmlFor="company" className="block text-sm font-medium text-zinc-300 mb-2">
-          Company
+          {t.contactForm.company}
         </label>
         <input
           type="text"
@@ -109,13 +112,13 @@ export default function ContactForm() {
           value={formData.company}
           onChange={handleChange}
           className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-          placeholder="Your company"
+          placeholder={t.contactForm.placeholders.company}
         />
       </div>
 
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-zinc-300 mb-2">
-          Message *
+          {t.contactForm.message}
         </label>
         <textarea
           id="message"
@@ -125,7 +128,7 @@ export default function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none"
-          placeholder="Tell us about your needs..."
+          placeholder={t.contactForm.placeholders.message}
         />
       </div>
 
@@ -134,7 +137,7 @@ export default function ContactForm() {
         disabled={isSubmitting}
         className="w-full px-6 py-3 bg-violet-600 text-white font-medium rounded-lg hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        {isSubmitting ? 'Sending...' : 'Send Message'}
+        {isSubmitting ? 'Sending...' : t.contactForm.submit}
       </button>
     </form>
   );

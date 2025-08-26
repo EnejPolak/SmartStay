@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useLanguageStore } from '../stores/language';
 // Safe no-op fallback to avoid build errors if marketing lib is absent on some envs
 const trackCustom = (event: string, _payload?: Record<string, any>) => {
   if (typeof window === 'undefined') return;
@@ -13,6 +14,9 @@ const trackCustom = (event: string, _payload?: Record<string, any>) => {
 };
 
 export default function ThankYouPage() {
+  const { getTranslation } = useLanguageStore();
+  const t = getTranslation();
+  
   useEffect(() => {
     // Track demo scheduling event
     trackCustom('DemoScheduled', {
@@ -36,13 +40,12 @@ export default function ThankYouPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h1 className="text-4xl font-bold mb-4">Thank You!</h1>
+            <h1 className="text-4xl font-bold mb-4">{t.thankYou.title}</h1>
             <p className="text-xl text-zinc-300 mb-6">
-              We&apos;ve received your demo request and will be in touch shortly.
+              {t.thankYou.subtitle}
             </p>
             <p className="text-zinc-400 mb-8">
-              Our team will contact you within 24 hours to schedule your personalized demo 
-              and show you how SmartStay can transform your guest experience.
+              {t.thankYou.description}
             </p>
           </div>
           
@@ -51,14 +54,14 @@ export default function ThankYouPage() {
               href="/"
               className="inline-flex items-center px-6 py-3 bg-violet-600 text-white font-medium rounded-lg hover:bg-violet-700 transition-colors"
             >
-              Return to Home
+              {t.thankYou.returnHome}
             </Link>
             <div>
               <Link 
                 href="/demo"
                 className="text-violet-400 hover:text-violet-300 transition-colors"
               >
-                Explore our demo →
+                {t.thankYou.exploreDemo}
               </Link>
             </div>
           </div>

@@ -1,27 +1,28 @@
 "use client";
 import React from 'react';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import { useCountryDetection } from '../hooks/useCountryDetection';
+import { useLanguageStore } from '../stores/language';
 
 const HowItWorksSection: React.FC = () => {
   const step1 = useIntersectionObserver({ threshold: 0.2 });
   const step2 = useIntersectionObserver({ threshold: 0.2 });
   const step3 = useIntersectionObserver({ threshold: 0.2 });
   const ctaSection = useIntersectionObserver({ threshold: 0.2 });
-  const { getBookingLink } = useCountryDetection();
+  const { getBookingLink, getTranslation } = useLanguageStore();
+  const t = getTranslation();
 
   return (
     <section className="py-32 px-6 lg:px-8 bg-gray-900/30">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-20 animate-on-load animate-fade-in-up delay-200">
           <h2 className="text-5xl lg:text-6xl font-light text-white mb-8 tracking-tight">
-            From setup to success
+            {t.howItWorks.title}
             <span className="block bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent font-medium">
-              in under a month
+              {t.howItWorks.titleHighlight}
             </span>
           </h2>
           <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light">
-            Three simple steps. Zero technical knowledge required. Maximum results.
+            {t.howItWorks.subtitle}
           </p>
         </div>
 
@@ -44,15 +45,14 @@ const HowItWorksSection: React.FC = () => {
             </div>
             <div className="text-left">
               <h3 className="text-3xl font-medium text-white mb-6 tracking-tight">
-                Share your property details
+                {t.howItWorks.steps[0].title}
               </h3>
               <p className="text-gray-400 text-xl leading-relaxed font-light mb-8">
-                Tell us about your property in a quick 10-minute call. WiFi passwords, 
-                house rules, local favorites—we handle the rest.
+                {t.howItWorks.steps[0].description}
               </p>
               <div className="inline-flex items-center text-violet-400 font-medium text-lg">
                 <span className="w-3 h-3 bg-violet-400 rounded-full mr-3"></span>
-                30 minutes of your time
+                {t.howItWorks.steps[0].time}
               </div>
             </div>
           </div>
@@ -76,30 +76,28 @@ const HowItWorksSection: React.FC = () => {
                 </div>
               </div>
               <h3 className="text-3xl font-medium text-white mb-6 tracking-tight">
-                We build your digital guide
+                {t.howItWorks.steps[1].title}
               </h3>
               <p className="text-gray-400 text-xl leading-relaxed font-light mb-8">
-                Our team creates a beautiful, mobile-optimized guide with all your 
-                property information. No work required from you.
+                {t.howItWorks.steps[1].description}
               </p>
               <div className="inline-flex items-center text-blue-400 font-medium text-lg">
                 <span className="w-3 h-3 bg-blue-400 rounded-full mr-3"></span>
-                Built in under a month
+                {t.howItWorks.steps[1].time}
               </div>
             </div>
 
             {/* Desktop: Original layout */}
             <div className="text-right lg:order-1 hidden lg:block">
               <h3 className="text-3xl font-medium text-white mb-6 tracking-tight">
-                We build your digital guide
+                {t.howItWorks.steps[1].title}
               </h3>
               <p className="text-gray-400 text-xl leading-relaxed font-light mb-8">
-                Our team creates a beautiful, mobile-optimized guide with all your 
-                property information. No work required from you.
+                {t.howItWorks.steps[1].description}
               </p>
               <div className="inline-flex items-center text-blue-400 font-medium text-lg">
                 <span className="w-3 h-3 bg-blue-400 rounded-full mr-3"></span>
-                Built in under a month
+                {t.howItWorks.steps[1].time}
               </div>
             </div>
             <div className="justify-center lg:justify-start lg:order-2 hidden lg:flex">
@@ -130,15 +128,14 @@ const HowItWorksSection: React.FC = () => {
             </div>
             <div className="text-left">
               <h3 className="text-3xl font-medium text-white mb-6 tracking-tight">
-                Enjoy complete automation
+                {t.howItWorks.steps[2].title}
               </h3>
               <p className="text-gray-400 text-xl leading-relaxed font-light mb-8">
-                Guests automatically receive your guide before check-in. No more questions, 
-                no more interruptions. Pure passive income.
+                {t.howItWorks.steps[2].description}
               </p>
               <div className="inline-flex items-center text-green-400 font-medium text-lg">
                 <span className="w-3 h-3 bg-green-400 rounded-full mr-3"></span>
-                Set it and forget it
+                {t.howItWorks.steps[2].time}
               </div>
             </div>
           </div>
@@ -160,7 +157,7 @@ const HowItWorksSection: React.FC = () => {
           >
             <span className="flex items-center space-x-2">
               <span className="w-3 h-3 bg-violet-400 rounded-full"></span>
-              <span>Schedule a Call</span>
+              <span>{t.howItWorks.ctaButton}</span>
             </span>
           </a>
         </div>

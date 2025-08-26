@@ -2,28 +2,32 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useLanguageStore } from '../stores/language';
 
 export default function AboutUs() {
+  const { getTranslation } = useLanguageStore();
+  const t = getTranslation();
+  
   const teamMembers = [
     {
-      name: "Hana",
-      role: "Co-Founder",
+      name: t.aboutUs.teamMembers[0].name,
+      role: t.aboutUs.teamMembers[0].role,
       image: "/pictures/persons/hana.png",
-      description: "Visionary leader focused on crafting exceptional guest experiences and shaping the future of hospitality technology.",
+      description: t.aboutUs.teamMembers[0].description,
       isFounder: true,
     },
     {
-      name: "Nik",
-      role: "Co-Founder", 
+      name: t.aboutUs.teamMembers[1].name,
+      role: t.aboutUs.teamMembers[1].role,
       image: "/pictures/persons/nik.png",
-      description: "Product strategist driving growth and innovation, ensuring SmartStay stays ahead of industry trends and user needs.",
+      description: t.aboutUs.teamMembers[1].description,
       isFounder: true,
     },
     {
-      name: "Eva",
-      role: "Design & Marketing",
+      name: t.aboutUs.teamMembers[2].name,
+      role: t.aboutUs.teamMembers[2].role,
       image: "/pictures/persons/eva.png", 
-      description: "Creative force behind our brand identity and user experience, with an exceptional eye for aesthetics and compelling communication.",
+      description: t.aboutUs.teamMembers[2].description,
       isDesigner: true,
     },
   ];
@@ -47,10 +51,10 @@ export default function AboutUs() {
         <section className="mb-20 text-center">
           <div className="mx-auto max-w-4xl animate-fade-in-up">
             <h1 className="mb-6 bg-gradient-to-r from-[#8B7CDF] via-white to-[#60A5FA] bg-clip-text text-6xl font-black leading-tight tracking-tight text-transparent md:text-7xl">
-              Meet the SmartxStay Team
+              {t.aboutUs.title}
             </h1>
                           <p className="mx-auto max-w-2xl text-xl text-zinc-300 leading-relaxed">
-                The people behind your next-level guest experience!
+                {t.aboutUs.subtitle}
               </p>
           </div>
         </section>
@@ -73,7 +77,7 @@ export default function AboutUs() {
                 {/* Founder Badge */}
                 {member.isFounder && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] px-3 py-1 text-xs font-bold text-white shadow-lg">
-                    FOUNDER
+                    {t.aboutUs.founder}
                   </div>
                 )}
 
@@ -119,15 +123,15 @@ export default function AboutUs() {
         {/* CTA Section */}
         <section className="text-center">
           <div className="mx-auto max-w-4xl animate-fade-in-up rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-8 backdrop-blur-xl transition-all duration-500 hover:border-white/20 hover:bg-white/[0.12]">
-            <h3 className="mb-4 text-3xl font-bold text-white">Want to work with us?</h3>
+            <h3 className="mb-4 text-3xl font-bold text-white">{t.aboutUs.cta.title}</h3>
             <p className="mb-6 text-lg text-zinc-300">
-              Ready to transform your property into an unforgettable experience? Let's create something amazing together.
+              {t.aboutUs.cta.description}
             </p>
             <Link
               href="/Contact"
               className="inline-block rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] px-8 py-3 text-lg font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40"
             >
-              Get in touch
+              {t.aboutUs.cta.button}
             </Link>
           </div>
         </section>

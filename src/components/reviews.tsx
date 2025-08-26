@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useLanguageStore } from '../stores/language';
 
 interface Review {
   id: string;
@@ -37,6 +38,8 @@ export default function ReviewsSection() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedReviews, setExpandedReviews] = useState<Set<string>>(new Set());
+  const { getTranslation } = useLanguageStore();
+  const t = getTranslation();
 
   // Fetch reviews from API
   useEffect(() => {
@@ -148,8 +151,8 @@ export default function ReviewsSection() {
             }`}
             style={{ transitionDelay: '800ms' }}
           >
-            What our
-            <span className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent"> partners say</span>
+            {t.reviews.title}
+            <span className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent"> {t.reviews.titleHighlight}</span>
           </h2>
           <p 
             className={`text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed transition-all duration-700 ${
@@ -157,7 +160,7 @@ export default function ReviewsSection() {
             }`}
             style={{ transitionDelay: '1000ms' }}
           >
-            Join SmartStay today and become part of existing hotels and providers who already trust our platform to optimize their operations.
+            {t.reviews.subtitle}
           </p>
         </div>
 
@@ -176,7 +179,7 @@ export default function ReviewsSection() {
               onClick={() => window.location.reload()} 
               className="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors"
             >
-              Try Again
+              {t.reviews.retryButton}
             </button>
           </div>
         )}
@@ -184,7 +187,7 @@ export default function ReviewsSection() {
         {/* Empty State */}
         {!loading && !error && reviews.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-gray-400 text-lg">No reviews available at the moment.</p>
+            <p className="text-gray-400 text-lg">{t.reviews.noReviews}</p>
           </div>
         )}
 

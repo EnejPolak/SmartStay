@@ -5,10 +5,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useLanguageStore } from '../stores/language';
 
 const PreviewBlog: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { getTranslation } = useLanguageStore();
+  const t = getTranslation();
 
   // Blog posts data - isti kot v blog.tsx
   const blogPosts = [
@@ -224,8 +227,8 @@ const PreviewBlog: React.FC = () => {
           <Navbar />
           <div className="relative z-10 pt-32 pb-20 px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl font-bold text-white mb-4">Blog Post Not Found</h1>
-              <p className="text-gray-400 mb-8">The blog post you're looking for doesn't exist.</p>
+                          <h1 className="text-4xl font-bold text-white mb-4">{t.previewBlog.notFound}</h1>
+            <p className="text-gray-400 mb-8">{t.previewBlog.notFoundDescription}</p>
               <Link 
                 href="/blog"
                 className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 text-white font-medium hover:shadow-lg hover:shadow-violet-500/25 transition-all duration-300"
@@ -273,7 +276,7 @@ const PreviewBlog: React.FC = () => {
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                Back to Blog
+                                  {t.previewBlog.backToBlog}
               </Link>
             </div>
 
@@ -338,7 +341,7 @@ const PreviewBlog: React.FC = () => {
             <div className="mt-16 pt-8 border-t border-white/10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <span className="text-gray-400">Share this article:</span>
+                                      <span className="text-gray-400">{t.previewBlog.shareArticle}</span>
                   <div className="flex gap-3">
                     <button className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

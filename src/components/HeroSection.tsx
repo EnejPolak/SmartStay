@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
-import { useCountryDetection } from '../hooks/useCountryDetection';
+import { useLanguageStore } from '../stores/language';
 
 const HeroSection: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -8,7 +8,8 @@ const HeroSection: React.FC = () => {
   const subtitleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
-  const { getBookingLink } = useCountryDetection();
+  const { getBookingLink, getTranslation } = useLanguageStore();
+  const t = getTranslation();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -81,7 +82,7 @@ const HeroSection: React.FC = () => {
           <div className="hero-content text-center lg:text-left space-y-12">
             <div className="space-y-8">
               <h1 ref={titleRef} className="hero-title hero-animate-title text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white tracking-tight leading-[0.9] animate-on-load animate-fade-in-up delay-200">
-                Smart<span 
+                {t.homeHero.title}<span 
                   className="hero-title-gradient"
                   style={{
                     background: 'linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%)',
@@ -92,7 +93,7 @@ const HeroSection: React.FC = () => {
               </h1>
               <div className="space-y-6">
                 <h2 ref={subtitleRef} className="hero-subtitle hero-animate-subtitle text-lg sm:text-xl md:text-2xl lg:text-4xl text-gray-200 font-bold leading-tight animate-on-load animate-fade-in-up delay-400">
-                  Transform Guest Experience with{' '}
+                  {t.homeHero.subtitle}{' '}
                   <span 
                     className="hero-subtitle-gradient text-violet-400"
                     style={{
@@ -101,12 +102,11 @@ const HeroSection: React.FC = () => {
                       WebkitTextFillColor: 'transparent'
                     }}
                   >
-                    Digital Innovation
+                    {t.homeHero.subtitleHighlight}
                   </span>
                 </h2>
                 <p ref={descriptionRef} className="hero-description hero-animate-description text-base sm:text-lg lg:text-xl text-gray-400 leading-relaxed max-w-md lg:max-w-2xl mx-auto lg:mx-0 animate-on-load animate-fade-in-up delay-500">
-                  Stop endless guest questions. Create seamless digital guides with house rules, 
-                  local recommendations, and instant support.
+                  {t.homeHero.description}
                 </p>
               </div>
             </div>
@@ -121,14 +121,14 @@ const HeroSection: React.FC = () => {
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-violet-400 to-blue-400 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
                   <span className="relative z-10 tracking-wide flex items-center space-x-2">
-                    <span>SCHEDULE CALL</span>
+                    <span>{t.homeHero.bookCall}</span>
                     <span className="text-2xl group-hover:translate-x-1 transition-transform duration-300">→</span>
                   </span>
                 </a>
                 <button className="hero-cta-secondary inline-flex items-center justify-center px-8 py-5 text-lg font-semibold text-violet-300 border-2 border-violet-400/30 rounded-2xl hover:bg-violet-400/10 hover:border-violet-400/50 transition-all duration-300">
                   <span className="flex items-center space-x-2">
                     <span>▶</span>
-                    <span>Watch 2min Demo</span>
+                    <span>{t.homeHero.seeDemo}</span>
                   </span>
                 </button>
               </div>

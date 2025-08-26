@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useLanguageStore } from '../stores/language';
 
 type BlogItem = {
   id: string;
@@ -69,6 +70,8 @@ const BlogPage: React.FC = () => {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
   const [heroImageStyle, setHeroImageStyle] = React.useState<string>('object-cover object-center');
+  const { getTranslation } = useLanguageStore();
+  const t = getTranslation();
 
   // Function to analyze image and determine optimal positioning
   const analyzeHeroImage = React.useCallback((imageUrl: string) => {
@@ -252,7 +255,7 @@ const BlogPage: React.FC = () => {
         keywords={["smartxstay", "hospitality blog", "guest experience", "digital guide"]}
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950">
+      <div className="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950" suppressHydrationWarning>
         <Navbar />
         
         {/* Hero Section with staggered animations */}
@@ -263,7 +266,7 @@ const BlogPage: React.FC = () => {
                 <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
                 </svg>
-                Latest Insights
+                {t.blog.title}
               </span>
             </div>
             
@@ -278,8 +281,7 @@ const BlogPage: React.FC = () => {
             </h1>
             
             <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
-              Discover the latest trends, insights, and best practices in hospitality technology. 
-              Stay ahead with expert advice from industry leaders.
+              {t.blog.subtitle}
             </p>
           </div>
         </section>
@@ -297,7 +299,7 @@ const BlogPage: React.FC = () => {
                       : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white border border-white/10'
                   }`}
                 >
-                  All Articles
+                  {t.blog.title}
                 </button>
                 {filteredCategories.map((category) => (
                   <button
@@ -333,7 +335,7 @@ const BlogPage: React.FC = () => {
         {data?.hero && (
           <section className="px-4 mb-16">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-2xl font-bold text-white mb-8 text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '1.6s', animationFillMode: 'forwards' }}>Featured Article</h2>
+              <h2 className="text-2xl font-bold text-white mb-8 text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '1.6s', animationFillMode: 'forwards' }}>{t.blog.featuredArticle}</h2>
               <article className="group relative overflow-hidden rounded-3xl bg-gradient-to-r from-gray-900/50 to-slate-900/50 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 opacity-0 animate-fade-in-up hover:transform hover:scale-[1.02]" style={{ animationDelay: '1.8s', animationFillMode: 'forwards' }}>
                 <div className="grid lg:grid-cols-2 gap-8 p-8 lg:p-12">
                   <div className="space-y-6">
@@ -341,7 +343,7 @@ const BlogPage: React.FC = () => {
                       <span className="px-3 py-1 rounded-full text-xs font-medium bg-violet-600/20 text-violet-300 border border-violet-500/30">
                         {data.hero.category_name || 'General'}
                       </span>
-                      <span className="text-gray-400 text-sm">{(data.hero.read_minutes || 1)} min read</span>
+                      <span className="text-gray-400 text-sm">{(data.hero.read_minutes || 1)} {t.blog.minRead}</span>
                     </div>
                     
                     <h3 className="text-3xl lg:text-4xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-500">
@@ -358,7 +360,7 @@ const BlogPage: React.FC = () => {
                           S
                         </div>
                         <div>
-                          <p className="text-gray-200 font-medium text-sm">SmartStay Team</p>
+                          <p className="text-gray-200 font-medium text-sm">{t.blog.teamName}</p>
                           <p className="text-gray-400 text-xs">{formatDatePretty(data.hero.published_at)}</p>
                         </div>
                       </div>
@@ -367,7 +369,7 @@ const BlogPage: React.FC = () => {
                         href={`/blog/${data.hero.slug}`}
                         className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 text-white font-medium hover:shadow-lg hover:shadow-violet-500/25 hover:scale-105 transition-all duration-300 group"
                       >
-                        Read More
+                        {t.blog.readMore}
                         <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
@@ -446,7 +448,7 @@ const BlogPage: React.FC = () => {
                     <div className="flex items-center gap-2 text-sm text-white/60 tracking-tight">
                       <span>{formatDatePretty(post.published_at)}</span>
                       <span className="opacity-50">•</span>
-                      <span>{(post.read_minutes || 1)} min read</span>
+                      <span>{(post.read_minutes || 1)} {t.blog.minRead}</span>
                     </div>
                     
                     {/* Title */}
@@ -468,11 +470,11 @@ const BlogPage: React.FC = () => {
                         <div className="w-6 h-6 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 flex items-center justify-center text-white font-bold text-xs">
                           S
                         </div>
-                        <span className="text-white/80 text-sm font-medium">SmartStay Team</span>
+                        <span className="text-white/80 text-sm font-medium">{t.blog.teamName}</span>
                       </div>
                       
                       <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 text-white px-4 py-2 text-sm font-medium shadow-sm hover:shadow-md active:scale-[0.98] transition-all">
-                        Read More
+                        {t.blog.readMore}
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
@@ -493,13 +495,13 @@ const BlogPage: React.FC = () => {
                 <h3 className="text-xl font-bold text-white mb-2">
                   {selectedCategory 
                     ? `No articles found in ${categories.find(cat => cat.id === selectedCategory)?.name || 'this category'}`
-                    : 'No articles found'
+                    : t.blog.noPosts
                   }
                 </h3>
                 <p className="text-gray-400 mb-4">
                   {selectedCategory 
                     ? 'Try selecting a different category or check back later.'
-                    : 'Try again later. New content is coming soon.'
+                    : t.blog.noPostsDescription
                   }
                 </p>
                 {selectedCategory && (

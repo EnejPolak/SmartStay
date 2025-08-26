@@ -1,9 +1,12 @@
 "use client";
 import React from 'react';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useLanguageStore } from '../stores/language';
 
 const DemoFeaturesSection: React.FC = () => {
   const demoHeader = useIntersectionObserver({ threshold: 0.2 });
+  const { getTranslation } = useLanguageStore();
+  const t = getTranslation();
 
   return (
     <section className="py-32 px-6 lg:px-8">
@@ -17,17 +20,16 @@ const DemoFeaturesSection: React.FC = () => {
           }`}
         >
           <div className="inline-flex items-center bg-violet-500/10 border border-violet-400/20 rounded-full px-6 py-2 mb-8">
-            <span className="text-violet-400 text-sm font-semibold tracking-wide uppercase">Revolutionary Technology</span>
+            <span className="text-violet-400 text-sm font-semibold tracking-wide uppercase">{t.demoFeatures.badge}</span>
           </div>
           <h2 className="text-5xl lg:text-6xl font-light text-white mb-8 tracking-tight">
-            The future of
+            {t.demoFeatures.title}
             <span className="block bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent font-medium">
-              guest experience
+              {t.demoFeatures.titleHighlight}
             </span>
           </h2>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
-            Discover how SmartStay transforms traditional hospitality with cutting-edge automation, 
-            intelligent guest support, and seamless digital experiences that delight guests while saving you time.
+            {t.demoFeatures.subtitle}
           </p>
         </div>
 
@@ -42,7 +44,7 @@ const DemoFeaturesSection: React.FC = () => {
               <div className="w-2 h-2 bg-violet-400 rounded-full absolute top-0 right-0 group-hover:scale-150 transition-transform duration-300"></div>
             </div>
             <h3 className="relative z-10 text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 group-hover:from-violet-300 group-hover:to-white transition-all duration-500 tracking-tight">
-              Digital Guest Guide
+              {t.demoFeatures.features[0].title}
             </h3>
             <div className="mt-6 w-12 h-0.5 bg-gradient-to-r from-violet-400 to-transparent group-hover:w-20 transition-all duration-500"></div>
           </div>
@@ -57,7 +59,7 @@ const DemoFeaturesSection: React.FC = () => {
               <div className="w-2 h-2 bg-blue-400 rounded-full absolute top-0 right-0 group-hover:scale-150 transition-transform duration-300"></div>
             </div>
             <h3 className="relative z-10 text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200 group-hover:from-blue-300 group-hover:to-white transition-all duration-500 tracking-tight">
-              Instant Access Info
+              {t.demoFeatures.features[1].title}
             </h3>
             <div className="mt-6 w-12 h-0.5 bg-gradient-to-r from-blue-400 to-transparent group-hover:w-20 transition-all duration-500"></div>
           </div>
@@ -72,7 +74,7 @@ const DemoFeaturesSection: React.FC = () => {
               <div className="w-2 h-2 bg-green-400 rounded-full absolute top-0 right-0 group-hover:scale-150 transition-transform duration-300"></div>
             </div>
             <h3 className="relative z-10 text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-green-200 group-hover:from-green-300 group-hover:to-white transition-all duration-500 tracking-tight">
-              Local Recommendations
+              {t.demoFeatures.features[2].title}
             </h3>
             <div className="mt-6 w-12 h-0.5 bg-gradient-to-r from-green-400 to-transparent group-hover:w-20 transition-all duration-500"></div>
           </div>
@@ -102,7 +104,7 @@ const DemoFeaturesSection: React.FC = () => {
                     <div className="w-2 h-2 bg-current rounded-full group-hover:bg-white transition-colors duration-300"></div>
                   </div>
                   <span className="font-medium group-hover:text-white transition-colors duration-300">
-                    Explore SmartStay
+                    {t.demoFeatures.ctaText}
                   </span>
                   <svg 
                     className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" 

@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useLanguageStore } from '../stores/language';
 
 const ContactPage: React.FC = () => {
+  const { getTranslation } = useLanguageStore();
+  const t = getTranslation();
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -55,11 +59,11 @@ const ContactPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Contact - SmartStay</title>
-        <meta name="description" content="Get in touch with us. We answer your questions about SmartStay solutions for digital hospitality experiences." />
+        <title>{t.contact.pageTitle}</title>
+        <meta name="description" content={t.contact.pageDescription} />
       </Head>
       
-      <div className="min-h-screen relative overflow-hidden">
+      <div className="min-h-screen relative overflow-hidden" suppressHydrationWarning>
         {/* Same background as Home.tsx */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900"></div>
@@ -81,23 +85,22 @@ const ContactPage: React.FC = () => {
                 <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
                 </svg>
-                Get In Touch
+                {t.contact.title}
               </span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
               <span className="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
-                Contact
+                {t.contact.heroTitle.contact}
               </span>
               <br />
               <span className="bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                Us
+                {t.contact.heroTitle.us}
               </span>
             </h1>
             
             <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
-              Have questions about SmartStay solutions? Need help or consultation? 
-              Our team is here to help you transform your hospitality experience.
+              {t.contact.subtitle}
             </p>
           </div>
         </section>
@@ -115,11 +118,11 @@ const ContactPage: React.FC = () => {
                   {/* Improved header with better typography and spacing */}
                   <div className="mb-12">
                     <h2 className="text-4xl lg:text-5xl font-extrabold text-white mb-6 leading-tight">
-                      Send us a message
+                      {t.contact.formHeader.title}
                     </h2>
                     <p className="text-xl text-gray-300 leading-relaxed">
-                      Fill out the form below and we'll get back to you as soon as possible. 
-                      <span className="block mt-2 text-lg text-gray-400">Your inquiry is important to us.</span>
+                      {t.contact.formHeader.description}
+                      <span className="block mt-2 text-lg text-gray-400">{t.contact.formHeader.subtitle}</span>
                     </p>
                   </div>
 
@@ -127,8 +130,8 @@ const ContactPage: React.FC = () => {
                 {submitStatus === 'loading' && (
                   <div className="flex flex-col items-center justify-center py-20 animate-fade-in">
                     <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-6"></div>
-                    <h3 className="text-2xl font-bold text-white mb-2">Sending your message...</h3>
-                    <p className="text-gray-400 text-center">Please wait while we process your request.</p>
+                    <h3 className="text-2xl font-bold text-white mb-2">{t.contact.formStates.loading.title}</h3>
+                    <p className="text-gray-400 text-center">{t.contact.formStates.loading.description}</p>
                   </div>
                 )}
 
@@ -140,10 +143,10 @@ const ContactPage: React.FC = () => {
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <h3 className="text-3xl font-bold text-green-400 mb-4 text-center">Message Sent!</h3>
+                    <h3 className="text-3xl font-bold text-green-400 mb-4 text-center">{t.contact.formStates.success.title}</h3>
                     <p className="text-gray-300 text-center text-lg leading-relaxed max-w-md">{submitMessage}</p>
                     <div className="mt-8 text-sm text-gray-500">
-                      Form will reappear in a few seconds...
+                      {t.contact.formStates.success.timer}
                     </div>
                   </div>
                 )}
@@ -156,7 +159,7 @@ const ContactPage: React.FC = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                       </svg>
                     </div>
-                    <h3 className="text-3xl font-bold text-red-400 mb-4 text-center">Oops! Something went wrong</h3>
+                    <h3 className="text-3xl font-bold text-red-400 mb-4 text-center">{t.contact.formStates.error.title}</h3>
                     <p className="text-gray-300 text-center text-lg leading-relaxed max-w-md mb-6">{submitMessage}</p>
                     <button
                       onClick={() => {
@@ -165,7 +168,7 @@ const ContactPage: React.FC = () => {
                       }}
                       className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-red-500/25 transition-all duration-300"
                     >
-                      Try Again
+                      {t.contact.formStates.error.retry}
                     </button>
                   </div>
                 )}
@@ -176,7 +179,7 @@ const ContactPage: React.FC = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                        Full Name *
+                        {t.contact.form.name} *
                       </label>
                                               <input
                           type="text"
@@ -188,13 +191,13 @@ const ContactPage: React.FC = () => {
                           className={`w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 ${
                             formData.name ? 'text-blue-400 font-medium' : 'text-white'
                           }`}
-                          placeholder="Your name"
+                          placeholder={t.contact.placeholders.name}
                         />
                     </div>
                     
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                        Email *
+                        {t.contact.form.email} *
                       </label>
                                               <input
                           type="email"
@@ -206,14 +209,14 @@ const ContactPage: React.FC = () => {
                           className={`w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 ${
                             formData.email ? 'text-blue-400 font-medium' : 'text-white'
                           }`}
-                          placeholder="your@email.com"
+                          placeholder={t.contact.placeholders.email}
                         />
                     </div>
                   </div>
 
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                      Subject *
+                      {t.contact.formLabels.subject}
                     </label>
                     <select
                       id="subject"
@@ -225,19 +228,19 @@ const ContactPage: React.FC = () => {
                         formData.subject ? 'text-blue-400 font-medium' : 'text-white'
                       }`}
                     >
-                      <option value="" disabled className="text-gray-400">Select subject</option>
-                      <option value="general" className="bg-slate-800 text-white">General Inquiry</option>
-                      <option value="demo" className="bg-slate-800 text-white">Product Demo</option>
-                      <option value="pricing" className="bg-slate-800 text-white">Pricing & Packages</option>
-                      <option value="support" className="bg-slate-800 text-white">Technical Support</option>
-                      <option value="partnership" className="bg-slate-800 text-white">Partnership</option>
-                      <option value="other" className="bg-slate-800 text-white">Other</option>
+                      <option value="" disabled className="text-gray-400">{t.contact.placeholders.selectSubject}</option>
+                      <option value="general" className="bg-slate-800 text-white">{t.contact.formLabels.subjectOptions.general}</option>
+                      <option value="demo" className="bg-slate-800 text-white">{t.contact.formLabels.subjectOptions.demo}</option>
+                      <option value="pricing" className="bg-slate-800 text-white">{t.contact.formLabels.subjectOptions.pricing}</option>
+                      <option value="support" className="bg-slate-800 text-white">{t.contact.formLabels.subjectOptions.support}</option>
+                      <option value="partnership" className="bg-slate-800 text-white">{t.contact.formLabels.subjectOptions.partnership}</option>
+                      <option value="other" className="bg-slate-800 text-white">{t.contact.formLabels.subjectOptions.other}</option>
                     </select>
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                      Message *
+                      {t.contact.form.message} *
                     </label>
                     <textarea
                       id="message"
@@ -249,7 +252,7 @@ const ContactPage: React.FC = () => {
                       className={`w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 resize-none ${
                         formData.message ? 'text-blue-400 font-medium' : 'text-white'
                       }`}
-                      placeholder="Describe your question or needs..."
+                      placeholder={t.contact.placeholders.message}
                     />
                   </div>
 
@@ -265,11 +268,11 @@ const ContactPage: React.FC = () => {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Sending Message...
+                        {t.contact.submitButton.sending}
                       </>
                     ) : (
                       <>
-                        Send Message
+                        {t.contact.form.submit}
                         {/* Paper airplane icon from Heroicons */}
                         <svg className="w-6 h-6 ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -294,13 +297,12 @@ const ContactPage: React.FC = () => {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-white">SmartxStay</h3>
-                      <p className="text-violet-300 font-medium">Digital Solutions for Rental Properties</p>
+                      <h3 className="text-2xl font-bold text-white">{t.contact.company.name}</h3>
+                      <p className="text-violet-300 font-medium">{t.contact.company.tagline}</p>
                     </div>
                   </div>
                   <p className="text-gray-300 leading-relaxed text-lg">
-                    We help apartment and house rental owners create better guest experiences with smart digital guides. 
-                    Our mission is to reduce guest questions and make property management effortless for owners.
+                    {t.contact.company.description}
                   </p>
                 </div>
 
@@ -308,7 +310,7 @@ const ContactPage: React.FC = () => {
                 <div className="grid gap-4">
                   
                   {/* Phone - Green theme with tap-to-call */}
-                  <a href="tel:+38669415493" className="bg-gradient-to-br from-gray-900/40 to-slate-900/40 backdrop-blur-xl rounded-2xl border border-white/10 p-5 group hover:border-green-500/30 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 cursor-pointer opacity-0 animate-fade-in-up" style={{ animationDelay: '1.2s', animationFillMode: 'forwards' }}>
+                  <a href={`tel:${t.contact.contactMethods.phone.number}`} className="bg-gradient-to-br from-gray-900/40 to-slate-900/40 backdrop-blur-xl rounded-2xl border border-white/10 p-5 group hover:border-green-500/30 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 cursor-pointer opacity-0 animate-fade-in-up" style={{ animationDelay: '1.2s', animationFillMode: 'forwards' }}>
                     <div className="flex items-center">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mr-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -316,9 +318,9 @@ const ContactPage: React.FC = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="text-white font-bold text-lg group-hover:text-green-400 transition-colors duration-300">Phone</h4>
-                        <p className="text-gray-300 font-medium">+386 69 415 493</p>
-                        <p className="text-sm text-gray-400">Mon-Fri: 9:00 - 17:00</p>
+                        <h4 className="text-white font-bold text-lg group-hover:text-green-400 transition-colors duration-300">{t.contact.contactMethods.phone.title}</h4>
+                        <p className="text-gray-300 font-medium">{t.contact.contactMethods.phone.number}</p>
+                        <p className="text-sm text-gray-400">{t.contact.contactMethods.phone.hours}</p>
                       </div>
                     </div>
                   </a>
@@ -332,9 +334,9 @@ const ContactPage: React.FC = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="text-white font-bold text-lg group-hover:text-blue-400 transition-colors duration-300">Email</h4>
-                        <p className="text-gray-300 font-medium">info@qr-space.si</p>
-                        <p className="text-sm text-gray-400">Response within 24h</p>
+                        <h4 className="text-white font-bold text-lg group-hover:text-blue-400 transition-colors duration-300">{t.contact.contactMethods.email.title}</h4>
+                        <p className="text-gray-300 font-medium">{t.contact.contactMethods.email.address}</p>
+                        <p className="text-sm text-gray-400">{t.contact.contactMethods.email.response}</p>
                       </div>
                     </div>
                   </a>
@@ -349,9 +351,9 @@ const ContactPage: React.FC = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="text-white font-bold text-lg group-hover:text-purple-400 transition-colors duration-300">Location</h4>
-                        <p className="text-gray-300 font-medium">Ljubljana, Slovenia</p>
-                        <p className="text-sm text-gray-400">Available throughout Slovenia</p>
+                        <h4 className="text-white font-bold text-lg group-hover:text-purple-400 transition-colors duration-300">{t.contact.contactMethods.location.title}</h4>
+                        <p className="text-gray-300 font-medium">{t.contact.contactMethods.location.city}</p>
+                        <p className="text-sm text-gray-400">{t.contact.contactMethods.location.availability}</p>
                       </div>
                     </div>
                   </div>
@@ -365,9 +367,9 @@ const ContactPage: React.FC = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="text-white font-bold text-lg group-hover:text-orange-400 transition-colors duration-300">Working Hours</h4>
-                        <p className="text-gray-300 font-medium">Mon-Fri: 9:00 - 17:00</p>
-                        <p className="text-sm text-gray-400">Sat-Sun: By appointment</p>
+                        <h4 className="text-white font-bold text-lg group-hover:text-orange-400 transition-colors duration-300">{t.contact.contactMethods.hours.title}</h4>
+                        <p className="text-gray-300 font-medium">{t.contact.contactMethods.hours.weekdays}</p>
+                        <p className="text-sm text-gray-400">{t.contact.contactMethods.hours.weekend}</p>
                       </div>
                     </div>
                   </div>
@@ -377,7 +379,7 @@ const ContactPage: React.FC = () => {
                 {/* Social Links - Visually separated section */}
                 <div className="mt-8 pt-6 border-t border-white/10 opacity-0 animate-fade-in-up" style={{ animationDelay: '2.0s', animationFillMode: 'forwards' }}>
                   <div className="bg-gradient-to-br from-gray-900/30 to-slate-900/30 backdrop-blur-xl rounded-2xl border border-white/10 p-6">
-                    <h4 className="text-white font-bold text-lg mb-6 text-center">Follow Us</h4>
+                    <h4 className="text-white font-bold text-lg mb-6 text-center">{t.contact.social.title}</h4>
                     <div className="flex justify-center space-x-4">
                       {/* Facebook */}
                       <a href="https://www.facebook.com/SmartxStay/" className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center text-white hover:scale-110 hover:rotate-3 transition-all duration-300 shadow-lg group">

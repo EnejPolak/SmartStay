@@ -48,7 +48,7 @@ export function useCountryDetection() {
         return 'https://hanakucej-qr-space.zohobookings.eu/#/242002000000052012';
       default:
         // Default to Croatian link for other countries
-        return 'https://hanakucej-qr-space.zohobookings.eu/#/242002000000057014';
+        return 'https://hanakucej-qr-space.zohobookings.eu/#/242002000000052012';
     }
   };
 

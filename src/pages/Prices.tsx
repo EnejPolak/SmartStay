@@ -2,14 +2,15 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useState } from "react";
-import { useCountryDetection } from "../hooks/useCountryDetection";
+import { useLanguageStore } from "../stores/language";
 
 export default function Pricing() {
-  const [isAnnual, setIsAnnual] = useState(false);
-  const { getBookingLink } = useCountryDetection();
+  const [isAnnual, setIsAnnual] = useState(true);
+  const { getBookingLink, getTranslation } = useLanguageStore();
+  const t = getTranslation();
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900 text-white">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900 text-white" suppressHydrationWarning>
       {/* Enhanced background effects */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-20 -right-20 h-80 w-80 rounded-full bg-gradient-to-br from-[#8B7CDF]/30 to-[#60A5FA]/30 blur-3xl opacity-50" />
@@ -28,32 +29,22 @@ export default function Pricing() {
           <div className="mx-auto max-w-4xl animate-fade-in-up">
             <div className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 backdrop-blur-sm">
               <span className="mr-2 h-2 w-2 rounded-full bg-green-400"></span>
-              Trusted by 120+ Properties Worldwide
+              {t.pricing.trustBadge}
             </div>
             <h1 className="mb-6 bg-gradient-to-r from-[#8B7CDF] via-white to-[#60A5FA] bg-clip-text text-6xl font-black leading-tight tracking-tight text-transparent md:text-7xl">
-              Simple, Transparent<br />Pricing
+              {t.pricing.title}
             </h1>
             <p className="mx-auto mb-4 max-w-2xl text-xl text-zinc-300 leading-relaxed">
-              Choose the perfect plan for your property portfolio. Scale effortlessly as you grow.
+              {t.pricing.subtitle}
             </p>
             <div className="mx-auto max-w-3xl rounded-2xl border border-yellow-400/20 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 p-4 backdrop-blur-sm">
               <p className="text-sm text-yellow-100">
-                💡 <span className="font-semibold">Fair & Flexible:</span> All prices are starting points. We customize every solution to fit your exact needs.
+                {t.pricing.fairPricing}
               </p>
             </div>
             
             {/* Billing Toggle */}
             <div className="mx-auto mt-8 flex w-fit items-center rounded-xl border border-white/10 bg-white/5 p-1 backdrop-blur-sm">
-              <button
-                onClick={() => setIsAnnual(false)}
-                className={`rounded-lg px-6 py-2 text-sm font-semibold transition-all ${
-                  !isAnnual 
-                    ? "bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] text-white shadow-lg" 
-                    : "text-zinc-300 hover:text-white"
-                }`}
-              >
-                Monthly
-              </button>
               <button
                 onClick={() => setIsAnnual(true)}
                 className={`rounded-lg px-6 py-2 text-sm font-semibold transition-all ${
@@ -62,7 +53,17 @@ export default function Pricing() {
                     : "text-zinc-300 hover:text-white"
                 }`}
               >
-                Annual <span className="text-xs text-green-400 ml-1">(Save 10%)</span>
+                {t.pricing.annual} <span className="text-xs text-green-400 ml-1">({t.pricing.save})</span>
+              </button>
+              <button
+                onClick={() => setIsAnnual(false)}
+                className={`rounded-lg px-6 py-2 text-sm font-semibold transition-all ${
+                  !isAnnual 
+                    ? "bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] text-white shadow-lg" 
+                    : "text-zinc-300 hover:text-white"
+                }`}
+              >
+                {t.pricing.monthly}
               </button>
             </div>
           </div>
@@ -85,9 +86,9 @@ export default function Pricing() {
             
             {/* Plan Details */}
             <div className="mb-8">
-              <h3 className="mb-3 text-3xl font-bold text-white">SmartxStart</h3>
-              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">(1 – 3 units)</p>
-              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">For small property owners with 1 to 3 units</p>
+              <h3 className="mb-3 text-3xl font-bold text-white">{t.pricing.plans.smartxStart.name}</h3>
+              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">{t.pricing.plans.smartxStart.units}</p>
+              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">{t.pricing.plans.smartxStart.description}</p>
               
               {/* Pricing Section */}
               <div className="bg-white/5 rounded-xl p-6 mb-6 border border-white/10">
@@ -113,7 +114,7 @@ export default function Pricing() {
                 <div className="border-t border-white/10 pt-4">
                   <div className="flex justify-between items-center">
                     <span className="text-zinc-400 text-sm font-medium">One-time setup:</span>
-                    <span className="text-zinc-100 font-semibold text-base">from 450€</span>
+                    <span className="text-zinc-100 font-semibold text-base">{t.pricing.plans.smartxStart.setup}</span>
                   </div>
                 </div>
               </div>
@@ -121,15 +122,9 @@ export default function Pricing() {
             
             {/* Features */}
             <div className="mb-8">
-              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">What's included:</h4>
+              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">{t.pricing.features.title}</h4>
               <ul className="space-y-3">
-                {[
-                  "Secure hosting on fast servers",
-                  "Regular backups & updates",
-                  "Uninterrupted platform operation without ads",
-                  "Technical support from our team",
-                  "Continuous improvements and new features"
-                ].map((feature, i) => (
+                {t.pricing.plans.smartxStart.features.map((feature, i) => (
                   <li key={i} className="flex items-start text-sm font-normal text-zinc-200">
                     <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
                       <svg className="h-3 w-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,7 +143,7 @@ export default function Pricing() {
               rel="noopener noreferrer"
               className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40"
             >
-              Request a Quote
+              {t.pricing.requestQuote}
             </a>
           </div>
 
@@ -156,7 +151,7 @@ export default function Pricing() {
             <div className="group relative animate-fade-in-up rounded-3xl border-2 border-[#8B7CDF]/50 bg-gradient-to-b from-white/[0.12] to-white/[0.04] p-10 shadow-2xl backdrop-blur-xl transition-all duration-500 hover:scale-[1.02] hover:border-[#8B7CDF]/70 hover:shadow-violet-500/30 [animation-delay:150ms]">
             {/* Popular Badge */}
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] px-4 py-1 text-xs font-bold text-white shadow-lg">
-              MOST POPULAR
+              {t.pricing.plans.smartxPlus.popular}
             </div>
             <div className="absolute -top-px left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#8B7CDF]/50 to-transparent"></div>
             
@@ -169,9 +164,9 @@ export default function Pricing() {
             
             {/* Plan Details */}
             <div className="mb-8">
-              <h3 className="mb-3 text-3xl font-bold text-white">SmartxPlus</h3>
-              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">(4 – 7 units)</p>
-              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">Ideal for medium-sized providers with multiple units</p>
+              <h3 className="mb-3 text-3xl font-bold text-white">{t.pricing.plans.smartxPlus.name}</h3>
+              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">{t.pricing.plans.smartxPlus.units}</p>
+              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">{t.pricing.plans.smartxPlus.description}</p>
               
               {/* Pricing Section */}
               <div className="bg-white/5 rounded-xl p-6 mb-6 border border-[#8B7CDF]/20">
@@ -197,7 +192,7 @@ export default function Pricing() {
                 <div className="border-t border-[#8B7CDF]/20 pt-4">
                   <div className="flex justify-between items-center">
                     <span className="text-zinc-400 text-sm font-medium">One-time setup:</span>
-                    <span className="text-zinc-100 font-semibold text-base">from 590€</span>
+                    <span className="text-zinc-100 font-semibold text-base">{t.pricing.plans.smartxPlus.setup}</span>
                   </div>
                 </div>
               </div>
@@ -205,15 +200,9 @@ export default function Pricing() {
             
             {/* Features */}
             <div className="mb-8">
-              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">What's included:</h4>
+              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">{t.pricing.features.title}</h4>
               <ul className="space-y-3">
-                {[
-                  "Everything in SmartxStart",
-                  "Extended scalability for more guests",
-                  "More storage and capacity",
-                  "Customizable features depending on needs",
-                  "License for up to 7 units"
-                ].map((feature, i) => (
+                {t.pricing.plans.smartxPlus.features.map((feature, i) => (
                   <li key={i} className="flex items-start text-sm font-normal text-zinc-200">
                     <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
                       <svg className="h-3 w-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -227,7 +216,7 @@ export default function Pricing() {
             </div>
             
             <Link href="/Contact" className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40">
-              Request a Quote
+              {t.pricing.requestQuote}
             </Link>
           </div>
 
@@ -244,9 +233,9 @@ export default function Pricing() {
             
             {/* Plan Details */}
             <div className="mb-8">
-              <h3 className="mb-3 text-3xl font-bold text-white">SmartxPro</h3>
-              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">(8 – 10 units)</p>
-              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">For larger property owners with 8 to 10 units</p>
+              <h3 className="mb-3 text-3xl font-bold text-white">{t.pricing.plans.smartxPro.name}</h3>
+              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">{t.pricing.plans.smartxPro.units}</p>
+              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">{t.pricing.plans.smartxPro.description}</p>
               
               {/* Pricing Section */}
               <div className="bg-white/5 rounded-xl p-6 mb-6 border border-white/10">
@@ -272,7 +261,7 @@ export default function Pricing() {
                 <div className="border-t border-white/10 pt-4">
                   <div className="flex justify-between items-center">
                     <span className="text-zinc-400 text-sm font-medium">One-time setup:</span>
-                    <span className="text-zinc-100 font-semibold text-base">from 790€</span>
+                    <span className="text-zinc-100 font-semibold text-base">{t.pricing.plans.smartxPro.setup}</span>
                   </div>
                 </div>
               </div>
@@ -280,15 +269,9 @@ export default function Pricing() {
             
             {/* Features */}
             <div className="mb-8">
-              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">What's included:</h4>
+              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">{t.pricing.features.title}</h4>
               <ul className="space-y-3">
-                {[
-                  "Everything in SmartxPlus",
-                  "Optimized performance for higher usage",
-                  "Priority support",
-                  "Advanced management and analytics features",
-                  "License for up to 10 units"
-                ].map((feature, i) => (
+                {t.pricing.plans.smartxPro.features.map((feature, i) => (
                   <li key={i} className="flex items-start text-sm font-normal text-zinc-200">
                     <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
                       <svg className="h-3 w-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -307,7 +290,7 @@ export default function Pricing() {
               rel="noopener noreferrer"
               className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40"
             >
-              Request a Quote
+              {t.pricing.requestQuote}
             </a>
           </div>
           </div>
@@ -328,26 +311,26 @@ export default function Pricing() {
             
             {/* Plan Details */}
             <div className="mb-8">
-              <h3 className="mb-3 text-3xl font-bold text-white">SmartxEnterprise</h3>
-              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">(more than 10 units)</p>
-              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">For hotels and large accommodation providers</p>
+              <h3 className="mb-3 text-3xl font-bold text-white">{t.pricing.plans.smartxEnterprise.name}</h3>
+              <p className="text-xs text-zinc-400 mb-6 font-medium tracking-wide uppercase">{t.pricing.plans.smartxEnterprise.units}</p>
+              <p className="text-zinc-300 text-sm mb-6 leading-relaxed">{t.pricing.plans.smartxEnterprise.description}</p>
               
               {/* Pricing Section */}
               <div className="bg-white/5 rounded-xl p-6 mb-6 border border-white/10">
                 {/* Custom Price - Main Focus */}
                 <div className="text-center mb-6">
                   <div className="mb-2">
-                    <span className="text-4xl font-bold text-white">custom</span>
+                    <span className="text-4xl font-bold text-white">{t.pricing.plans.smartxEnterprise.custom}</span>
                   </div>
                   <p className="text-zinc-300 text-sm font-medium">Total investment</p>
-                  <p className="text-xs text-zinc-500 mt-2 italic">(based on scope and requirements)</p>
+                  <p className="text-xs text-zinc-500 mt-2 italic">{t.pricing.plans.smartxEnterprise.customDescription}</p>
                 </div>
                 
                 {/* Other Details */}
                 <div className="border-t border-white/10 pt-4">
                   <div className="flex justify-between items-center">
                     <span className="text-zinc-400 text-sm font-medium">Setup & Implementation:</span>
-                    <span className="text-zinc-100 font-semibold text-base">custom</span>
+                    <span className="text-zinc-100 font-semibold text-base">{t.pricing.plans.smartxEnterprise.setup}</span>
                   </div>
                 </div>
               </div>
@@ -355,15 +338,9 @@ export default function Pricing() {
             
             {/* Features */}
             <div className="mb-8">
-              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">What's included:</h4>
+              <h4 className="text-sm font-semibold text-zinc-300 mb-4 uppercase tracking-wide">{t.pricing.features.title}</h4>
               <ul className="space-y-3">
-                {[
-                  "All benefits of SmartxPro",
-                  "Tailored integrations",
-                  "Dedicated account manager",
-                  "Unlimited scalability",
-                  "Fully customized licensing and pricing"
-                ].map((feature, i) => (
+                {t.pricing.plans.smartxEnterprise.features.map((feature, i) => (
                   <li key={i} className="flex items-start text-sm font-normal text-zinc-200">
                     <div className="mr-3 mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 border border-green-400/30 flex-shrink-0">
                       <svg className="h-3 w-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -382,7 +359,7 @@ export default function Pricing() {
                   rel="noopener noreferrer"
                   className="block w-full rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] py-3 text-center font-semibold text-white shadow-lg shadow-[#8B7CDF]/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#8B7CDF]/40"
                 >
-                  Request a Quote
+                  {t.pricing.requestQuote}
                 </a>
               </div>
             </div>
@@ -392,8 +369,8 @@ export default function Pricing() {
         {/* Trust Section */}
         <section className="mt-20 text-center">
           <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-8 backdrop-blur-xl">
-            <h3 className="mb-4 text-3xl font-bold text-white">Still have questions?</h3>
-            <p className="mb-6 text-zinc-300">Our team is here to help you choose the perfect plan and answer any questions.</p>
+            <h3 className="mb-4 text-3xl font-bold text-white">{t.pricing.trust.title}</h3>
+            <p className="mb-6 text-zinc-300">{t.pricing.trust.description}</p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <a 
                 href={getBookingLink()} 
@@ -401,10 +378,10 @@ export default function Pricing() {
                 rel="noopener noreferrer"
                 className="rounded-xl bg-gradient-to-r from-[#8B7CDF] to-[#60A5FA] px-6 py-3 font-semibold text-white transition-all hover:scale-105"
               >
-                Schedule Free Consultation
+                {t.pricing.trust.consultation}
               </a>
               <a href="mailto:hello@smartxstay.com" className="rounded-xl border border-white/20 bg-white/5 px-6 py-3 font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10">
-                Email Us Directly
+                {t.pricing.trust.email}
               </a>
             </div>
           </div>

@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import Spline from "@splinetool/react-spline";
 import { trackViewContent } from "../../lib/marketing/metaPixel";
-import { useCountryDetection } from "../hooks/useCountryDetection";
+import { useLanguageStore } from "../stores/language";
 
 // Disable GSAP snap/auto-advance for Spline sync
 const ENABLE_TIMELINE_SNAP = false;
@@ -39,19 +39,7 @@ function ensureGsapRegistered() {
   }
 }
 
-const FEATURES: Feature[] = [
-  { id: "welcome", title: "Welcome Message", desc: "A warm, personal greeting upon arrival. The perfect first impression without extra effort.", bullets: ["Personalised hello", "Arrival tips", "Instant comfort"] },
-  { id: "checkin", title: "Check-in / Check-out & Wi-Fi", desc: "Clear arrival/departure instructions and Wi-Fi details in one place (including copy button).", bullets: ["One-tap Wi‑Fi copy", "Directions & times", "No confusion"] },
-  { id: "rules", title: "House Rules & Instructions", desc: "Simple, practical guidelines for a peaceful stay without misunderstandings.", bullets: ["Quiet hours", "Appliance guides", "No guesswork"] },
-  { id: "info", title: "Additional Information", desc: "Breakfast, sauna, parking… little details that make a big difference.", bullets: ["Breakfast times", "Parking & sauna", "Small but vital"] },
-  { id: "reservations", title: "Reservations & Extras", desc: "Book a massage, bike rental, restaurant table, or purchase local goods – in one click.", bullets: ["One‑click add‑ons", "Upsell ready", "Instant booking"] },
-  { id: "food", title: "Local Cuisine & Bars", desc: "Closest and best places with direct links and directions.", bullets: ["Top picks", "Open hours", "Quick directions"] },
-  { id: "activities", title: "Activities & Attractions", desc: "Tours, events, landmarks, and parking – all with navigation.", bullets: ["Tours & tickets", "Parking info", "Maps ready"] },
-  { id: "routes", title: "Hiking & Cycling Routes", desc: "Google Maps integration; guests always know where and how to get there.", bullets: ["GPX / Maps", "Clear difficulty", "Offline friendly"] },
-  { id: "services", title: "Nearby Services", desc: "Bakeries, shops, pharmacies, taxis, emergency contacts – quickly and safely accessible.", bullets: ["Essentials nearby", "Emergency ready", "Trustworthy"] },
-  { id: "contact", title: "Contact", desc: "Host just one click away. Call or message without hassle.", bullets: ["One-tap call", "WhatsApp/SMS", "Always reachable"] },
-  { id: "reviews", title: "Reviews", desc: "End-of-stay reminder; get more reviews with less effort.", bullets: ["Smart reminder", "Direct links", "More 5★"] },
-];
+
 
 // Mapping from feature IDs to exact Spline state names
 const STATE_NAME_BY_ID: Record<string, string> = {
@@ -181,7 +169,8 @@ function PinnedPhone({
 }
 
 function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () => void; onSecondaryClick: () => void; phone?: React.ReactNode }) {
-  const { getBookingLink } = useCountryDetection();
+  const { getBookingLink, getTranslation } = useLanguageStore();
+  const t = getTranslation();
   return (
     <section aria-labelledby="hero-heading" className="py-32 lg:py-70">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -189,21 +178,21 @@ function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () 
           {/* Kicker - top left for F-pattern */}
           <div className="mb-8">
             <span className="inline-flex items-center rounded-full bg-violet-600/10 px-4 py-1.5 text-sm font-medium text-violet-400 ring-1 ring-inset ring-violet-600/20">
-              Smart Stay Platform
+              {t.hero.platform}
             </span>
           </div>
           
           {/* Main headline - scannable hierarchy */}
           <h1 id="hero-heading" className="text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Clear guest guides.
-            <span className="text-violet-400"> Fewer questions.</span>
+            {t.hero.title}
+            <span className="text-violet-400">{t.hero.titleHighlight}</span>
             <br />
-            <span className="text-zinc-300">Happier stays.</span>
+            <span className="text-zinc-300">{t.hero.titleSubtitle}</span>
           </h1>
           
           {/* Supporting copy - increased line height for better scanning */}
           <p className="mt-8 text-xl leading-8 text-zinc-300 max-w-2xl mx-auto">
-            Share everything guests need to know — from Wi‑Fi to local tips — in a beautiful, mobile‑first guide that reduces support requests and improves guest satisfaction.
+            {t.hero.description}
           </p>
           
           {/* Action buttons - prominent primary action */}
@@ -215,7 +204,7 @@ function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () 
               aria-label="Book a Demo" 
               className="w-64 sm:w-auto inline-flex items-center justify-center rounded-xl bg-violet-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-violet-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-colors"
             >
-              Book a Call
+              {t.hero.bookCall}
               <svg className="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
               </svg>
@@ -225,7 +214,7 @@ function Hero({ onPrimaryClick, onSecondaryClick, phone }: { onPrimaryClick: () 
               onClick={onSecondaryClick} 
               className="w-64 sm:w-auto inline-flex items-center justify-center rounded-xl border border-zinc-600 bg-transparent px-8 py-4 text-lg font-medium text-zinc-300 hover:border-zinc-500 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 transition-colors"
             >
-              See Features
+              {t.hero.seeFeatures}
             </button>
           </div>
         </div>
@@ -470,54 +459,7 @@ function FeatureTextSwitcher({ features, activeIndex, reduced }: { features: Fea
   );
 }
 
-function MobileActiveText({ feature, reduced }: { feature: Feature; reduced: boolean; }) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const featureIndex = FEATURES.findIndex(f => f.id === feature.id);
-  
-  useEffect(() => {
-    if (reduced || !ref.current) return;
-    ensureGsapRegistered();
-    gsap.fromTo(ref.current, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" });
-  }, [feature.id, reduced]);
-  
-  return (
-    <div ref={ref} className="relative">
-      <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-sm rounded-2xl border border-zinc-700/50 p-6">
-        {/* Feature number badge */}
-        <div className="mb-4">
-          <span className="inline-flex items-center rounded-full bg-violet-600/20 px-3 py-1.5 text-sm font-medium text-violet-300">
-            {String(featureIndex + 1).padStart(2, '0')}
-          </span>
-        </div>
-        
-        {/* Title with better hierarchy */}
-        <h3 className="text-xl font-bold text-white leading-tight mb-3">
-          {feature.title}
-        </h3>
-        
-        {/* Description with optimal line height */}
-        <p className="text-base text-zinc-200 leading-7 mb-5">
-          {feature.desc}
-        </p>
-        
-        {/* Benefits with improved scanning */}
-        {feature.bullets && feature.bullets.length > 0 && (
-          <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wide">Key Benefits</h4>
-            <ul className="space-y-2.5">
-              {feature.bullets.map((b, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <div className="mt-2 h-1.5 w-1.5 rounded-full bg-violet-400 flex-shrink-0"></div>
-                  <span className="text-sm text-zinc-300 leading-6">{b}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+
 
 function MobileProgressBar({ progress, features, onStepClick, reduced }: { progress: number; features: Feature[]; onStepClick: (index: number) => void; reduced: boolean; }) {
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -562,6 +504,8 @@ function MobileProgressBar({ progress, features, onStepClick, reduced }: { progr
 }
 
 function MobileZigZagBlocks({ reduced }: { reduced: boolean }) {
+  const { getTranslation } = useLanguageStore();
+  const t = getTranslation();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -625,7 +569,7 @@ function MobileZigZagBlocks({ reduced }: { reduced: boolean }) {
         <div ref={containerRef} className="space-y-5">
           {blocks.map((num) => {
             const label = String(num).padStart(2, "0");
-            const feature = FEATURES[num - 1];
+            const feature = t.features[num - 1];
             return (
               <div
                 key={label}
@@ -681,14 +625,15 @@ function MobileZigZagBlocks({ reduced }: { reduced: boolean }) {
 }
 
 function FinalCTA() {
-  const { getBookingLink } = useCountryDetection();
+  const { getBookingLink, getTranslation } = useLanguageStore();
+  const t = getTranslation();
   
   return (
     <section aria-labelledby="cta-title" className="py-20">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-zinc-900/60 shadow-sm ring-1 ring-white/10 p-10 md:p-14 text-center">
-          <h2 id="cta-title" className="text-3xl md:text-4xl font-bold text-white">Book a Free Call</h2>
-          <p className="mt-3 text-zinc-300 max-w-2xl mx-auto">See how Smart Stay reduces questions and elevates guest experience in minutes.</p>
+          <h2 id="cta-title" className="text-3xl md:text-4xl font-bold text-white">{t.finalCTA.title}</h2>
+          <p className="mt-3 text-zinc-300 max-w-2xl mx-auto">{t.finalCTA.description}</p>
           <div className="mt-6">
             <a 
               href={getBookingLink()} 
@@ -697,7 +642,7 @@ function FinalCTA() {
               aria-label="Book a Free Demo" 
               className="inline-flex items-center rounded-lg bg-violet-600 px-6 py-3 text-white font-medium shadow-sm hover:bg-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
             >
-              Book a Call
+              {t.finalCTA.bookCall}
             </a>
           </div>
         </div>
@@ -709,7 +654,9 @@ function FinalCTA() {
 export default function Demo() {
   const reduced = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [screen, setScreen] = useState<string>(FEATURES[0].id);
+  const { getBookingLink, getTranslation } = useLanguageStore();
+  const t = getTranslation();
+  const [screen, setScreen] = useState<string>(t.features[0].id);
   const featuresRef = useRef<HTMLElement | null>(null);
   const [filled, setFilled] = useState<Set<string>>(new Set());
   const currentIndexRef = useRef<number>(0);
@@ -722,9 +669,8 @@ export default function Demo() {
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
   const sectionsRef = useRef<HTMLElement[]>([]);
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const { getBookingLink } = useCountryDetection();
 
-  const ids = useMemo(() => FEATURES.map((f) => f.id), []);
+  const ids = useMemo(() => t.features.map((f) => f.id), [t.features]);
 
   const handleEnter = (id: string) => {
     // Always update the UI screen label
@@ -757,15 +703,15 @@ export default function Demo() {
 
   const highestFilledIndex = useMemo(() => {
     let max = -1;
-    FEATURES.forEach((f, i) => {
+    t.features.forEach((f, i) => {
       if (filled.has(f.id)) max = Math.max(max, i);
     });
     return max;
-  }, [filled]);
+  }, [filled, t.features]);
 
   const mobileProgress = useMemo(() => {
-    return FEATURES.length > 1 && highestFilledIndex >= 0 ? highestFilledIndex / (FEATURES.length - 1) : 0;
-  }, [highestFilledIndex]);
+    return t.features.length > 1 && highestFilledIndex >= 0 ? highestFilledIndex / (t.features.length - 1) : 0;
+  }, [highestFilledIndex, t.features]);
 
   useEffect(() => {
     if (highestFilledIndex >= 0) {
@@ -852,8 +798,8 @@ export default function Demo() {
 
   // Helper to scroll to a specific section aligned with the trigger position
   const scrollToSection = (index: number) => {
-    const clamped = Math.max(0, Math.min(FEATURES.length - 1, index));
-    const el = document.getElementById(`${FEATURES[clamped].id}-section`);
+    const clamped = Math.max(0, Math.min(t.features.length - 1, index));
+    const el = document.getElementById(`${t.features[clamped].id}-section`);
     if (!el) return;
     const stickyHeader = 0; // adjust if needed
     const offsetY = window.innerHeight * 0.7 - stickyHeader; // align element top to 70% viewport line
@@ -883,8 +829,8 @@ export default function Demo() {
         anticipatePin: 1,
         snap: {
           snapTo: (value: number) => {
-            const idx = Math.round(value * (FEATURES.length - 1));
-            return idx / (FEATURES.length - 1);
+                const idx = Math.round(value * (t.features.length - 1));
+    return idx / (t.features.length - 1);
           },
           duration: { min: 0.2, max: 0.5 },
           delay: 0.05,
@@ -905,7 +851,7 @@ export default function Demo() {
     const triggerAdvance = (direction: 1 | -1) => {
       if (cooldownRef.current) return;
       const nextIndex = currentIndexRef.current + direction;
-      if (nextIndex < 0 || nextIndex > FEATURES.length - 1) {
+      if (nextIndex < 0 || nextIndex > t.features.length - 1) {
         resetGate();
         return;
       }
@@ -1027,8 +973,8 @@ export default function Demo() {
             </div>
             {/* Mobile progress bar removed as requested */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mt-8">
-              <FeatureRail activeIndex={activeIndex} total={FEATURES.length} ids={ids} filledIds={filled} features={FEATURES} reduced={reduced} onJump={(i) => {
-                const el = document.getElementById(`${FEATURES[i].id}-section`);
+                      <FeatureRail activeIndex={activeIndex} total={t.features.length} ids={ids} filledIds={filled} features={t.features} reduced={reduced} onJump={(i) => {
+          const el = document.getElementById(`${t.features[i].id}-section`);
                 if (el) {
                   // Calculate precise offset to match ScrollTrigger "start: top 70%" exactly
                   const rect = el.getBoundingClientRect();
@@ -1044,7 +990,7 @@ export default function Demo() {
 
               {/* Invisible scroll triggers */}
               <div className="lg:col-span-4">
-                {FEATURES.map((f) => (
+                {t.features.map((f) => (
                   <div id={`${f.id}-section`} key={f.id}>
                     <FeatureStep id={f.id} title={f.title} desc={f.desc} bullets={f.bullets} onEnter={handleEnter} onFill={handleFill} onUnfill={handleUnfill} reduced={reduced} visuallyHidden />
                   </div>

@@ -1,8 +1,21 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguageStore } from '../stores/language';
 
 const Footer: React.FC = () => {
+  const { selectedLanguage, setLanguage, getBookingLink, getTranslation } = useLanguageStore();
+  const t = getTranslation();
+
+  const languages = [
+    { code: 'EN', flag: '🇬🇧' },
+    { code: 'SL', flag: '🇸🇮' },
+    { code: 'HR', flag: '🇭🇷' }
+  ];
+
+  const currentLanguage = languages.find(lang => lang.code === selectedLanguage) || languages[0];
   return (
     <footer className="footer">
       {/* Subtle top border with pastel purple glow */}
@@ -21,13 +34,13 @@ const Footer: React.FC = () => {
             />
           </div>
           <p className="brand-tagline">
-            Revolutionizing your stay experience with smart technology and premium comfort.
+            {t.footer.tagline}
           </p>
         </div>
 
         {/* Center Section - Navigation */}
         <div className="footer-section nav-section">
-          <h4 className="section-title">Quick Links</h4>
+          <h4 className="section-title">{t.footer.quickLinks}</h4>
           <nav className="footer-nav">
             <div className="nav-column">
               <Link href="/" className="nav-link">Home</Link>
@@ -42,9 +55,9 @@ const Footer: React.FC = () => {
           </nav>
         </div>
 
-        {/* Right Section - Social Media */}
+        {/* Right Section - Social Media & Language */}
         <div className="footer-section social-section">
-          <h4 className="section-title">Connect With Us</h4>
+          <h4 className="section-title">{t.footer.connectWithUs}</h4>
           <div className="social-icons">
             <a 
               href="https://www.facebook.com/SmartxStay/" 
@@ -82,12 +95,43 @@ const Footer: React.FC = () => {
               </svg>
             </a>
           </div>
+
+          {/* Language Section - Under Social Links */}
+          <div className="language-section" style={{ marginTop: '1.5rem', color: '#ffffff' }}>
+            <h4 className="section-title" style={{ fontSize: '1rem', marginBottom: '0.75rem', color: '#ffffff', fontWeight: '600' }}>Language</h4>
+            <details className="language-dropdown">
+              <summary className="language-current" aria-haspopup="listbox" role="button" style={{ color: '#ffffff', fontSize: '1rem', fontWeight: '500' }}>
+                <span className="language-flag" aria-hidden style={{ fontSize: '1.2rem' }}>{currentLanguage.flag}</span>
+                <span className="language-code" style={{ color: '#ffffff', fontSize: '1rem', fontWeight: '500' }}>{currentLanguage.code}</span>
+                <span className="language-caret" aria-hidden style={{ color: '#ffffff' }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 10l5 5 5-5z"/>
+                  </svg>
+                </span>
+              </summary>
+              <ul className="language-menu" role="listbox" aria-label="Select language">
+                {languages.map((language) => (
+                  <li key={language.code} role="option" aria-selected={selectedLanguage === language.code}>
+                    <button 
+                      type="button" 
+                      className="language-option"
+                      onClick={() => setLanguage(language.code)}
+                      style={{ color: '#ffffff', fontSize: '0.95rem', fontWeight: '500' }}
+                    >
+                      <span className="language-flag" aria-hidden style={{ fontSize: '1.1rem' }}>{language.flag}</span>
+                      <span className="language-code" style={{ color: '#ffffff', fontSize: '0.95rem', fontWeight: '500' }}>{language.code}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          </div>
         </div>
       </div>
 
       {/* Copyright Section */}
       <div className="footer-bottom">
-        <p className="copyright">© 2025 SmartStay. All Rights Reserved.</p>
+        <p className="copyright">{t.footer.copyright}</p>
       </div>
     </footer>
   );
