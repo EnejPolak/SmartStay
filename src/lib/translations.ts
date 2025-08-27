@@ -330,7 +330,7 @@ export interface Translation {
 export const translations: Record<string, Translation> = {
   EN: {
     hero: {
-      platform: "Smart Stay Platform",
+      platform: "SmartxStay Platform",
       title: "Clear guest guides.",
       titleHighlight: " Fewer questions.",
       titleSubtitle: "Happier stays.",
@@ -353,7 +353,7 @@ export const translations: Record<string, Translation> = {
     ],
     finalCTA: {
       title: "Book a Free Call",
-      description: "See how Smart Stay reduces questions and elevates guest experience in minutes.",
+      description: "See how SmartxStay reduces questions and elevates guest experience in minutes.",
       bookCall: "Book a Call"
     },
     homeHero: {
@@ -376,13 +376,13 @@ export const translations: Record<string, Translation> = {
       tagline: "Revolutionizing your stay experience with smart technology and premium comfort.",
       quickLinks: "Quick Links",
       connectWithUs: "Connect With Us",
-      copyright: "© 2025 SmartStay. All Rights Reserved."
+      copyright: "© 2025 SmartxStay. All Rights Reserved."
     },
     contact: {
       title: "Get in Touch",
       subtitle: "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
-      pageTitle: "Contact - SmartStay",
-      pageDescription: "Get in touch with us. We answer your questions about SmartStay solutions for digital hospitality experiences.",
+      pageTitle: "Contact - SmartxStay",
+      pageDescription: "Get in touch with us. We answer your questions about SmartxStay solutions for digital hospitality experiences.",
       heroTitle: {
         contact: "Contact",
         us: "Us"
@@ -544,7 +544,7 @@ export const translations: Record<string, Translation> = {
     reviews: {
       title: "What our",
       titleHighlight: "partners say",
-      subtitle: "Real feedback from property owners who transformed their guest experience with SmartStay",
+      subtitle: "Real feedback from property owners who transformed their guest experience with SmartxStay",
       noReviews: "No reviews available at the moment.",
       retryButton: "Try Again"
     },
@@ -570,7 +570,7 @@ export const translations: Record<string, Translation> = {
         }
       ],
       ctaTitle: "Ready to transform your guest experience?",
-      ctaDescription: "Join hundreds of property owners who've already eliminated guest questions with SmartStay.",
+      ctaDescription: "Join hundreds of property owners who've already eliminated guest questions with SmartxStay.",
       ctaButton: "Get Started Today"
     },
     cookieBanner: {
@@ -607,7 +607,7 @@ export const translations: Record<string, Translation> = {
         {
           name: "Nik",
           role: "Co-Founder",
-          description: "Product strategist driving growth and innovation, ensuring SmartStay stays ahead of industry trends and user needs."
+          description: "Product strategist driving growth and innovation, ensuring SmartxStay stays ahead of industry trends and user needs."
         },
         {
           name: "Eva",
@@ -624,16 +624,16 @@ export const translations: Record<string, Translation> = {
     thankYou: {
       title: "Thank You!",
       subtitle: "We've received your demo request and will be in touch shortly.",
-      description: "Our team will contact you within 24 hours to schedule your personalized demo and show you how SmartStay can transform your guest experience.",
+      description: "Our team will contact you within 24 hours to schedule your personalized demo and show you how SmartxStay can transform your guest experience.",
       returnHome: "Return to Home",
       exploreDemo: "Explore our demo →"
     },
     blog: {
-      title: "SmartStay Blog",
+      title: "SmartxStay Blog",
       subtitle: "Insights, tips, and stories from the hospitality industry",
       featuredArticle: "Featured Article",
       minRead: "min read",
-      teamName: "SmartStay Team",
+      teamName: "SmartxStay Team",
       readMore: "Read More",
       noPosts: "No posts found",
       noPostsDescription: "We couldn't find any posts matching your criteria. Try adjusting your filters or check back later.",
@@ -648,7 +648,7 @@ export const translations: Record<string, Translation> = {
     madEmotions: {
       title: "Stop losing money on",
       titleHighlight: "endless guest questions",
-      subtitle: "Property owners waste 270+ hours per season answering the same questions. SmartStay eliminates this completely.",
+      subtitle: "Property owners waste 270+ hours per season answering the same questions. SmartxStay eliminates this completely.",
       painPoints: [
         {
           id: 1,
@@ -709,7 +709,7 @@ export const translations: Record<string, Translation> = {
       ]
     },
     solution: {
-      title: "SmartStay solves this",
+      title: "SmartxStay solves this",
       titleHighlight: "automatically",
       subtitle: "One digital guide eliminates 95% of guest questions while you sleep",
       features: [
@@ -725,7 +725,7 @@ export const translations: Record<string, Translation> = {
         },
         {
           title: "Set it and forget it",
-          description: "Once set up, SmartStay runs automatically. No maintenance, no updates, no technical headaches. Pure passive income.",
+          description: "Once set up, SmartxStay runs automatically. No maintenance, no updates, no technical headaches. Pure passive income.",
           tagline: "True automation"
         }
       ]
@@ -734,7 +734,7 @@ export const translations: Record<string, Translation> = {
       badge: "FEATURES",
       title: "Everything guests need",
       titleHighlight: "in one place",
-      subtitle: "From WiFi passwords to local recommendations, SmartStay covers every aspect of the guest experience.",
+      subtitle: "From WiFi passwords to local recommendations, SmartxStay covers every aspect of the guest experience.",
       features: [
         {
           title: "Welcome Message"
@@ -775,11 +775,11 @@ export const translations: Record<string, Translation> = {
   },
   SL: {
     hero: {
-      platform: "Smart Stay Platform",
-      title: "Jasni vodiči za goste.",
+      platform: "SmartxStay Platform",
+      title: "Pametni vodiči za goste.",
       titleHighlight: " Manj vprašanj.",
       titleSubtitle: "Srečnejši obiski.",
-      description: "Delite vse, kar gostje potrebujejo vedeti — od Wi-Fi do lokalnih nasvetov — v lepem, mobilno prilagojenem vodiču, ki zmanjšuje zahteve za podporo in izboljšuje zadovoljstvo gostov.",
+      description: "Odgovorite na vprašanja, še preden jih gostje postavijo – in navdušite z brezhibno storitvijo.",
       bookCall: "Naroči klic",
       seeFeatures: "Oglej si funkcije"
     },
@@ -798,15 +798,15 @@ export const translations: Record<string, Translation> = {
     ],
     finalCTA: {
       title: "Naroči brezplačen klic",
-      description: "Oglejte si, kako Smart Stay zmanjšuje vprašanja in izboljšuje izkušnjo gostov v minutah.",
+      description: "Oglejte si, kako SmartxStay zmanjšuje vprašanja in izboljšuje izkušnjo gostov v minutah.",
       bookCall: "Naroči klic"
     },
     homeHero: {
       title: "Smart",
-      subtitle: "Transformirajte izkušnjo gostov z",
-      subtitleHighlight: "Digitalno inovacijo",
+      subtitle: "Za vse gostitelje, ki imajo rade",
+      subtitleHighlight: "svoje goste",
       description: "Ustavite neskončna vprašanja gostov. Ustvarite brezhibne digitalne vodiče s hišnim pravilnikom, lokalnimi priporočili in takojšnjo podporo.",
-      bookCall: "NAROČI KLIC",
+      bookCall: "SPOZNAJMO SE",
       seeDemo: "Oglej si 2min demo"
     },
     navbar: {
@@ -821,13 +821,13 @@ export const translations: Record<string, Translation> = {
       tagline: "Revolucionarizacija vaše izkušnje bivanja s pametno tehnologijo in vrhunskim udobjem.",
       quickLinks: "Hitre povezave",
       connectWithUs: "Povežite se z nami",
-      copyright: "© 2025 SmartStay. Vse pravice pridržane."
+      copyright: "© 2025 SmartxStay. Vse pravice pridržane."
     },
     contact: {
       title: "Stopite v stik",
-      subtitle: "Radi bi slišali od vas. Pošljite nam sporočilo in odgovorili bomo čim prej.",
-      pageTitle: "Kontaktirajte nas - SmartStay",
-      pageDescription: "Stopite v stik z nami. Odgovarjamo na vaša vprašanja o SmartStay rešitvah za digitalne gostinske izkušnje.",
+      subtitle: "Veseli bomo vašega sporočila, odogovorili bomo v čim krajšem času.",
+      pageTitle: "Kontaktirajte nas - SmartxStay",
+      pageDescription: "Stopite v stik z nami. Odgovarjamo na vaša vprašanja o SmartxStay rešitvah za digitalne gostinske izkušnje.",
       heroTitle: {
         contact: "Kontaktirajte",
         us: "nas"
@@ -840,7 +840,7 @@ export const translations: Record<string, Translation> = {
       },
       company: {
         name: "SmartxStay",
-        tagline: "Digitalne rešitve za najem nepremičnin",
+        tagline: "Spremeni vsako nastanitev in destinacijo v najboljšo izkušnjo.",
         description: "Pomagamo lastnikom stanovanj in hiš ustvariti boljše izkušnje gostov s pametnimi digitalnimi vodiči. Naša misija je zmanjšati vprašanja gostov in narediti upravljanje nepremičnin brez napora za lastnike."
       },
       contactMethods: {
@@ -980,16 +980,16 @@ export const translations: Record<string, Translation> = {
         title: "Kaj je vključeno:"
       },
       trust: {
-        title: "Še vedno imate vprašanja?",
+        title: "Vas še kaj zanima?",
         description: "Naša ekipa je tu, da vam pomaga izbrati popoln načrt in odgovori na vsa vprašanja.",
-        consultation: "Naročite brezplačno posvetovanje",
-        email: "Pišite nam neposredno"
+        consultation: "Spoznajmo se na sestanku",
+        email: "Vprašajte nas"
       }
     },
     madEmotions: {
-      title: "Nehajte izgubljati denar za",
-      titleHighlight: "neskončna vprašanja gostov",
-      subtitle: "Lastniki nepremičnin zapravijo 270+ ur na sezono z odgovarjanjem na ista vprašanja. SmartStay to popolnoma odpravlja.",
+      title: "Nehajte izgubljajte čas za",
+      titleHighlight: "neskončna vprašanja vaših gostov",
+      subtitle: "Lastniki nepremičnin zapravijo 270+ ur na sezono z odgovarjanjem na ista vprašanja. SmartxStay to popolnoma odpravlja.",
       painPoints: [
         {
           id: 1,
@@ -1050,23 +1050,23 @@ export const translations: Record<string, Translation> = {
       ]
     },
     solution: {
-      title: "SmartStay to reši",
+      title: "SmartxStay to reši",
       titleHighlight: "avtomatsko",
       subtitle: "Eden digitalni vodič odpravlja 95% vprašanj gostov, medtem ko spite",
       features: [
         {
           title: "Takojšnji odgovori, 24/7",
-          description: "Gostje takoj najdejo gesla za WiFi, hišna pravila in lokalna priporočila. Ni več prekinitev ob 2h zjutraj vašega družinskega časa.",
+          description: "Gostje takoj najdejo gesla za WiFi, hišna pravila in lokalna priporočila. Nič več klicev kako se prižge jakuzzi ob 2h zjutraj.",
           tagline: "Pridobite nazaj svoje življenje"
         },
         {
-          title: "Osredotočite se na pomembno",
-          description: "Nehajte odgovarjati na ista vprašanja vedno znova. Porabite čas za rast vašega podjetja ali uživanje življenja, medtem ko se gostje sami pomagajo.",
+          title: "Vaš čas je dragocen",
+          description: "Namesto ponavljanja istih stvari, raje uživajte v stvareh, ki jih imate radi - gostje pa si pomagajo sami.",
           tagline: "Delajte pametneje, ne težje"
         },
         {
           title: "Nastavite in pozabite",
-          description: "Ko je nastavljeno, SmartStay deluje avtomatsko. Brez vzdrževanja, brez posodobitev, brez tehničnih težav. Čisti pasivni dohodek.",
+          description: "Ko je SmartxStay nastavljen, deluje avtomatsko - za vzdrževanje in posodobitve poskrbimo mi.",
           tagline: "Prava avtomatizacija"
         }
       ]
@@ -1074,8 +1074,8 @@ export const translations: Record<string, Translation> = {
     demoFeatures: {
       badge: "Revolucionarna tehnologija",
       title: "Prihodnost",
-      titleHighlight: "izkušnje gostov",
-      subtitle: "Odkrijte, kako SmartStay spreminja tradicionalno gostinstvo z najsodobnejšo avtomatizacijo, inteligentno podporo gostom in brezhibnimi digitalnimi izkušnjami, ki navdušijo goste in vam prihranijo čas.",
+      titleHighlight: "turizma",
+      subtitle: "Vse panoge se digitalizirajo, večino gostiteljev oddaja kot v letu 2007. Napovedi pravijo da bo SmartxStay v letu 2030 v turizmu nepogrešljiv - kot wifi.",
       features: [
         { title: "Digitalni vodič za goste" },
         { title: "Takojšnji dostop do informacij" },
@@ -1084,9 +1084,9 @@ export const translations: Record<string, Translation> = {
       ctaText: "Oglejte si demo"
     },
     reviews: {
-      title: "Kaj pravijo naši",
-      titleHighlight: "partnerji",
-      subtitle: "Resnične povratne informacije lastnikov nepremičnin, ki so preobrazili izkušnjo gostov s SmartStay",
+      title: "Kaj pravijo naše",
+      titleHighlight: "stranke",
+      subtitle: "S ponosom sodelujemo s Slovenia Outdoor, uradnim digitalnim vodnikom po pohodniških in kolesarskih poteh po Sloveniji. Skupaj zagotavljamo preverjene in varne GPX poti, dostopne tudi brez povezave, ki vas vodijo po najbolj očarljivih kotičkih naše dežele.",
       noReviews: "Trenutno ni na voljo nobenih ocen.",
       retryButton: "Poskusi znova"
     },
@@ -1096,23 +1096,23 @@ export const translations: Record<string, Translation> = {
       subtitle: "Trije preprosti koraki. Nič tehničnega znanja potrebnega. Maksimalni rezultati.",
       steps: [
         {
-          title: "Delite podrobnosti o nepremičnini",
-          description: "Povejte nam o svoji nepremičnini v hitrem 10-minutnem klicu. Gesla za WiFi, hišna pravila, lokalni favoriti—mi poskrbimo za ostalo.",
+          title: "Spoznavni brainstorming",
+          description: "Polurni sestanek z vašo ekipo, kjer skupaj prepoznamo potrebe in želene funkcionalnosti. Trudimo se, da je zbiranje informacij za vas hitro in enostavno.",
           time: "30 minut vašega časa"
         },
         {
-          title: "Mi zgradimo vaš digitalni vodič",
-          description: "Naša ekipa ustvari lep, mobilno optimiziran vodič z vsemi informacijami o vaši nepremičnini. Od vas ni potrebno nobenega dela.",
+          title: "Mi vzpostavimo vaš SmartxStay",
+          description: "Naša izkušena ekipa za vas zasnuje, oblikuje in vzpostavi personaliziran SmartxStay — popolnoma prilagojen vašim željam in potrebam.",
           time: "Zgrajeno v manj kot mesecu"
         },
         {
-          title: "Lansirajte in uživajte rezultate",
-          description: "Vaš digitalni vodič postane aktiven. Gostje dobijo takojšnje odgovore, vi dobite mir. Začnite videti rezultate takoj.",
+          title: "Brezskrbno oddajanje",
+          description: "Prihranite čas, medtem ko vaši gostje kar najbolje izkoristijo svoje bivanje. Vi brez skrbi, oni z nasmehom.",
           time: "Rezultati od prvega dne"
         }
       ],
       ctaTitle: "Pripravljeni za preobrazbo izkušnje gostov?",
-      ctaDescription: "Pridružite se stotinam lastnikov nepremičnin, ki so že odpravili vprašanja gostov s SmartStay.",
+      ctaDescription: "Pridružite se stotinam lastnikov nepremičnin, ki so že odpravili vprašanja gostov s SmartxStay.",
       ctaButton: "Začnite danes"
     },
     cookieBanner: {
@@ -1149,7 +1149,7 @@ export const translations: Record<string, Translation> = {
         {
           name: "Nik",
           role: "Součelovnik",
-          description: "Produktni strateg, ki poganja rast in inovacije, zagotavlja, da SmartStay ostane pred industrijskimi trendi in potrebami uporabnikov."
+          description: "Produktni strateg, ki poganja rast in inovacije, zagotavlja, da SmartxStay ostane pred industrijskimi trendi in potrebami uporabnikov."
         },
         {
           name: "Eva",
@@ -1166,16 +1166,16 @@ export const translations: Record<string, Translation> = {
     thankYou: {
       title: "Hvala!",
       subtitle: "Prejeli smo vašo zahtevo za demo in se bomo kmalu oglasili.",
-      description: "Naša ekipa vas bo kontaktirala v 24 urah, da dogovori vaš personaliziran demo in vam pokaže, kako SmartStay lahko preobrazimo izkušnjo vaših gostov.",
+      description: "Naša ekipa vas bo kontaktirala v 24 urah, da dogovori vaš personaliziran demo in vam pokaže, kako SmartxStay lahko preobrazimo izkušnjo vaših gostov.",
       returnHome: "Nazaj na domačo stran",
       exploreDemo: "Raziskujte naš demo →"
     },
     blog: {
-      title: "SmartStay Blog",
+      title: "SmartxStay Blog",
       subtitle: "Vpogledi, nasveti in zgodbe iz gostinske industrije",
       featuredArticle: "Predstavljen članek",
       minRead: "min branja",
-      teamName: "SmartStay ekipa",
+      teamName: "SmartxStay ekipa",
       readMore: "Preberi več",
       noPosts: "Ni najdenih objav",
       noPostsDescription: "Ni našli nobenih objav, ki bi ustrezale vašim kriterijem. Poskusite prilagoditi filtre ali preverite kasneje.",
@@ -1190,8 +1190,8 @@ export const translations: Record<string, Translation> = {
   },
   HR: {
     hero: {
-      platform: "Smart Stay Platform",
-      title: "Jasni vodiči za goste.",
+      platform: "SmartxStay Platform",
+      title: "Pametni vodiči za goste.",
       titleHighlight: " Manje pitanja.",
       titleSubtitle: "Sretniji boravci.",
       description: "Podijelite sve što gosti trebaju znati — od Wi-Fi do lokalnih savjeta — u lijepom, mobilno prilagođenom vodiču koji smanjuje zahtjeve za podršku i poboljšava zadovoljstvo gostiju.",
@@ -1213,7 +1213,7 @@ export const translations: Record<string, Translation> = {
     ],
     finalCTA: {
       title: "Naruči besplatan poziv",
-      description: "Pogledajte kako Smart Stay smanjuje pitanja i podiže iskustvo gostiju u minutama.",
+      description: "Pogledajte kako SmartxStay smanjuje pitanja i podiže iskustvo gostiju u minutama.",
       bookCall: "Naruči poziv"
     },
     homeHero: {
@@ -1236,13 +1236,13 @@ export const translations: Record<string, Translation> = {
       tagline: "Revolucionarizacija vašeg iskustva boravka s pametnom tehnologijom i vrhunskim udobnostima.",
       quickLinks: "Brze poveznice",
       connectWithUs: "Povežite se s nama",
-      copyright: "© 2025 SmartStay. Sva prava pridržana."
+      copyright: "© 2025 SmartxStay. Sva prava pridržana."
     },
     contact: {
       title: "Javite nam se",
       subtitle: "Voljeli bismo čuti od vas. Pošaljite nam poruku i odgovorit ćemo što prije.",
-      pageTitle: "Kontaktirajte nas - SmartStay",
-      pageDescription: "Javite nam se. Odgovaramo na vaša pitanja o SmartStay rješenjima za digitalna ugostiteljska iskustva.",
+      pageTitle: "Kontaktirajte nas - SmartxStay",
+      pageDescription: "Javite nam se. Odgovaramo na vaša pitanja o SmartxStay rješenjima za digitalna ugostiteljska iskustva.",
       heroTitle: {
         contact: "Kontaktirajte",
         us: "nas"
@@ -1404,7 +1404,7 @@ export const translations: Record<string, Translation> = {
     madEmotions: {
       title: "Prestanite gubiti novac za",
       titleHighlight: "beskonačna pitanja gostiju",
-      subtitle: "Vlasnici nekretnina gube 270+ sati po sezoni odgovarajući na ista pitanja. SmartStay to potpuno otklanja.",
+      subtitle: "Vlasnici nekretnina gube 270+ sati po sezoni odgovarajući na ista pitanja. SmartxStay to potpuno otklanja.",
       painPoints: [
         {
           id: 1,
@@ -1465,7 +1465,7 @@ export const translations: Record<string, Translation> = {
       ]
     },
     solution: {
-      title: "SmartStay to rješava",
+      title: "SmartxStay to rješava",
       titleHighlight: "automatski",
       subtitle: "Jedan digitalni vodič otklanja 95% pitanja gostiju dok vi spavate",
       features: [
@@ -1481,7 +1481,7 @@ export const translations: Record<string, Translation> = {
         },
         {
           title: "Postavite i zaboravite",
-          description: "Jednom postavljeno, SmartStay radi automatski. Bez održavanja, bez ažuriranja, bez tehničkih glavobolja. Čisti pasivni prihod.",
+          description: "Jednom postavljeno, SmartxStay radi automatski. Bez održavanja, bez ažuriranja, bez tehničkih glavobolja. Čisti pasivni prihod.",
           tagline: "Prava automatizacija"
         }
       ]
@@ -1490,7 +1490,7 @@ export const translations: Record<string, Translation> = {
       badge: "Revolucionarna tehnologija",
       title: "Budućnost",
       titleHighlight: "iskustva gostiju",
-      subtitle: "Otkrijte kako SmartStay transformira tradicionalno ugostiteljstvo s najnovijom automatizacijom, inteligentnom podrškom gostima i besprijekornim digitalnim iskustvima koja oduševljavaju goste dok vam štede vrijeme.",
+      subtitle: "Otkrijte kako SmartxStay transformira tradicionalno ugostiteljstvo s najnovijom automatizacijom, inteligentnom podrškom gostima i besprijekornim digitalnim iskustvima koja oduševljavaju goste dok vam štede vrijeme.",
       features: [
         { title: "Digitalni vodič za goste" },
         { title: "Trenutni pristup informacijama" },
@@ -1501,7 +1501,7 @@ export const translations: Record<string, Translation> = {
     reviews: {
       title: "Što kažu naši",
       titleHighlight: "partneri",
-      subtitle: "Pravi povratni odgovori vlasnika nekretnina koji su transformirali iskustvo gostiju sa SmartStay",
+      subtitle: "Pravi povratni odgovori vlasnika nekretnina koji su transformirali iskustvo gostiju sa SmartxStay",
       noReviews: "Trenutno nema dostupnih recenzija.",
       retryButton: "Pokušaj ponovo"
     },
@@ -1527,7 +1527,7 @@ export const translations: Record<string, Translation> = {
         }
       ],
       ctaTitle: "Spremni za transformaciju iskustva gostiju?",
-      ctaDescription: "Pridružite se stotinama vlasnika nekretnina koji su već eliminirali pitanja gostiju sa SmartStay.",
+      ctaDescription: "Pridružite se stotinama vlasnika nekretnina koji su već eliminirali pitanja gostiju sa SmartxStay.",
       ctaButton: "Započnite danas"
     },
     cookieBanner: {
@@ -1564,7 +1564,7 @@ export const translations: Record<string, Translation> = {
         {
           name: "Nik",
           role: "Suosnivač",
-          description: "Produktni strateg koji pokreće rast i inovacije, osiguravajući da SmartStay ostane ispred industrijskih trendova i korisničkih potreba."
+          description: "Produktni strateg koji pokreće rast i inovacije, osiguravajući da SmartxStay ostane ispred industrijskih trendova i korisničkih potreba."
         },
         {
           name: "Eva",
@@ -1581,16 +1581,16 @@ export const translations: Record<string, Translation> = {
     thankYou: {
       title: "Hvala!",
       subtitle: "Primili smo vaš zahtjev za demo i uskoro ćemo vas kontaktirati.",
-      description: "Naš tim će vas kontaktirati u roku od 24 sata da zakazemo vaš personalizirani demo i pokažemo vam kako SmartStay može transformirati iskustvo vaših gostiju.",
+      description: "Naš tim će vas kontaktirati u roku od 24 sata da zakazemo vaš personalizirani demo i pokažemo vam kako SmartxStay može transformirati iskustvo vaših gostiju.",
       returnHome: "Povratak na početnu",
       exploreDemo: "Istražite naš demo →"
     },
     blog: {
-      title: "SmartStay Blog",
+      title: "SmartxStay Blog",
       subtitle: "Uvidi, savjeti i priče iz ugostiteljske industrije",
       featuredArticle: "Istaknuti članak",
       minRead: "min čitanja",
-      teamName: "SmartStay tim",
+      teamName: "SmartxStay tim",
       readMore: "Pročitaj više",
       noPosts: "Nema pronađenih objava",
       noPostsDescription: "Nismo pronašli objave koje odgovaraju vašim kriterijima. Pokušajte prilagoditi filtere ili provjerite kasnije.",

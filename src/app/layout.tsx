@@ -4,6 +4,7 @@ import "./globals.css";
 import SmoothScrollProvider from "@/components/scrool-animations/SmoothScrollProvider";
 import CookieBanner from "@/components/CookieBanner";
 import RouteTrackingProvider from "@/components/RouteTrackingProvider";
+import LanguageProvider from "@/components/LanguageProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,12 +39,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SmoothScrollProvider>
-          <RouteTrackingProvider>
-            {children}
-            <CookieBanner />
-          </RouteTrackingProvider>
-        </SmoothScrollProvider>
+        <LanguageProvider>
+          <SmoothScrollProvider>
+            <RouteTrackingProvider>
+              {children}
+              <CookieBanner />
+            </RouteTrackingProvider>
+          </SmoothScrollProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
