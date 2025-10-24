@@ -1,32 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import SmoothScrollProvider from "@/components/scrool-animations/SmoothScrollProvider";
-import CookieBanner from "@/components/CookieBanner";
-import RouteTrackingProvider from "@/components/RouteTrackingProvider";
-import LanguageProvider from "@/components/LanguageProvider";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({ 
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "SmartStay - Digital Guest Experience Solutions",
-  description: "Transform your property into a modern, connected experience. SmartStay provides digital solutions for vacation rentals, hotels, and hospitality businesses.",
-  keywords: "vacation rental, hotel management, digital guest experience, hospitality technology, property management",
-  authors: [{ name: "SmartStay Team" }],
-  openGraph: {
-    title: "SmartStay - Digital Guest Experience Solutions",
-    description: "Transform your property into a modern, connected experience with our comprehensive digital solutions.",
-    type: "website",
-    locale: "en_US",
-  },
+  title: "SmartStay",
+  description: "SmartStay application",
 };
 
 export default function RootLayout({
@@ -36,18 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <LanguageProvider>
-          <SmoothScrollProvider>
-            <RouteTrackingProvider>
-              {children}
-              <CookieBanner />
-            </RouteTrackingProvider>
-          </SmoothScrollProvider>
-        </LanguageProvider>
+      <body className={inter.className}>
+        <Navbar />
+        {children}
+        <Footer />
       </body>
     </html>
   );
 }
+

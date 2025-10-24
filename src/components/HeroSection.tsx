@@ -1,160 +1,170 @@
-"use client";
-import React, { useEffect, useRef } from 'react';
-import { useLanguageStore } from '../stores/language';
+'use client';
 
-const HeroSection: React.FC = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLHeadingElement>(null);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const buttonsRef = useRef<HTMLDivElement>(null);
-  const { getBookingLink, getTranslation } = useLanguageStore();
-  const t = getTranslation();
+import React, { useState, useEffect } from 'react';
+
+const HeroSection = () => {
+  const [heroImage, setHeroImage] = useState('');
+  const [overlayType, setOverlayType] = useState('');
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    // Array of available hero images
+    const heroImages = [
+      '/images/hero1SmartxStay.png',
+      '/images/hero2smartxstay.png',
+      '/images/hero3smartxstay.png',
+      '/images/hero4smartxstay.png'
+    ];
     
-    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-    if (prefersReduced) return;
-
-    let gsap: any;
-    let ScrollTrigger: any;
-
-    (async () => {
-      try {
-        const [{ gsap: gsapCore }, stModule] = await Promise.all([
-          import("gsap"),
-          import("gsap/ScrollTrigger"),
-        ]);
-
-        gsap = gsapCore;
-        ScrollTrigger = stModule.ScrollTrigger || stModule.default;
-        
-        if (!gsap || !ScrollTrigger) return;
-        
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Hero entrance animations
-        const tl = gsap.timeline({ delay: 0.3 });
-        
-        tl.fromTo(titleRef.current, 
-          { y: 50, opacity: 0, scale: 0.95 },
-          { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power3.out" }
-        )
-        .fromTo(subtitleRef.current,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
-          "-=0.6"
-        )
-        .fromTo(descriptionRef.current,
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
-          "-=0.4"
-        )
-        .fromTo(buttonsRef.current,
-          { y: 20, opacity: 0, scale: 0.95 },
-          { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.2)" },
-          "-=0.3"
-        );
-
-        // Parallax effect for hero content on scroll
-        gsap.to(heroRef.current, {
-          yPercent: -20,
-          ease: "none",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1
-          }
-        });
-
-      } catch (error) {
-        console.log("GSAP loading failed:", error);
-      }
-    })();
+    // Randomly select one hero image
+    const randomImageIndex = Math.floor(Math.random() * heroImages.length);
+    setHeroImage(heroImages[randomImageIndex]);
+    
+    // Randomly select overlay type (blue overlay or circular gradient)
+    const overlayTypes = ['blue', 'gradient'];
+    const randomOverlayIndex = Math.floor(Math.random() * overlayTypes.length);
+    setOverlayType(overlayTypes[randomOverlayIndex]);
   }, []);
 
   return (
-    <div ref={heroRef} className="hero-section relative z-10 min-h-screen flex items-center pt-20">
-      <div className="hero-container max-w-7xl mx-auto px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <div className="hero-content text-center lg:text-left space-y-12">
-            <div className="space-y-8">
-              <h1 ref={titleRef} className="hero-title hero-animate-title text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white tracking-tight leading-[0.9] animate-on-load animate-fade-in-up delay-200">
-                {t.homeHero.title}<span 
-                  className="hero-title-gradient"
-                  style={{
-                    background: 'linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
-                  }}
-                >x</span>Stay
-              </h1>
-              <div className="space-y-6">
-                <h2 ref={subtitleRef} className="hero-subtitle hero-animate-subtitle text-lg sm:text-xl md:text-2xl lg:text-4xl text-gray-200 font-bold leading-tight animate-on-load animate-fade-in-up delay-400">
-                  {t.homeHero.subtitle}{' '}
-                  <span 
-                    className="hero-subtitle-gradient text-violet-400"
-                    style={{
-                      background: 'linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent'
-                    }}
-                  >
-                    {t.homeHero.subtitleHighlight}
-                  </span>
-                </h2>
-                <p ref={descriptionRef} className="hero-description hero-animate-description text-base sm:text-lg lg:text-xl text-gray-400 leading-relaxed max-w-md lg:max-w-2xl mx-auto lg:mx-0 animate-on-load animate-fade-in-up delay-500">
-                  {t.homeHero.description}
-                </p>
-              </div>
-            </div>
-            <div className="space-y-6">
-              <div ref={buttonsRef} className="hero-cta-container hero-animate-cta flex flex-col sm:flex-row gap-4 animate-on-load animate-scale-in delay-600">
-                <a 
-                  href={getBookingLink()} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hero-cta-primary group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white rounded-2xl shadow-2xl hover:shadow-violet-500/25 transition-all duration-300 ease-out overflow-hidden transform hover:scale-105"
-                  style={{background: 'var(--gradient-primary)'}}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-violet-400 to-blue-400 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
-                  <span className="relative z-10 tracking-wide flex items-center space-x-2">
-                    <span>{t.homeHero.bookCall}</span>
-                    <span className="text-2xl group-hover:translate-x-1 transition-transform duration-300">→</span>
-                  </span>
-                </a>
-                <button className="hero-cta-secondary inline-flex items-center justify-center px-8 py-5 text-lg font-semibold text-violet-300 border-2 border-violet-400/30 rounded-2xl hover:bg-violet-400/10 hover:border-violet-400/50 transition-all duration-300">
-                  <span className="flex items-center space-x-2">
-                    <span>▶</span>
-                    <span>{t.homeHero.seeDemo}</span>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="hidden lg:flex items-center justify-center">
-            <div className="relative w-full h-[600px]">
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-500/10 to-blue-500/10 blur-3xl rounded-full"></div>
-              <iframe 
-                src="https://my.spline.design/iphoneprocopy-R0IJdgxrF9sgMnOGYoUOwmPE/"
-                width="100%" 
-                height="100%"
-                className="relative z-10 rounded-2xl bg-transparent"
-                frameBorder="0"
-                title="3D iPhone SmartStay Demo"
-                style={{ background: 'transparent' }}
-                allowTransparency={true}
-              />
-            </div>
-          </div>
+    <section 
+      className="relative flex items-center justify-center"
+      style={{ 
+        minHeight: '100vh',
+        backgroundImage: heroImage ? `url("${heroImage}")` : 'url("/images/hero1SmartxStay.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        fontFamily: 'Inter, sans-serif',
+        padding: '100px 20px'
+      }}
+    >
+      {/* Dynamic Overlay */}
+      <div 
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundColor: overlayType === 'blue' ? 'rgba(18, 57, 85, 0.77)' : 'transparent',
+          background: overlayType === 'gradient' 
+            ? 'radial-gradient(circle at 50% 50%, rgba(135, 110, 191, 0.77) 0%, rgba(31, 12, 66, 0.77) 100%)'
+            : 'transparent',
+          zIndex: 1
+        }}
+      />
+
+      {/* Hero Content */}
+      <div 
+        className="flex flex-col items-center justify-center text-center"
+        style={{ 
+          maxWidth: '90%',
+          width: '100%',
+          position: 'relative',
+          zIndex: 2,
+          gap: '35px'
+        }}
+      >
+        {/* Main Heading */}
+        <h1 
+          className="font-bold transition-all duration-300"
+          style={{ 
+            maxWidth: '700px',
+            lineHeight: '1.3',
+            fontSize: 'clamp(36px, 5vw, 52px)',
+            textAlign: 'center',
+            margin: 0
+          }}
+        >
+          <span style={{ color: '#ffffff' }}>Elevate every stay</span>
+          <br />
+          <span style={{ color: '#daceff' }}>For hosts who love their guests.</span>
+        </h1>
+
+        {/* Subtitle */}
+        <p 
+          className="transition-all duration-300"
+          style={{ 
+            color: '#ffffff',
+            fontSize: '18px',
+            fontWeight: 400,
+            maxWidth: '700px',
+            lineHeight: '1.6',
+            textAlign: 'center',
+            margin: 0
+          }}
+        >
+          With SmartxStay, you know you're in good hands. Every host on our platform 
+          cares deeply about comfort, quality and creating meaningful guest experiences.
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="hero-buttons flex items-center justify-center" style={{ gap: '20px' }}>
+          <button
+            className="transition-all duration-300"
+            style={{
+              backgroundColor: '#daceff',
+              color: '#ffffff',
+              fontWeight: 500,
+              fontSize: '16px',
+              borderRadius: '40px',
+              padding: '12px 32px',
+              border: 'none',
+              cursor: 'pointer',
+              minWidth: '150px',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#c9baff';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(218, 206, 255, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#daceff';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            For hosts
+          </button>
+
+          <button
+            className="transition-all duration-300"
+            style={{
+              backgroundColor: '#ffffff',
+              color: '#b399ff',
+              fontWeight: 500,
+              fontSize: '16px',
+              borderRadius: '40px',
+              padding: '12px 32px',
+              border: 'none',
+              cursor: 'pointer',
+              minWidth: '150px',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#f8f6ff';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(218, 206, 255, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#ffffff';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            For guests
+          </button>
         </div>
       </div>
-    </div>
+
+      <style jsx>{`
+        @media (max-width: 768px) {
+          section {
+            padding: 60px 15px !important;
+          }
+          .hero-buttons {
+            flex-direction: column !important;
+            gap: 15px !important;
+          }
+        }
+      `}</style>
+    </section>
   );
 };
 
 export default HeroSection;
-
 

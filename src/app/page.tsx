@@ -1,15 +1,22 @@
-import Home from '@/components/Home';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import HeroSection from '@/components/HeroSection';
+import WhatIsSmartxStay from '@/components/WhatIsSmartxStay';
+import ProblemsSection from '@/components/ProblemsSection';
+import FeaturesOverviewSection from '@/components/FeaturesOverviewSection';
+import OurHostsSection from '@/components/OurHostsSection';
+import LocalExperienceSection from '@/components/LocalExperienceSection';
+import CTAContactSection from '@/components/CTAContactSection';
 
-export default function Page() {
+export default function Home() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <Home />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <HeroSection />
+      <WhatIsSmartxStay />
+      <ProblemsSection />
+      <FeaturesOverviewSection />
+      <OurHostsSection />
+      <LocalExperienceSection />
+      <CTAContactSection />
+    </main>
   );
 }
+

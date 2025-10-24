@@ -1,0 +1,125 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "1",
+        "title": "Cozy Mountain Cabin",
+        "city": "Aspen",
+        "country": "United States",
+        "note": "Perfect for winter getaways with stunning mountain views",
+        "url": "/stays/cozy-mountain-cabin"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-106.8222, 39.1911]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "2",
+        "title": "Modern Loft Downtown",
+        "city": "New York",
+        "country": "United States",
+        "note": "Stylish urban retreat in the heart of Manhattan",
+        "url": "/stays/modern-loft-downtown"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-74.0060, 40.7128]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "3",
+        "title": "Historic Parisian Apartment",
+        "city": "Paris",
+        "country": "France",
+        "note": "Charming apartment with Eiffel Tower views",
+        "url": "/stays/historic-parisian-apartment"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3522, 48.8566]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "4",
+        "title": "Beachfront Villa",
+        "city": "Santorini",
+        "country": "Greece",
+        "note": "Luxurious villa with private beach access",
+        "url": "/stays/beachfront-villa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [25.4615, 36.3932]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "5",
+        "title": "Traditional Ryokan",
+        "city": "Kyoto",
+        "country": "Japan",
+        "note": "Authentic Japanese experience with hot springs",
+        "url": "/stays/traditional-ryokan"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [135.7681, 35.0116]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "6",
+        "title": "Safari Lodge",
+        "city": "Serengeti",
+        "country": "Tanzania",
+        "note": "Wildlife viewing with luxury accommodations",
+        "url": "/stays/safari-lodge"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.8333, -2.3333]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "7",
+        "title": "Alpine Chalet",
+        "city": "Zermatt",
+        "country": "Switzerland",
+        "note": "Matterhorn views from a cozy mountain retreat",
+        "url": "/stays/alpine-chalet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.7489, 46.0207]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "8",
+        "title": "Tropical Treehouse",
+        "city": "Bali",
+        "country": "Indonesia",
+        "note": "Unique eco-friendly stay in the jungle canopy",
+        "url": "/stays/tropical-treehouse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [115.1889, -8.4095]
+      }
+    }
+  ]
+}
