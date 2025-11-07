@@ -29,7 +29,7 @@ export const MAPBOX_CONFIG = {
   SETTINGS: {
     minZoom: 2,
     maxZoom: 12,
-    defaultCenter: [0, 20],
+    defaultCenter: [0, 20] as [number, number],
     defaultZoom: 2,
     clusterRadius: 50,
     clusterMaxZoom: 12

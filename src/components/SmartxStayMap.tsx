@@ -14,6 +14,20 @@ interface StayData {
   url: string;
 }
 
+interface GeoJSONFeature {
+  type: 'Feature';
+  geometry: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
+  properties: StayData;
+}
+
+interface StaysGeoJSON {
+  type: 'FeatureCollection';
+  features: GeoJSONFeature[];
+}
+
 interface SmartxStayMapProps {
   className?: string;
 }
@@ -23,7 +37,7 @@ const SmartxStayMap: React.FC<SmartxStayMapProps> = ({ className = '' }) => {
   const map = useRef<mapboxgl.Map | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedStay, setSelectedStay] = useState<StayData | null>(null);
-  const [staysData, setStaysData] = useState<any>(null);
+  const [staysData, setStaysData] = useState<StaysGeoJSON | null>(null);
   const [isInViewport, setIsInViewport] = useState(false);
 
   // Intersection Observer for lazy loading
@@ -177,7 +191,7 @@ const SmartxStayMap: React.FC<SmartxStayMapProps> = ({ className = '' }) => {
       });
 
       // Add hover effects
-      map.current.on('mouseenter', 'unclustered-point', (e) => {
+      map.current.on('mouseenter', 'unclustered-point', () => {
         if (map.current) {
           map.current.getCanvas().style.cursor = 'pointer';
           map.current.setPaintProperty('unclustered-point', 'circle-radius', 22);
@@ -185,7 +199,7 @@ const SmartxStayMap: React.FC<SmartxStayMapProps> = ({ className = '' }) => {
         }
       });
 
-      map.current.on('mouseleave', 'unclustered-point', (e) => {
+      map.current.on('mouseleave', 'unclustered-point', () => {
         if (map.current) {
           map.current.getCanvas().style.cursor = '';
           map.current.setPaintProperty('unclustered-point', 'circle-radius', 20);
@@ -204,7 +218,7 @@ const SmartxStayMap: React.FC<SmartxStayMapProps> = ({ className = '' }) => {
       // Fit bounds to show all stays
       if (staysData.features.length > 0) {
         const bounds = new mapboxgl.LngLatBounds();
-        staysData.features.forEach((feature: any) => {
+        staysData.features.forEach((feature) => {
           bounds.extend(feature.geometry.coordinates);
         });
         map.current.fitBounds(bounds, { padding: 50 });

@@ -82,7 +82,7 @@ const FinalCTASection = () => {
                 lineHeight: '1.6'
               }}
             >
-              Let's connect and bring digital hospitality to your guests. Book a free, no-obligation video meeting to see how SmartxStay can work for you.
+              Let&apos;s connect and bring digital hospitality to your guests. Book a free, no-obligation video meeting to see how SmartxStay can work for you.
             </p>
 
             {/* CTA Button */}

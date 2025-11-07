@@ -55,7 +55,7 @@ const WhatIsSmartxStay = () => {
         >
           SmartxStay is a digital guest experience platform that helps vacation rental hosts 
           share all essential information, recommendations, and services in one place by simply 
-          scanning a QR code or tapping an NFC tag. It's designed for hosts who care deeply 
+          scanning a QR code or tapping an NFC tag. It&apos;s designed for hosts who care deeply 
           about their guests, offering a smooth, personal, and connected stay. With SmartxStay, 
           every guest instantly feels informed, welcomed, and at home.
         </p>

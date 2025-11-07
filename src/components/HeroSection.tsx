@@ -91,7 +91,7 @@ const HeroSection = () => {
             margin: 0
           }}
         >
-          With SmartxStay, you know you're in good hands. Every host on our platform 
+          With SmartxStay, you know you&apos;re in good hands. Every host on our platform 
           cares deeply about comfort, quality and creating meaningful guest experiences.
         </p>
 

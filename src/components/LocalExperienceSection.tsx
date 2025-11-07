@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 const LocalExperienceSection = () => {
   return (
@@ -83,7 +84,7 @@ const LocalExperienceSection = () => {
                 margin: 0
               }}
             >
-              We provide the tool, you provide the local soul. Let's create unforgettable stays together, 
+              We provide the tool, you provide the local soul. Let&apos;s create unforgettable stays together, 
               one local tip at a time.
             </p>
           </div>
@@ -122,12 +123,11 @@ const LocalExperienceSection = () => {
                     position: 'relative'
                   }}
                 >
-                  <img 
+                  <Image 
                     src="/images/local-experience/pocitnice.png" 
-                    alt="Local experience - Počitnice" 
+                    alt="Local experience - Počitnice"
+                    fill
                     style={{ 
-                      width: '100%', 
-                      height: '100%', 
                       objectFit: 'cover',
                       filter: 'sepia(0.1) contrast(1.1) brightness(1.05)'
                     }} 

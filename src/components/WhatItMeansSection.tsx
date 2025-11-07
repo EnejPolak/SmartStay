@@ -50,7 +50,7 @@ const WhatItMeansSection = () => {
             marginRight: 'auto'
           }}
         >
-          Being a SmartxStay Host means elevating every aspect of the guest experience, turning simple stays into memorable journeys. It's about anticipating needs, offering personalized touches, and using technology to create a seamless and welcoming environment. You're not just providing a place to sleep; you're curating an experience that guests will cherish and share.
+          Being a SmartxStay Host means elevating every aspect of the guest experience, turning simple stays into memorable journeys. It&apos;s about anticipating needs, offering personalized touches, and using technology to create a seamless and welcoming environment. You&apos;re not just providing a place to sleep; you&apos;re curating an experience that guests will cherish and share.
         </p>
       </div>
 

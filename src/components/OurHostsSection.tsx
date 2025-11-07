@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 
 const OurHostsSection = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [, setCurrentSlide] = useState(0);
 
   const testimonials = [
     {
@@ -139,7 +139,7 @@ const OurHostsSection = () => {
               maxWidth: '1120px'
             }}
           >
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
                 className="testimonial-card"
@@ -200,7 +200,7 @@ const OurHostsSection = () => {
                     margin: 0
                   }}
                 >
-                  "{testimonial.text}"
+                  &ldquo;{testimonial.text}&rdquo;
                 </p>
               </div>
             ))}

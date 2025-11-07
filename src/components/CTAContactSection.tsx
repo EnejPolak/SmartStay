@@ -73,7 +73,7 @@ const CTAContactSection = () => {
               marginBottom: '28px'
             }}
           >
-            Let's connect and bring digital hospitality to your guests. Book a free, no-obligation 
+            Let&apos;s connect and bring digital hospitality to your guests. Book a free, no-obligation 
             video meeting to see how SmartxStay can work for you.
           </p>
 

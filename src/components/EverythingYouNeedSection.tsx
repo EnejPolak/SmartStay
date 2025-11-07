@@ -226,7 +226,7 @@ const EverythingYouNeedSection = () => {
                 margin: 0
               }}
             >
-              Get your host's curated local tips for the best experiences in town.
+              Get your host&apos;s curated local tips for the best experiences in town.
             </p>
           </div>
 

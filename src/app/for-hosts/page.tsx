@@ -50,7 +50,7 @@ const ForHostsPage = () => {
             margin: '0 0 40px 0'
           }}
         >
-          You're more than a host; you're a creator of experiences. We're here to help you make every guest's stay unforgettable through care, connection, and seamless technology.
+          You&apos;re more than a host; you&apos;re a creator of experiences. We&apos;re here to help you make every guest&apos;s stay unforgettable through care, connection, and seamless technology.
         </p>
 
         {/* CTA Buttons */}

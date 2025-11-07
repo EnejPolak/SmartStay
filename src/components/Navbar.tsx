@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
@@ -30,7 +31,7 @@ const Navbar = () => {
 
       {/* Navigation Links */}
       <div className="flex items-center justify-center flex-1" style={{ gap: '40px', marginLeft: '-150px' }}>
-        <a 
+        <Link 
           href="/" 
           className="transition-colors duration-200"
           style={{ 
@@ -42,7 +43,7 @@ const Navbar = () => {
           onMouseLeave={(e) => e.currentTarget.style.color = pathname === '/' ? '#b8a1ff' : '#333'}
         >
           Home
-        </a>
+        </Link>
         <a 
           href="#features" 
           className="transition-colors duration-200"
