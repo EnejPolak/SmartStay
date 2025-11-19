@@ -1,8 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const FeaturesOverviewSection = () => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
   const features = [
     {
       id: 1,
@@ -47,21 +53,119 @@ const FeaturesOverviewSection = () => {
       ),
       title: 'Simple Setup',
       description: 'Get started in minutes. Our intuitive dashboard makes setup a breeze.'
+    },
+    {
+      id: 5,
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M2 12H22" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+      title: 'Upsell',
+      description: 'Boost your revenue with extra services like tours and offers.'
+    },
+    {
+      id: 6,
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 11L12 14L22 4" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+      title: 'Apartment Directions',
+      description: 'Clear, step-by-step navigation straight to your apartment.'
+    },
+    {
+      id: 7,
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="4" width="22" height="16" rx="2" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M1 10H23" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+      title: 'Transport',
+      description: 'Help guests travel like locals with taxis or parking info.'
     }
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(true);
+    };
+
+    window.addEventListener('scroll', handleScroll, { once: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasScrolled) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2, rootMargin: '-50px' }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasScrolled]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (scrollContainerRef.current) {
+        const container = scrollContainerRef.current;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        
+        setScrollPosition((prev) => {
+          const newPosition = prev + 1;
+          if (newPosition >= maxScroll) {
+            return 0;
+          }
+          return newPosition;
+        });
+      }
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = scrollPosition;
+    }
+  }, [scrollPosition]);
+
   return (
     <section
+      ref={sectionRef}
       id="features-overview"
       style={{
-        backgroundColor: '#f7f6fb',
+        backgroundColor: 'transparent',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         padding: '96px 20px',
         fontFamily: 'Inter, sans-serif',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
       }}
     >
       <div
@@ -99,35 +203,48 @@ const FeaturesOverviewSection = () => {
           Features designed for connection, not just convenience.
         </p>
 
-        {/* Features Grid */}
+        {/* Features Carousel */}
         <div
-          className="features-grid"
+          ref={scrollContainerRef}
+          className="features-carousel"
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '28px'
+            display: 'flex',
+            gap: '24px',
+            overflowX: 'auto',
+            scrollBehavior: 'smooth',
+            paddingBottom: '20px',
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none'
           }}
         >
-          {features.map((feature) => (
+          {features.concat(features).map((feature, index) => (
             <div
-              key={feature.id}
+              key={`${feature.id}-${index}`}
               className="feature-card"
               style={{
-                backgroundColor: '#ffffff',
+                minWidth: '280px',
+                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                backdropFilter: 'blur(25px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(25px) saturate(180%)',
                 borderRadius: '20px',
                 padding: '28px',
-                boxShadow: '0 12px 26px rgba(0,0,0,0.08)',
-                transition: 'all 0.2s ease',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.25)',
+                borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+                borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
+                transition: 'all 0.3s ease',
                 cursor: 'pointer',
-                height: 'auto'
+                flexShrink: 0
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px)';
-                e.currentTarget.style.boxShadow = '0 16px 32px rgba(0,0,0,0.10)';
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.15)';
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.35)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 12px 26px rgba(0,0,0,0.08)';
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.05)';
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
               }}
             >
               {/* Icon */}
@@ -136,7 +253,7 @@ const FeaturesOverviewSection = () => {
                   width: '56px',
                   height: '56px',
                   borderRadius: '50%',
-                  backgroundColor: '#efeaff',
+                  backgroundColor: 'rgba(239, 234, 255, 0.8)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -164,7 +281,7 @@ const FeaturesOverviewSection = () => {
                 style={{
                   fontSize: '15px',
                   fontWeight: 400,
-                  color: '#737373',
+                  color: '#4a4a4a',
                   lineHeight: '1.7',
                   margin: 0
                 }}
@@ -177,10 +294,8 @@ const FeaturesOverviewSection = () => {
       </div>
 
       <style jsx>{`
-        @media (max-width: 1024px) {
-          .features-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
+        .features-carousel::-webkit-scrollbar {
+          display: none;
         }
 
         @media (max-width: 768px) {
@@ -188,9 +303,8 @@ const FeaturesOverviewSection = () => {
             padding: 72px 16px !important;
           }
 
-          .features-grid {
-            grid-template-columns: 1fr !important;
-            gap: 20px !important;
+          .feature-card {
+            min-width: 240px !important;
           }
         }
       `}</style>

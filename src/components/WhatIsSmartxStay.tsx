@@ -1,16 +1,60 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const WhatIsSmartxStay = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    // Počakaj da uporabnik začne scrollati
+    const handleScroll = () => {
+      setHasScrolled(true);
+    };
+
+    window.addEventListener('scroll', handleScroll, { once: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasScrolled) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3, rootMargin: '-50px' }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasScrolled]);
+
   return (
     <section 
+      ref={sectionRef}
       id="what-is-smartxstay"
       className="what-is-section"
       style={{ 
-        backgroundColor: '#f7f6fb',
+        backgroundColor: 'transparent',
         fontFamily: 'Inter, sans-serif',
-        padding: '96px 20px'
+        padding: '96px 20px',
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
       }}
     >
       {/* Content Container */}

@@ -10,10 +10,13 @@ const Footer = () => {
     <footer
       id="site-footer"
       style={{
-        backgroundColor: '#f4f1fe',
+        backgroundColor: 'rgba(255, 255, 255, 0.25)',
+        backdropFilter: 'blur(25px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(25px) saturate(180%)',
         fontFamily: 'Inter, sans-serif',
-        boxShadow: '0 -8px 32px rgba(0,0,0,0.04)',
-        color: '#333'
+        boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.05)',
+        color: '#333',
+        borderTop: '1px solid rgba(255, 255, 255, 0.5)'
       }}
     >
       <div
@@ -59,14 +62,14 @@ const Footer = () => {
               href="mailto:info@qr-space.si"
               style={{
                 display: 'block',
-                color: '#6b6b6b',
+                color: '#4a4a4a',
                 textDecoration: 'none',
                 fontSize: '15px',
                 marginBottom: '8px',
                 transition: 'color 0.2s ease'
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = '#b8a1ff')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#6b6b6b')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#4a4a4a')}
             >
               info@qr-space.si
             </a>
@@ -74,13 +77,13 @@ const Footer = () => {
               href="tel:+38669415493"
               style={{
                 display: 'block',
-                color: '#6b6b6b',
+                color: '#4a4a4a',
                 textDecoration: 'none',
                 fontSize: '15px',
                 transition: 'color 0.2s ease'
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = '#b8a1ff')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#6b6b6b')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#4a4a4a')}
             >
               +386 69 415 493
             </a>
@@ -92,7 +95,7 @@ const Footer = () => {
               style={{
                 fontSize: '13px',
                 fontWeight: 500,
-                color: '#6b6b6b',
+                color: '#4a4a4a',
                 marginBottom: '12px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
@@ -210,7 +213,7 @@ const Footer = () => {
                   <Link
                     href={link.href}
                     style={{
-                      color: '#6b6b6b',
+                      color: '#4a4a4a',
                       textDecoration: 'none',
                       fontSize: '15px',
                       transition: 'all 0.2s ease',
@@ -224,7 +227,7 @@ const Footer = () => {
                       if (underline) underline.style.width = '100%';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.color = '#6b6b6b';
+                      e.currentTarget.style.color = '#4a4a4a';
                       const underline = e.currentTarget.querySelector('.underline') as HTMLElement;
                       if (underline) underline.style.width = '0';
                     }}
@@ -266,26 +269,26 @@ const Footer = () => {
             <Link
               href="/terms"
               style={{
-                color: '#6b6b6b',
+                color: '#4a4a4a',
                 textDecoration: 'none',
                 fontSize: '15px',
                 transition: 'color 0.2s ease'
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = '#b8a1ff')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#6b6b6b')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#4a4a4a')}
             >
               Terms and conditions
             </Link>
             <Link
               href="/privacy"
               style={{
-                color: '#6b6b6b',
+                color: '#4a4a4a',
                 textDecoration: 'none',
                 fontSize: '15px',
                 transition: 'color 0.2s ease'
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = '#b8a1ff')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#6b6b6b')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#4a4a4a')}
             >
               Privacy Policy
             </Link>

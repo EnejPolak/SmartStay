@@ -1,21 +1,64 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 const LocalExperienceSection = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(true);
+    };
+
+    window.addEventListener('scroll', handleScroll, { once: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasScrolled) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2, rootMargin: '-50px' }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasScrolled]);
+
   return (
     <section
+      ref={sectionRef}
       id="local-experience"
       style={{
-        backgroundColor: '#f7f6fb',
+        backgroundColor: 'transparent',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         padding: '100px 20px',
         fontFamily: 'Inter, sans-serif',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
       }}
     >
       <div
@@ -41,137 +84,171 @@ const LocalExperienceSection = () => {
           </h2>
         </div>
 
-        {/* Main Content - Two Columns */}
+        {/* Main Content - Centered Text */}
         <div
-          className="grid-layout"
+          className="text-content"
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1.1fr 0.9fr',
-            gap: '48px',
-            alignItems: 'stretch'
+            maxWidth: '900px',
+            margin: '0 auto',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '40px'
           }}
         >
-          {/* Left Column - Text */}
-          <div className="text-content" style={{ textAlign: 'left', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <p
+          {/* First Paragraph */}
+          <p
+            style={{
+              fontSize: 'clamp(20px, 2.5vw, 26px)',
+              lineHeight: '1.6',
+              margin: 0,
+              color: '#4a4a4a'
+            }}
+          >
+            We believe the best recommendations come from those who know the area best:{' '}
+            <span
               style={{
-                color: '#737373',
-                fontSize: 'clamp(18px, 2.2vw, 22px)',
-                lineHeight: '1.7',
-                margin: 0
+                fontWeight: 700,
+                color: '#5ba3c7',
+                fontSize: 'clamp(22px, 2.7vw, 28px)'
               }}
             >
-              We believe the best recommendations come from those who know the area best: the hosts.
-            </p>
+              the hosts.
+            </span>
+          </p>
 
-            <p
+          {/* Second Paragraph */}
+          <p
+            style={{
+              fontSize: 'clamp(20px, 2.5vw, 26px)',
+              lineHeight: '1.6',
+              margin: 0,
+              color: '#4a4a4a'
+            }}
+          >
+            <span
               style={{
-                color: '#737373',
-                fontSize: 'clamp(18px, 2.2vw, 22px)',
-                lineHeight: '1.7',
-                margin: 0
+                fontWeight: 700,
+                color: '#0f0f0f'
               }}
             >
-              SmartxStay was created to empower hosts to share their favorite local spots, from the best 
-              coffee shop around the corner to that hidden gem of a restaurant.
-            </p>
-
-            <p
+              SmartxStay
+            </span>{' '}
+            was created to{' '}
+            <span
               style={{
-                color: '#737373',
-                fontSize: 'clamp(18px, 2.2vw, 22px)',
-                lineHeight: '1.7',
-                margin: 0
+                fontWeight: 600,
+                color: '#6eb5d0',
+                fontStyle: 'italic'
               }}
             >
-              We provide the tool, you provide the local soul. Let&apos;s create unforgettable stays together, 
-              one local tip at a time.
-            </p>
-          </div>
+              empower hosts
+            </span>{' '}
+            to share their favorite local spots, from the best coffee shop around the corner to that{' '}
+            <span
+              style={{
+                fontWeight: 600,
+                color: '#87CEEB'
+              }}
+            >
+              hidden gem
+            </span>{' '}
+            of a restaurant.
+          </p>
 
-          {/* Right Column - Image */}
-          <div style={{ position: 'relative', width: '100%', maxWidth: '520px', margin: '0 auto' }}>
-            {/* Local Experience Image - Polaroid Style */}
+          {/* Third Paragraph */}
+          <p
+            style={{
+              fontSize: 'clamp(20px, 2.5vw, 26px)',
+              lineHeight: '1.6',
+              margin: 0,
+              color: '#4a4a4a'
+            }}
+          >
+            We provide the{' '}
+            <span
+              style={{
+                fontWeight: 700,
+                color: '#0f0f0f'
+              }}
+            >
+              tool
+            </span>
+            , you provide the{' '}
+            <span
+              style={{
+                fontWeight: 700,
+                color: '#5ba3c7',
+                fontSize: 'clamp(22px, 2.7vw, 28px)'
+              }}
+            >
+              local soul
+            </span>
+            . Let&apos;s create{' '}
+            <span
+              style={{
+                fontWeight: 600,
+                color: '#6eb5d0',
+                fontStyle: 'italic'
+              }}
+            >
+              unforgettable stays
+            </span>{' '}
+            together, one local tip at a time.
+          </p>
+        </div>
+
+        {/* Our Local Partners Section */}
+        <div style={{ marginTop: '100px', textAlign: 'center' }}>
+          <h3
+            style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: 800,
+              color: '#0f0f0f',
+              marginBottom: '48px'
+            }}
+          >
+            Our local partners
+          </h3>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '80px',
+              flexWrap: 'wrap'
+            }}
+          >
+            {/* Cerklje pod Krvavcem Logo */}
             <div
               style={{
-                width: '100%',
-                aspectRatio: '4 / 3',
                 position: 'relative',
-                transform: 'rotate(-2deg)',
-                marginTop: '20px'
+                width: '280px',
+                height: '180px'
               }}
             >
-              {/* Polaroid Frame */}
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: '#ffffff',
-                  borderRadius: '8px',
-                  padding: '12px 12px 40px 12px',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.1)',
-                  position: 'relative'
-                }}
-              >
-                {/* Photo */}
-                <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: '4px',
-                    overflow: 'hidden',
-                    position: 'relative'
-                  }}
-                >
-                  <Image 
-                    src="/images/local-experience/pocitnice.png" 
-                    alt="Local experience - Počitnice"
-                    fill
-                    style={{ 
-                      objectFit: 'cover',
-                      filter: 'sepia(0.1) contrast(1.1) brightness(1.05)'
-                    }} 
-                  />
-                </div>
-              </div>
-              
-              {/* Tape strips */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '-8px',
-                  left: '20px',
-                  right: '20px',
-                  height: '16px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                  borderRadius: '2px',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
-                }}
+              <Image
+                src="/images/local-experience/cerklje-logo.png"
+                alt="Cerklje pod Krvavcem"
+                fill
+                style={{ objectFit: 'contain' }}
               />
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '-4px',
-                  left: '30px',
-                  right: '30px',
-                  height: '8px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                  borderRadius: '1px'
-                }}
-              />
-              
-              {/* Bottom tape */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '-8px',
-                  left: '25px',
-                  right: '25px',
-                  height: '12px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.6)',
-                  borderRadius: '2px',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
-                }}
+            </div>
+
+            {/* Slovenia Outdoor Logo */}
+            <div
+              style={{
+                position: 'relative',
+                width: '320px',
+                height: '120px'
+              }}
+            >
+              <Image
+                src="/images/local-experience/slovenia-outdoor-logo.png"
+                alt="Slovenia Outdoor"
+                fill
+                style={{ objectFit: 'contain' }}
               />
             </div>
           </div>
@@ -188,13 +265,8 @@ const LocalExperienceSection = () => {
             margin-bottom: 48px !important;
           }
 
-          .grid-layout {
-            grid-template-columns: 1fr !important;
-            gap: 32px !important;
-          }
-
           .text-content {
-            text-align: center !important;
+            gap: 32px !important;
           }
         }
       `}</style>

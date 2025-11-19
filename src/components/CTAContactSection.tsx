@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const CTAContactSection = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +9,45 @@ const CTAContactSection = () => {
     userType: '',
     message: ''
   });
+
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(true);
+    };
+
+    window.addEventListener('scroll', handleScroll, { once: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasScrolled) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2, rootMargin: '-50px' }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasScrolled]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,9 +63,10 @@ const CTAContactSection = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="cta-contact"
       style={{
-        backgroundColor: '#f4f1fe',
+        backgroundColor: 'transparent',
         width: '100%',
         padding: '96px 20px',
         fontFamily: 'Inter, sans-serif',
@@ -34,7 +74,10 @@ const CTAContactSection = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
       }}
     >
       <div
@@ -67,7 +110,7 @@ const CTAContactSection = () => {
           <p
             style={{
               fontSize: 'clamp(16px, 2vw, 18px)',
-              color: '#737373',
+              color: '#4a4a4a',
               lineHeight: '1.7',
               maxWidth: '540px',
               marginBottom: '28px'
@@ -110,10 +153,15 @@ const CTAContactSection = () => {
         <div
           className="contact-form-card"
           style={{
-            backgroundColor: '#ffffff',
+            backgroundColor: 'rgba(255, 255, 255, 0.25)',
+            backdropFilter: 'blur(25px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(25px) saturate(180%)',
             borderRadius: '22px',
             padding: '32px',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.25)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+            borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
             maxWidth: '540px',
             width: '100%'
           }}
@@ -142,8 +190,8 @@ const CTAContactSection = () => {
               onChange={handleChange}
               required
               style={{
-                backgroundColor: '#f8f8fc',
-                border: '1px solid #e4e4f2',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '14px',
                 padding: '14px 16px',
                 fontSize: '16px',
@@ -155,10 +203,12 @@ const CTAContactSection = () => {
               onFocus={(e) => {
                 e.target.style.borderColor = '#b8a1ff';
                 e.target.style.boxShadow = '0 0 0 3px rgba(184,161,255,0.25)';
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = '#e4e4f2';
+                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
                 e.target.style.boxShadow = 'none';
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
               }}
             />
 
@@ -171,8 +221,8 @@ const CTAContactSection = () => {
               onChange={handleChange}
               required
               style={{
-                backgroundColor: '#f8f8fc',
-                border: '1px solid #e4e4f2',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '14px',
                 padding: '14px 16px',
                 fontSize: '16px',
@@ -184,10 +234,12 @@ const CTAContactSection = () => {
               onFocus={(e) => {
                 e.target.style.borderColor = '#b8a1ff';
                 e.target.style.boxShadow = '0 0 0 3px rgba(184,161,255,0.25)';
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = '#e4e4f2';
+                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
                 e.target.style.boxShadow = 'none';
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
               }}
             />
 
@@ -198,8 +250,8 @@ const CTAContactSection = () => {
               onChange={handleChange}
               required
               style={{
-                backgroundColor: '#f8f8fc',
-                border: '1px solid #e4e4f2',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '14px',
                 padding: '14px 16px',
                 fontSize: '16px',
@@ -212,10 +264,12 @@ const CTAContactSection = () => {
               onFocus={(e) => {
                 e.target.style.borderColor = '#b8a1ff';
                 e.target.style.boxShadow = '0 0 0 3px rgba(184,161,255,0.25)';
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = '#e4e4f2';
+                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
                 e.target.style.boxShadow = 'none';
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
               }}
             >
               <option value="" disabled>Vacation Rental Host</option>
@@ -234,8 +288,8 @@ const CTAContactSection = () => {
               required
               rows={5}
               style={{
-                backgroundColor: '#f8f8fc',
-                border: '1px solid #e4e4f2',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '14px',
                 padding: '14px 16px',
                 fontSize: '16px',
@@ -249,10 +303,12 @@ const CTAContactSection = () => {
               onFocus={(e) => {
                 e.target.style.borderColor = '#b8a1ff';
                 e.target.style.boxShadow = '0 0 0 3px rgba(184,161,255,0.25)';
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = '#e4e4f2';
+                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
                 e.target.style.boxShadow = 'none';
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
               }}
             />
 

@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
+import React, { useState } from 'react';
 
 const ProblemsSection = () => {
+  const [activeTab, setActiveTab] = useState<'hosts' | 'guests'>('hosts');
 
-  const problems = [
+  const hostsProblems = [
     {
       id: 1,
       title: 'Repetitive guest questions',
@@ -31,6 +31,35 @@ const ProblemsSection = () => {
       icon: 'star'
     }
   ];
+
+  const guestsProblems = [
+    {
+      id: 1,
+      title: 'Lost information',
+      description: 'Hard to find local guides, rules or amenities',
+      icon: 'info'
+    },
+    {
+      id: 2,
+      title: 'Getting lost before arrival',
+      description: 'Poor direction info from your host',
+      icon: 'message'
+    },
+    {
+      id: 3,
+      title: 'Hours lost researching for trips',
+      description: 'Avrage traveler plans at least 4 h tor a trip',
+      icon: 'star'
+    },
+    {
+      id: 4,
+      title: 'Confusing transport info',
+      description: 'Dont know what transport to use and how',
+      icon: 'check'
+    }
+  ];
+
+  const problems = activeTab === 'hosts' ? hostsProblems : guestsProblems;
 
   const renderIcon = (iconType: string) => {
     const iconColor = '#a29eff';
@@ -62,6 +91,26 @@ const ProblemsSection = () => {
             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke={iconColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         );
+      case 'info':
+        return (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke={iconColor} strokeWidth="2"/>
+            <path d="M12 16V12M12 8H12.01" stroke={iconColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        );
+      case 'message':
+        return (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke={iconColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        );
+      case 'check':
+        return (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke={iconColor} strokeWidth="2"/>
+            <path d="M9 12L11 14L15 10" stroke={iconColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        );
       default:
         return null;
     }
@@ -72,7 +121,7 @@ const ProblemsSection = () => {
       id="problems-smartxstay-solves"
       className="problems-section"
       style={{ 
-        backgroundColor: '#f4f1fe',
+        backgroundColor: 'transparent',
         fontFamily: 'Inter, sans-serif',
         padding: '120px 20px',
         minHeight: '100vh',
@@ -137,11 +186,11 @@ const ProblemsSection = () => {
             justifyContent: 'center'
           }}
         >
-          <Link href="/for-hosts" style={{ textDecoration: 'none' }}>
             <button
+            onClick={() => setActiveTab('hosts')}
               style={{
-                backgroundColor: '#a29eff',
-                color: '#ffffff',
+              backgroundColor: activeTab === 'hosts' ? '#a29eff' : '#ffffff',
+              color: activeTab === 'hosts' ? '#ffffff' : '#a29eff',
                 borderRadius: '24px',
                 padding: '14px 32px',
                 fontWeight: 600,
@@ -150,27 +199,34 @@ const ProblemsSection = () => {
                 fontSize: '16px',
                 transition: 'all 0.3s ease',
                 fontFamily: 'Inter, sans-serif',
-                boxShadow: '0 4px 12px rgba(162, 158, 255, 0.3)'
+              boxShadow: activeTab === 'hosts' ? '0 4px 12px rgba(162, 158, 255, 0.3)' : '0 4px 12px rgba(162, 158, 255, 0.15)'
               }}
               onMouseEnter={(e) => {
+              if (activeTab === 'hosts') {
                 e.currentTarget.style.backgroundColor = '#9383ee';
                 e.currentTarget.style.transform = 'translateY(-2px)';
                 e.currentTarget.style.boxShadow = '0 6px 16px rgba(162, 158, 255, 0.4)';
+              } else {
+                e.currentTarget.style.backgroundColor = '#f4f1fe';
+              }
               }}
               onMouseLeave={(e) => {
+              if (activeTab === 'hosts') {
                 e.currentTarget.style.backgroundColor = '#a29eff';
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 158, 255, 0.3)';
+              } else {
+                e.currentTarget.style.backgroundColor = '#ffffff';
+              }
               }}
             >
               For hosts
             </button>
-          </Link>
-          <Link href="/for-guests" style={{ textDecoration: 'none' }}>
             <button
+            onClick={() => setActiveTab('guests')}
               style={{
-                backgroundColor: '#ffffff',
-                color: '#a29eff',
+              backgroundColor: activeTab === 'guests' ? '#a29eff' : '#ffffff',
+              color: activeTab === 'guests' ? '#ffffff' : '#a29eff',
                 borderRadius: '24px',
                 padding: '14px 32px',
                 fontWeight: 600,
@@ -179,51 +235,63 @@ const ProblemsSection = () => {
                 fontSize: '16px',
                 transition: 'all 0.3s ease',
                 fontFamily: 'Inter, sans-serif',
-                boxShadow: '0 4px 12px rgba(162, 158, 255, 0.15)'
+              boxShadow: activeTab === 'guests' ? '0 4px 12px rgba(162, 158, 255, 0.3)' : '0 4px 12px rgba(162, 158, 255, 0.15)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#a29eff';
-                e.currentTarget.style.color = '#ffffff';
+              if (activeTab === 'guests') {
+                e.currentTarget.style.backgroundColor = '#9383ee';
                 e.currentTarget.style.transform = 'translateY(-2px)';
                 e.currentTarget.style.boxShadow = '0 6px 16px rgba(162, 158, 255, 0.4)';
+              } else {
+                e.currentTarget.style.backgroundColor = '#f4f1fe';
+              }
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#ffffff';
-                e.currentTarget.style.color = '#a29eff';
+              if (activeTab === 'guests') {
+                e.currentTarget.style.backgroundColor = '#a29eff';
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 158, 255, 0.15)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 158, 255, 0.3)';
+              } else {
+                e.currentTarget.style.backgroundColor = '#ffffff';
+              }
               }}
             >
               For guests
             </button>
-          </Link>
         </div>
 
         {/* Cards Grid */}
         <div 
+          key={activeTab}
           className="cards-grid"
           style={{ 
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '32px',
+            gap: '24px',
             width: '100%',
-            maxWidth: '1100px'
+            maxWidth: '900px',
+            animation: 'fadeIn 0.5s ease-in-out'
           }}
         >
-          {problems.map((problem) => (
+          {problems.map((problem, index) => (
             <div
               key={problem.id}
               className="problem-card"
               style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '24px',
-                padding: '40px 36px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
-                border: '1px solid rgba(162, 158, 255, 0.1)',
+                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                backdropFilter: 'blur(25px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+                borderRadius: '16px',
+                padding: '28px 24px',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.25)',
+                borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+                borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 cursor: 'pointer',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                animation: `slideUp 0.5s ease-out ${index * 0.1}s both`
               }}
               tabIndex={0}
             >
@@ -249,10 +317,10 @@ const ProblemsSection = () => {
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: '24px',
-                  padding: '16px',
-                  backgroundColor: '#f4f1fe',
-                  borderRadius: '16px',
+                  marginBottom: '16px',
+                  padding: '12px',
+                  backgroundColor: 'rgba(239, 234, 255, 0.8)',
+                  borderRadius: '12px',
                   transition: 'all 0.3s ease'
                 }}
               >
@@ -263,10 +331,10 @@ const ProblemsSection = () => {
               <h3 
                 style={{
                   color: '#0f0f0f',
-                  fontSize: '24px',
+                  fontSize: '20px',
                   fontWeight: 700,
                   margin: 0,
-                  marginBottom: '12px',
+                  marginBottom: '8px',
                   lineHeight: '1.3',
                   letterSpacing: '-0.01em'
                 }}
@@ -277,11 +345,11 @@ const ProblemsSection = () => {
               {/* Description */}
               <p 
                 style={{
-                  color: '#737373',
-                  fontSize: '17px',
+                  color: '#4a4a4a',
+                  fontSize: '15px',
                   fontWeight: 400,
                   margin: 0,
-                  lineHeight: '1.6'
+                  lineHeight: '1.5'
                 }}
               >
                 {problem.description}
@@ -296,10 +364,31 @@ const ProblemsSection = () => {
           color: #a29eff;
         }
 
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         .problem-card:hover {
           transform: translateY(-8px);
-          box-shadow: 0 16px 48px rgba(162, 158, 255, 0.2) !important;
-          border-color: rgba(162, 158, 255, 0.3) !important;
+          box-shadow: 0 8px 24px rgba(162, 158, 255, 0.15) !important;
+          border-color: rgba(255, 255, 255, 0.35) !important;
+          background-color: rgba(255, 255, 255, 0.35) !important;
         }
 
         .problem-card:hover .card-gradient {

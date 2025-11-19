@@ -10,11 +10,15 @@ const Navbar = () => {
 
   return (
     <nav 
-      className="sticky top-0 w-full flex items-center px-12 z-50"
+      className="fixed top-0 w-full flex items-center px-12 z-50"
       style={{ 
-        backgroundColor: '#f4f1fe',
+        backgroundColor: 'rgba(255, 255, 255, 0.25)',
+        backdropFilter: 'blur(25px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(25px) saturate(180%)',
         height: '80px',
-        fontFamily: 'Inter, sans-serif'
+        fontFamily: 'Inter, sans-serif',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.25)',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)'
       }}
     >
       {/* Logo */}

@@ -1,9 +1,47 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const OurHostsSection = () => {
   const [, setCurrentSlide] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(true);
+    };
+
+    window.addEventListener('scroll', handleScroll, { once: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasScrolled) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2, rootMargin: '-50px' }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasScrolled]);
 
   const testimonials = [
     {
@@ -63,9 +101,10 @@ const OurHostsSection = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="our-hosts"
       style={{
-        backgroundColor: '#f4f1fe',
+        backgroundColor: 'transparent',
         width: '100%',
         padding: '100px 20px',
         fontFamily: 'Inter, sans-serif',
@@ -73,7 +112,10 @@ const OurHostsSection = () => {
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
       }}
     >
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -144,9 +186,14 @@ const OurHostsSection = () => {
                 key={testimonial.id}
                 className="testimonial-card"
                 style={{
-                  backgroundColor: '#ffffff',
+                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                  backdropFilter: 'blur(25px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(25px) saturate(180%)',
                   borderRadius: '20px',
-                  boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+                  borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
                   padding: '24px 28px',
                   textAlign: 'left',
                   transition: 'all 0.3s ease',
@@ -179,7 +226,7 @@ const OurHostsSection = () => {
                     <h4 style={{ margin: 0, fontWeight: 700, color: '#0f0f0f', fontSize: '16px' }}>
                       {testimonial.name}
                     </h4>
-                    <p style={{ margin: 0, fontSize: '14px', color: '#737373' }}>
+                    <p style={{ margin: 0, fontSize: '14px', color: '#4a4a4a' }}>
                       {testimonial.role}
                     </p>
                   </div>
@@ -195,7 +242,7 @@ const OurHostsSection = () => {
                   style={{
                     fontSize: '16px',
                     lineHeight: '1.7',
-                    color: '#737373',
+                    color: '#4a4a4a',
                     fontStyle: 'italic',
                     margin: 0
                   }}
@@ -230,6 +277,12 @@ const OurHostsSection = () => {
       </div>
 
       <style jsx>{`
+        .testimonial-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 24px rgba(162, 158, 255, 0.15) !important;
+          background-color: rgba(255, 255, 255, 0.35) !important;
+        }
+
         .nav-button:hover {
           transform: scale(1.15);
         }
