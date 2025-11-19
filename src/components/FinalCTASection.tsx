@@ -26,13 +26,13 @@ const FinalCTASection = () => {
   return (
     <section
       style={{
-        backgroundColor: '#f4f1fe',
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '100px 20px',
-        fontFamily: 'Inter, sans-serif'
+        fontFamily: 'Inter, sans-serif',
+        position: 'relative'
       }}
     >
       <div
@@ -124,10 +124,15 @@ const FinalCTASection = () => {
           {/* Right Side - Contact Form */}
           <div
             style={{
-              backgroundColor: '#ffffff',
+              backgroundColor: 'rgba(255, 255, 255, 0.3)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+              borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
               borderRadius: '16px',
               padding: '40px',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
+              boxShadow: '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(162, 158, 255, 0.1)',
             }}
           >
             {/* Form Title */}

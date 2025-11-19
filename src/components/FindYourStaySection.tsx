@@ -7,13 +7,13 @@ const FindYourStaySection = () => {
   return (
     <section
       style={{
-        backgroundColor: '#f4f1fe',
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '80px 20px',
-        fontFamily: 'Inter, sans-serif'
+        fontFamily: 'Inter, sans-serif',
+        position: 'relative'
       }}
     >
       <div

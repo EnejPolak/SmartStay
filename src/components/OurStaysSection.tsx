@@ -18,13 +18,13 @@ const OurStaysSection = () => {
   return (
     <section
       style={{
-        backgroundColor: '#f7f6fb',
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '80px 20px',
-        fontFamily: 'Inter, sans-serif'
+        fontFamily: 'Inter, sans-serif',
+        position: 'relative'
       }}
     >
       <div

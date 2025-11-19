@@ -18,14 +18,14 @@ const CommunitySection = () => {
   return (
     <section
       style={{
-        backgroundColor: '#f7f6fb',
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '100px 20px',
         fontFamily: 'Inter, sans-serif',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        position: 'relative'
       }}
     >
       <div
@@ -158,7 +158,7 @@ const CommunitySection = () => {
               left: 0,
               width: '100px',
               height: '100%',
-              background: 'linear-gradient(to right, #f7f6fb, transparent)',
+              background: 'linear-gradient(to right, rgba(255, 255, 255, 0.8), transparent)',
               pointerEvents: 'none',
               zIndex: 2
             }}
@@ -170,7 +170,7 @@ const CommunitySection = () => {
               right: 0,
               width: '100px',
               height: '100%',
-              background: 'linear-gradient(to left, #f7f6fb, transparent)',
+              background: 'linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent)',
               pointerEvents: 'none',
               zIndex: 2
             }}
