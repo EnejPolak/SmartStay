@@ -23,19 +23,20 @@ function IPhoneModel() {
       gltf.scene.position.sub(center.multiplyScalar(scale));
       
       // Ensure materials are visible
-      gltf.scene.traverse((child: any) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-          if (child.material) {
-            if (Array.isArray(child.material)) {
-              child.material.forEach((mat: any) => {
+      gltf.scene.traverse((child: THREE.Object3D) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh;
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+          if (mesh.material) {
+            if (Array.isArray(mesh.material)) {
+              mesh.material.forEach((mat: THREE.Material) => {
                 mat.transparent = false;
                 mat.opacity = 1;
               });
             } else {
-              child.material.transparent = false;
-              child.material.opacity = 1;
+              (mesh.material as THREE.Material).transparent = false;
+              (mesh.material as THREE.Material).opacity = 1;
             }
           }
         }

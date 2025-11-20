@@ -25,19 +25,20 @@ function IPhoneModel() {
       gltf.scene.position.sub(center.multiplyScalar(scale));
       
       // Ensure materials are visible
-      gltf.scene.traverse((child: any) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-          if (child.material) {
-            if (Array.isArray(child.material)) {
-              child.material.forEach((mat: any) => {
+      gltf.scene.traverse((child: THREE.Object3D) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh;
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+          if (mesh.material) {
+            if (Array.isArray(mesh.material)) {
+              mesh.material.forEach((mat: THREE.Material) => {
                 mat.transparent = false;
                 mat.opacity = 1;
               });
             } else {
-              child.material.transparent = false;
-              child.material.opacity = 1;
+              (mesh.material as THREE.Material).transparent = false;
+              (mesh.material as THREE.Material).opacity = 1;
             }
           }
         }
@@ -580,7 +581,7 @@ const ForGuestsPage = () => {
                 lineHeight: '1.3',
               }}
             >
-              Hidden gems you'd never find alone
+              Hidden gems you&apos;d never find alone
             </h3>
             <p
               style={{
@@ -705,7 +706,7 @@ const ForGuestsPage = () => {
           }}
         >
           Because a great trip starts with<br />
-          someone who's on your side.
+          someone who&apos;s on your side.
         </h2>
 
         {/* Description */}
@@ -720,8 +721,8 @@ const ForGuestsPage = () => {
             maxWidth: '800px',
           }}
         >
-          When you book with a SmartxStay host, you're not just getting a place to sleep, you're
-          getting someone who genuinely cares about your experience. SmartxStay hosts don't
+          When you book with a SmartxStay host, you&apos;re not just getting a place to sleep, you&apos;re
+          getting someone who genuinely cares about your experience. SmartxStay hosts don&apos;t
           leave you guessing, googling, or stressing. They guide you, support you, and make
           sure your stay feels effortless.
         </p>

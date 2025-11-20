@@ -46,14 +46,6 @@ const EverythingYouNeedSection = () => {
     };
   }, []);
 
-  const handleCardMouseEnter = () => {
-    isPausedRef.current = true;
-  };
-
-  const handleCardMouseLeave = () => {
-    isPausedRef.current = false;
-  };
-
   return (
     <section
       style={{
