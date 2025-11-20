@@ -48,19 +48,19 @@ const Navbar = () => {
         >
           Home
         </Link>
-        <a 
-          href="#features" 
+        <Link 
+          href="/prices" 
           className="transition-colors duration-200"
           style={{ 
-            color: '#333',
+            color: pathname === '/prices' ? '#b8a1ff' : '#333',
             fontWeight: 500,
             textDecoration: 'none'
           }}
           onMouseEnter={(e) => e.currentTarget.style.color = '#b8a1ff'}
-          onMouseLeave={(e) => e.currentTarget.style.color = '#333'}
+          onMouseLeave={(e) => e.currentTarget.style.color = pathname === '/prices' ? '#b8a1ff' : '#333'}
         >
-          Features
-        </a>
+          Prices
+        </Link>
         <a 
           href="/for-guests" 
           className="transition-colors duration-200"

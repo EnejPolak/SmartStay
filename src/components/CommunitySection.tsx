@@ -1,18 +1,30 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 const CommunitySection = () => {
-  // Placeholder logos - will be replaced with actual partner logos
+  // Partner logos
   const logos = [
-    'LOGO 1',
-    'LOGO 2',
-    'LOGO 3',
-    'LOGO 4',
-    'LOGO 5',
-    'LOGO 6',
-    'LOGO 7',
-    'LOGO 8',
+    '/images/community/1.png',
+    '/images/community/2.png',
+    '/images/community/3.png',
+    '/images/community/4.png',
+    '/images/community/5.png',
+    '/images/community/6.png',
+    '/images/community/7.png',
+    '/images/community/8.png',
+    '/images/community/9.png',
+    '/images/community/10.png',
+    '/images/community/11.png',
+    '/images/community/12.png',
+    '/images/community/13.png',
+    '/images/community/14.png',
+    '/images/community/15.png',
+    '/images/community/16.png',
+    '/images/community/17.png',
+    '/images/community/18.png',
+    '/images/community/19.png',
   ];
 
   return (
@@ -78,7 +90,7 @@ const CommunitySection = () => {
             style={{
               display: 'flex',
               gap: '24px',
-              animation: 'scroll 20s linear infinite'
+              animation: 'scroll 40s linear infinite'
             }}
           >
             {/* First set of logos */}
@@ -89,29 +101,50 @@ const CommunitySection = () => {
                 style={{
                   minWidth: '140px',
                   height: '140px',
-                  backgroundColor: '#ffffff',
+                  backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+                  borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
                   borderRadius: '12px',
-                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+                  boxShadow: '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  color: '#b8a1ff',
+                  padding: '16px',
                   transition: 'all 0.3s ease',
                   cursor: 'pointer',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  position: 'relative',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8)';
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+                  const img = e.currentTarget.querySelector('.logo-image') as HTMLElement;
+                  if (img) img.style.filter = 'grayscale(0%)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08)';
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)';
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                  const img = e.currentTarget.querySelector('.logo-image') as HTMLElement;
+                  if (img) img.style.filter = 'grayscale(100%)';
                 }}
               >
-                {logo}
+                <Image
+                  src={logo}
+                  alt={`Partner logo ${index + 1}`}
+                  fill
+                  style={{ 
+                    objectFit: 'contain',
+                    filter: 'grayscale(100%)',
+                    transition: 'filter 0.3s ease',
+                  }}
+                  className="logo-image"
+                  sizes="140px"
+                />
               </div>
             ))}
             
@@ -123,58 +156,53 @@ const CommunitySection = () => {
                 style={{
                   minWidth: '140px',
                   height: '140px',
-                  backgroundColor: '#ffffff',
+                  backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+                  borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
                   borderRadius: '12px',
-                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+                  boxShadow: '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  color: '#b8a1ff',
+                  padding: '16px',
                   transition: 'all 0.3s ease',
                   cursor: 'pointer',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  position: 'relative',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8)';
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+                  const img = e.currentTarget.querySelector('.logo-image') as HTMLElement;
+                  if (img) img.style.filter = 'grayscale(0%)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08)';
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)';
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                  const img = e.currentTarget.querySelector('.logo-image') as HTMLElement;
+                  if (img) img.style.filter = 'grayscale(100%)';
                 }}
               >
-                {logo}
+                <Image
+                  src={logo}
+                  alt={`Partner logo ${index + 1}`}
+                  fill
+                  style={{ 
+                    objectFit: 'contain',
+                    filter: 'grayscale(100%)',
+                    transition: 'filter 0.3s ease',
+                  }}
+                  className="logo-image"
+                  sizes="140px"
+                />
               </div>
             ))}
           </div>
-
-          {/* Fade edges for smooth appearance */}
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100px',
-              height: '100%',
-              background: 'linear-gradient(to right, rgba(255, 255, 255, 0.8), transparent)',
-              pointerEvents: 'none',
-              zIndex: 2
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '100px',
-              height: '100%',
-              background: 'linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent)',
-              pointerEvents: 'none',
-              zIndex: 2
-            }}
-          />
         </div>
       </div>
 
@@ -182,7 +210,7 @@ const CommunitySection = () => {
       <style jsx>{`
         @keyframes scroll {
           0% {
-            transform: translateX(calc(-140px * 8 - 24px * 8));
+            transform: translateX(calc(-140px * 19 - 24px * 19));
           }
           100% {
             transform: translateX(0);
@@ -196,7 +224,7 @@ const CommunitySection = () => {
         @media (max-width: 768px) {
           @keyframes scroll {
             0% {
-              transform: translateX(calc(-140px * 8 - 24px * 8));
+              transform: translateX(calc(-120px * 19 - 24px * 19));
             }
             100% {
               transform: translateX(0);

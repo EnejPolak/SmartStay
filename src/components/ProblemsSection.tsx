@@ -20,14 +20,14 @@ const ProblemsSection = () => {
     },
     {
       id: 3,
-      title: 'Lost time',
-      description: 'Time spent on logistics is time lost on hospitality',
-      icon: 'clock'
+      title: 'Falling behind in modern tourism',
+      description: 'Technology moves fast, don\'t get left behind.',
+      icon: 'hourglass'
     },
     {
       id: 4,
-      title: 'Low differentiation',
-      description: 'Struggling to stand out in a crowded market',
+      title: 'Losing opportunities to upsell',
+      description: 'Guests don\'t find your additional services',
       icon: 'star'
     }
   ];
@@ -83,6 +83,13 @@ const ProblemsSection = () => {
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="12" r="10" stroke={iconColor} strokeWidth="2"/>
             <path d="M12 6V12L16 14" stroke={iconColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        );
+      case 'hourglass':
+        return (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 2H18M6 22H18M6 2V6L10 10C10 10 10 14 6 18V22M18 2V6L14 10C14 10 14 14 18 18V22" stroke={iconColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M6 6L10 10C10 10 10 14 6 18M18 6L14 10C14 10 14 14 18 18" stroke={iconColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         );
       case 'star':
