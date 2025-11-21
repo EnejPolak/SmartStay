@@ -51,7 +51,8 @@ const WhatIsSmartxStay = () => {
       style={{ 
         backgroundColor: 'transparent',
         fontFamily: 'Inter, sans-serif',
-        padding: '96px 20px',
+        padding: '60px 20px',
+        marginTop: '0px',
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
         transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'

@@ -73,13 +73,13 @@ const ForGuestsPage = () => {
       {/* Hero Section */}
       <section
         style={{
-          minHeight: '100vh',
+          minHeight: 'auto',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
           fontFamily: 'Inter, sans-serif',
-          padding: '80px 40px 40px 80px',
+          padding: '80px 40px 20px 80px',
           position: 'relative',
           gap: '64px',
         }}
@@ -96,7 +96,7 @@ const ForGuestsPage = () => {
           {/* Main Heading */}
           <h1
             style={{
-              fontSize: 'clamp(40px, 5vw, 64px)',
+              fontSize: 'clamp(48px, 6vw, 80px)',
               fontWeight: 900,
               lineHeight: '1.1',
               margin: '0 0 24px 0',
@@ -104,12 +104,16 @@ const ForGuestsPage = () => {
             }}
           >
             <span style={{ color: '#0f0f0f' }}>Your stay,</span>{' '}
-            <span style={{ 
-              background: 'linear-gradient(135deg, #a29eff 0%, #b8a1ff 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}>made smarter.</span>
+            <span 
+              className="animated-gradient-text"
+              style={{ 
+                background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
+                backgroundSize: '200% 100%',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >made smarter.</span>
           </h1>
 
           {/* Description */}
@@ -243,6 +247,22 @@ const ForGuestsPage = () => {
 
       {/* Responsive Styles */}
       <style jsx>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
         @media (max-width: 1024px) {
           section {
             flex-direction: column !important;
@@ -288,12 +308,13 @@ const ForGuestsPage = () => {
       {/* Host Curated Section */}
       <section
         style={{
-          minHeight: '70vh',
+          minHeight: 'auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '100px 40px',
+          padding: '60px 40px',
+          marginTop: '0px',
           fontFamily: 'Inter, sans-serif',
           position: 'relative',
           maxWidth: '1200px',
@@ -681,12 +702,13 @@ const ForGuestsPage = () => {
       {/* Great Trip Starts Section */}
       <section
         style={{
-          minHeight: '60vh',
+          minHeight: 'auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '80px 40px',
+          padding: '60px 40px',
+          marginTop: '0px',
           fontFamily: 'Inter, sans-serif',
           position: 'relative',
           maxWidth: '1200px',

@@ -9,6 +9,18 @@ const FeaturesOverviewSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
 
+  // Funkcija za določanje barve glede na index (šahovnica)
+  const getCardColor = (index: number) => {
+    const isPurple = index % 2 === 0;
+    return {
+      backgroundColor: isPurple ? '#ede9fe' : '#e0f2fe', // Močnejša vijolična ali pastelno modra
+      iconBg: isPurple ? '#ddd6fe' : 'rgba(191, 219, 254, 0.8)', // Bolj vijoličen krog za vijolične kartice
+      iconColor: isPurple ? '#a29eff' : '#3b82f6', // Vijolična ali modra ikona
+      titleColor: isPurple ? '#7c3aed' : '#1e40af', // Temno vijolična ali temno modra za naslov
+      hoverBg: isPurple ? '#e9e0ff' : '#d4eaf7',
+    };
+  };
+
   const features = [
     {
       id: 1,
@@ -156,11 +168,12 @@ const FeaturesOverviewSection = () => {
       id="features-overview"
       style={{
         backgroundColor: 'transparent',
-        minHeight: '100vh',
+        minHeight: 'auto',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '96px 20px',
+        padding: '60px 20px',
+        marginTop: '0px',
         fontFamily: 'Inter, sans-serif',
         overflow: 'hidden',
         opacity: isVisible ? 1 : 0,
@@ -217,34 +230,37 @@ const FeaturesOverviewSection = () => {
             scrollbarWidth: 'none'
           }}
         >
-          {features.concat(features).map((feature, index) => (
+          {features.concat(features).map((feature, index) => {
+            const colors = getCardColor(index);
+            return (
             <div
               key={`${feature.id}-${index}`}
               className="feature-card"
               style={{
-                minWidth: '280px',
-                backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                backdropFilter: 'blur(25px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+                width: '240px',
+                height: '240px',
+                backgroundColor: colors.backgroundColor,
                 borderRadius: '20px',
-                padding: '28px',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.25)',
-                borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-                borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
+                padding: '24px',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.5)',
                 transition: 'all 0.3s ease',
                 cursor: 'pointer',
-                flexShrink: 0
+                flexShrink: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                gap: '12px'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.15)';
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.35)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+                e.currentTarget.style.backgroundColor = colors.hoverBg;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.05)';
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08)';
+                e.currentTarget.style.backgroundColor = colors.backgroundColor;
               }}
             >
               {/* Icon */}
@@ -253,24 +269,36 @@ const FeaturesOverviewSection = () => {
                   width: '56px',
                   height: '56px',
                   borderRadius: '50%',
-                  backgroundColor: 'rgba(239, 234, 255, 0.8)',
+                  backgroundColor: colors.iconBg,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: '14px'
+                  flexShrink: 0
                 }}
               >
-                {feature.icon}
+                {React.cloneElement(feature.icon as React.ReactElement<Record<string, unknown>>, {
+                  children: React.Children.map((feature.icon as React.ReactElement<Record<string, unknown>>).props.children as React.ReactNode, (child: React.ReactNode) => {
+                    if (React.isValidElement(child)) {
+                      const childProps = (child.props as Record<string, unknown>) || {};
+                      return React.cloneElement(child as React.ReactElement<Record<string, unknown>>, {
+                        ...childProps,
+                        stroke: colors.iconColor,
+                      } as Record<string, unknown>);
+                    }
+                    return child;
+                  }),
+                } as Record<string, unknown>)}
               </div>
 
               {/* Title */}
               <h3
                 style={{
-                  fontSize: '19px',
+                  fontSize: '18px',
                   fontWeight: 700,
-                  color: '#0f0f0f',
-                  marginBottom: '8px',
-                  lineHeight: '1.3'
+                  color: colors.titleColor,
+                  margin: 0,
+                  lineHeight: '1.3',
+                  flexShrink: 0
                 }}
               >
                 {feature.title}
@@ -279,17 +307,23 @@ const FeaturesOverviewSection = () => {
               {/* Description */}
               <p
                 style={{
-                  fontSize: '15px',
+                  fontSize: '14px',
                   fontWeight: 400,
                   color: '#4a4a4a',
-                  lineHeight: '1.7',
-                  margin: 0
+                  lineHeight: '1.6',
+                  margin: 0,
+                  flex: 1,
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: 'vertical'
                 }}
               >
                 {feature.description}
               </p>
             </div>
-          ))}
+          );
+          })}
         </div>
       </div>
 
@@ -304,7 +338,8 @@ const FeaturesOverviewSection = () => {
           }
 
           .feature-card {
-            min-width: 240px !important;
+            width: 200px !important;
+            height: 200px !important;
           }
         }
       `}</style>

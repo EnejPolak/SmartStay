@@ -61,8 +61,7 @@ const ProblemsSection = () => {
 
   const problems = activeTab === 'hosts' ? hostsProblems : guestsProblems;
 
-  const renderIcon = (iconType: string) => {
-    const iconColor = '#a29eff';
+  const renderIcon = (iconType: string, iconColor: string = '#a29eff') => {
     
     switch(iconType) {
       case 'question':
@@ -130,8 +129,9 @@ const ProblemsSection = () => {
       style={{ 
         backgroundColor: 'transparent',
         fontFamily: 'Inter, sans-serif',
-        padding: '120px 20px',
-        minHeight: '100vh',
+        padding: '60px 20px',
+        marginTop: '0px',
+        minHeight: 'auto',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
@@ -280,20 +280,23 @@ const ProblemsSection = () => {
             animation: 'fadeIn 0.5s ease-in-out'
           }}
         >
-          {problems.map((problem, index) => (
+          {problems.map((problem, index) => {
+            // Barve: index 0 in 3 (Repetitive questions, Losing opportunities) -> modra
+            //        index 1 in 2 (Outdated guides, Falling behind) -> vijolična
+            const isBlue = index === 0 || index === 3;
+            
+            return (
             <div
               key={problem.id}
               className="problem-card"
               style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                backdropFilter: 'blur(25px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+                backgroundColor: isBlue 
+                  ? '#e0f2fe' 
+                  : '#ede9fe', // Močnejša vijolična
                 borderRadius: '16px',
                 padding: '28px 24px',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.25)',
-                borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-                borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+                border: '1px solid rgba(162, 158, 255, 0.15)',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 cursor: 'pointer',
                 position: 'relative',
@@ -302,20 +305,6 @@ const ProblemsSection = () => {
               }}
               tabIndex={0}
             >
-              {/* Gradient overlay */}
-              <div 
-                className="card-gradient"
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '4px',
-                  background: 'linear-gradient(90deg, #a29eff 0%, #b8a1ff 100%)',
-                  opacity: 0,
-                  transition: 'opacity 0.3s ease'
-                }}
-              />
 
               {/* Icon Container */}
               <div 
@@ -326,18 +315,18 @@ const ProblemsSection = () => {
                   justifyContent: 'center',
                   marginBottom: '16px',
                   padding: '12px',
-                  backgroundColor: 'rgba(239, 234, 255, 0.8)',
+                  backgroundColor: isBlue ? 'rgba(191, 219, 254, 0.8)' : '#ddd6fe', // Bolj vijoličen krog
                   borderRadius: '12px',
                   transition: 'all 0.3s ease'
                 }}
               >
-                {renderIcon(problem.icon)}
+                {renderIcon(problem.icon, isBlue ? '#1e40af' : '#a29eff')}
               </div>
 
               {/* Title */}
               <h3 
                 style={{
-                  color: '#0f0f0f',
+                  color: isBlue ? '#1e40af' : '#7c3aed', // Temno moder ali temno vijoličen
                   fontSize: '20px',
                   fontWeight: 700,
                   margin: 0,
@@ -362,7 +351,8 @@ const ProblemsSection = () => {
                 {problem.description}
               </p>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -392,23 +382,44 @@ const ProblemsSection = () => {
         }
 
         .problem-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 8px 24px rgba(162, 158, 255, 0.15) !important;
-          border-color: rgba(255, 255, 255, 0.35) !important;
-          background-color: rgba(255, 255, 255, 0.35) !important;
+          transform: translateY(-4px);
+          box-shadow: 0 8px 24px rgba(162, 158, 255, 0.2) !important;
+          border-color: rgba(162, 158, 255, 0.3) !important;
+        }
+        
+        .problem-card:nth-child(1):hover,
+        .problem-card:nth-child(4):hover {
+          background-color: #cfe7f5 !important;
+        }
+        
+        .problem-card:nth-child(2):hover,
+        .problem-card:nth-child(3):hover {
+          background-color: #ede9ff !important;
         }
 
-        .problem-card:hover .card-gradient {
-          opacity: 1 !important;
+        .problem-card:nth-child(1):hover .icon-container,
+        .problem-card:nth-child(4):hover .icon-container {
+          background-color: #bfdbfe !important;
+          transform: scale(1.05);
         }
-
-        .problem-card:hover .icon-container {
+        
+        .problem-card:nth-child(2):hover .icon-container,
+        .problem-card:nth-child(3):hover .icon-container {
           background-color: #e8e5ff !important;
           transform: scale(1.05);
         }
 
-        .problem-card:hover .icon-container svg path,
-        .problem-card:hover .icon-container svg circle {
+        .problem-card:nth-child(1):hover .icon-container svg path,
+        .problem-card:nth-child(1):hover .icon-container svg circle,
+        .problem-card:nth-child(4):hover .icon-container svg path,
+        .problem-card:nth-child(4):hover .icon-container svg circle {
+          stroke: #1e3a8a !important;
+        }
+        
+        .problem-card:nth-child(2):hover .icon-container svg path,
+        .problem-card:nth-child(2):hover .icon-container svg circle,
+        .problem-card:nth-child(3):hover .icon-container svg path,
+        .problem-card:nth-child(3):hover .icon-container svg circle {
           stroke: #b8a1ff !important;
         }
 

@@ -49,11 +49,12 @@ const LocalExperienceSection = () => {
       id="local-experience"
       style={{
         backgroundColor: 'transparent',
-        minHeight: '100vh',
+        minHeight: 'auto',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '100px 20px',
+        padding: '60px 20px',
+        marginTop: '0px',
         fontFamily: 'Inter, sans-serif',
         overflow: 'hidden',
         opacity: isVisible ? 1 : 0,

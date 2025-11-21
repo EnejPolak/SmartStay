@@ -26,11 +26,12 @@ const FinalCTASection = () => {
   return (
     <section
       style={{
-        minHeight: '100vh',
+        minHeight: 'auto',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '100px 20px',
+        padding: '60px 20px',
+        marginTop: '0px',
         fontFamily: 'Inter, sans-serif',
         position: 'relative'
       }}

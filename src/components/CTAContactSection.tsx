@@ -68,9 +68,10 @@ const CTAContactSection = () => {
       style={{
         backgroundColor: 'transparent',
         width: '100%',
-        padding: '96px 20px',
+        padding: '60px 20px',
+        marginTop: '0px',
         fontFamily: 'Inter, sans-serif',
-        minHeight: '100vh',
+        minHeight: 'auto',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

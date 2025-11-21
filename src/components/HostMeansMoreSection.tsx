@@ -6,12 +6,13 @@ const HostMeansMoreSection = () => {
   return (
     <section
       style={{
-        minHeight: '70vh',
+        minHeight: 'auto',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '120px 40px',
+        padding: '60px 40px',
+        marginTop: '0px',
         fontFamily: 'Inter, sans-serif',
         position: 'relative',
       }}

@@ -4,7 +4,6 @@ import React, { useState, Suspense, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
-import { gsap } from 'gsap';
 
 // iPhone Model Component
 function IPhoneModel() {
@@ -59,101 +58,15 @@ useGLTF.preload('/iphone.glb');
 
 const HeroSection = () => {
   const [activeTab, setActiveTab] = useState<'hosts' | 'guests'>('hosts');
-  const buttonsRef = useRef<HTMLDivElement>(null);
-  const textContainerRef = useRef<HTMLDivElement>(null);
-  const previousTabRef = useRef<'hosts' | 'guests'>('hosts');
 
-  useEffect(() => {
-    if (buttonsRef.current && textContainerRef.current && previousTabRef.current !== activeTab) {
-      // Izmerimo trenutno pozicijo gumbov
-      const startRect = buttonsRef.current.getBoundingClientRect();
-      const parentElement = buttonsRef.current.parentElement;
-      if (!parentElement) return;
-      
-      const parentRect = parentElement.getBoundingClientRect();
-      const relativeStartTop = startRect.top - parentRect.top;
-      const buttonWidth = buttonsRef.current.offsetWidth;
-      
-      // Zamrzni gumbi na trenutni poziciji z absolute positioning
-      gsap.set(buttonsRef.current, { 
-        position: 'absolute',
-        top: relativeStartTop,
-        left: 0,
-        width: buttonWidth
-      });
-      
-      // Počakajmo, da se DOM posodobi z novim besedilom
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          if (textContainerRef.current && buttonsRef.current && parentElement) {
-            // Izračunaj novo pozicijo - kje bi bili gumbi v normalnem flow-u
-            // Najprej odstranimo absolute positioning za trenutek
-            gsap.set(buttonsRef.current, { 
-              position: 'static',
-              top: 'auto',
-              left: 'auto',
-              width: 'auto'
-            });
-            
-            requestAnimationFrame(() => {
-              if (buttonsRef.current && parentElement) {
-                const newRect = buttonsRef.current.getBoundingClientRect();
-                const newParentRect = parentElement.getBoundingClientRect();
-                const relativeEndTop = newRect.top - newParentRect.top;
-                const distance = relativeEndTop - relativeStartTop;
-                
-                // Vrnimo absolute positioning in animiraj
-                gsap.set(buttonsRef.current, { 
-                  position: 'absolute',
-                  top: relativeStartTop,
-                  left: 0,
-                  width: buttonWidth
-                });
-                
-                // Če se pozicija spremeni, animiraj gumbi navzdol
-                if (Math.abs(distance) > 1) {
-                  // Animiraj na končno pozicijo
-                  gsap.to(buttonsRef.current, {
-                    top: relativeEndTop,
-                    duration: 0.6,
-                    ease: 'power2.out',
-                    onComplete: () => {
-                      // Po končani animaciji vrnimo na normalno pozicioniranje
-                      if (buttonsRef.current) {
-                        gsap.set(buttonsRef.current, { 
-                          position: '',
-                          top: '',
-                          left: '',
-                          width: ''
-                        });
-                      }
-                    }
-                  });
-                } else {
-                  // Če se pozicija ni spremenila, samo vrnimo na normalno pozicioniranje
-                  gsap.set(buttonsRef.current, { 
-                    position: '',
-                    top: '',
-                    left: '',
-                    width: ''
-                  });
-                }
-              }
-            });
-          }
-        });
-      });
-      
-      previousTabRef.current = activeTab;
-    }
-  }, [activeTab]);
 
   return (
     <section 
       className="hero-content-section"
       style={{
-        padding: '80px 40px 40px 80px',
-        minHeight: '100vh',
+        padding: '80px 40px 20px 80px',
+        minHeight: 'auto',
+        marginTop: '0px',
         display: 'flex',
         flexDirection: 'column',
         fontFamily: 'Inter, sans-serif',
@@ -173,7 +86,6 @@ const HeroSection = () => {
       >
         {/* Text Content - Left Aligned */}
         <div
-          ref={textContainerRef}
           style={{
             flex: '1',
             minWidth: '300px',
@@ -278,45 +190,53 @@ const HeroSection = () => {
           key={activeTab}
           className="fade-in-slide-up"
           style={{
-            fontSize: 'clamp(32px, 4vw, 48px)',
-            fontWeight: 800,
-            color: '#0f0f0f',
-            lineHeight: '1.2',
-            marginBottom: '24px',
+            fontSize: 'clamp(48px, 6vw, 80px)',
+            fontWeight: 900,
+            lineHeight: '1.1',
+            marginBottom: '0px',
             animation: 'fadeInSlideUp 0.5s ease-out both',
+            letterSpacing: '-0.02em',
           }}
         >
-          {activeTab === 'hosts' 
-            ? 'Customized app for your property.'
-            : 'Stress free travel with local tips.'
-          }
+          {activeTab === 'hosts' ? (
+            <>
+              <span style={{ color: '#0f0f0f' }}>Customized app for your</span>{' '}
+              <span 
+                className="animated-gradient-text"
+                style={{ 
+                  background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
+                  backgroundSize: '200% 100%',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >property.</span>
+            </>
+          ) : (
+            <>
+              <span style={{ color: '#0f0f0f' }}>Stress free travel with</span>{' '}
+              <span 
+                className="animated-gradient-text"
+                style={{ 
+                  background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
+                  backgroundSize: '200% 100%',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >local tips.</span>
+            </>
+          )}
         </h1>
-        <p
-          key={`${activeTab}-subtitle`}
-          className="fade-in-slide-up"
-          style={{
-            fontSize: 'clamp(24px, 3vw, 36px)',
-            fontWeight: 700,
-            color: '#a29eff',
-            lineHeight: '1.4',
-            marginBottom: '48px',
-            animation: 'fadeInSlideUp 0.5s ease-out 0.1s both',
-          }}
-        >
-          {activeTab === 'hosts'
-            ? 'For hosts who love their guests.'
-            : 'For guests who dont like to stress.'
-          }
-        </p>
 
         {/* CTA Buttons */}
         <div
-          ref={buttonsRef}
           style={{
             display: 'flex',
             gap: '20px',
             flexWrap: 'wrap',
             justifyContent: 'flex-start',
+            marginTop: '24px',
           }}
         >
           <button
@@ -486,8 +406,24 @@ const HeroSection = () => {
           }
         }
 
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
         .fade-in-slide-up {
           animation-fill-mode: both;
+        }
+
+        .animated-gradient-text {
+          animation: gradientShift 3s ease-in-out infinite;
         }
 
         @media (max-width: 1024px) {

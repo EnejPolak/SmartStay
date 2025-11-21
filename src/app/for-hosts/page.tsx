@@ -76,13 +76,13 @@ const ForHostsPage = () => {
       {/* Hero Section */}
       <section
         style={{
-          minHeight: '100vh',
+          minHeight: 'auto',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
           fontFamily: 'Inter, sans-serif',
-          padding: '80px 40px 40px 80px',
+          padding: '80px 40px 20px 80px',
           position: 'relative',
           gap: '64px',
         }}
@@ -99,20 +99,24 @@ const ForHostsPage = () => {
           {/* Main Heading */}
           <h1
             style={{
-              fontSize: 'clamp(40px, 5vw, 64px)',
+              fontSize: 'clamp(48px, 6vw, 80px)',
               fontWeight: 900,
               lineHeight: '1.1',
               margin: '0 0 24px 0',
+              letterSpacing: '-0.02em',
             }}
           >
             <span style={{ color: '#0f0f0f' }}>Welcome, Smart</span>
-            <span style={{ 
-              background: 'linear-gradient(135deg, #b8a1ff 0%, #7c5fd9 50%, #a29eff 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              filter: 'drop-shadow(0 2px 4px rgba(184, 161, 255, 0.3))',
-            }}>x</span>
+            <span 
+              className="animated-gradient-text"
+              style={{ 
+                background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
+                backgroundSize: '200% 100%',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >x</span>
             <span style={{ color: '#0f0f0f' }}>Stay Hosts.</span>
           </h1>
 
@@ -253,6 +257,22 @@ const ForHostsPage = () => {
 
       {/* Responsive Styles */}
       <style jsx>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
         @media (max-width: 1024px) {
           section {
             flex-direction: column !important;
