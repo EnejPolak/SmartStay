@@ -140,54 +140,12 @@ const ForGuestsPage = () => {
             }}
           >
             {/* Primary Button */}
-            <button
-              style={{
-                backgroundColor: '#daceff',
-                color: '#ffffff',
-                fontWeight: 500,
-                fontSize: '16px',
-                borderRadius: '40px',
-                padding: '12px 32px',
-                border: 'none',
-                cursor: 'pointer',
-                minWidth: '150px',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#c9baff';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(218, 206, 255, 0.4)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#daceff';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            >
+            <button className="btn-primary">
               Find your Stay
             </button>
 
             {/* Secondary Button */}
-            <button
-              style={{
-                backgroundColor: '#ffffff',
-                color: '#b399ff',
-                fontWeight: 500,
-                fontSize: '16px',
-                borderRadius: '40px',
-                padding: '12px 32px',
-                border: 'none',
-                cursor: 'pointer',
-                minWidth: '150px',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#f8f6ff';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(218, 206, 255, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#ffffff';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            >
+            <button className="btn-tertiary">
               Ask a question
             </button>
           </div>
@@ -334,22 +292,28 @@ const ForGuestsPage = () => {
           }}
         >
           <span style={{ color: '#0f0f0f' }}>Your host curated</span>{' '}
-          <span style={{ 
-            color: '#a29eff',
-            background: 'linear-gradient(135deg, #a29eff 0%, #b8a1ff 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}>everything.</span>{' '}
+          <span 
+            className="animated-gradient-text"
+            style={{ 
+              background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
+              backgroundSize: '200% 100%',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >everything.</span>{' '}
           <br />
           <span style={{ color: '#0f0f0f' }}>You just</span>{' '}
-          <span style={{ 
-            color: '#a29eff',
-            background: 'linear-gradient(135deg, #a29eff 0%, #b8a1ff 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}>enjoy.</span>
+          <span 
+            className="animated-gradient-text"
+            style={{ 
+              background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
+              backgroundSize: '200% 100%',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >enjoy.</span>
         </h2>
 
         {/* Subheading */}

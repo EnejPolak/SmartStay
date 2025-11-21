@@ -87,37 +87,7 @@ const FinalCTASection = () => {
             </p>
 
             {/* CTA Button */}
-            <button
-              style={{
-                backgroundColor: '#b8a1ff',
-                color: '#ffffff',
-                fontWeight: 600,
-                fontSize: '16px',
-                borderRadius: '16px',
-                padding: '16px 40px',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#a991ff';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(184, 161, 255, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#b8a1ff';
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08)';
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.outline = '2px solid #b8a1ff';
-                e.currentTarget.style.outlineOffset = '2px';
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.outline = 'none';
-              }}
-            >
+            <button className="btn-primary">
               Book a free presentation
             </button>
           </div>
@@ -334,26 +304,8 @@ const FinalCTASection = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                style={{
-                  width: '100%',
-                  backgroundColor: '#b8a1ff',
-                  color: '#ffffff',
-                  fontWeight: 600,
-                  fontSize: '16px',
-                  borderRadius: '14px',
-                  padding: '14px 32px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#a991ff';
-                  e.currentTarget.style.transform = 'translateY(-1px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#b8a1ff';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
+                className="btn-primary"
+                style={{ width: '100%' }}
               >
                 Send Message
               </button>

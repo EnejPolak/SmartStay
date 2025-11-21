@@ -112,7 +112,16 @@ export default function PricesPage() {
             }}
           >
             <span style={{ color: '#0f0f0f' }}>Pametnejša digitalna izkušnja za</span>{' '}
-            <span style={{ color: '#3b82f6' }}>vaše goste</span>
+            <span 
+              className="animated-gradient-text"
+              style={{ 
+                background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
+                backgroundSize: '200% 100%',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >vaše goste</span>
           </h1>
 
           {/* Sub-headline */}
@@ -155,32 +164,7 @@ export default function PricesPage() {
             }}
           >
             {/* Primerjaj pakete Button */}
-            <button
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '14px 32px',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #a29eff 0%, #3b82f6 100%)',
-                color: '#ffffff',
-                fontSize: '16px',
-                fontWeight: 600,
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                fontFamily: 'Inter, sans-serif',
-                boxShadow: '0 4px 16px rgba(162, 158, 255, 0.3)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.4)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(162, 158, 255, 0.3)';
-              }}
-            >
+            <button className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               Primerjaj pakete
               <svg
                 width="20"
@@ -200,38 +184,7 @@ export default function PricesPage() {
             </button>
 
             {/* Brezplačen posvet Button */}
-            <button
-              style={{
-                padding: '14px 32px',
-                borderRadius: '12px',
-                backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                backdropFilter: 'blur(20px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                color: '#a29eff',
-                border: '1px solid rgba(162, 158, 255, 0.3)',
-                borderTop: '1px solid rgba(162, 158, 255, 0.5)',
-                borderLeft: '1px solid rgba(162, 158, 255, 0.5)',
-                fontSize: '16px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                fontFamily: 'Inter, sans-serif',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(162, 158, 255, 0.1)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(162, 158, 255, 0.15)';
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
-                e.currentTarget.style.borderColor = 'rgba(162, 158, 255, 0.4)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(162, 158, 255, 0.1)';
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-                e.currentTarget.style.borderColor = 'rgba(162, 158, 255, 0.3)';
-              }}
-            >
+            <button className="btn-secondary">
               Brezplačen posvet
             </button>
           </div>
@@ -378,29 +331,7 @@ export default function PricesPage() {
               </ul>
 
               {/* Button */}
-              <button
-                style={{
-                  width: '100%',
-                  padding: '14px 24px',
-                  borderRadius: '12px',
-                  backgroundColor: '#ffffff',
-                  color: '#4b5563',
-                  fontSize: '16px',
-                  fontWeight: 600,
-                  border: '1px solid rgba(0, 0, 0, 0.1)',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  fontFamily: 'Inter, sans-serif',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
+              <button className="btn-tertiary" style={{ width: '100%' }}>
                 Izberite paket
               </button>
             </div>
@@ -551,30 +482,7 @@ export default function PricesPage() {
               </ul>
 
               {/* Button */}
-              <button
-                style={{
-                  width: '100%',
-                  padding: '14px 24px',
-                  borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #3b82f6 0%, #a29eff 100%)',
-                  color: '#ffffff',
-                  fontSize: '16px',
-                  fontWeight: 600,
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  fontFamily: 'Inter, sans-serif',
-                  boxShadow: '0 4px 16px rgba(59, 130, 246, 0.3)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(59, 130, 246, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(59, 130, 246, 0.3)';
-                }}
-              >
+              <button className="btn-primary" style={{ width: '100%' }}>
                 Začnite zdaj
               </button>
             </div>
@@ -700,29 +608,7 @@ export default function PricesPage() {
               </ul>
 
               {/* Button */}
-              <button
-                style={{
-                  width: '100%',
-                  padding: '14px 24px',
-                  borderRadius: '12px',
-                  backgroundColor: '#ffffff',
-                  color: '#4b5563',
-                  fontSize: '16px',
-                  fontWeight: 600,
-                  border: '1px solid rgba(0, 0, 0, 0.1)',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  fontFamily: 'Inter, sans-serif',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
+              <button className="btn-tertiary" style={{ width: '100%' }}>
                 Izberite paket
               </button>
             </div>
@@ -1515,6 +1401,22 @@ export default function PricesPage() {
 
       {/* CSS Animations */}
       <style jsx>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
         @keyframes fadeInUp {
           from {
             opacity: 0;

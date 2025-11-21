@@ -239,81 +239,13 @@ const HeroSection = () => {
             marginTop: '24px',
           }}
         >
-          <button
-            className="glossy-button"
-            style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.3)',
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-              color: '#a29eff',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-              borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
-              borderRadius: '12px',
-              padding: '14px 32px',
-              fontSize: '16px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              fontFamily: 'Inter, sans-serif',
-              whiteSpace: 'nowrap',
-              position: 'relative',
-              overflow: 'hidden',
-              boxShadow: '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(162, 158, 255, 0.1)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(162, 158, 255, 0.15)';
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(162, 158, 255, 0.1)';
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-            }}
-          >
+          <button className="btn-primary">
             {activeTab === 'hosts' 
               ? 'Book a free presentation'
               : 'Find your next stay'
             }
           </button>
-          <button
-            className="glossy-button"
-            style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.3)',
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-              color: '#a29eff',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-              borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
-              borderRadius: '12px',
-              padding: '14px 32px',
-              fontSize: '16px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              fontFamily: 'Inter, sans-serif',
-              whiteSpace: 'nowrap',
-              position: 'relative',
-              overflow: 'hidden',
-              boxShadow: '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(162, 158, 255, 0.1)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(162, 158, 255, 0.15)';
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(162, 158, 255, 0.1)';
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-            }}
-          >
+          <button className="btn-secondary">
             Read more
           </button>
         </div>

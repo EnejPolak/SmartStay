@@ -144,64 +144,12 @@ const ForHostsPage = () => {
             }}
           >
             {/* Primary Button */}
-            <button
-              style={{
-                background: 'linear-gradient(135deg, rgba(184, 161, 255, 0.9) 0%, rgba(124, 95, 217, 0.9) 100%)',
-                color: '#ffffff',
-                fontWeight: 600,
-                fontSize: '16px',
-                borderRadius: '16px',
-                padding: '16px 40px',
-                border: 'none',
-                cursor: 'pointer',
-                minWidth: '220px',
-                transition: 'all 0.3s ease',
-                backdropFilter: 'blur(20px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                boxShadow: '0 4px 16px rgba(162, 158, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(124, 95, 217, 0.2)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.02)';
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(124, 95, 217, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(162, 158, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(124, 95, 217, 0.2)';
-              }}
-            >
+            <button className="btn-primary">
               Book a free presentation
             </button>
 
             {/* Secondary Button */}
-            <button
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                backdropFilter: 'blur(20px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                color: '#7c5fd9',
-                fontWeight: 600,
-                fontSize: '16px',
-                borderRadius: '16px',
-                padding: '16px 40px',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-                borderLeft: '1px solid rgba(255, 255, 255, 0.5)',
-                cursor: 'pointer',
-                minWidth: '180px',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(162, 158, 255, 0.1)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.02)';
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.45)';
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(162, 158, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(162, 158, 255, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(162, 158, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(162, 158, 255, 0.1)';
-              }}
-            >
+            <button className="btn-secondary">
               Ask a question
             </button>
           </div>

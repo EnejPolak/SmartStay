@@ -36,13 +36,17 @@ const HostMeansMoreSection = () => {
           }}
         >
           <span style={{ color: '#0f0f0f' }}>Because being a </span>
-          <span style={{ 
-            background: 'linear-gradient(135deg, #b8a1ff 0%, #7c5fd9 50%, #a29eff 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            filter: 'drop-shadow(0 2px 4px rgba(184, 161, 255, 0.3))',
-          }}>SmartxStay</span>
+          <span 
+            className="animated-gradient-text"
+            style={{ 
+              background: 'linear-gradient(90deg, #b8a1ff 0%, #7c5fd9 50%, #a29eff 100%)',
+              backgroundSize: '200% 100%',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              filter: 'drop-shadow(0 2px 4px rgba(184, 161, 255, 0.3))',
+            }}
+          >SmartxStay</span>
           <br />
           <span style={{ color: '#0f0f0f' }}>host means more</span>
         </h2>
@@ -110,6 +114,22 @@ const HostMeansMoreSection = () => {
 
       {/* Responsive Styles */}
       <style jsx>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
         @media (max-width: 768px) {
           section {
             padding: 80px 20px !important;

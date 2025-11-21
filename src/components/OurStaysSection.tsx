@@ -200,38 +200,7 @@ const OurStaysSection = () => {
         </div>
 
         {/* CTA Button */}
-        <button
-          style={{
-            backgroundColor: '#daceff',
-            color: '#ffffff',
-            fontWeight: 600,
-            fontSize: '16px',
-            borderRadius: '16px',
-            padding: '18px 48px',
-            border: 'none',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            boxShadow: '0 4px 16px rgba(218, 206, 255, 0.3)',
-            minWidth: '280px'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#c9baff';
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 6px 24px rgba(218, 206, 255, 0.5)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = '#daceff';
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 4px 16px rgba(218, 206, 255, 0.3)';
-          }}
-          onFocus={(e) => {
-            e.currentTarget.style.outline = '2px solid #b8a1ff';
-            e.currentTarget.style.outlineOffset = '2px';
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.outline = 'none';
-          }}
-        >
+        <button className="btn-primary">
           Explore more SmartxStay homes
         </button>
       </div>

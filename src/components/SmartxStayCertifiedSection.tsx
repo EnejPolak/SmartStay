@@ -75,9 +75,78 @@ const SmartxStayCertifiedSection = () => {
             fontSize: 'clamp(16px, 2vw, 18px)',
             fontWeight: 400,
             color: '#737373',
-            margin: '0 auto 80px auto',
+            margin: '0 auto 48px auto',
             maxWidth: '740px',
             lineHeight: '1.6'
+          }}
+        >
+          Showcase your commitment to exceptional hospitality. Our certification highlights your dedication to guest care and quality, providing a trusted benchmark that helps you stand out.
+        </p>
+
+        {/* Host Badges */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '32px',
+            marginBottom: '60px',
+            flexWrap: 'wrap'
+          }}
+        >
+          {/* Smart Pro Host Badge */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '12px'
+            }}
+          >
+            <img
+              src="/images/hosts/ProHost.png"
+              alt="Smart Pro Host"
+              style={{
+                maxWidth: '200px',
+                width: '100%',
+                height: 'auto',
+                objectFit: 'contain'
+              }}
+            />
+          </div>
+
+          {/* Smart Elite Host Badge */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '12px'
+            }}
+          >
+            <img
+              src="/images/hosts/EliteHost.png"
+              alt="Smart Elite Host"
+              style={{
+                maxWidth: '200px',
+                width: '100%',
+                height: 'auto',
+                objectFit: 'contain'
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Description below badges */}
+        <p
+          style={{
+            fontSize: 'clamp(16px, 2vw, 18px)',
+            fontWeight: 400,
+            color: '#737373',
+            margin: '0 auto 60px auto',
+            maxWidth: '740px',
+            lineHeight: '1.6',
+            textAlign: 'center'
           }}
         >
           Showcase your commitment to exceptional hospitality. Our certification highlights your dedication to guest care and quality, providing a trusted benchmark that helps you stand out.

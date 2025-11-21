@@ -122,30 +122,7 @@ const CTAContactSection = () => {
           </p>
 
           {/* CTA Button */}
-          <button
-            className="cta-button"
-            style={{
-              backgroundColor: '#b8a1ff',
-              color: '#ffffff',
-              fontWeight: 600,
-              fontSize: '16px',
-              padding: '16px 30px',
-              borderRadius: '18px',
-              border: 'none',
-              cursor: 'pointer',
-              boxShadow: '0 8px 24px rgba(184,161,255,0.4)',
-              transition: 'all 0.25s ease',
-              fontFamily: 'Inter, sans-serif'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#a991ff';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(184,161,255,0.55)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#b8a1ff';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(184,161,255,0.4)';
-            }}
-          >
+          <button className="btn-primary">
             Book a free presentation
           </button>
         </div>
@@ -316,26 +293,8 @@ const CTAContactSection = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="submit-button"
-              style={{
-                width: '100%',
-                backgroundColor: '#b8a1ff',
-                color: '#ffffff',
-                fontWeight: 700,
-                fontSize: '16px',
-                padding: '14px',
-                borderRadius: '14px',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.25s ease',
-                fontFamily: 'Inter, sans-serif'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#a991ff';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#b8a1ff';
-              }}
+              className="btn-primary"
+              style={{ width: '100%' }}
             >
               Send Message
             </button>

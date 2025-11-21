@@ -110,3 +110,122 @@ body {
   position: relative;
 }
 
+/* Button System - 3 Core Styles */
+
+/* PRIMARY CTA Button - Gradient with powerful effect */
+.btn-primary {
+  position: relative;
+  background: linear-gradient(135deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 14px;
+  padding: 16px 36px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 8px 24px rgba(125, 184, 255, 0.4), 
+              0 4px 12px rgba(162, 158, 255, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 16px 48px rgba(125, 184, 255, 0.5), 
+              0 8px 24px rgba(162, 158, 255, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 24px rgba(125, 184, 255, 0.4), 
+              0 4px 12px rgba(162, 158, 255, 0.3);
+  transition: all 0.1s ease;
+}
+
+/* SECONDARY Button - Glossy glass effect */
+.btn-secondary {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  color: #7c5fd9;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 14px;
+  padding: 16px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+  border-left: 1px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 16px rgba(162, 158, 255, 0.15), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.7), 
+              inset 0 -1px 0 rgba(162, 158, 255, 0.1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-4px) scale(1.03);
+  background-color: rgba(255, 255, 255, 0.45);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 12px 32px rgba(162, 158, 255, 0.25), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.9), 
+              inset 0 -1px 0 rgba(162, 158, 255, 0.15);
+}
+
+.btn-secondary:active {
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* TERTIARY Button - Outline/minimal style */
+.btn-tertiary {
+  position: relative;
+  background-color: transparent;
+  color: #7c5fd9;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 14px;
+  padding: 16px 36px;
+  border: 2px solid rgba(124, 95, 217, 0.3);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.btn-tertiary:hover {
+  transform: translateY(-4px) scale(1.03);
+  background-color: rgba(124, 95, 217, 0.08);
+  border-color: rgba(124, 95, 217, 0.5);
+  box-shadow: 0 8px 20px rgba(124, 95, 217, 0.2);
+  color: #6b4fc4;
+}
+
+.btn-tertiary:active {
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Button focus states for accessibility */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-tertiary:focus-visible {
+  outline: 3px solid rgba(162, 158, 255, 0.5);
+  outline-offset: 3px;
+}
+

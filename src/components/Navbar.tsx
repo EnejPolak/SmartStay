@@ -48,32 +48,6 @@ const Navbar = () => {
         >
           Home
         </Link>
-        <Link 
-          href="/prices" 
-          className="transition-colors duration-200"
-          style={{ 
-            color: pathname === '/prices' ? '#b8a1ff' : '#333',
-            fontWeight: 500,
-            textDecoration: 'none'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.color = '#b8a1ff'}
-          onMouseLeave={(e) => e.currentTarget.style.color = pathname === '/prices' ? '#b8a1ff' : '#333'}
-        >
-          Prices
-        </Link>
-        <a 
-          href="/for-guests" 
-          className="transition-colors duration-200"
-          style={{ 
-            color: pathname === '/for-guests' ? '#b8a1ff' : '#333',
-            fontWeight: 500,
-            textDecoration: 'none'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.color = '#b8a1ff'}
-          onMouseLeave={(e) => e.currentTarget.style.color = pathname === '/for-guests' ? '#b8a1ff' : '#333'}
-        >
-          For guests
-        </a>
         <a 
           href="/for-hosts" 
           className="transition-colors duration-200"
@@ -88,18 +62,31 @@ const Navbar = () => {
           For hosts
         </a>
         <a 
-          href="#blog" 
+          href="/for-guests" 
           className="transition-colors duration-200"
           style={{ 
-            color: '#333',
+            color: pathname === '/for-guests' ? '#b8a1ff' : '#333',
             fontWeight: 500,
             textDecoration: 'none'
           }}
           onMouseEnter={(e) => e.currentTarget.style.color = '#b8a1ff'}
-          onMouseLeave={(e) => e.currentTarget.style.color = '#333'}
+          onMouseLeave={(e) => e.currentTarget.style.color = pathname === '/for-guests' ? '#b8a1ff' : '#333'}
         >
-          Blog
+          For guests
         </a>
+        <Link 
+          href="/prices" 
+          className="transition-colors duration-200"
+          style={{ 
+            color: pathname === '/prices' ? '#b8a1ff' : '#333',
+            fontWeight: 500,
+            textDecoration: 'none'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.color = '#b8a1ff'}
+          onMouseLeave={(e) => e.currentTarget.style.color = pathname === '/prices' ? '#b8a1ff' : '#333'}
+        >
+          Pricing
+        </Link>
         <a 
           href="#about" 
           className="transition-colors duration-200"
@@ -125,6 +112,19 @@ const Navbar = () => {
           onMouseLeave={(e) => e.currentTarget.style.color = '#333'}
         >
           Contact
+        </a>
+        <a 
+          href="#blog" 
+          className="transition-colors duration-200"
+          style={{ 
+            color: '#333',
+            fontWeight: 500,
+            textDecoration: 'none'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.color = '#b8a1ff'}
+          onMouseLeave={(e) => e.currentTarget.style.color = '#333'}
+        >
+          Blog
         </a>
       </div>
     </nav>

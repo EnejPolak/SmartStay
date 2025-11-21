@@ -81,7 +81,17 @@ const LocalExperienceSection = () => {
             }}
           >
             <span style={{ color: '#0f0f0f', display: 'block', marginBottom: '6px' }}>Local experience.</span>
-            <span style={{ color: '#b8a1ff', display: 'block' }}>Powered by hosts.</span>
+            <span 
+              className="animated-gradient-text"
+              style={{ 
+                background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
+                backgroundSize: '200% 100%',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                display: 'block'
+              }}
+            >Powered by hosts.</span>
           </h2>
         </div>
 
@@ -257,6 +267,22 @@ const LocalExperienceSection = () => {
       </div>
 
       <style jsx>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
         @media (max-width: 768px) {
           section {
             padding: 60px 16px !important;
