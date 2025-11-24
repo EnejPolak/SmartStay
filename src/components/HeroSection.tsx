@@ -162,11 +162,11 @@ const HeroSection = () => {
           style={{
             flex: '1 1 60%',
             minWidth: '300px',
-            maxWidth: '720px',
+            maxWidth: '900px',
             textAlign: 'left',
             position: 'relative',
             paddingLeft: '60px',
-            paddingRight: '20px',
+            paddingRight: '60px',
             overflow: 'visible',
             width: '100%',
           }}
@@ -430,6 +430,7 @@ const HeroSection = () => {
           overflow: visible;
           padding: 2px 8px 2px 0;
           width: 100%;
+          max-width: 100%;
         }
 
         .hero-line {
@@ -492,6 +493,7 @@ const HeroSection = () => {
           
           .hero-text-content {
             padding-left: 40px !important;
+            padding-right: 40px !important;
             flex: 1 1 100% !important;
             max-width: 100% !important;
           }
@@ -561,7 +563,7 @@ const HeroSection = () => {
           .cta-buttons a {
             width: auto !important;
             min-width: 200px !important;
-            max-width: 280px !important;
+            max-width: 320px !important;
           }
         }
         
@@ -602,8 +604,11 @@ const HeroSection = () => {
           .cta-buttons button,
           .cta-buttons a {
             width: auto !important;
-            min-width: 240px !important;
-            max-width: 280px !important;
+            min-width: 280px !important;
+            max-width: 100% !important;
+            padding: 12px 20px !important;
+            white-space: normal !important;
+            word-wrap: break-word !important;
           }
         }
       `}</style>

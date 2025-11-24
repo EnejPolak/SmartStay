@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -10,6 +10,25 @@ const Navbar = () => {
   const pathname = usePathname();
   const { language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target as Node)) {
+        setIsLangDropdownOpen(false);
+      }
+    };
+
+    if (isLangDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isLangDropdownOpen]);
 
   const navText = {
     en: {
@@ -56,7 +75,8 @@ const Navbar = () => {
         height: '80px',
         fontFamily: 'Inter, sans-serif',
         borderBottom: '1px solid rgba(255, 255, 255, 0.25)',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)'
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
+        paddingRight: 'clamp(16px, 3vw, 48px)'
       }}
     >
       <style jsx>{`
@@ -158,42 +178,149 @@ const Navbar = () => {
         ))}
       </div>
 
-      {/* Language Toggle - Desktop */}
-      <div className="desktop-lang-toggle" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+      {/* Language Toggle - Desktop with Dropdown */}
+      <div 
+        ref={langDropdownRef}
+        className="desktop-lang-toggle" 
+        style={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          position: 'relative',
+          marginRight: '20px'
+        }}
+      >
         <button
-          onClick={() => setLanguage('en')}
+          onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
           style={{
             padding: '6px 12px',
-            border: language === 'en' ? '2px solid #b8a1ff' : '2px solid transparent',
+            border: '2px solid #b8a1ff',
             borderRadius: '6px',
-            backgroundColor: language === 'en' ? 'rgba(184, 161, 255, 0.1)' : 'transparent',
-            color: language === 'en' ? '#b8a1ff' : '#333',
-            fontWeight: language === 'en' ? 600 : 400,
+            backgroundColor: 'rgba(184, 161, 255, 0.1)',
             cursor: 'pointer',
-            fontSize: '14px',
+            fontSize: '18px',
             transition: 'all 0.2s ease',
             fontFamily: 'Inter, sans-serif',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            minWidth: '50px',
+            justifyContent: 'center'
           }}
         >
-          EN
+          <span>{language === 'en' ? '🇬🇧' : '🇸🇮'}</span>
+          <svg 
+            width="12" 
+            height="12" 
+            viewBox="0 0 12 12" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+            style={{
+              transform: isLangDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+              transition: 'transform 0.2s ease'
+            }}
+          >
+            <path 
+              d="M3 4.5L6 7.5L9 4.5" 
+              stroke="#b8a1ff" 
+              strokeWidth="1.5" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
-        <button
-          onClick={() => setLanguage('sl')}
-          style={{
-            padding: '6px 12px',
-            border: language === 'sl' ? '2px solid #b8a1ff' : '2px solid transparent',
-            borderRadius: '6px',
-            backgroundColor: language === 'sl' ? 'rgba(184, 161, 255, 0.1)' : 'transparent',
-            color: language === 'sl' ? '#b8a1ff' : '#333',
-            fontWeight: language === 'sl' ? 600 : 400,
-            cursor: 'pointer',
-            fontSize: '14px',
-            transition: 'all 0.2s ease',
-            fontFamily: 'Inter, sans-serif',
-          }}
-        >
-          SL
-        </button>
+        
+        {/* Dropdown Menu */}
+        {isLangDropdownOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '100%',
+              right: 0,
+              marginTop: '8px',
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              border: '1px solid rgba(184, 161, 255, 0.3)',
+              borderRadius: '8px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+              minWidth: '120px',
+              zIndex: 1000,
+              overflow: 'hidden'
+            }}
+          >
+            <button
+              onClick={() => {
+                setLanguage('en');
+                setIsLangDropdownOpen(false);
+              }}
+              style={{
+                width: '100%',
+                padding: '10px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                backgroundColor: language === 'en' ? 'rgba(184, 161, 255, 0.1)' : 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '15px',
+                color: language === 'en' ? '#b8a1ff' : '#333',
+                fontWeight: language === 'en' ? 600 : 400,
+                transition: 'all 0.2s ease',
+                fontFamily: 'Inter, sans-serif',
+                textAlign: 'left'
+              }}
+              onMouseEnter={(e) => {
+                if (language !== 'en') {
+                  e.currentTarget.style.backgroundColor = 'rgba(184, 161, 255, 0.05)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (language !== 'en') {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
+              }}
+            >
+              <span style={{ fontSize: '20px' }}>🇬🇧</span>
+              <span>English</span>
+            </button>
+            <button
+              onClick={() => {
+                setLanguage('sl');
+                setIsLangDropdownOpen(false);
+              }}
+              style={{
+                width: '100%',
+                padding: '10px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                backgroundColor: language === 'sl' ? 'rgba(184, 161, 255, 0.1)' : 'transparent',
+                border: 'none',
+                borderTop: '1px solid rgba(184, 161, 255, 0.1)',
+                cursor: 'pointer',
+                fontSize: '15px',
+                color: language === 'sl' ? '#b8a1ff' : '#333',
+                fontWeight: language === 'sl' ? 600 : 400,
+                transition: 'all 0.2s ease',
+                fontFamily: 'Inter, sans-serif',
+                textAlign: 'left'
+              }}
+              onMouseEnter={(e) => {
+                if (language !== 'sl') {
+                  e.currentTarget.style.backgroundColor = 'rgba(184, 161, 255, 0.05)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (language !== 'sl') {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
+              }}
+            >
+              <span style={{ fontSize: '20px' }}>🇸🇮</span>
+              <span>Slovenščina</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Mobile Menu Button */}
@@ -310,12 +437,17 @@ const Navbar = () => {
             color: language === 'en' ? '#b8a1ff' : '#333',
             fontWeight: language === 'en' ? 600 : 400,
             cursor: 'pointer',
-            fontSize: '16px',
+            fontSize: '20px',
             transition: 'all 0.2s ease',
             fontFamily: 'Inter, sans-serif',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minWidth: '50px',
+            height: '40px'
           }}
         >
-          EN
+          🇬🇧
         </button>
         <button
           onClick={() => {
@@ -330,12 +462,17 @@ const Navbar = () => {
             color: language === 'sl' ? '#b8a1ff' : '#333',
             fontWeight: language === 'sl' ? 600 : 400,
             cursor: 'pointer',
-            fontSize: '16px',
+            fontSize: '20px',
             transition: 'all 0.2s ease',
             fontFamily: 'Inter, sans-serif',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minWidth: '50px',
+            height: '40px'
           }}
         >
-          SL
+          🇸🇮
         </button>
       </div>
     </div>
