@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const FeaturesOverviewSection = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -8,6 +9,7 @@ const FeaturesOverviewSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const { language } = useLanguage();
 
   // Funkcija za določanje barve glede na index (šahovnica)
   const getCardColor = (index: number) => {
@@ -21,86 +23,128 @@ const FeaturesOverviewSection = () => {
     };
   };
 
-  const features = [
+  const translations = {
+    en: {
+      title: 'Everything you need in one place',
+      subtitle: 'Features designed for connection, not just convenience.',
+      features: [
     {
       id: 1,
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M9 22V12H15V22" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      ),
       title: 'Digital Info Map',
       description: 'All apartment info, rules, and appliance guides in one interactive hub.'
     },
     {
       id: 2,
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      ),
       title: 'Curated Local Guide',
       description: 'Personal recommendations for restaurants, cafés, and hidden gems.'
     },
     {
       id: 3,
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="4" width="18" height="18" rx="2" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M16 2V6M8 2V6M3 10H21" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M8 14H8.01M12 14H12.01M16 14H16.01M8 18H8.01M12 18H12.01M16 18H16.01" stroke="#b8a1ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      ),
       title: 'Smart Bookings',
       description: 'Integrate services like taxi booking, food delivery, or local tours.'
     },
     {
       id: 4,
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      ),
       title: 'Simple Setup',
       description: 'Get started in minutes. Our intuitive dashboard makes setup a breeze.'
     },
     {
       id: 5,
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M2 12H22" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      ),
       title: 'Upsell',
       description: 'Boost your revenue with extra services like tours and offers.'
     },
     {
       id: 6,
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 11L12 14L22 4" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      ),
       title: 'Apartment Directions',
       description: 'Clear, step-by-step navigation straight to your apartment.'
     },
     {
       id: 7,
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          title: 'Transport',
+          description: 'Help guests travel like locals with taxis or parking info.'
+        }
+      ]
+    },
+    sl: {
+      title: 'Vse, kar potrebujete, na enem mestu',
+      subtitle: 'Funkcije zasnovane za povezovanje, ne le za udobje.',
+      features: [
+        {
+          id: 1,
+          title: 'Digitalna informacijska mapa',
+          description: 'Vse informacije o apartmaju, pravila in navodila za naprave na enem interaktivnem mestu.'
+        },
+        {
+          id: 2,
+          title: 'Kurirana lokalna vodnica',
+          description: 'Osebna priporočila za restavracije, kavarne in skrite biserke.'
+        },
+        {
+          id: 3,
+          title: 'Pametne rezervacije',
+          description: 'Integrirajte storitve, kot so rezervacija taksija, dostava hrane ali lokalni izleti.'
+        },
+        {
+          id: 4,
+          title: 'Preprosta nastavitev',
+          description: 'Začnite v nekaj minutah. Naša intuitivna nadzorna plošča naredi nastavitev otročje enostavno.'
+        },
+        {
+          id: 5,
+          title: 'Dodatne storitve',
+          description: 'Povečajte svoj prihodek z dodatnimi storitvami, kot so izleti in ponudbe.'
+        },
+        {
+          id: 6,
+          title: 'Navodila do apartmaja',
+          description: 'Jasna, korak za korakom navigacija naravnost do vašega apartmaja.'
+        },
+        {
+          id: 7,
+          title: 'Prevoz',
+          description: 'Pomagajte gostom potovati kot domačini z informacijami o taksijih ali parkiranju.'
+        }
+      ]
+    }
+  };
+
+  const t = translations[language];
+
+  const features = t.features.map((feature, index) => {
+    // Keep original icons
+    const icons = [
+      <svg key="1" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M9 22V12H15V22" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>,
+      <svg key="2" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>,
+      <svg key="3" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="4" width="18" height="18" rx="2" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M16 2V6M8 2V6M3 10H21" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M8 14H8.01M12 14H12.01M16 14H16.01M8 18H8.01M12 18H12.01M16 18H16.01" stroke="#b8a1ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>,
+      <svg key="4" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>,
+      <svg key="5" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M2 12H22" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>,
+      <svg key="6" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 11L12 14L22 4" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>,
+      <svg key="7" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="1" y="4" width="22" height="16" rx="2" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M1 10H23" stroke="#b8a1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-      ),
-      title: 'Transport',
-      description: 'Help guests travel like locals with taxis or parking info.'
-    }
   ];
+    return { ...feature, icon: icons[index] };
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -200,7 +244,7 @@ const FeaturesOverviewSection = () => {
             lineHeight: '1.2'
           }}
         >
-          Everything you need in one place
+          {t.title}
         </h2>
 
         {/* Subtitle */}
@@ -213,7 +257,7 @@ const FeaturesOverviewSection = () => {
             lineHeight: '1.6'
           }}
         >
-          Features designed for connection, not just convenience.
+          {t.subtitle}
         </p>
 
         {/* Features Carousel */}
@@ -238,7 +282,8 @@ const FeaturesOverviewSection = () => {
               className="feature-card"
               style={{
                 width: '240px',
-                height: '240px',
+                minHeight: '240px',
+                height: 'auto',
                 backgroundColor: colors.backgroundColor,
                 borderRadius: '20px',
                 padding: '24px',
@@ -313,10 +358,8 @@ const FeaturesOverviewSection = () => {
                   lineHeight: '1.6',
                   margin: 0,
                   flex: 1,
-                  overflow: 'hidden',
-                  display: '-webkit-box',
-                  WebkitLineClamp: 4,
-                  WebkitBoxOrient: 'vertical'
+                  overflow: 'visible',
+                  display: 'block'
                 }}
               >
                 {feature.description}
@@ -334,12 +377,47 @@ const FeaturesOverviewSection = () => {
 
         @media (max-width: 768px) {
           section {
-            padding: 72px 16px !important;
+            padding: 60px 16px !important;
+          }
+          
+          .section-title {
+            font-size: clamp(28px, 6vw, 40px) !important;
+          }
+          
+          .section-subtitle {
+            font-size: clamp(14px, 3vw, 16px) !important;
           }
 
           .feature-card {
             width: 200px !important;
-            height: 200px !important;
+            min-width: 200px !important;
+            min-height: 220px !important;
+            height: auto !important;
+            padding: 20px !important;
+          }
+          
+          .feature-card p {
+            font-size: 13px !important;
+            line-height: 1.5 !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          section {
+            padding: 48px 12px !important;
+          }
+
+          .feature-card {
+            width: 180px !important;
+            min-width: 180px !important;
+            min-height: 200px !important;
+            height: auto !important;
+            padding: 18px !important;
+          }
+          
+          .feature-card p {
+            font-size: 12px !important;
+            line-height: 1.5 !important;
           }
         }
       `}</style>

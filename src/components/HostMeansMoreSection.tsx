@@ -1,8 +1,33 @@
 'use client';
 
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const HostMeansMoreSection = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      because: 'Because being a ',
+      smartxStay: 'SmartxStay',
+      hostMeans: 'host means more',
+      moreTrust: 'more trust, more visibility, more bookings, and happier guests.',
+      paragraph1: 'Being a SmartxStay Host means giving guests more than a place to sleep.',
+      paragraph2: 'It means making their stay easy, personal, and unforgettable.',
+      paragraph3: 'You anticipate what they need, guide them with care, and use simple tools to create a smooth, welcoming experience they\'ll remember and talk about.'
+    },
+    sl: {
+      because: 'Ker biti ',
+      smartxStay: 'SmartxStay',
+      hostMeans: 'gostitelj pomeni več',
+      moreTrust: 'več zaupanja, več vidnosti, več rezervacij in srečnejših gostov.',
+      paragraph1: 'Biti SmartxStay gostitelj pomeni dati gostom več kot le kraj za spanje.',
+      paragraph2: 'Pomeni narediti njihov obisk enostaven, oseben in nepozaben.',
+      paragraph3: 'Predvidite, kaj potrebujejo, vodite jih s skrbjo in uporabljajte preprosta orodja za ustvarjanje gladke, gostoljubne izkušnje, ki si jo bodo zapomnili in o njej govorili.'
+    }
+  };
+
+  const t = translations[language];
   return (
     <section
       style={{
@@ -35,7 +60,7 @@ const HostMeansMoreSection = () => {
             textAlign: 'center',
           }}
         >
-          <span style={{ color: '#0f0f0f' }}>Because being a </span>
+          <span style={{ color: '#0f0f0f' }}>{t.because}</span>
           <span 
             className="animated-gradient-text"
             style={{ 
@@ -46,9 +71,9 @@ const HostMeansMoreSection = () => {
               backgroundClip: 'text',
               filter: 'drop-shadow(0 2px 4px rgba(184, 161, 255, 0.3))',
             }}
-          >SmartxStay</span>
+          >{t.smartxStay}</span>
           <br />
-          <span style={{ color: '#0f0f0f' }}>host means more</span>
+          <span style={{ color: '#0f0f0f' }}>{t.hostMeans}</span>
         </h2>
 
         {/* Benefit List */}
@@ -62,7 +87,7 @@ const HostMeansMoreSection = () => {
             textAlign: 'center',
           }}
         >
-          more trust, more visibility, more bookings, and happier guests.
+          {t.moreTrust}
         </p>
 
         {/* Detailed Paragraphs */}
@@ -71,7 +96,7 @@ const HostMeansMoreSection = () => {
             display: 'flex',
             flexDirection: 'column',
             gap: '32px',
-            textAlign: 'left',
+            textAlign: 'center',
             maxWidth: '800px',
             margin: '0 auto',
           }}
@@ -83,9 +108,10 @@ const HostMeansMoreSection = () => {
               color: '#737373',
               lineHeight: '1.6',
               margin: 0,
+              textAlign: 'center',
             }}
           >
-            Being a SmartxStay Host means giving guests more than a place to sleep.
+            {t.paragraph1}
           </p>
           <p
             style={{
@@ -94,9 +120,10 @@ const HostMeansMoreSection = () => {
               color: '#737373',
               lineHeight: '1.6',
               margin: 0,
+              textAlign: 'center',
             }}
           >
-            It means making their stay easy, personal, and unforgettable.
+            {t.paragraph2}
           </p>
           <p
             style={{
@@ -105,9 +132,10 @@ const HostMeansMoreSection = () => {
               color: '#737373',
               lineHeight: '1.6',
               margin: 0,
+              textAlign: 'center',
             }}
           >
-            You anticipate what they need, guide them with care, and use simple tools to create a smooth, welcoming experience they&apos;ll remember and talk about.
+            {t.paragraph3}
           </p>
         </div>
       </div>

@@ -1,8 +1,185 @@
 'use client';
 
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function PricesPage() {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      packagesModules: 'Packages & Modules',
+      title: 'Smarter digital experience for',
+      yourGuests: 'your guests',
+      subtitle: 'Choose a SmartStay package that grows with your needs.',
+      description: 'From basic digital welcome to advanced automation and integrations - SmartStay lets you create an experience that delights every guest.',
+      comparePackages: 'Compare packages',
+      freeConsultation: 'Free consultation',
+      recommended: 'Recommended',
+      smartxWelcome: 'SmartxWelcome',
+      smartxPro: 'SmartxPro',
+      smartxElite: 'SmartxElite',
+      perMonth: '/month',
+      forTesting: 'For testing and basic digitalization.',
+      timeSaving: 'Time saving and communication automation.',
+      forProfessionals: 'For professionals with integration and revenue growth requirements.',
+      selectPackage: 'Select package',
+      startNow: 'Start now',
+      additionalModules: 'Additional modules for',
+      greaterValue: 'greater value',
+      modulesDescription: 'Upgrade your SmartStay experience with modules that increase revenue and improve guest satisfaction.',
+      sportMode: 'Sport Mode',
+      sportModeDesc: 'GPX routes for active guests',
+      eventsMode: 'Events Mode',
+      eventsModeDesc: 'Automatic display of current events',
+      salesMode: 'Sales Mode',
+      salesModeDesc: 'Upsell services (breakfast, wine, souvenirs)',
+      perService: '/service',
+      reservationsMode: 'Reservations mode',
+      reservationsModeDesc: 'Reservations for additional services',
+      byAgreement: 'By agreement',
+      placesKulturaMode: 'Places & Culture Mode',
+      placesKulturaModeDesc: 'Show guests the local experience',
+      receptionCare: 'Reception/Care',
+      receptionCareDesc: 'Request for linen change, towels etc.',
+      additionalLanguage: 'Additional Language',
+      additionalLanguageDesc: 'Each additional language',
+      perLanguage: '/language',
+      transportMode: 'Transport Mode',
+      transportModeDesc: 'Give guests all info about local transport',
+      ecoLabel: 'Eco Label',
+      ecoLabelDesc: 'Show your sustainability certificates',
+      weatherMode: 'Weather Mode',
+      weatherModeDesc: 'Enable tourists to see the weather',
+      ratingMode: 'Rating Mode',
+      ratingModeDesc: 'Enable guests to leave a rating',
+      surveysForms: 'Surveys and forms',
+      surveysFormsDesc: 'Insert surveys, forms...',
+      features: {
+        welcome: [
+          'Logo & CGP',
+          'All basic accommodation info',
+          'Parking and access instructions',
+          'Appliance instructions',
+          'Contact',
+          'Check in / check out',
+          'WiFi access',
+          '2 languages',
+          'Support',
+          'Chat integration - Viber, WhatsApp',
+          'Basic analytics'
+        ],
+        pro: [
+          'Everything from SmartxWelcome package',
+          '4 languages',
+          'Places module',
+          'Cultural heritage module',
+          'Sustainability module',
+          'Weather module',
+          'Rating module',
+          'Salesmode (1)'
+        ],
+        elite: [
+          'Everything from SmartxPro package',
+          '6 languages',
+          'Salesmode (3)',
+          'Sportsmode',
+          'Events',
+          'Room care',
+          'Surveys/Forms',
+          'Private feedback',
+          'Advanced analytics'
+        ]
+      }
+    },
+    sl: {
+      packagesModules: 'Paketi & Moduli',
+      title: 'Pametnejša digitalna izkušnja za',
+      yourGuests: 'vaše goste',
+      subtitle: 'Izberite SmartStay paket, ki raste z vašimi potrebami.',
+      description: 'Od osnovne digitalne dobrodošlice do napredne avtomatizacije in integracij - SmartStay vam omogoča, da ustvarite izkušnjo, ki navduši vsakega gosta.',
+      comparePackages: 'Primerjaj pakete',
+      freeConsultation: 'Brezplačen posvet',
+      recommended: 'Priporočeno',
+      smartxWelcome: 'SmartxWelcome',
+      smartxPro: 'SmartxPro',
+      smartxElite: 'SmartxElite',
+      perMonth: '/mesec',
+      forTesting: 'Za testiranje in osnovno digitalizacijo.',
+      timeSaving: 'Prihranek časa in avtomatizacija komunikacije.',
+      forProfessionals: 'Za profesionalce z zahtevami po integraciji in rasti prihodkov.',
+      selectPackage: 'Izberite paket',
+      startNow: 'Začnite zdaj',
+      additionalModules: 'Dodatni moduli za',
+      greaterValue: 'večjo vrednost',
+      modulesDescription: 'Nadgradite svojo SmartStay izkušnjo z moduli, ki povečajo prihodke in izboljšajo gostovo zadovoljstvo.',
+      sportMode: 'Način športa',
+      sportModeDesc: 'GPX poti za aktivne goste',
+      eventsMode: 'Način dogodkov',
+      eventsModeDesc: 'Avtomatsko prikazovanje aktualnih dogodkov',
+      salesMode: 'Način prodaje',
+      salesModeDesc: 'Upsell storitev (zajtrk, vino, spominki)',
+      perService: '/storitev',
+      reservationsMode: 'Način rezervacij',
+      reservationsModeDesc: 'Rezervacije dodatnih storitev',
+      byAgreement: 'Po dogovoru',
+      placesKulturaMode: 'Način krajev in kulture',
+      placesKulturaModeDesc: 'Prikažite gostom lokalno izkušnjo',
+      receptionCare: 'Recepcija/Skrb',
+      receptionCareDesc: 'Prošnja za menjavo rjuh, brisač ipd.',
+      additionalLanguage: 'Dodatni jezik',
+      additionalLanguageDesc: 'Vsak dodaten jezik',
+      perLanguage: '/jezik',
+      transportMode: 'Način prevoza',
+      transportModeDesc: 'Podajte gostom vse info o lokalnem transportu',
+      ecoLabel: 'Eko oznaka',
+      ecoLabelDesc: 'Pokažite svoje trajnostne certifikate',
+      weatherMode: 'Način vremena',
+      weatherModeDesc: 'Omogočite turistom vpogled v vreme',
+      ratingMode: 'Način ocenjevanja',
+      ratingModeDesc: 'Omogočite gostom, da pustijo oceno',
+      surveysForms: 'Ankete in obrazci',
+      surveysFormsDesc: 'Vstavite ankete, obrazce...',
+      features: {
+        welcome: [
+          'Logo & CGP',
+          'Vse osnovne info o nastanitvi',
+          'Navodila za parking in dostop',
+          'Navodila za aparate',
+          'Kontakt',
+          'Prijava / Odjava',
+          'WiFi dostop',
+          '2 jezika',
+          'Podpora',
+          'Chat integracija - Viber, WhatsApp',
+          'Osnovna analitika'
+        ],
+        pro: [
+          'Vse iz SmartxWelcome paketa',
+          '4 jeziki',
+          'Modul krajev',
+          'Modul kulturna dediščina',
+          'Modul trajnost',
+          'Modul vreme',
+          'Modul ocena',
+          'Modul način prodaje (1)'
+        ],
+        elite: [
+          'Vse iz SmartxPro paketa',
+          '6 jezikov',
+          'Modul način prodaje (3)',
+          'Modul način športa',
+          'Modul dogodkov',
+          'Modul skrb za sobe',
+          'Ankete/Obrazci',
+          'Zasebni povratni odziv',
+          'Napredna analitika'
+        ]
+      }
+    }
+  };
+
+  const t = translations[language];
   // Funkcija za določanje barve glede na pozicijo v gridu (šahovnica)
   const getCardColor = (index: number) => {
     const row = Math.floor(index / 4);
@@ -96,7 +273,7 @@ export default function PricesPage() {
                 fill="#a29eff"
               />
             </svg>
-            Paketi & Moduli
+            {language === 'sl' ? t.packagesModules : 'Packages & Modules'}
           </button>
 
           {/* Main Heading */}
@@ -111,7 +288,7 @@ export default function PricesPage() {
               maxWidth: '900px',
             }}
           >
-            <span style={{ color: '#0f0f0f' }}>Pametnejša digitalna izkušnja za</span>{' '}
+            <span style={{ color: '#0f0f0f' }}>{language === 'sl' ? t.title : 'Smarter digital experience for'}</span>{' '}
             <span 
               className="animated-gradient-text"
               style={{ 
@@ -121,7 +298,7 @@ export default function PricesPage() {
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}
-            >vaše goste</span>
+            >{language === 'sl' ? t.yourGuests : 'your guests'}</span>
           </h1>
 
           {/* Sub-headline */}
@@ -136,7 +313,7 @@ export default function PricesPage() {
               maxWidth: '700px',
             }}
           >
-            Izberite SmartStay paket, ki raste z vašimi potrebami.
+            {language === 'sl' ? t.subtitle : 'Choose a SmartStay package that grows with your needs.'}
           </p>
 
           {/* Description */}
@@ -151,7 +328,7 @@ export default function PricesPage() {
               maxWidth: '800px',
             }}
           >
-            Od osnovne digitalne dobrodošlice do napredne avtomatizacije in integracij - SmartStay vam omogoča, da ustvarite izkušnjo, ki navduši vsakega gosta.
+            {language === 'sl' ? t.description : 'From basic digital welcome to advanced automation and integrations - SmartStay lets you create an experience that delights every guest.'}
           </p>
 
           {/* CTA Buttons */}
@@ -165,7 +342,7 @@ export default function PricesPage() {
           >
             {/* Primerjaj pakete Button */}
             <button className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              Primerjaj pakete
+              {language === 'sl' ? t.comparePackages : 'Compare packages'}
               <svg
                 width="20"
                 height="20"
@@ -185,7 +362,7 @@ export default function PricesPage() {
 
             {/* Brezplačen posvet Button */}
             <button className="btn-secondary">
-              Brezplačen posvet
+              {language === 'sl' ? t.freeConsultation : 'Free consultation'}
             </button>
           </div>
         </section>
@@ -252,19 +429,34 @@ export default function PricesPage() {
                   width: 'fit-content',
                 }}
               >
-                SmartxWelcome
+                {language === 'sl' ? t.smartxWelcome : 'SmartxWelcome'}
               </div>
 
               {/* Price */}
+              <div style={{ marginBottom: '8px' }}>
+                {/* Original Price - Strikethrough */}
+                <div
+                  style={{
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    color: '#9ca3af',
+                    textDecoration: 'line-through',
+                    marginBottom: '4px',
+                  }}
+                >
+                  17,88€
+                </div>
+                {/* Current Price */}
               <div
+                className="price-amount"
                 style={{
                   fontSize: '48px',
                   fontWeight: 900,
                   color: '#1e40af',
-                  marginBottom: '8px',
                 }}
               >
-                14,90€/mesec
+                  14,90€{language === 'sl' ? t.perMonth : '/month'}
+                </div>
               </div>
 
               {/* Description */}
@@ -276,7 +468,7 @@ export default function PricesPage() {
                   lineHeight: '1.6',
                 }}
               >
-                Za testiranje in osnovno digitalizacijo.
+                {language === 'sl' ? t.forTesting : 'For testing and basic digitalization.'}
               </p>
 
               {/* Features List */}
@@ -288,19 +480,19 @@ export default function PricesPage() {
                   flex: 1,
                 }}
               >
-                {[
+                {(language === 'sl' ? t.features.welcome : [
                   'Logo & CGP',
-                  'Vse osnovne info o nastanitvi',
-                  'Navodila za parking in dostop',
-                  'Navodila za aparate',
-                  'Kontakt',
+                  'All basic accommodation info',
+                  'Parking and access instructions',
+                  'Appliance instructions',
+                  'Contact',
                   'Check in / check out',
-                  'WiFi dostop',
-                  '2 jezika',
+                  'WiFi access',
+                  '2 languages',
                   'Support',
-                  'Chat integracija - viber, whatsup',
-                  'Osnovna analitika',
-                ].map((feature, index) => (
+                  'Chat integration - Viber, WhatsApp',
+                  'Basic analytics'
+                ]).map((feature, index) => (
                   <li
                     key={index}
                     style={{
@@ -383,7 +575,7 @@ export default function PricesPage() {
                   boxShadow: '0 4px 12px rgba(162, 158, 255, 0.4)',
                 }}
               >
-                Priporočeno
+                {language === 'sl' ? t.recommended : 'Recommended'}
               </div>
 
               {/* Title Badge */}
@@ -403,20 +595,35 @@ export default function PricesPage() {
                   WebkitBackdropFilter: 'blur(10px)',
                 }}
               >
-                SmartxPro
+                {language === 'sl' ? t.smartxPro : 'SmartxPro'}
               </div>
 
               {/* Price */}
+              <div style={{ marginBottom: '8px' }}>
+                {/* Original Price - Strikethrough */}
+                <div
+                  style={{
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    color: '#9ca3af',
+                    textDecoration: 'line-through',
+                    marginBottom: '4px',
+                  }}
+                >
+                  41,88€
+                </div>
+                {/* Current Price */}
               <div
+                className="price-amount"
                 style={{
                   fontSize: '48px',
                   fontWeight: 900,
                   color: '#1e40af',
-                  marginBottom: '8px',
                   textShadow: '0 2px 4px rgba(255, 255, 255, 0.5)',
                 }}
               >
-                34,90€/mesec
+                  34,90€{language === 'sl' ? t.perMonth : '/month'}
+                </div>
               </div>
 
               {/* Description */}
@@ -429,7 +636,7 @@ export default function PricesPage() {
                   fontWeight: 500,
                 }}
               >
-                Prihranek časa in avtomatizacija komunikacije.
+                {language === 'sl' ? t.timeSaving : 'Time saving and communication automation.'}
               </p>
 
               {/* Features List */}
@@ -441,16 +648,18 @@ export default function PricesPage() {
                   flex: 1,
                 }}
               >
-                {[
-                  { text: 'Vse iz SmartxWelcome paketa', bold: true },
-                  { text: '4 jeziki', bold: false },
-                  { text: 'Modul places', bold: false },
-                  { text: 'Modul kulturna dediščina', bold: false },
-                  { text: 'Modul trajnost', bold: false },
-                  { text: 'Modul vreme', bold: false },
-                  { text: 'Modul ocena', bold: false },
-                  { text: 'Modul Salesmode (1)', bold: false },
-                ].map((feature, index) => (
+                {(language === 'sl' ? t.features.pro : [
+                  'Everything from SmartxWelcome package',
+                  '4 languages',
+                  'Places module',
+                  'Cultural heritage module',
+                  'Sustainability module',
+                  'Weather module',
+                  'Rating module',
+                  'Salesmode (1)'
+                ]).map((text, index) => {
+                  const feature = { text, bold: index === 0 };
+                  return (
                   <li
                     key={index}
                     style={{
@@ -478,12 +687,13 @@ export default function PricesPage() {
                     </svg>
                     <span>{feature.text}</span>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
 
               {/* Button */}
               <button className="btn-primary" style={{ width: '100%' }}>
-                Začnite zdaj
+                {language === 'sl' ? t.startNow : 'Start now'}
               </button>
             </div>
 
@@ -530,19 +740,34 @@ export default function PricesPage() {
                   width: 'fit-content',
                 }}
               >
-                SmartxElite
+                {language === 'sl' ? t.smartxElite : 'SmartxElite'}
               </div>
 
               {/* Price */}
+              <div style={{ marginBottom: '8px' }}>
+                {/* Original Price - Strikethrough */}
+                <div
+                  style={{
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    color: '#9ca3af',
+                    textDecoration: 'line-through',
+                    marginBottom: '4px',
+                  }}
+                >
+                  71,88€
+                </div>
+                {/* Current Price */}
               <div
+                className="price-amount"
                 style={{
                   fontSize: '48px',
                   fontWeight: 900,
                   color: '#1e40af',
-                  marginBottom: '8px',
                 }}
               >
-                59,90€/mesec
+                  59,90€{language === 'sl' ? t.perMonth : '/month'}
+                </div>
               </div>
 
               {/* Description */}
@@ -554,7 +779,7 @@ export default function PricesPage() {
                   lineHeight: '1.6',
                 }}
               >
-                Za profesionalce z zahtevami po integraciji in rasti prihodkov.
+                {language === 'sl' ? t.forProfessionals : 'For professionals with integration and revenue growth requirements.'}
               </p>
 
               {/* Features List */}
@@ -566,17 +791,19 @@ export default function PricesPage() {
                   flex: 1,
                 }}
               >
-                {[
-                  { text: 'Vse iz SmartxPro paketa', bold: true },
-                  { text: '6 jezikov', bold: false },
-                  { text: 'Modul Salesmode (3)', bold: false },
-                  { text: 'Modul Sportsmode', bold: false },
-                  { text: 'Modul Events', bold: false },
-                  { text: 'Modul Room care', bold: false },
-                  { text: 'Ankete/Obrazci', bold: false },
-                  { text: 'Privtni feedback', bold: false },
-                  { text: 'Napredna analitika', bold: false },
-                ].map((feature, index) => (
+                {(language === 'sl' ? t.features.elite : [
+                  'Everything from SmartxPro package',
+                  '6 languages',
+                  'Salesmode (3)',
+                  'Sportsmode',
+                  'Events',
+                  'Room care',
+                  'Surveys/Forms',
+                  'Private feedback',
+                  'Advanced analytics'
+                ]).map((text, index) => {
+                  const feature = { text, bold: index === 0 };
+                  return (
                   <li
                     key={index}
                     style={{
@@ -604,12 +831,13 @@ export default function PricesPage() {
                     </svg>
                     <span>{feature.text}</span>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
 
               {/* Button */}
               <button className="btn-tertiary" style={{ width: '100%' }}>
-                Izberite paket
+                {language === 'sl' ? t.selectPackage : 'Select package'}
               </button>
             </div>
           </div>
@@ -641,14 +869,14 @@ export default function PricesPage() {
                 letterSpacing: '-0.02em',
               }}
             >
-              <span style={{ color: '#0f0f0f' }}>Dodatni moduli za </span>
+              <span style={{ color: '#0f0f0f' }}>{language === 'sl' ? t.additionalModules : 'Additional modules for'} </span>
               <span style={{ 
                 background: 'linear-gradient(135deg, #a29eff 0%, #3b82f6 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}>
-                večjo vrednost
+                {language === 'sl' ? t.greaterValue : 'greater value'}
               </span>
             </h2>
             <p
@@ -663,7 +891,7 @@ export default function PricesPage() {
                 marginRight: 'auto',
               }}
             >
-              Nadgradite svojo SmartStay izkušnjo z moduli, ki povečajo prihodke in izboljšajo gostovo zadovoljstvo.
+              {language === 'sl' ? t.modulesDescription : 'Upgrade your SmartStay experience with modules that increase revenue and improve guest satisfaction.'}
             </p>
           </div>
 
@@ -722,13 +950,13 @@ export default function PricesPage() {
                   </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Sport Mode
+                    {language === 'sl' ? t.sportMode : 'Sport Mode'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    GPX poti za aktivne goste
+                    {language === 'sl' ? t.sportModeDesc : 'GPX routes for active guests'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    12,90 €/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    12,90 €{language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -782,13 +1010,13 @@ export default function PricesPage() {
                   </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Events Mode
+                    {language === 'sl' ? t.eventsMode : 'Events Mode'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Avtomatsko prikazovanje aktualnih dogodkov
+                    {language === 'sl' ? t.eventsModeDesc : 'Automatic display of current events'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    7,00 €/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    7,00 €{language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -842,13 +1070,13 @@ export default function PricesPage() {
                   </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Sales Mode
+                    {language === 'sl' ? t.salesMode : 'Sales Mode'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Upsell storitev (zajtrk, vino, spominki)
+                    {language === 'sl' ? t.salesModeDesc : 'Upsell services (breakfast, wine, souvenirs)'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    3,00 €/ storitev /mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    3,00 €{language === 'sl' ? t.perService : '/service'} {language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -902,13 +1130,13 @@ export default function PricesPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Reservations mode
+                    {language === 'sl' ? t.reservationsMode : 'Reservations mode'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Rezervacije dodatnih storitev
+                    {language === 'sl' ? t.reservationsModeDesc : 'Reservations for additional services'}
                   </p>
                   <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Po dogovoru
+                    {language === 'sl' ? t.byAgreement : 'By agreement'}
                   </div>
                 </div>
               </div>
@@ -962,13 +1190,13 @@ export default function PricesPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Places & Kultura Mode
+                    {language === 'sl' ? t.placesKulturaMode : 'Places & Culture Mode'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Prikažite gostom lokalno izkušnjo
+                    {language === 'sl' ? t.placesKulturaModeDesc : 'Show guests the local experience'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    9,90 €/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    9,90 €{language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -1022,13 +1250,13 @@ export default function PricesPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Reception/Care
+                    {language === 'sl' ? t.receptionCare : 'Reception/Care'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Prošnja za menjavo rjuh, brisač ipd.
+                    {language === 'sl' ? t.receptionCareDesc : 'Request for linen change, towels etc.'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    4,00 €/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    4,00 €{language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -1082,13 +1310,13 @@ export default function PricesPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Dodatni Jezik
+                    {language === 'sl' ? t.additionalLanguage : 'Additional Language'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Vsak dodaten jezik
+                    {language === 'sl' ? t.additionalLanguageDesc : 'Each additional language'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    2,50 €/ jezik/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    2,50 €{language === 'sl' ? t.perLanguage : '/language'} {language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -1142,13 +1370,13 @@ export default function PricesPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Transport Mode
+                    {language === 'sl' ? t.transportMode : 'Transport Mode'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Podajte gostom vse info o lokalnem transportu
+                    {language === 'sl' ? t.transportModeDesc : 'Give guests all info about local transport'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    3,00 €/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    3,00 €{language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -1202,13 +1430,13 @@ export default function PricesPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Eco Label
+                    {language === 'sl' ? t.ecoLabel : 'Eco Label'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Pokažite svoje trajnostne certifikate
+                    {language === 'sl' ? t.ecoLabelDesc : 'Show your sustainability certificates'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    3,00 €/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    3,00 €{language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -1262,13 +1490,13 @@ export default function PricesPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Vreme Mode
+                    {language === 'sl' ? t.weatherMode : 'Weather Mode'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Omogočite turistom vpogled v vreme
+                    {language === 'sl' ? t.weatherModeDesc : 'Enable tourists to see the weather'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    1,90 €/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    1,90 €{language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -1322,13 +1550,13 @@ export default function PricesPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Ocena Mode
+                    {language === 'sl' ? t.ratingMode : 'Rating Mode'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Omogočite gostom, da pustijo oceno
+                    {language === 'sl' ? t.ratingModeDesc : 'Enable guests to leave a rating'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    0,90 €/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    0,90 €{language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -1382,13 +1610,13 @@ export default function PricesPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#0f0f0f' }}>
-                    Ankete in obrazci
+                    {language === 'sl' ? t.surveysForms : 'Surveys and forms'}
                   </h3>
                   <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#737373', lineHeight: '1.5' }}>
-                    Vstavite ankete, obrazce...
+                    {language === 'sl' ? t.surveysFormsDesc : 'Insert surveys, forms...'}
                   </p>
-                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
-                    3,00 €/ mesec
+                  <div className="module-price" style={{ fontSize: '16px', fontWeight: 700, color: '#0f0f0f' }}>
+                    3,00 €{language === 'sl' ? t.perMonth : '/month'}
                   </div>
                 </div>
               </div>
@@ -1491,6 +1719,64 @@ export default function PricesPage() {
         @media (max-width: 1024px) {
           .pricing-card-featured {
             transform: scale(1) !important;
+          }
+          
+          .pricing-cards-container {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+            gap: 24px !important;
+          }
+          
+          section {
+            padding: 60px 30px !important;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .price-amount {
+            font-size: 36px !important;
+          }
+          
+          .module-price {
+            font-size: 15px !important;
+          }
+          
+          .pricing-cards-container {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+          
+          section {
+            padding: 50px 20px !important;
+          }
+          
+          .pricing-card {
+            padding: 28px 24px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .price-amount {
+            font-size: 32px !important;
+          }
+          
+          .module-price {
+            font-size: 14px !important;
+          }
+          
+          section {
+            padding: 40px 16px !important;
+          }
+          
+          .pricing-card {
+            padding: 24px 20px !important;
+          }
+          
+          .module-card {
+            padding: 20px !important;
+          }
+          
+          h1 {
+            font-size: clamp(28px, 6vw, 48px) !important;
           }
         }
 

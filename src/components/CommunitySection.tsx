@@ -2,8 +2,25 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const CommunitySection = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      title: 'Become a Part of Smart',
+      community: 'Stay Community',
+      description: 'Connect with a global network of hosts who share your passion for hospitality. Share insights, find support, and grow together in a community dedicated to creating unforgettable guest experiences worldwide.'
+    },
+    sl: {
+      title: 'Postanite del Smart',
+      community: 'Stay skupnosti',
+      description: 'Povežite se z globalno mrežo gostiteljev, ki delijo vašo strast do gostoljubja. Delite vpoglede, poiščite podporo in rastite skupaj v skupnosti, posvečeni ustvarjanju nepozabnih gostovskih izkušenj po vsem svetu.'
+    }
+  };
+
+  const t = translations[language];
   // Partner logos
   const logos = [
     '/images/community/1.png',
@@ -59,7 +76,7 @@ const CommunitySection = () => {
             lineHeight: '1.2'
           }}
         >
-          Become a Part of Smart<span style={{ color: '#b8a1ff' }}>x</span>Stay Community
+          {t.title}<span style={{ color: '#b8a1ff' }}>x</span>{t.community}
         </h2>
 
         {/* Description */}
@@ -73,7 +90,7 @@ const CommunitySection = () => {
             lineHeight: '1.6'
           }}
         >
-          Connect with a global network of hosts who share your passion for hospitality. Share insights, find support, and grow together in a community dedicated to creating unforgettable guest experiences worldwide.
+          {t.description}
         </p>
 
         {/* Logos Carousel Container */}

@@ -1,8 +1,29 @@
 'use client';
 
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const StandOutSection = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      standOut: 'Stand Out',
+      inWorld: 'in a World Full of Stays',
+      paragraph1: 'Every apartment looks good online.',
+      paragraph2: 'Not every host delivers an unforgettable experience.',
+      paragraph3: 'SmartxStay helps you become the host guests remember.'
+    },
+    sl: {
+      standOut: 'Izdite',
+      inWorld: 'v svetu polnem nastanitev',
+      paragraph1: 'Vsak apartma izgleda dobro na spletu.',
+      paragraph2: 'Vendar vsak gostitelj ne ponudi nepozabne izkušnje.',
+      paragraph3: 'SmartxStay vam pomaga postati gostitelj, ki ga gostje ne pozabijo.'
+    }
+  };
+
+  const t = translations[language];
   return (
     <section
       style={{
@@ -45,8 +66,8 @@ const StandOutSection = () => {
               backgroundClip: 'text',
               filter: 'drop-shadow(0 2px 4px rgba(184, 161, 255, 0.3))',
             }}
-          >Stand Out</span>{' '}
-          <span style={{ color: '#0f0f0f' }}>in a World Full of Stays</span>
+          >{t.standOut}</span>{' '}
+          <span style={{ color: '#0f0f0f' }}>{t.inWorld}</span>
         </h2>
 
         {/* Paragraphs */}
@@ -66,7 +87,7 @@ const StandOutSection = () => {
               margin: 0,
             }}
           >
-            Every apartment looks good online.
+            {t.paragraph1}
           </p>
           <p
             style={{
@@ -77,7 +98,7 @@ const StandOutSection = () => {
               margin: 0,
             }}
           >
-            Not every host delivers an unforgettable experience.
+            {t.paragraph2}
           </p>
           <p
             style={{
@@ -88,7 +109,7 @@ const StandOutSection = () => {
               margin: 0,
             }}
           >
-            SmartxStay helps you become the host guests remember.
+            {t.paragraph3}
           </p>
         </div>
       </div>

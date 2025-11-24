@@ -1,8 +1,27 @@
 'use client';
 
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const OurStaysSection = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      title: 'Our stays around the World',
+      subtitle: 'Browse the full list below to find your next perfect SmartxStay.',
+      exploreMore: 'Explore more SmartxStay homes',
+      imageComingSoon: 'Image coming soon'
+    },
+    sl: {
+      title: 'Naši obiski po vsem svetu',
+      subtitle: 'Prebrskajte celoten seznam spodaj, da najdete svoj naslednji popoln SmartxStay.',
+      exploreMore: 'Raziščite več SmartxStay domov',
+      imageComingSoon: 'Slika kmalu'
+    }
+  };
+
+  const t = translations[language];
   // Sample stays data with placeholders
   const stays = [
     { id: 1, title: 'Chic Parisian Flat', location: 'Paris, France', emoji: '🇫🇷' },
@@ -46,7 +65,7 @@ const OurStaysSection = () => {
             lineHeight: '1.2'
           }}
         >
-          Our stays around the World
+          {t.title}
         </h2>
 
         {/* Subtitle */}
@@ -60,7 +79,7 @@ const OurStaysSection = () => {
             lineHeight: '1.6'
           }}
         >
-          Browse the full list below to find your next perfect SmartxStay.
+          {t.subtitle}
         </p>
 
         {/* Stays Grid */}
@@ -140,7 +159,7 @@ const OurStaysSection = () => {
                       letterSpacing: '0.5px'
                     }}
                   >
-                    Image coming soon
+                    {t.imageComingSoon}
                   </div>
                 </div>
               </div>
@@ -201,7 +220,7 @@ const OurStaysSection = () => {
 
         {/* CTA Button */}
         <button className="btn-primary">
-          Explore more SmartxStay homes
+          {t.exploreMore}
         </button>
       </div>
 
@@ -222,6 +241,7 @@ const OurStaysSection = () => {
           .stays-grid {
             grid-template-columns: 1fr !important;
             gap: 20px !important;
+            width: 100% !important;
           }
           
           section {
@@ -229,8 +249,28 @@ const OurStaysSection = () => {
           }
           
           .stay-card {
-            max-width: 400px;
-            margin: 0 auto;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            min-height: 320px !important;
+          }
+          
+          .stay-card > div:first-child {
+            width: 100% !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .stays-grid {
+            gap: 16px !important;
+          }
+          
+          section {
+            padding: 40px 12px !important;
+          }
+          
+          .stay-card {
+            min-height: 300px !important;
           }
         }
       `}</style>

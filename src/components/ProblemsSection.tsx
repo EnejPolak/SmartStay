@@ -1,11 +1,20 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ProblemsSection = () => {
   const [activeTab, setActiveTab] = useState<'hosts' | 'guests'>('hosts');
+  const { language } = useLanguage();
 
-  const hostsProblems = [
+  const translations = {
+    en: {
+      title: 'Problems Smart',
+      solves: 'solves',
+      subtitle: 'Transforming challenges into seamless experiences.',
+      forHosts: 'For hosts',
+      forGuests: 'For guests',
+      hostsProblems: [
     {
       id: 1,
       title: 'Repetitive guest questions',
@@ -30,9 +39,8 @@ const ProblemsSection = () => {
       description: 'Guests don\'t find your additional services',
       icon: 'star'
     }
-  ];
-
-  const guestsProblems = [
+      ],
+      guestsProblems: [
     {
       id: 1,
       title: 'Lost information',
@@ -57,9 +65,71 @@ const ProblemsSection = () => {
       description: 'Dont know what transport to use and how',
       icon: 'check'
     }
-  ];
+      ]
+    },
+    sl: {
+      title: 'Težave, ki jih Smart',
+      solves: 'rešuje',
+      subtitle: 'Preoblikovanje izzivov v brezhibne izkušnje.',
+      forHosts: 'Za gostitelje',
+      forGuests: 'Za goste',
+      hostsProblems: [
+        {
+          id: 1,
+          title: 'Ponavljajoča se vprašanja gostov',
+          description: 'Nenehno odgovarjanje na ista vprašanja',
+          icon: 'question'
+        },
+        {
+          id: 2,
+          title: 'Zastareli papirnati vodniki',
+          description: 'Težko posodabljanje, enostavno izgubiti ali poškodovati',
+          icon: 'document'
+        },
+        {
+          id: 3,
+          title: 'Zaostajanje v sodobnem turizmu',
+          description: 'Tehnologija se hitro razvija, ne zaostajajte.',
+          icon: 'hourglass'
+        },
+        {
+          id: 4,
+          title: 'Izgubljene priložnosti za dodatne storitve',
+          description: 'Gosti ne najdejo vaših dodatnih storitev',
+          icon: 'star'
+        }
+      ],
+      guestsProblems: [
+        {
+          id: 1,
+          title: 'Izgubljene informacije',
+          description: 'Težko najti lokalne vodnike, pravila ali opremo',
+          icon: 'info'
+        },
+        {
+          id: 2,
+          title: 'Izgubljeni pred prihodom',
+          description: 'Slabe navodila za smer od vašega gostitelja',
+          icon: 'message'
+        },
+        {
+          id: 3,
+          title: 'Izgubljene ure pri raziskovanju za izlete',
+          description: 'Povprečen popotnik načrtuje vsaj 4 ure za izlet',
+          icon: 'star'
+        },
+        {
+          id: 4,
+          title: 'Zmedene informacije o prevozu',
+          description: 'Ne veste, kateri prevoz uporabiti in kako',
+          icon: 'check'
+        }
+      ]
+    }
+  };
 
-  const problems = activeTab === 'hosts' ? hostsProblems : guestsProblems;
+  const t = translations[language];
+  const problems = activeTab === 'hosts' ? t.hostsProblems : t.guestsProblems;
 
   const renderIcon = (iconType: string, iconColor: string = '#a29eff') => {
     
@@ -162,7 +232,7 @@ const ProblemsSection = () => {
             letterSpacing: '-0.02em'
           }}
         >
-          Problems Smart<span className="accent-x">x</span>Stay solves
+          {t.title}<span className="accent-x">x</span>Stay {t.solves}
         </h2>
 
         {/* Subtitle */}
@@ -179,7 +249,7 @@ const ProblemsSection = () => {
             lineHeight: '1.6'
           }}
         >
-          Transforming challenges into seamless experiences.
+          {t.subtitle}
         </p>
 
         {/* Navigation Buttons */}
@@ -227,7 +297,7 @@ const ProblemsSection = () => {
               }
               }}
             >
-              For hosts
+              {t.forHosts}
             </button>
             <button
             onClick={() => setActiveTab('guests')}
@@ -263,7 +333,7 @@ const ProblemsSection = () => {
               }
               }}
             >
-              For guests
+              {t.forGuests}
             </button>
         </div>
 
@@ -436,7 +506,7 @@ const ProblemsSection = () => {
 
         @media (max-width: 768px) {
           .problems-section {
-            padding: 80px 16px !important;
+            padding: 60px 16px !important;
           }
 
           .cards-grid {
@@ -445,31 +515,47 @@ const ProblemsSection = () => {
           }
 
           .problem-card {
-            padding: 32px 28px !important;
+            padding: 28px 24px !important;
           }
 
           .section-title {
-            font-size: 36px !important;
+            font-size: clamp(28px, 6vw, 40px) !important;
             margin-bottom: 16px !important;
           }
 
           .section-subtitle {
-            font-size: 17px !important;
+            font-size: clamp(14px, 3vw, 17px) !important;
             margin-bottom: 32px !important;
           }
 
           .pill-buttons {
-            margin-bottom: 48px !important;
+            margin-bottom: 40px !important;
+            gap: 12px !important;
+          }
+          
+          .pill-button {
+            font-size: clamp(14px, 3vw, 16px) !important;
+            padding: 10px 20px !important;
           }
         }
 
         @media (max-width: 480px) {
+          .problems-section {
+            padding: 48px 12px !important;
+          }
+          
           .problem-card {
-            padding: 28px 24px !important;
+            padding: 24px 20px !important;
           }
 
           .icon-container {
             padding: 12px !important;
+            width: 48px !important;
+            height: 48px !important;
+          }
+          
+          .section-title {
+            font-size: clamp(24px, 7vw, 32px) !important;
           }
         }
       `}</style>

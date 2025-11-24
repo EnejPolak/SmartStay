@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const EverythingYouNeedSection = () => {
+  const { language } = useLanguage();
   const carouselRef = useRef<HTMLDivElement>(null);
   const rotationRef = useRef(0);
   const isPausedRef = useRef(false);
@@ -20,6 +22,18 @@ const EverythingYouNeedSection = () => {
     { title: 'Stay Connected', description: 'A seamless, connected experience from check-in to check-out.', icon: 'M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z' },
   ];
 
+  const translations = {
+    en: {
+      title: 'Everything you need in one place',
+      subtitle: 'Features designed for connection, not just convenience.'
+    },
+    sl: {
+      title: 'Vse, kar potrebujete, na enem mestu',
+      subtitle: 'Funkcije zasnovane za povezovanje, ne le za udobje.'
+    }
+  };
+
+  const t = translations[language];
   const totalCards = features.length;
   const radius = 350; // Polmer kroga
 
@@ -29,7 +43,7 @@ const EverythingYouNeedSection = () => {
 
     const rotate = () => {
       if (!isPausedRef.current) {
-        rotationRef.current += 0.2; // Hitrost rotacije
+        rotationRef.current += 0.08; // Počasnejša hitrost rotacije za lažje branje
         if (rotationRef.current >= 360) {
           rotationRef.current = 0;
         }
@@ -38,7 +52,9 @@ const EverythingYouNeedSection = () => {
       animationFrameRef.current = requestAnimationFrame(rotate);
     };
 
+    // Začni rotacijo takoj
     animationFrameRef.current = requestAnimationFrame(rotate);
+    
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
@@ -76,7 +92,7 @@ const EverythingYouNeedSection = () => {
             lineHeight: '1.2'
           }}
         >
-          Everything you need in one place
+          {t.title}
         </h2>
 
         {/* Subtitle */}
@@ -92,11 +108,12 @@ const EverythingYouNeedSection = () => {
             lineHeight: '1.6'
           }}
         >
-          Features designed for connection, not just convenience.
+          {t.subtitle}
         </p>
 
         {/* Carousel Container */}
         <div
+          className="carousel-wrapper"
           style={{
             perspective: '1200px',
             perspectiveOrigin: '50% 50%',
@@ -236,28 +253,68 @@ const EverythingYouNeedSection = () => {
       {/* Responsive Styles */}
       <style jsx>{`
         @media (max-width: 1024px) {
-          .carousel-container {
-            transform: scale(0.8) !important;
+          .carousel-wrapper {
+            transform: scale(0.8);
           }
           
           section {
             padding: 40px 20px !important;
+            min-height: auto !important;
+          }
+          
+          .carousel-wrapper {
+            height: 400px !important;
           }
         }
 
         @media (max-width: 768px) {
-          .carousel-container {
-            transform: scale(0.6) !important;
+          .carousel-wrapper {
+            transform: scale(0.85);
+            height: 400px !important;
           }
           
           section {
             padding: 30px 16px !important;
+            min-height: auto !important;
+          }
+          
+          .feature-card {
+            width: 280px !important;
+            height: 360px !important;
+            margin-left: -140px !important;
+            margin-top: -180px !important;
+            padding: 28px 24px !important;
+          }
+          
+          .feature-card h3 {
+            font-size: 20px !important;
+          }
+          
+          .feature-card p {
+            font-size: 15px !important;
           }
         }
         
         @media (max-width: 480px) {
-          .carousel-container {
-            transform: scale(0.5) !important;
+          .carousel-wrapper {
+            transform: scale(0.75);
+            height: 380px !important;
+          }
+          
+          .feature-card {
+            width: 260px !important;
+            height: 340px !important;
+            margin-left: -130px !important;
+            margin-top: -170px !important;
+            padding: 26px 22px !important;
+          }
+          
+          .feature-card h3 {
+            font-size: 19px !important;
+          }
+          
+          .feature-card p {
+            font-size: 14px !important;
           }
         }
       `}</style>

@@ -3,8 +3,41 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      contact: 'Contact',
+      followUs: 'Follow us',
+      menu: 'Menu',
+      home: 'Home',
+      forGuests: 'For guests',
+      forHosts: 'For hosts',
+      pricing: 'Pricing',
+      aboutUs: 'About us',
+      contactLink: 'Contact',
+      terms: 'Terms and conditions',
+      privacy: 'Privacy Policy'
+    },
+    sl: {
+      contact: 'Kontakt',
+      followUs: 'Sledite nam',
+      menu: 'Meni',
+      home: 'Domov',
+      forGuests: 'Za goste',
+      forHosts: 'Za gostitelje',
+      pricing: 'Cenik',
+      aboutUs: 'O nas',
+      contactLink: 'Kontakt',
+      terms: 'Pogoji uporabe',
+      privacy: 'Pravilnik o zasebnosti'
+    }
+  };
+
+  const t = translations[language];
 
   return (
     <footer
@@ -23,7 +56,7 @@ const Footer = () => {
         className="footer-container"
         style={{
           maxWidth: '1200px',
-          margin: '0 auto',
+          margin: '0 0 0 auto',
           padding: '64px 24px',
           display: 'grid',
           gridTemplateColumns: '1.2fr 1fr 1fr',
@@ -33,8 +66,8 @@ const Footer = () => {
       >
         {/* Brand & Contact - Left Column */}
         <div className="footer-brand-contact">
-          {/* Logo */}
-          <div style={{ marginBottom: '20px' }}>
+          {/* Logo - na mobilnih bo na sredini zgoraj */}
+          <div className="footer-logo" style={{ marginBottom: '32px', width: '100%', gridColumn: '1 / -1' }}>
             <Image
               src="/logo__1__720.png"
               alt="SmartxStay Logo"
@@ -46,6 +79,7 @@ const Footer = () => {
 
           {/* Contact Section */}
           <h3
+            className="footer-section-title"
             style={{
               fontSize: '16px',
               fontWeight: 700,
@@ -54,7 +88,7 @@ const Footer = () => {
               marginTop: 0
             }}
           >
-            Contact
+            {t.contact}
           </h3>
 
           <div style={{ marginBottom: '24px' }}>
@@ -101,7 +135,7 @@ const Footer = () => {
                 letterSpacing: '0.5px'
               }}
             >
-              Follow us
+              {t.followUs}
             </p>
             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
               {/* LinkedIn */}
@@ -188,6 +222,7 @@ const Footer = () => {
         {/* Menu - Middle Column */}
         <div className="footer-menu">
           <h3
+            className="footer-section-title"
             style={{
               fontSize: '16px',
               fontWeight: 700,
@@ -196,18 +231,17 @@ const Footer = () => {
               marginTop: 0
             }}
           >
-            Menu
+            {t.menu}
           </h3>
           <nav>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {[
-                { label: 'Home', href: '/' },
-                { label: 'Features', href: '#features-overview' },
-                { label: 'For guests', href: '/for-guests' },
-                { label: 'For hosts', href: '/for-hosts' },
-                { label: 'About us', href: '/about-us' },
-                { label: 'Contact', href: '/contact' },
-                { label: 'Blog', href: '/blog' }
+                { label: t.home, href: '/' },
+                { label: t.forGuests, href: '/for-guests' },
+                { label: t.forHosts, href: '/for-hosts' },
+                { label: t.pricing, href: '/prices' },
+                { label: t.aboutUs, href: '/about' },
+                { label: t.contactLink, href: '/contact' }
               ].map((link) => (
                 <li key={link.label} style={{ marginBottom: '8px' }}>
                   <Link
@@ -277,7 +311,7 @@ const Footer = () => {
               onMouseEnter={(e) => (e.currentTarget.style.color = '#b8a1ff')}
               onMouseLeave={(e) => (e.currentTarget.style.color = '#4a4a4a')}
             >
-              Terms and conditions
+              {t.terms}
             </Link>
             <Link
               href="/privacy"
@@ -290,7 +324,7 @@ const Footer = () => {
               onMouseEnter={(e) => (e.currentTarget.style.color = '#b8a1ff')}
               onMouseLeave={(e) => (e.currentTarget.style.color = '#4a4a4a')}
             >
-              Privacy Policy
+              {t.privacy}
             </Link>
           </div>
         </div>
@@ -298,10 +332,23 @@ const Footer = () => {
 
       {/* Responsive Styles */}
       <style jsx>{`
+        .footer-section-title {
+          margin-top: 0 !important;
+        }
+        
+        .footer-brand-contact .footer-section-title {
+          margin-top: 0 !important;
+        }
+        
+        .footer-menu .footer-section-title {
+          margin-top: 0 !important;
+        }
+
         @media (max-width: 1024px) {
           .footer-container {
             grid-template-columns: 1fr 1fr !important;
             gap: 48px !important;
+            margin: 0 0 0 auto !important;
           }
 
           .footer-brand-contact {
@@ -310,6 +357,10 @@ const Footer = () => {
 
           .footer-menu {
             grid-column: 2;
+          }
+          
+          .footer-section-title {
+            margin-top: 0 !important;
           }
 
           .footer-legal {
@@ -326,46 +377,138 @@ const Footer = () => {
 
         @media (max-width: 768px) {
           .footer-container {
-            grid-template-columns: 1fr !important;
-            gap: 40px !important;
-            padding: 56px 20px !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 24px !important;
+            padding: 48px 20px !important;
+            display: grid !important;
           }
 
-          .footer-brand-contact,
-          .footer-menu,
-          .footer-legal {
-            text-align: center !important;
+          /* Logo na sredini zgoraj */
+          .footer-logo {
+            display: flex !important;
+            justify-content: center !important;
+            margin-bottom: 32px !important;
+            width: 100% !important;
+            grid-column: 1 / -1 !important;
+          }
+          
+          .footer-brand-contact {
+            grid-column: 1;
+            display: block !important;
+            margin-bottom: 0 !important;
+            width: 100% !important;
+          }
+          
+          .footer-brand-contact > div:nth-child(2) {
+            grid-column: auto;
           }
 
-          .footer-brand-contact > div:first-child {
-            display: flex;
-            justify-content: center;
+          .footer-brand-contact h3 {
+            text-align: left !important;
+            margin-bottom: 12px !important;
+            margin-top: 0 !important;
           }
 
           .footer-brand-contact > div:nth-child(3) {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: 24px !important;
           }
 
+          .footer-brand-contact > div:nth-child(3) a {
+            text-align: left !important;
+          }
+
+          /* Follow us pod Contact, na levi */
           .footer-brand-contact > div:last-child {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: block !important;
+            text-align: left !important;
+            margin-top: 0 !important;
+          }
+
+          .footer-brand-contact > div:last-child > p {
+            text-align: left !important;
           }
 
           .footer-brand-contact > div:last-child > div {
-            justify-content: center !important;
-            margin-top: 16px;
+            justify-content: flex-start !important;
+            margin-top: 12px !important;
           }
 
+          .footer-menu {
+            grid-column: 2;
+            text-align: right !important;
+            margin-bottom: 0 !important;
+            align-self: start !important;
+          }
+
+          .footer-menu h3 {
+            text-align: right !important;
+            margin-bottom: 12px !important;
+            margin-top: 0 !important;
+          }
+          
+          /* Poravnaj naslova na isto višino */
+          .footer-section-title {
+            margin-top: 0 !important;
+            margin-bottom: 12px !important;
+          }
+
+          .footer-menu ul {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+          }
+
+          .footer-menu ul li {
+            text-align: right !important;
+          }
+
+          /* Legal na sredini spodaj */
           .footer-legal {
+            grid-column: 1 / -1 !important;
             text-align: center !important;
             padding-right: 0 !important;
+            margin-top: 32px !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+            padding-top: 24px !important;
+            width: 100% !important;
+          }
+
+          .footer-legal h3 {
+            text-align: center !important;
+            margin-bottom: 12px !important;
           }
 
           .footer-legal > div {
             align-items: center !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .footer-container {
+            padding: 40px 16px !important;
+            gap: 28px !important;
+          }
+
+          .footer-brand-contact > div:first-child img {
+            max-width: 140px !important;
+            height: auto !important;
+          }
+
+          .footer-brand-contact h3,
+          .footer-menu h3,
+          .footer-legal h3 {
+            font-size: 15px !important;
+          }
+
+          .footer-brand-contact > div:nth-child(3) a,
+          .footer-menu ul li a,
+          .footer-legal > div a {
+            font-size: 14px !important;
           }
         }
 

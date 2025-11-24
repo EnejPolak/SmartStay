@@ -1,8 +1,37 @@
 'use client';
 
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const SmartxStayCertifiedSection = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      title: 'Smart',
+      certified: 'Stay Certified',
+      subtitle: 'Showcase your commitment to exceptional hospitality. Our certification highlights your dedication to guest care and quality, providing a trusted benchmark that helps you stand out.',
+      buildTrust: 'Build Trust',
+      buildTrustDesc: 'Gain a competitive edge with a badge that signals quality and reliability to potential guests, assuring them of a superior stay.',
+      elevateListing: 'Elevate Your Listing',
+      elevateListingDesc: 'Certified hosts get priority placement and greater visibility across our platform and partners, attracting more bookings.',
+      accessResources: 'Access Expert Resources',
+      accessResourcesDesc: 'Unlock exclusive guides, workshops, and tools to help you refine your hosting skills and enhance guest satisfaction.'
+    },
+    sl: {
+      title: 'Smart',
+      certified: 'Stay Certificirano',
+      subtitle: 'Pokažite svojo zavezanost izjemnemu gostoljubju. Naša certificacija poudarja vašo predanost skrbi za goste in kakovosti, kar zagotavlja zaupanja vreden standard, ki vam pomaga izstopati.',
+      buildTrust: 'Zgradite zaupanje',
+      buildTrustDesc: 'Pridobite konkurenčno prednost z značko, ki potencialnim gostom sporoča kakovost in zanesljivost ter jim zagotavlja vrhunski bivanje.',
+      elevateListing: 'Dvignite svoj oglas',
+      elevateListingDesc: 'Certificirani gostitelji dobijo prednostno umestitev in večjo vidnost na naši platformi in pri partnerjih, kar pritegne več rezervacij.',
+      accessResources: 'Dostop do strokovnih virov',
+      accessResourcesDesc: 'Odklenite ekskluzivne vodnike, delavnice in orodja, ki vam pomagajo izboljšati svoje gostiteljske spretnosti in povečati zadovoljstvo gostov.'
+    }
+  };
+
+  const t = translations[language];
   return (
     <section
       style={{
@@ -62,26 +91,12 @@ const SmartxStayCertifiedSection = () => {
             fontSize: 'clamp(36px, 4.5vw, 52px)',
             fontWeight: 800,
             color: '#0f0f0f',
-            margin: '0 0 24px 0',
+            margin: '0 0 48px 0',
             lineHeight: '1.2'
           }}
         >
-          Smart<span style={{ color: '#b8a1ff' }}>x</span>Stay Certified
+          {t.title}<span style={{ color: '#b8a1ff' }}>x</span>{t.certified}
         </h2>
-
-        {/* Subtitle */}
-        <p
-          style={{
-            fontSize: 'clamp(16px, 2vw, 18px)',
-            fontWeight: 400,
-            color: '#737373',
-            margin: '0 auto 48px auto',
-            maxWidth: '740px',
-            lineHeight: '1.6'
-          }}
-        >
-          Showcase your commitment to exceptional hospitality. Our certification highlights your dedication to guest care and quality, providing a trusted benchmark that helps you stand out.
-        </p>
 
         {/* Host Badges */}
         <div
@@ -149,7 +164,7 @@ const SmartxStayCertifiedSection = () => {
             textAlign: 'center'
           }}
         >
-          Showcase your commitment to exceptional hospitality. Our certification highlights your dedication to guest care and quality, providing a trusted benchmark that helps you stand out.
+          {t.subtitle}
         </p>
 
         {/* Benefits Cards */}
@@ -232,7 +247,7 @@ const SmartxStayCertifiedSection = () => {
                 lineHeight: '1.3'
               }}
             >
-              Build Trust
+              {t.buildTrust}
             </h3>
 
             {/* Description */}
@@ -244,7 +259,7 @@ const SmartxStayCertifiedSection = () => {
                 margin: 0
               }}
             >
-              Gain a competitive edge with a badge that signals quality and reliability to potential guests, assuring them of a superior stay.
+              {t.buildTrustDesc}
             </p>
           </div>
 
@@ -318,7 +333,7 @@ const SmartxStayCertifiedSection = () => {
                 lineHeight: '1.3'
               }}
             >
-              Elevate Your Listing
+              {t.elevateListing}
             </h3>
 
             {/* Description */}
@@ -330,7 +345,7 @@ const SmartxStayCertifiedSection = () => {
                 margin: 0
               }}
             >
-              Certified hosts get priority placement and greater visibility across our platform and partners, attracting more bookings.
+              {t.elevateListingDesc}
             </p>
           </div>
 
@@ -404,7 +419,7 @@ const SmartxStayCertifiedSection = () => {
                 lineHeight: '1.3'
               }}
             >
-              Access Expert Resources
+              {t.accessResources}
             </h3>
 
             {/* Description */}
@@ -416,7 +431,7 @@ const SmartxStayCertifiedSection = () => {
                 margin: 0
               }}
             >
-              Unlock exclusive guides, workshops, and tools to help you refine your hosting skills and enhance guest satisfaction.
+              {t.accessResourcesDesc}
             </p>
           </div>
         </div>
@@ -444,19 +459,46 @@ const SmartxStayCertifiedSection = () => {
         @media (max-width: 768px) {
           .benefits-grid {
             grid-template-columns: 1fr !important;
-            gap: 24px !important;
+            gap: 20px !important;
           }
           
           section {
-            padding: 80px 16px !important;
+            padding: 60px 16px !important;
           }
           
           .benefit-card {
-            padding: 40px 32px !important;
+            padding: 32px 24px !important;
+            max-width: 100% !important;
           }
           
           .benefit-card:last-child {
             max-width: 100%;
+          }
+          
+          .benefit-card h3 {
+            font-size: 20px !important;
+          }
+          
+          .benefit-card p {
+            font-size: 15px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          section {
+            padding: 50px 12px !important;
+          }
+          
+          .benefit-card {
+            padding: 28px 20px !important;
+          }
+          
+          .benefit-card h3 {
+            font-size: 18px !important;
+          }
+          
+          .benefit-card p {
+            font-size: 14px !important;
           }
         }
       `}</style>

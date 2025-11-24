@@ -4,13 +4,15 @@ import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 import EverythingYouNeedSection from '@/components/EverythingYouNeedSection';
 import FindYourStaySection from '@/components/FindYourStaySection';
 import OurStaysSection from '@/components/OurStaysSection';
 
 // iPhone Model Component
 function IPhoneModel() {
-  const gltf = useGLTF('/iphone.glb');
+  const gltf = useGLTF('/guestIphone.glb');
   
   React.useEffect(() => {
     if (gltf && gltf.scene) {
@@ -57,9 +59,66 @@ function IPhoneModel() {
 }
 
 // Preload the model
-useGLTF.preload('/iphone.glb');
+useGLTF.preload('/guestIphone.glb');
 
 const ForGuestsPage = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      yourStay: 'Your stay,',
+      madeSmarter: 'made smarter.',
+      subtitle: 'Explore more, relax better, and feel connected wherever you go. With SmartxStay, everything you need for a perfect stay is right at your fingertips.',
+      findYourStay: 'Find your Stay',
+      askQuestion: 'Ask a question',
+      loading: 'Loading iPhone...',
+      hostCurated: 'Your host curated',
+      everything: 'everything.',
+      youJust: 'You just',
+      enjoy: 'enjoy.',
+      curatedSubtitle: 'Local experiences, curated by someone who actually knows. No more guessing, no more googling—just authentic moments waiting for you.',
+      noTouristTraps: 'No more tourist traps',
+      noTouristTrapsDesc: 'Discover authentic local spots your host personally recommends',
+      trustedInfo: 'Trusted info from your host',
+      trustedInfoDesc: 'Get insider tips from locals who know the area best',
+      hiddenGems: 'Hidden gems you\'d never find alone',
+      hiddenGemsDesc: 'Access secret spots only locals know about',
+      easyDecisions: 'Easy decisions, unforgettable moments',
+      easyDecisionsDesc: 'Spend less time planning, more time creating memories',
+      greatTrip: 'Because a great trip starts with',
+      someoneOnYourSide: 'someone who\'s on your side.',
+      greatTripDesc: 'When you book with a SmartxStay host, you\'re not just getting a place to sleep, you\'re getting someone who genuinely cares about your experience. SmartxStay hosts don\'t leave you guessing, googling, or stressing. They guide you, support you, and make sure your stay feels effortless.',
+      travelWithHosts: 'Travel with hosts who go the extra mile. Travel with SmartxStay.'
+    },
+    sl: {
+      yourStay: 'Vaš obisk,',
+      madeSmarter: 'narejen pametneje.',
+      subtitle: 'Raziščite več, sproščajte se bolje in se počutite povezane, kamor koli greste. Z SmartxStay je vse, kar potrebujete za popoln obisk, na dosegu roke.',
+      findYourStay: 'Poiščite svoj obisk',
+      askQuestion: 'Postavite vprašanje',
+      loading: 'Nalaganje iPhone...',
+      hostCurated: 'Vaš gostitelj je pripravil',
+      everything: 'vse.',
+      youJust: 'Vi samo',
+      enjoy: 'uživate.',
+      curatedSubtitle: 'Lokalne izkušnje, pripravljene s strani nekoga, ki res ve. Ni več ugibanja, ni več googlanja—samo pristni trenutki, ki vas čakajo.',
+      noTouristTraps: 'Ni več turističnih pasti',
+      noTouristTrapsDesc: 'Odkrijte pristne lokalne kraje, ki jih vaš gostitelj osebno priporoča',
+      trustedInfo: 'Zaupanja vredne informacije od vašega gostitelja',
+      trustedInfoDesc: 'Pridobite notranje nasvete od domačinov, ki najbolje poznajo območje',
+      hiddenGems: 'Skriti biseri, ki jih nikoli ne bi našli sami',
+      hiddenGemsDesc: 'Dostop do skritih krajev, ki jih poznajo le domačini',
+      easyDecisions: 'Enostavne odločitve, nepozabni trenutki',
+      easyDecisionsDesc: 'Porabite manj časa za načrtovanje, več časa za ustvarjanje spominov',
+      greatTrip: 'Ker se odličen izlet začne z',
+      someoneOnYourSide: 'nečim, ki je na vaši strani.',
+      greatTripDesc: 'Ko rezervirate pri SmartxStay gostitelju, ne dobite le kraja za spanje, ampak nekoga, ki mu resnično mar za vašo izkušnjo. SmartxStay gostitelji vas ne puščajo ugibati, googlati ali se stresati. Vodijo vas, podpirajo vas in poskrbijo, da se vaš obisk počuti brez napora.',
+      travelWithHosts: 'Potujte z gostitelji, ki grejo korak dlje. Potujte z SmartxStay.'
+    }
+  };
+
+  const t = translations[language];
+
   return (
     <main>
       {/* Fixed Background - skupno ozadje za celo stran */}
@@ -86,6 +145,7 @@ const ForGuestsPage = () => {
       >
         {/* Text Content - Left Side */}
         <div
+          className="hero-text-content"
           style={{
             flex: '1',
             minWidth: '300px',
@@ -95,15 +155,17 @@ const ForGuestsPage = () => {
         >
           {/* Main Heading */}
           <h1
+            className="fade-in-slide-up"
             style={{
               fontSize: 'clamp(48px, 6vw, 80px)',
               fontWeight: 900,
               lineHeight: '1.1',
               margin: '0 0 24px 0',
               letterSpacing: '-0.02em',
+              animation: 'fadeInSlideUp 0.5s ease-out both',
             }}
           >
-            <span style={{ color: '#0f0f0f' }}>Your stay,</span>{' '}
+            <span style={{ color: '#0f0f0f' }}>{t.yourStay}</span>{' '}
             <span 
               className="animated-gradient-text"
               style={{ 
@@ -113,52 +175,57 @@ const ForGuestsPage = () => {
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}
-            >made smarter.</span>
+            >{t.madeSmarter}</span>
           </h1>
 
           {/* Description */}
           <p
+            className="fade-in-slide-up"
             style={{
               color: '#737373',
               fontSize: 'clamp(18px, 2vw, 24px)',
               lineHeight: '1.6',
               margin: '0 0 40px 0',
-              fontWeight: 400
+              fontWeight: 400,
+              animation: 'fadeInSlideUp 0.5s ease-out 0.2s both',
             }}
           >
-            Explore more, relax better, and feel connected wherever you go. With SmartxStay, 
-            everything you need for a perfect stay is right at your fingertips.
+            {t.subtitle}
           </p>
 
           {/* CTA Buttons */}
           <div
+            className="fade-in-slide-up cta-buttons"
             style={{
               display: 'flex',
               gap: '20px',
               flexWrap: 'wrap',
-              justifyContent: 'flex-start'
+              justifyContent: 'flex-start',
+              animation: 'fadeInSlideUp 0.5s ease-out 0.4s both',
             }}
           >
             {/* Primary Button */}
             <button className="btn-primary">
-              Find your Stay
+              {t.findYourStay}
             </button>
 
             {/* Secondary Button */}
-            <button className="btn-tertiary">
-              Ask a question
-            </button>
+            <Link href="/contact" className="btn-tertiary" style={{ textDecoration: 'none' }}>
+              {t.askQuestion}
+            </Link>
           </div>
         </div>
 
         {/* Right Side - iPhone 3D Model */}
         <div
+          className="fade-in-slide-up phone-model-container"
           style={{
             flex: '1',
             minWidth: '400px',
             maxWidth: '800px',
             height: '800px',
             position: 'relative',
+            animation: 'fadeInSlideUp 0.8s ease-out 0.8s both',
           }}
         >
           <Suspense fallback={
@@ -173,7 +240,7 @@ const ForGuestsPage = () => {
               backgroundColor: 'rgba(244, 241, 254, 0.5)',
               borderRadius: '12px',
             }}>
-              Loading iPhone...
+              {t.loading}
             </div>
           }>
             <Canvas
@@ -181,22 +248,22 @@ const ForGuestsPage = () => {
               style={{ width: '100%', height: '100%', background: 'transparent' }}
               gl={{ antialias: true, alpha: true }}
             >
-              <ambientLight intensity={3} />
-              <directionalLight position={[0, 0, 10]} intensity={6} />
-              <directionalLight position={[5, 5, 5]} intensity={4} />
-              <directionalLight position={[-5, 5, -5]} intensity={2.5} />
-              <pointLight position={[0, 0, 8]} intensity={5} />
-              <pointLight position={[0, 5, 0]} intensity={2} />
-              <spotLight position={[0, 0, 10]} angle={0.8} intensity={6} penumbra={0.3} />
+              <ambientLight intensity={5} />
+              <directionalLight position={[0, 0, 10]} intensity={10} />
+              <directionalLight position={[5, 5, 5]} intensity={8} />
+              <directionalLight position={[-5, 5, -5]} intensity={6} />
+              <pointLight position={[0, 0, 8]} intensity={8} />
+              <pointLight position={[0, 5, 0]} intensity={5} />
+              <spotLight position={[0, 0, 10]} angle={0.8} intensity={10} penumbra={0.3} />
+              <directionalLight position={[0, -2, 5]} intensity={4} />
               <Suspense fallback={null}>
                 <IPhoneModel />
               </Suspense>
               <OrbitControls
                 enableZoom={false}
                 enablePan={false}
+                enableRotate={false}
                 autoRotate={false}
-                minPolarAngle={Math.PI / 4}
-                maxPolarAngle={Math.PI / 1.8}
               />
             </Canvas>
           </Suspense>
@@ -205,6 +272,17 @@ const ForGuestsPage = () => {
 
       {/* Responsive Styles */}
       <style jsx>{`
+        @keyframes fadeInSlideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         @keyframes gradientShift {
           0% {
             background-position: 0% 50%;
@@ -217,6 +295,10 @@ const ForGuestsPage = () => {
           }
         }
 
+        .fade-in-slide-up {
+          animation-fill-mode: both;
+        }
+
         .animated-gradient-text {
           animation: gradientShift 3s ease-in-out infinite;
         }
@@ -224,11 +306,11 @@ const ForGuestsPage = () => {
         @media (max-width: 1024px) {
           section {
             flex-direction: column !important;
-            align-items: flex-start !important;
-            padding: 60px 40px 40px 40px !important;
+            align-items: center !important;
+            padding: 80px 40px 40px 40px !important;
           }
           
-          div[style*="height: 800px"] {
+          .phone-model-container {
             width: 100% !important;
             max-width: 100% !important;
             height: 500px !important;
@@ -241,24 +323,104 @@ const ForGuestsPage = () => {
         
         @media (max-width: 768px) {
           section {
-            padding: 60px 20px 40px 40px !important;
+            padding: 160px 20px 60px 20px !important;
+            min-height: auto !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-direction: column !important;
+            gap: 40px !important;
+          }
+          
+          .phone-model-container {
+            display: none !important;
+          }
+          
+          .hero-text-content {
+            text-align: center !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            padding: 0 !important;
+            min-width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
           }
           
           h1 {
-            font-size: 36px !important;
+            font-size: clamp(32px, 7vw, 56px) !important;
+            text-align: center !important;
+            line-height: 1.2 !important;
+            margin: 0 0 20px 0 !important;
+            width: 100% !important;
+          }
+          
+          p[style*="color: '#737373'"] {
+            text-align: center !important;
+            margin: 0 0 32px 0 !important;
+            max-width: 100% !important;
+            padding: 0 10px !important;
+          }
+          
+          .cta-buttons {
+            justify-content: center !important;
+            align-items: center !important;
+            width: 100% !important;
+            flex-direction: column !important;
+            gap: 16px !important;
+          }
+          
+          .cta-buttons button,
+          .cta-buttons a {
+            width: auto !important;
+            min-width: 200px !important;
+            max-width: 280px !important;
+            font-size: 16px !important;
           }
           
           h2 {
             font-size: 32px !important;
           }
           
-          div[style*="height: 800px"] {
-            height: 400px !important;
-          }
-          
           div[style*="gridTemplateColumns"] {
             grid-template-columns: 1fr !important;
             gap: 16px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          section {
+            padding: 140px 16px 50px 16px !important;
+          }
+          
+          .hero-text-content {
+            padding: 0 !important;
+          }
+          
+          h1 {
+            font-size: clamp(28px, 8vw, 48px) !important;
+            line-height: 1.15 !important;
+            margin: 0 0 16px 0 !important;
+          }
+          
+          p[style*="color: '#737373'"] {
+            font-size: clamp(16px, 4vw, 18px) !important;
+            margin: 0 0 28px 0 !important;
+            padding: 0 !important;
+          }
+          
+          .cta-buttons {
+            flex-direction: column !important;
+            gap: 16px !important;
+            width: 100% !important;
+          }
+          
+          .cta-buttons button,
+          .cta-buttons a {
+            width: auto !important;
+            min-width: 240px !important;
+            max-width: 100% !important;
+            font-size: 15px !important;
+            padding: 12px 24px !important;
           }
         }
       `}</style>
@@ -291,7 +453,7 @@ const ForGuestsPage = () => {
             letterSpacing: '-0.02em',
           }}
         >
-          <span style={{ color: '#0f0f0f' }}>Your host curated</span>{' '}
+          <span style={{ color: '#0f0f0f' }}>{t.hostCurated}</span>{' '}
           <span 
             className="animated-gradient-text"
             style={{ 
@@ -301,9 +463,9 @@ const ForGuestsPage = () => {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
             }}
-          >everything.</span>{' '}
+          >{t.everything}</span>{' '}
           <br />
-          <span style={{ color: '#0f0f0f' }}>You just</span>{' '}
+          <span style={{ color: '#0f0f0f' }}>{t.youJust}</span>{' '}
           <span 
             className="animated-gradient-text"
             style={{ 
@@ -313,7 +475,7 @@ const ForGuestsPage = () => {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
             }}
-          >enjoy.</span>
+          >{t.enjoy}</span>
         </h2>
 
         {/* Subheading */}
@@ -328,7 +490,7 @@ const ForGuestsPage = () => {
             maxWidth: '700px',
           }}
         >
-          Local experiences, curated by someone who actually knows. No more guessing, no more googling—just authentic moments waiting for you.
+          {t.curatedSubtitle}
         </p>
 
         {/* Feature List */}
@@ -406,7 +568,7 @@ const ForGuestsPage = () => {
                 lineHeight: '1.3',
               }}
             >
-              No more tourist traps
+              {t.noTouristTraps}
             </h3>
             <p
               style={{
@@ -417,7 +579,7 @@ const ForGuestsPage = () => {
                 lineHeight: '1.5',
               }}
             >
-              Discover authentic local spots your host personally recommends
+              {t.noTouristTrapsDesc}
             </p>
           </div>
 
@@ -486,7 +648,7 @@ const ForGuestsPage = () => {
                 lineHeight: '1.3',
               }}
             >
-              Trusted info from your host
+              {t.trustedInfo}
             </h3>
             <p
               style={{
@@ -497,7 +659,7 @@ const ForGuestsPage = () => {
                 lineHeight: '1.5',
               }}
             >
-              Get insider tips from locals who know the area best
+              {t.trustedInfoDesc}
             </p>
           </div>
 
@@ -566,7 +728,7 @@ const ForGuestsPage = () => {
                 lineHeight: '1.3',
               }}
             >
-              Hidden gems you&apos;d never find alone
+              {t.hiddenGems}
             </h3>
             <p
               style={{
@@ -577,7 +739,7 @@ const ForGuestsPage = () => {
                 lineHeight: '1.5',
               }}
             >
-              Access secret spots only locals know about
+              {t.hiddenGemsDesc}
             </p>
           </div>
 
@@ -646,7 +808,7 @@ const ForGuestsPage = () => {
                 lineHeight: '1.3',
               }}
             >
-              Easy decisions, unforgettable moments
+              {t.easyDecisions}
             </h3>
             <p
               style={{
@@ -657,7 +819,7 @@ const ForGuestsPage = () => {
                 lineHeight: '1.5',
               }}
             >
-              Spend less time planning, more time creating memories
+              {t.easyDecisionsDesc}
             </p>
           </div>
         </div>
@@ -691,8 +853,8 @@ const ForGuestsPage = () => {
             color: '#0f0f0f',
           }}
         >
-          Because a great trip starts with<br />
-          someone who&apos;s on your side.
+          {t.greatTrip}<br />
+          {t.someoneOnYourSide}
         </h2>
 
         {/* Description */}
@@ -707,10 +869,7 @@ const ForGuestsPage = () => {
             maxWidth: '800px',
           }}
         >
-          When you book with a SmartxStay host, you&apos;re not just getting a place to sleep, you&apos;re
-          getting someone who genuinely cares about your experience. SmartxStay hosts don&apos;t
-          leave you guessing, googling, or stressing. They guide you, support you, and make
-          sure your stay feels effortless.
+          {t.greatTripDesc}
         </p>
 
         {/* Tagline */}
@@ -726,7 +885,7 @@ const ForGuestsPage = () => {
             maxWidth: '700px',
           }}
         >
-          Travel with hosts who go the extra mile. Travel with SmartxStay.
+          {t.travelWithHosts}
         </p>
       </section>
 

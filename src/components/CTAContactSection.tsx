@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const CTAContactSection = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,46 @@ const CTAContactSection = () => {
     userType: '',
     message: ''
   });
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      title: 'Ready to elevate your hospitality?',
+      description: 'Let\'s connect and bring digital hospitality to your guests. Book a free, no-obligation video meeting to see how SmartxStay can work for you.',
+      button: 'Book a free presentation',
+      formTitle: 'Get in Touch',
+      accommodationName: 'Accommodation name',
+      emailAddress: 'Email Address',
+      vacationRentalHost: 'Vacation Rental Host',
+      yourMessage: 'Your Message',
+      sendMessage: 'Send Message',
+      selectOptions: {
+        host: 'Vacation Rental Host',
+        propertyManager: 'Property Manager',
+        guest: 'Guest',
+        other: 'Other'
+      }
+    },
+    sl: {
+      title: 'Pripravljeni dvigniti vašo gostoljubnost?',
+      description: 'Povežimo se in prinesimo digitalno gostoljubnost vašim gostom. Rezervirajte brezplačen, brezobvezen video sestanek, da vidite, kako lahko SmartxStay deluje za vas.',
+      button: 'Rezervirajte brezplačno predstavitev',
+      formTitle: 'Kontaktirajte nas',
+      accommodationName: 'Ime nastanitve',
+      emailAddress: 'E-poštni naslov',
+      vacationRentalHost: 'Gostitelj najema za počitnice',
+      yourMessage: 'Vaše sporočilo',
+      sendMessage: 'Pošlji sporočilo',
+      selectOptions: {
+        host: 'Gostitelj najema za počitnice',
+        propertyManager: 'Upravitelj nepremičnin',
+        guest: 'Gost',
+        other: 'Drugo'
+      }
+    }
+  };
+
+  const t = translations[language];
 
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -104,7 +145,7 @@ const CTAContactSection = () => {
               marginBottom: '16px'
             }}
           >
-            Ready to elevate your hospitality?
+            {t.title}
           </h2>
 
           {/* Description */}
@@ -117,13 +158,12 @@ const CTAContactSection = () => {
               marginBottom: '28px'
             }}
           >
-            Let&apos;s connect and bring digital hospitality to your guests. Book a free, no-obligation 
-            video meeting to see how SmartxStay can work for you.
+            {t.description}
           </p>
 
           {/* CTA Button */}
           <button className="btn-primary">
-            Book a free presentation
+            {t.button}
           </button>
         </div>
 
@@ -154,7 +194,7 @@ const CTAContactSection = () => {
               marginBottom: '20px'
             }}
           >
-            Get in Touch
+            {t.formTitle}
           </h3>
 
           {/* Contact Form */}
@@ -163,7 +203,7 @@ const CTAContactSection = () => {
             <input
               type="text"
               name="name"
-              placeholder="Your Name"
+              placeholder={t.accommodationName}
               value={formData.name}
               onChange={handleChange}
               required
@@ -194,7 +234,7 @@ const CTAContactSection = () => {
             <input
               type="email"
               name="email"
-              placeholder="Email Address"
+              placeholder={t.emailAddress}
               value={formData.email}
               onChange={handleChange}
               required
@@ -250,17 +290,17 @@ const CTAContactSection = () => {
                 e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
               }}
             >
-              <option value="" disabled>Vacation Rental Host</option>
-              <option value="host">Vacation Rental Host</option>
-              <option value="property-manager">Property Manager</option>
-              <option value="guest">Guest</option>
-              <option value="other">Other</option>
+              <option value="" disabled>{t.vacationRentalHost}</option>
+              <option value="host">{t.selectOptions.host}</option>
+              <option value="property-manager">{t.selectOptions.propertyManager}</option>
+              <option value="guest">{t.selectOptions.guest}</option>
+              <option value="other">{t.selectOptions.other}</option>
             </select>
 
             {/* Message Textarea */}
             <textarea
               name="message"
-              placeholder="Your Message"
+              placeholder={t.yourMessage}
               value={formData.message}
               onChange={handleChange}
               required
@@ -296,7 +336,7 @@ const CTAContactSection = () => {
               className="btn-primary"
               style={{ width: '100%' }}
             >
-              Send Message
+              {t.sendMessage}
             </button>
           </form>
         </div>
@@ -305,12 +345,20 @@ const CTAContactSection = () => {
       <style jsx>{`
         @media (max-width: 768px) {
           section {
-            padding: 72px 16px !important;
+            padding: 60px 16px !important;
+          }
+          
+          .section-title {
+            font-size: clamp(28px, 6vw, 40px) !important;
+          }
+          
+          .section-subtitle {
+            font-size: clamp(14px, 3vw, 16px) !important;
           }
 
           .cta-container {
             grid-template-columns: 1fr !important;
-            gap: 40px !important;
+            gap: 32px !important;
           }
 
           .cta-text {
@@ -321,10 +369,22 @@ const CTAContactSection = () => {
             max-width: 100% !important;
             margin-left: auto;
             margin-right: auto;
+            font-size: clamp(14px, 3vw, 16px) !important;
           }
 
           .contact-form-card {
             margin: 0 auto;
+            padding: 32px 24px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          section {
+            padding: 48px 12px !important;
+          }
+          
+          .contact-form-card {
+            padding: 24px 20px !important;
           }
         }
 

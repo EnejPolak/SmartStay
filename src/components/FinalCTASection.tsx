@@ -1,8 +1,47 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const FinalCTASection = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      title: 'Ready to elevate your hospitality?',
+      subtitle: 'Let\'s connect and bring digital hospitality to your guests. Book a free, no-obligation video meeting to see how SmartxStay can work for you.',
+      bookPresentation: 'Book a free presentation',
+      getInTouch: 'Get in Touch',
+      yourName: 'Your Name',
+      emailAddress: 'Email Address',
+      iAmA: 'I am a...',
+      select: 'Select...',
+      vacationRental: 'Vacation Rental Host',
+      hotelManager: 'Hotel Manager',
+      propertyManager: 'Property Manager',
+      other: 'Other',
+      yourMessage: 'Your Message',
+      sendMessage: 'Send Message'
+    },
+    sl: {
+      title: 'Pripravljeni dvigniti svoje gostoljubje?',
+      subtitle: 'Povežimo se in prinesimo digitalno gostoljubje vašim gostom. Rezervirajte brezplačen, brezobvezen video sestanek, da vidite, kako SmartxStay lahko deluje za vas.',
+      bookPresentation: 'Rezervirajte brezplačno predstavitev',
+      getInTouch: 'Kontaktirajte nas',
+      yourName: 'Vaše ime',
+      emailAddress: 'E-poštni naslov',
+      iAmA: 'Sem...',
+      select: 'Izberite...',
+      vacationRental: 'Gostitelj najema za počitnice',
+      hotelManager: 'Upravitelj hotela',
+      propertyManager: 'Upravitelj nepremičnin',
+      other: 'Drugo',
+      yourMessage: 'Vaše sporočilo',
+      sendMessage: 'Pošlji sporočilo'
+    }
+  };
+
+  const t = translations[language];
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -69,7 +108,7 @@ const FinalCTASection = () => {
                 lineHeight: '1.2'
               }}
             >
-              Ready to elevate your hospitality?
+              {t.title}
             </h2>
 
             {/* Subtitle */}
@@ -83,12 +122,12 @@ const FinalCTASection = () => {
                 lineHeight: '1.6'
               }}
             >
-              Let&apos;s connect and bring digital hospitality to your guests. Book a free, no-obligation video meeting to see how SmartxStay can work for you.
+              {t.subtitle}
             </p>
 
             {/* CTA Button */}
             <button className="btn-primary">
-              Book a free presentation
+              {t.bookPresentation}
             </button>
           </div>
 
@@ -116,7 +155,7 @@ const FinalCTASection = () => {
                 textAlign: 'center'
               }}
             >
-              Get in Touch
+              {t.getInTouch}
             </h3>
 
             {/* Form */}
@@ -133,7 +172,7 @@ const FinalCTASection = () => {
                     marginBottom: '8px'
                   }}
                 >
-                  Your Name
+                  {t.yourName}
                 </label>
                 <input
                   type="text"
@@ -176,7 +215,7 @@ const FinalCTASection = () => {
                     marginBottom: '8px'
                   }}
                 >
-                  Email Address
+                  {t.emailAddress}
                 </label>
                 <input
                   type="email"
@@ -219,7 +258,7 @@ const FinalCTASection = () => {
                     marginBottom: '8px'
                   }}
                 >
-                  I am a...
+                  {t.iAmA}
                 </label>
                 <select
                   id="hostType"
@@ -249,11 +288,11 @@ const FinalCTASection = () => {
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  <option value="">Select...</option>
-                  <option value="vacation-rental">Vacation Rental Host</option>
-                  <option value="hotel">Hotel Manager</option>
-                  <option value="property-manager">Property Manager</option>
-                  <option value="other">Other</option>
+                  <option value="">{t.select}</option>
+                  <option value="vacation-rental">{t.vacationRental}</option>
+                  <option value="hotel">{t.hotelManager}</option>
+                  <option value="property-manager">{t.propertyManager}</option>
+                  <option value="other">{t.other}</option>
                 </select>
               </div>
 
@@ -269,7 +308,7 @@ const FinalCTASection = () => {
                     marginBottom: '8px'
                   }}
                 >
-                  Your Message
+                  {t.yourMessage}
                 </label>
                 <textarea
                   id="message"
@@ -307,7 +346,7 @@ const FinalCTASection = () => {
                 className="btn-primary"
                 style={{ width: '100%' }}
               >
-                Send Message
+                {t.sendMessage}
               </button>
             </form>
           </div>

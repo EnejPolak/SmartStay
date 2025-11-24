@@ -4,10 +4,12 @@ import React, { useState, Suspense, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // iPhone Model Component
 function IPhoneModel() {
-  const gltf = useGLTF('/iphone.glb');
+  const gltf = useGLTF('/welcomeIphone.glb');
   
   React.useEffect(() => {
     if (gltf && gltf.scene) {
@@ -54,11 +56,77 @@ function IPhoneModel() {
 }
 
 // Preload the model
-useGLTF.preload('/iphone.glb');
+useGLTF.preload('/welcomeIphone.glb');
 
 const HeroSection = () => {
   const [activeTab, setActiveTab] = useState<'hosts' | 'guests'>('hosts');
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const { language } = useLanguage();
 
+  const translations = {
+    en: {
+      forHosts: 'For hosts',
+      forGuests: 'For guests',
+      hostsHeading: {
+        line1: 'Customized app',
+        line2: 'for your property.',
+        line3: 'For hosts who love',
+        line4: 'their guests.'
+      },
+      guestsHeading: {
+        line1: 'Stress free travel',
+        line2: 'with local tips.',
+        line3: 'For guests who',
+        line4: 'dont like to stress.'
+      },
+      hostsButton: 'Book a free presentation',
+      guestsButton: 'Find your next stay',
+      readMore: 'Read more'
+    },
+    sl: {
+      forHosts: 'Za gostitelje',
+      forGuests: 'Za goste',
+      hostsHeading: {
+        line1: 'Prilagojena aplikacija',
+        line2: 'za vašo nepremičnino.',
+        line3: 'Za gostitelje, ki ljubijo',
+        line4: 'svoje goste.'
+      },
+      guestsHeading: {
+        line1: 'Brezstresno potovanje',
+        line2: 'z lokalnimi nasveti.',
+        line3: 'Za goste, ki',
+        line4: 'ne marajo stresa.'
+      },
+      hostsButton: 'Rezervirajte brezplačno predstavitev',
+      guestsButton: 'Poiščite vaš naslednji bivališče',
+      readMore: 'Preberite več'
+    }
+  };
+
+  const t = translations[language];
+
+  // Animate heading when tab changes
+  useEffect(() => {
+    if (headingRef.current) {
+      const lines = headingRef.current.querySelectorAll('.hero-line');
+      
+      // Reset all lines
+      lines.forEach((line) => {
+        (line as HTMLElement).style.opacity = '0';
+        (line as HTMLElement).style.transform = 'translateY(20px)';
+      });
+      
+      // Animate each line with stagger
+      lines.forEach((line, index) => {
+        setTimeout(() => {
+          (line as HTMLElement).style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+          (line as HTMLElement).style.opacity = '1';
+          (line as HTMLElement).style.transform = 'translateY(0)';
+        }, 100 + (index * 100)); // Stagger: 100ms delay between each line
+      });
+    }
+  }, [activeTab]);
 
   return (
     <section 
@@ -70,6 +138,9 @@ const HeroSection = () => {
         display: 'flex',
         flexDirection: 'column',
         fontFamily: 'Inter, sans-serif',
+        overflow: 'visible',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       {/* Main Content Row - Text Left, iPhone Right */}
@@ -82,16 +153,22 @@ const HeroSection = () => {
           gap: '64px',
           width: '100%',
           flexWrap: 'wrap',
+          overflow: 'visible',
         }}
       >
         {/* Text Content - Left Aligned */}
         <div
+          className="hero-text-content"
           style={{
-            flex: '1',
+            flex: '1 1 60%',
             minWidth: '300px',
-            maxWidth: '600px',
+            maxWidth: '720px',
             textAlign: 'left',
             position: 'relative',
+            paddingLeft: '60px',
+            paddingRight: '20px',
+            overflow: 'visible',
+            width: '100%',
           }}
         >
         {/* Tabs Navigation */}
@@ -130,7 +207,7 @@ const HeroSection = () => {
               }
             }}
           >
-            For hosts
+            {t.forHosts}
             <span
               style={{
                 position: 'absolute',
@@ -170,7 +247,7 @@ const HeroSection = () => {
               }
             }}
           >
-            For guests
+            {t.forGuests}
             <span
               style={{
                 position: 'absolute',
@@ -187,73 +264,58 @@ const HeroSection = () => {
           </button>
         </div>
         <h1
+          ref={headingRef}
           key={activeTab}
-          className="fade-in-slide-up"
-          style={{
-            fontSize: 'clamp(48px, 6vw, 80px)',
-            fontWeight: 900,
-            lineHeight: '1.1',
-            marginBottom: '0px',
-            animation: 'fadeInSlideUp 0.5s ease-out both',
-            letterSpacing: '-0.02em',
-          }}
+          className="hero-heading"
         >
           {activeTab === 'hosts' ? (
             <>
-              <span style={{ color: '#0f0f0f' }}>Customized app for your</span>{' '}
-              <span 
-                className="animated-gradient-text"
-                style={{ 
-                  background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
-                  backgroundSize: '200% 100%',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >property.</span>
+              <span className="hero-line hero-line-black">{t.hostsHeading.line1}</span>
+              <span className="hero-line hero-line-black">{t.hostsHeading.line2}</span>
+              <span className="hero-line hero-line-gradient">{t.hostsHeading.line3}</span>
+              <span className="hero-line hero-line-gradient">{t.hostsHeading.line4}</span>
             </>
           ) : (
             <>
-              <span style={{ color: '#0f0f0f' }}>Stress free travel with</span>{' '}
-              <span 
-                className="animated-gradient-text"
-                style={{ 
-                  background: 'linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%)',
-                  backgroundSize: '200% 100%',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >local tips.</span>
+              <span className="hero-line hero-line-black">{t.guestsHeading.line1}</span>
+              <span className="hero-line hero-line-black">{t.guestsHeading.line2}</span>
+              <span className="hero-line hero-line-gradient">{t.guestsHeading.line3}</span>
+              <span className="hero-line hero-line-gradient">{t.guestsHeading.line4}</span>
             </>
           )}
         </h1>
 
         {/* CTA Buttons */}
         <div
+          className="cta-buttons"
           style={{
             display: 'flex',
             gap: '20px',
             flexWrap: 'wrap',
             justifyContent: 'flex-start',
             marginTop: '24px',
+            width: '100%',
           }}
         >
           <button className="btn-primary">
             {activeTab === 'hosts' 
-              ? 'Book a free presentation'
-              : 'Find your next stay'
+              ? t.hostsButton
+              : t.guestsButton
             }
           </button>
-          <button className="btn-secondary">
-            Read more
-          </button>
+          <Link 
+            href={activeTab === 'hosts' ? '/for-hosts' : '/for-guests'}
+            className="btn-secondary"
+            style={{ textDecoration: 'none' }}
+          >
+            {t.readMore}
+          </Link>
         </div>
         </div>
 
         {/* Right Side - iPhone 3D Model */}
       <div
-        className="fade-in-slide-up"
+        className="fade-in-slide-up phone-model-container"
         style={{
           flex: '1',
           minWidth: '400px',
@@ -283,22 +345,22 @@ const HeroSection = () => {
             style={{ width: '100%', height: '100%', background: 'transparent' }}
             gl={{ antialias: true, alpha: true }}
           >
-            <ambientLight intensity={3} />
-            <directionalLight position={[0, 0, 10]} intensity={6} />
-            <directionalLight position={[5, 5, 5]} intensity={4} />
-            <directionalLight position={[-5, 5, -5]} intensity={2.5} />
-            <pointLight position={[0, 0, 8]} intensity={5} />
-            <pointLight position={[0, 5, 0]} intensity={2} />
-            <spotLight position={[0, 0, 10]} angle={0.8} intensity={6} penumbra={0.3} />
+            <ambientLight intensity={5} />
+            <directionalLight position={[0, 0, 10]} intensity={10} />
+            <directionalLight position={[5, 5, 5]} intensity={8} />
+            <directionalLight position={[-5, 5, -5]} intensity={6} />
+            <pointLight position={[0, 0, 8]} intensity={8} />
+            <pointLight position={[0, 5, 0]} intensity={5} />
+            <spotLight position={[0, 0, 10]} angle={0.8} intensity={10} penumbra={0.3} />
+            <directionalLight position={[0, -2, 5]} intensity={4} />
             <Suspense fallback={null}>
               <IPhoneModel />
             </Suspense>
             <OrbitControls
               enableZoom={false}
               enablePan={false}
+              enableRotate={false}
               autoRotate={false}
-              minPolarAngle={Math.PI / 4}
-              maxPolarAngle={Math.PI / 1.8}
             />
           </Canvas>
         </Suspense>
@@ -358,26 +420,190 @@ const HeroSection = () => {
           animation: gradientShift 3s ease-in-out infinite;
         }
 
+        .hero-heading {
+          font-size: clamp(40px, 5vw, 72px);
+          font-weight: 900;
+          line-height: 1.15;
+          margin-bottom: 0px;
+          letter-spacing: -0.02em;
+          text-align: left;
+          overflow: visible;
+          padding: 2px 8px 2px 0;
+          width: 100%;
+        }
+
+        .hero-line {
+          display: block;
+          color: #000000;
+        }
+
+        .hero-line-black {
+          color: #000000;
+        }
+
+        .hero-line-gradient {
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        /* Desktop: enforce nowrap to maintain 4-line layout */
+        @media (min-width: 1024px) {
+          .hero-line {
+            white-space: nowrap;
+          }
+        }
+
+        /* Smaller screens: allow wrapping if needed */
+        @media (max-width: 1023px) {
+          .hero-line {
+            white-space: normal;
+          }
+        }
+
+        @media (max-width: 1200px) {
+          .hero-heading {
+            font-size: clamp(38px, 4.5vw, 68px);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .hero-heading {
+            font-size: clamp(32px, 4vw, 56px);
+          }
+        }
+
         @media (max-width: 1024px) {
-          section {
+          .hero-content-section > div:first-child {
             flex-direction: column !important;
             align-items: flex-start !important;
+            gap: 40px !important;
           }
           
-          div[style*="height: 800px"] {
+          .phone-model-container {
             width: 100% !important;
             max-width: 100% !important;
             height: 500px !important;
+            min-width: 100% !important;
+          }
+          
+          .hero-text-content {
+            padding-left: 40px !important;
+            flex: 1 1 100% !important;
+            max-width: 100% !important;
           }
         }
 
         @media (max-width: 768px) {
           section {
-            padding: 60px 20px 40px 40px !important;
+            padding: 160px 20px 60px 20px !important;
+            min-height: auto !important;
+            align-items: center !important;
+            justify-content: center !important;
           }
           
-          div[style*="height: 800px"] {
-            height: 400px !important;
+          .phone-model-container {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+          }
+          
+          .hero-content-section > div:first-child {
+            gap: 40px !important;
+            width: 100% !important;
+            justify-content: center !important;
+            align-items: center !important;
+          }
+          
+          .hero-text-content {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+            text-align: center !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+          }
+          
+          .hero-heading {
+            font-size: clamp(32px, 7vw, 56px) !important;
+            line-height: 1.2 !important;
+            text-align: center !important;
+            width: 100% !important;
+          }
+          
+          .fade-in-slide-up {
+            width: 100% !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            margin-bottom: 40px !important;
+          }
+          
+          .fade-in-slide-up button {
+            font-size: 16px !important;
+          }
+          
+          .cta-buttons {
+            justify-content: center !important;
+            align-items: center !important;
+            width: 100% !important;
+          }
+          
+          .cta-buttons button,
+          .cta-buttons a {
+            width: auto !important;
+            min-width: 200px !important;
+            max-width: 280px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          section {
+            padding: 140px 16px 50px 16px !important;
+          }
+          
+          .phone-model-container {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+          }
+          
+          .hero-heading {
+            font-size: clamp(28px, 8vw, 48px) !important;
+            line-height: 1.15 !important;
+          }
+          
+          .fade-in-slide-up {
+            gap: 24px !important;
+            margin-bottom: 32px !important;
+          }
+          
+          .fade-in-slide-up button {
+            font-size: 15px !important;
+            padding: 0 0 6px 0 !important;
+          }
+          
+          .cta-buttons {
+            flex-direction: column !important;
+            gap: 16px !important;
+          }
+          
+          .cta-buttons button,
+          .cta-buttons a {
+            width: auto !important;
+            min-width: 240px !important;
+            max-width: 280px !important;
           }
         }
       `}</style>
