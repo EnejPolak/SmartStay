@@ -143,13 +143,13 @@ const Navbar = () => {
         }
       `}</style>
       {/* Logo */}
-      <div className="flex items-center" style={{ width: '100px', minWidth: '100px' }}>
+      <div className="flex items-center" style={{ width: '90px', minWidth: '90px' }}>
         <Link href="/">
           <Image 
             src="/logo__1__720.png" 
             alt="SmartStay Logo" 
-            width={100} 
-            height={50}
+            width={90} 
+            height={45}
             className="object-contain"
             priority
             style={{ maxWidth: '100%', height: 'auto' }}
@@ -158,7 +158,7 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Navigation Links */}
-      <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, gap: '40px', marginLeft: '-100px' }}>
+      <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, gap: '40px', marginLeft: '-90px' }}>
         {navLinks.map((link) => (
           <Link 
             key={link.href}
