@@ -143,8 +143,8 @@ const WhatIsSmartxStay = () => {
 
         @media (max-width: 768px) {
           .what-is-section {
-            padding: 20px 16px 40px 16px !important;
-            margin-top: -40px !important;
+            padding: 120px 16px 40px 16px !important;
+            margin-top: 0 !important;
           }
           
           .section-title {

@@ -337,7 +337,14 @@ const OurHostsSection = () => {
             marginBottom: '16px'
           }}
         >
-          {t.title}
+          {language === 'en' ? (
+            <span className="title-en">{t.title}</span>
+          ) : (
+            <>
+              <span className="title-sl-line1">Kaj Naše Stranke</span>
+              <span className="title-sl-line2">Pravijo O Nas</span>
+            </>
+          )}
         </h2>
 
         {/* Subtitle */}
@@ -646,12 +653,26 @@ const OurHostsSection = () => {
 
         @media (max-width: 768px) {
           section {
-            padding: 60px 16px !important;
+            padding: 60px 8px !important;
+          }
+
+          section > div {
+            padding: 0 8px !important;
           }
           
           .section-title {
             font-size: clamp(28px, 6vw, 40px) !important;
             margin-bottom: 12px !important;
+          }
+
+          .title-en {
+            white-space: nowrap;
+            display: block;
+          }
+
+          .title-sl-line1,
+          .title-sl-line2 {
+            display: block;
           }
 
           .section-subtitle {
@@ -663,10 +684,12 @@ const OurHostsSection = () => {
             grid-template-columns: 1fr !important;
             gap: 20px !important;
             max-width: 100% !important;
+            padding: 0 !important;
           }
           
           .testimonial-card {
-            padding: 20px 24px !important;
+            padding: 24px 28px !important;
+            width: 100% !important;
           }
 
           .nav-button {
@@ -676,7 +699,11 @@ const OurHostsSection = () => {
         
         @media (max-width: 480px) {
           section {
-            padding: 48px 12px !important;
+            padding: 48px 4px !important;
+          }
+
+          section > div {
+            padding: 0 4px !important;
           }
           
           .section-title {
@@ -684,7 +711,8 @@ const OurHostsSection = () => {
           }
           
           .testimonial-card {
-            padding: 16px 20px !important;
+            padding: 20px 24px !important;
+            width: 100% !important;
           }
         }
       `}</style>
