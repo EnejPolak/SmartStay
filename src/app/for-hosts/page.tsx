@@ -69,16 +69,16 @@ const ForHostsPage = () => {
 
   const translations = {
     en: {
-      welcome: 'Welcome, Smart',
-      stay: 'Stay Hosts.',
+      welcome: 'Welcome,',
+      stay: 'Hosts.',
       subtitle: 'You\'re more than a host; you\'re a creator of experiences. We\'re here to help you make every guest\'s stay unforgettable through care, connection, and seamless technology.',
       bookPresentation: 'Book a free presentation',
       askQuestion: 'Ask a question',
       loading: 'Loading...'
     },
     sl: {
-      welcome: 'Dobrodošli, Smart',
-      stay: 'Stay Gostitelji.',
+      welcome: 'Dobrodošli,',
+      stay: 'Gostitelji.',
       subtitle: 'Niste le gostitelj; ste ustvarjalec izkušenj. Tu smo, da vam pomagamo narediti vsak gostov obisk nepozaben skozi skrb, povezovanje in brezhibno tehnologijo.',
       bookPresentation: 'Rezervirajte brezplačno predstavitev',
       askQuestion: 'Postavite vprašanje',
@@ -134,7 +134,7 @@ const ForHostsPage = () => {
               animation: 'fadeInSlideUp 0.5s ease-out both',
             }}
           >
-            <span style={{ color: '#0f0f0f' }}>{t.welcome}</span>
+            <span style={{ color: '#0f0f0f' }}>{t.welcome}</span>{' '}
             <span 
               className="animated-gradient-text"
               style={{ 
@@ -144,7 +144,7 @@ const ForHostsPage = () => {
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}
-            >x</span>
+            >SmartxStay</span>{' '}
             <span style={{ color: '#0f0f0f' }}>{t.stay}</span>
           </h1>
 
