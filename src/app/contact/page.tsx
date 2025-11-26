@@ -15,6 +15,28 @@ export default function ContactPage() {
   });
 
   const translations = {
+    en: {
+      title: 'Contact us',
+      subtitle: 'Have a question or want to learn more about SmartxStay? Write to us and we will be happy to answer you.',
+      email: 'Email',
+      phone: 'Phone',
+      location: 'Location',
+      viewOnMap: 'View on map',
+      sendMessage: 'Send us a message',
+      fullName: 'Full name',
+      emailAddress: 'Email address',
+      phoneLabel: 'Phone',
+      iAm: 'I am...',
+      select: 'Select...',
+      host: 'Host',
+      guest: 'Guest',
+      propertyManager: 'Property manager',
+      partner: 'Partner',
+      other: 'Other',
+      message: 'Message',
+      sendButton: 'Send message',
+      messageSent: 'Message sent! (demo)'
+    },
     sl: {
       title: 'Kontaktirajte nas',
       subtitle: 'Imate vprašanje ali želite izvedeti več o SmartxStay? Pišite nam in z veseljem vam bomo odgovorili.',
@@ -36,15 +58,37 @@ export default function ContactPage() {
       message: 'Sporočilo',
       sendButton: 'Pošlji sporočilo',
       messageSent: 'Sporočilo poslano! (demo)'
+    },
+    hr: {
+      title: 'Kontaktirajte nas',
+      subtitle: 'Imate pitanje ili želite saznati više o SmartxStay? Pišite nam i rado ćemo vam odgovoriti.',
+      email: 'Email',
+      phone: 'Telefon',
+      location: 'Lokacija',
+      viewOnMap: 'Pogledajte na karti',
+      sendMessage: 'Pošaljite nam poruku',
+      fullName: 'Ime i prezime',
+      emailAddress: 'Email adresa',
+      phoneLabel: 'Telefon',
+      iAm: 'Ja sam...',
+      select: 'Odaberite...',
+      host: 'Domaćin',
+      guest: 'Gost',
+      propertyManager: 'Upravitelj nekretnina',
+      partner: 'Partner',
+      other: 'Drugo',
+      message: 'Poruka',
+      sendButton: 'Pošalji poruku',
+      messageSent: 'Poruka poslana! (demo)'
     }
   };
 
-  const t = translations.sl;
+  const t = translations[language] || translations.en;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Add form submission logic
-    alert(language === 'sl' ? t.messageSent : 'Message sent! (demo)');
+    alert(t.messageSent);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -98,7 +142,7 @@ export default function ContactPage() {
                 backgroundClip: 'text',
               }}
             >
-              {language === 'sl' ? t.title : 'Contact us'}
+              {t.title}
             </span>
           </h1>
 
@@ -114,7 +158,7 @@ export default function ContactPage() {
               maxWidth: '700px',
             }}
           >
-            {language === 'sl' ? t.subtitle : 'Have a question or want to learn more about SmartxStay? Write to us and we\'ll be happy to answer.'}
+            {t.subtitle}
           </p>
 
           {/* Main Content Grid */}
@@ -168,7 +212,7 @@ export default function ContactPage() {
                       <path d="M22 6L12 13L2 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <h3 style={{ fontSize: '24px', fontWeight: 700, color: '#0f0f0f', margin: 0 }}>{language === 'sl' ? t.email : 'Email'}</h3>
+                  <h3 style={{ fontSize: '24px', fontWeight: 700, color: '#0f0f0f', margin: 0 }}>{t.email}</h3>
                 </div>
                 <p style={{ fontSize: '18px', color: '#4a4a4a', margin: 0, lineHeight: '1.6' }}>
                   <a 
@@ -217,7 +261,7 @@ export default function ContactPage() {
                       <path d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <h3 style={{ fontSize: '24px', fontWeight: 700, color: '#0f0f0f', margin: 0 }}>{language === 'sl' ? t.phone : 'Phone'}</h3>
+                  <h3 style={{ fontSize: '24px', fontWeight: 700, color: '#0f0f0f', margin: 0 }}>{t.phone}</h3>
                 </div>
                 <p style={{ fontSize: '18px', color: '#4a4a4a', margin: '0 0 8px 0', lineHeight: '1.6' }}>
                   <a 
@@ -282,7 +326,7 @@ export default function ContactPage() {
                       <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="white"/>
                     </svg>
                   </div>
-                  <h3 style={{ fontSize: '24px', fontWeight: 700, color: '#0f0f0f', margin: 0 }}>{language === 'sl' ? t.location : 'Location'}</h3>
+                  <h3 style={{ fontSize: '24px', fontWeight: 700, color: '#0f0f0f', margin: 0 }}>{t.location}</h3>
                 </div>
                 <p style={{ fontSize: '18px', color: '#4a4a4a', margin: '0 0 12px 0', lineHeight: '1.6' }}>
                   1231 Ljubljana - Črnuče<br />
@@ -300,7 +344,7 @@ export default function ContactPage() {
                     gap: '8px',
                   }}
                 >
-                  {language === 'sl' ? t.viewOnMap : 'View on map'}
+                  {t.viewOnMap}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -328,7 +372,7 @@ export default function ContactPage() {
                   margin: '0 0 32px 0',
                 }}
               >
-                {language === 'sl' ? t.sendMessage : 'Send us a message'}
+                {t.sendMessage}
               </h2>
 
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -344,7 +388,7 @@ export default function ContactPage() {
                       marginBottom: '8px',
                     }}
                   >
-                    {language === 'sl' ? t.fullName : 'Full name'} *
+                    {t.fullName} *
                   </label>
                   <input
                     type="text"
@@ -388,7 +432,7 @@ export default function ContactPage() {
                       marginBottom: '8px',
                     }}
                   >
-                    {language === 'sl' ? t.emailAddress : 'Email address'} *
+                    {t.emailAddress} *
                   </label>
                   <input
                     type="email"
@@ -432,7 +476,7 @@ export default function ContactPage() {
                       marginBottom: '8px',
                     }}
                   >
-                    {language === 'sl' ? t.phoneLabel : 'Phone'}
+                    {t.phoneLabel}
                   </label>
                   <input
                     type="tel"
@@ -475,7 +519,7 @@ export default function ContactPage() {
                       marginBottom: '8px',
                     }}
                   >
-                    {language === 'sl' ? t.iAm : 'I am...'} *
+                    {t.iAm} *
                   </label>
                   <select
                     id="userType"
@@ -505,12 +549,12 @@ export default function ContactPage() {
                       e.target.style.boxShadow = 'none';
                     }}
                   >
-                    <option value="">{language === 'sl' ? t.select : 'Select...'}</option>
-                    <option value="host">{language === 'sl' ? t.host : 'Host'}</option>
-                    <option value="guest">{language === 'sl' ? t.guest : 'Guest'}</option>
-                    <option value="property-manager">{language === 'sl' ? t.propertyManager : 'Property manager'}</option>
-                    <option value="partner">{language === 'sl' ? t.partner : 'Partner'}</option>
-                    <option value="other">{language === 'sl' ? t.other : 'Other'}</option>
+                    <option value="">{t.select}</option>
+                    <option value="host">{t.host}</option>
+                    <option value="guest">{t.guest}</option>
+                    <option value="property-manager">{t.propertyManager}</option>
+                    <option value="partner">{t.partner}</option>
+                    <option value="other">{t.other}</option>
                   </select>
                 </div>
 
@@ -526,7 +570,7 @@ export default function ContactPage() {
                       marginBottom: '8px',
                     }}
                   >
-                    {language === 'sl' ? t.message : 'Message'} *
+                    {t.message} *
                   </label>
                   <textarea
                     id="message"
@@ -566,7 +610,7 @@ export default function ContactPage() {
                   className="btn-primary"
                   style={{ width: '100%', marginTop: '8px' }}
                 >
-                  {language === 'sl' ? t.sendButton : 'Send message'}
+                  {t.sendButton}
                 </button>
               </form>
             </div>

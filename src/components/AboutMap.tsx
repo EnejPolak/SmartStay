@@ -4,11 +4,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { MAPBOX_CONFIG } from '@/config/mapbox';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const AboutMap = () => {
+  const { language } = useLanguage();
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+
+  const translations = {
+    en: {
+      loading: 'Loading map...',
+      navigation: 'Navigation'
+    },
+    sl: {
+      loading: 'Nalaganje zemljevida...',
+      navigation: 'Navigacija'
+    },
+    hr: {
+      loading: 'Učitavanje karte...',
+      navigation: 'Navigacija'
+    }
+  };
+
+  const t = translations[language] || translations.en;
 
   // Koordinate za Ljubljana - Črnuče (Pisarna Coworking)
   const LOCATION = {
@@ -118,7 +137,7 @@ const AboutMap = () => {
             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(162, 158, 255, 0.4)';"
             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';"
           >
-            Navigacija →
+            {t.navigation} →
           </a>
         </div>
       `);
@@ -202,7 +221,7 @@ const AboutMap = () => {
               }}
             />
             <p style={{ color: '#737373', fontSize: '14px', margin: 0 }}>
-              Nalaganje zemljevida...
+              {t.loading}
             </p>
           </div>
         </div>

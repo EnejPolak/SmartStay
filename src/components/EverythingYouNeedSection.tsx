@@ -30,10 +30,14 @@ const EverythingYouNeedSection = () => {
     sl: {
       title: 'Vse, kar potrebujete, na enem mestu',
       subtitle: 'Funkcije zasnovane za povezovanje, ne le za udobje.'
+    },
+    hr: {
+      title: 'Sve što trebate na jednom mjestu',
+      subtitle: 'Funkcije dizajnirane za povezivanje, ne samo za udobnost.'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   const totalCards = features.length;
   const radius = 350; // Polmer kroga
 

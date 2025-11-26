@@ -79,13 +79,13 @@ const ProblemsSection = () => {
         {
           id: 1,
           title: 'Ponavljajoča se vprašanja gostov',
-          description: 'Nenehno odgovarjanje na ista vprašanja',
+          description: 'Nenehno odgovarjanje na ista vprašanja.',
           icon: 'question'
         },
         {
           id: 2,
           title: 'Zastareli papirnati vodniki',
-          description: 'Težko posodabljanje, enostavno izgubiti ali poškodovati',
+          description: 'Težko posodabljanje, enostavno izgubiti ali poškodovati.',
           icon: 'document'
         },
         {
@@ -105,7 +105,7 @@ const ProblemsSection = () => {
         {
           id: 1,
           title: 'Izgubljene ure pri načrtovanju potovanja',
-          description: 'Povprečna oseba porabi več kot 10 ur za načrtovanje počitnic',
+          description: 'Povprečna oseba porabi več kot 10 ur za načrtovanje počitnic.',
           icon: 'star'
         },
         {
@@ -123,14 +123,74 @@ const ProblemsSection = () => {
         {
           id: 4,
           title: 'Zmedene informacije o prevozu',
-          description: 'Ne veste, kateri prevoz uporabiti in kako',
+          description: 'Ne veste, kateri prevoz uporabiti in kako.',
+          icon: 'check'
+        }
+      ]
+    },
+    hr: {
+      titlePrefix: 'Problemi koje ',
+      titleSmartxStay: 'SmartxStay',
+      solves: 'rješava',
+      subtitle: 'Pretvaranje izazova u besprijekorna iskustva.',
+      forHosts: 'Za domaćine',
+      forGuests: 'Za goste',
+      hostsProblems: [
+        {
+          id: 1,
+          title: 'Ponavljajuća pitanja gostiju',
+          description: 'Neprestano odgovaranje na ista pitanja.',
+          icon: 'question'
+        },
+        {
+          id: 2,
+          title: 'Zastarjeli papirnati vodiči',
+          description: 'Teško ažuriranje, lako izgubiti ili oštetiti.',
+          icon: 'document'
+        },
+        {
+          id: 3,
+          title: 'Zaostajanje u suvremenom turizmu',
+          description: 'Tehnologija se brzo razvija, ne zaostajte.',
+          icon: 'hourglass'
+        },
+        {
+          id: 4,
+          title: 'Izgubljene prilike za dodatnu prodaju',
+          description: 'Većina turista uopće ne sazna za dodatne usluge koje smještaj nudi.',
+          icon: 'star'
+        }
+      ],
+      guestsProblems: [
+        {
+          id: 1,
+          title: 'Izgubljeni sati pri planiranju putovanja',
+          description: 'Prosječna osoba potroši više od 10 sati za planiranje godišnjeg odmora.',
+          icon: 'star'
+        },
+        {
+          id: 2,
+          title: 'Izgubljeni prije dolaska',
+          description: 'Loše upute / Čekanje u redu, dugi minuti po dolasku. Istraživanje Cornellove sveučilišta: Čekanje duže od 5 minuta smanjuje zadovoljstvo gosta za 50%.',
+          icon: 'message'
+        },
+        {
+          id: 3,
+          title: 'Stres u stranoj državi',
+          description: 'Jezične prepreke. Zbog jezičnih prepreka brzo dolazi do nedostatka informacija, nezadovoljstva i nesigurnosti.',
+          icon: 'info'
+        },
+        {
+          id: 4,
+          title: 'Zbunjujuće informacije o prijevozu',
+          description: 'Ne znate koji prijevoz koristiti i kako.',
           icon: 'check'
         }
       ]
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   const problems = activeTab === 'hosts' ? t.hostsProblems : t.guestsProblems;
 
   const renderIcon = (iconType: string, iconColor: string = '#a29eff') => {

@@ -19,10 +19,16 @@ const CommunitySection = () => {
       titleSmartxStay: 'SmartxStay',
       community: 'skupnosti',
       description: 'Povežite se z globalno mrežo gostiteljev, ki delijo vašo strast do gostoljubja. Delite vpoglede, poiščite podporo in rastite skupaj v skupnosti, posvečeni ustvarjanju nepozabnih gostovskih izkušenj po vsem svetu.'
+    },
+    hr: {
+      title: 'Postanite dio ',
+      titleSmartxStay: 'SmartxStay',
+      community: 'zajednice',
+      description: 'Povežite se s globalnom mrežom domaćina koji dijele vašu strast prema gostoljubju. Dijelite uvide, pronađite podršku i rastite zajedno u zajednici posvećenoj stvaranju nezaboravnih gostujućih iskustava diljem svijeta.'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   // Partner logos
   const logos = [
     '/images/community/1.png',

@@ -118,10 +118,37 @@ const ForGuestsPage = () => {
       greatTripDesc2: 'SmartxStay gostitelji vas ne puščajo ugibati, iskati po Googlu in se stresirati.',
       greatTripDesc3: 'Z našo tehnologijo celostno poskrbijo za vašo izkušnjo.',
       travelWithHosts: 'Potujte z gostitelji, ki grejo korak dlje. Potujte z SmartxStay.'
+    },
+    hr: {
+      yourStay: 'Vaše putovanje,',
+      madeSmarter: 'planirano pametnije.',
+      subtitle: 'Istražite više, opustite se bolje i osjećajte se povezano, kamo god idete. Sa SmartxStay je sve što trebate za savršeno putovanje – od uputa do lokalnih dragulja – na dohvat ruke.',
+      findYourStay: 'Pronađite svoj boravak',
+      askQuestion: 'Postavite pitanje',
+      loading: 'Učitavanje iPhone...',
+      hostCurated: 'Vaš domaćin je pripremio',
+      everything: 'sve.',
+      youJust: 'Vi samo',
+      enjoy: 'stvarate uspomene.',
+      curatedSubtitle: 'Lokalna iskustva, pripremljena od strane nekoga tko stvarno zna. Nema više nagađanja, nema više googlanja—samo autentični trenutci koji vas čekaju.',
+      noTouristTraps: 'Nema više turističkih zamki',
+      noTouristTrapsDesc: 'Otkrijte autentična lokalna mjesta koja vaš domaćin osobno preporučuje',
+      trustedInfo: 'Pouzdane informacije od vašeg domaćina',
+      trustedInfoDesc: 'Dobijte unutarnje savjete od domaćina koji najbolje poznaju područje',
+      hiddenGems: 'Skriveni dragulji koje nikada ne biste pronašli sami',
+      hiddenGemsDesc: 'Pristup tajnim mjestima koja samo domaćini znaju',
+      easyDecisions: 'Lake odluke, nezaboravni trenutci',
+      easyDecisionsDesc: 'Potrošite manje vremena na planiranje, više vremena na stvaranje uspomena',
+      greatTrip: 'Vaše putovanje počinje s',
+      someoneOnYourSide: 'povjerenjem i bezbrižnošću.',
+      greatTripDesc: 'Kada rezervirate kod SmartxStay domaćina, ne dobivate samo mjesto za spavanje, već nekoga tko mu je stalo i tko je za vas pripremio sve.',
+      greatTripDesc2: 'SmartxStay domaćini vas ne ostavljaju da nagađate, tražite na Googlu i stresirate se.',
+      greatTripDesc3: 'S našom tehnologijom sveobuhvatno se brinu za vaše iskustvo.',
+      travelWithHosts: 'Putujte s domaćinima koji idu korak dalje. Putujte sa SmartxStay.'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   return (
     <main>

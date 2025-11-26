@@ -24,10 +24,19 @@ const HostMeansMoreSection = () => {
       paragraph1: 'Biti SmartxStay gostitelj pomeni dati gostom več kot le kraj za spanje.',
       paragraph2: 'Pomeni narediti njihov obisk enostaven, oseben in nepozaben.',
       paragraph3: 'Predvidite, kaj potrebujejo, vodite jih s skrbjo in uporabljajte preprosta orodja za ustvarjanje gladke, gostoljubne izkušnje, ki si jo bodo zapomnili in o njej govorili.'
+    },
+    hr: {
+      because: 'Jer biti ',
+      smartxStay: 'SmartxStay',
+      hostMeans: 'domaćin znači više',
+      moreTrust: 'Više povjerenja, više vidljivosti, više rezervacija i sretnijih gostiju.',
+      paragraph1: 'Biti SmartxStay domaćin znači dati gostima više od mjesta za spavanje.',
+      paragraph2: 'Znači učiniti njihov boravak lakim, osobnim i nezaboravnim.',
+      paragraph3: 'Predvidite što im treba, vodite ih s brižnošću i koristite jednostavne alate za stvaranje glatkog, gostoljubnog iskustva koje će pamtiti i o kojem će pričati.'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   return (
     <section
       style={{

@@ -8,6 +8,16 @@ export default function AboutPage() {
   const { language } = useLanguage();
 
   const translations = {
+    en: {
+      title: 'About us',
+      paragraph1: 'Tourism is one of the fastest growing industries, but most accommodations still operate with tools from the previous decade. This creates unnecessary stress and inefficiency.',
+      visionTitle: 'Our vision is simple:',
+      visionText: 'that every host can afford their own app for the best guest experience.',
+      paragraph2: 'SmartxStay is built with everyone in mind who wants to elevate their accommodation. Not with large investments, but with smart moves. We believe in transparency, beautiful design, simple communication and technology that never overshadows the human touch.',
+      weAre: 'We are SmartxStay.',
+      weAreText: 'For all hosts who love their guests and for all guests who like to travel stress-free.',
+      contactUs: 'Contact us'
+    },
     sl: {
       title: 'O nas',
       paragraph1: 'Turizem je ena najhitreje rastočih panog, toda večina nastanitev še vedno deluje z orodji iz prejšnjega desetletja. To ustvarja nepotreben stres in neučinkovitost.',
@@ -17,10 +27,20 @@ export default function AboutPage() {
       weAre: 'Smo SmartxStay.',
       weAreText: 'Za vse gostitelje, ki obožujejo svoje goste in za vse goste, ki radi potujejo brez stresa.',
       contactUs: 'Kontaktiraj nas'
+    },
+    hr: {
+      title: 'O nama',
+      paragraph1: 'Turizam je jedna od najbrže rastućih grana, ali većina smještaja još uvijek radi s alatima iz prošlog desetljeća. To stvara nepotreban stres i neučinkovitost.',
+      visionTitle: 'Naša vizija je jednostavna:',
+      visionText: 'da si svaki domaćin može priuštiti vlastitu aplikaciju za najbolje iskustvo gosta.',
+      paragraph2: 'SmartxStay je izgrađen s mislju na sve koji žele podići svoj smještaj. Ne s velikim investicijama, već pametnim potezima. Vjerujemo u transparentnost, lijep dizajn, jednostavnu komunikaciju i tehnologiju koja nikada ne prekriva ljudski dodir.',
+      weAre: 'Mi smo SmartxStay.',
+      weAreText: 'Za sve domaćine koji obožavaju svoje goste i za sve goste koji vole putovati bez stresa.',
+      contactUs: 'Kontaktirajte nas'
     }
   };
 
-  const t = translations.sl;
+  const t = translations[language] || translations.en;
   return (
     <main>
       {/* Fixed Background */}
@@ -65,7 +85,7 @@ export default function AboutPage() {
                 backgroundClip: 'text',
               }}
             >
-              {language === 'sl' ? t.title : 'About us'}
+              {t.title}
             </span>
           </h1>
 
@@ -91,7 +111,7 @@ export default function AboutPage() {
                 textAlign: 'center',
               }}
             >
-              {language === 'sl' ? t.paragraph1 : 'Tourism is one of the fastest-growing industries, yet most accommodations still operate with tools from the previous decade. This creates unnecessary stress and inefficiency.'}
+              {t.paragraph1}
             </p>
           </div>
 
@@ -115,7 +135,7 @@ export default function AboutPage() {
                 fontWeight: 500,
               }}
             >
-              <strong>{language === 'sl' ? t.visionTitle : 'Our vision is simple:'}</strong> {language === 'sl' ? t.visionText : 'to make it possible for every host to afford their own app for the best guest experience.'}
+              <strong>{t.visionTitle}</strong> {t.visionText}
             </p>
           </div>
 
@@ -141,7 +161,7 @@ export default function AboutPage() {
                 textAlign: 'center',
               }}
             >
-              {language === 'sl' ? t.paragraph2 : 'SmartxStay is built with everyone in mind who wants to elevate their accommodation. Not with big investments, but with smart moves. We believe in transparency, beautiful design, simple communication, and technology that never overshadows the human touch.'}
+              {t.paragraph2}
             </p>
           </div>
 
@@ -165,7 +185,7 @@ export default function AboutPage() {
                 fontWeight: 500,
               }}
             >
-              <strong>{language === 'sl' ? t.weAre : 'We are SmartxStay.'}</strong> {language === 'sl' ? t.weAreText : 'For all hosts who love their guests and for all guests who love to travel stress-free.'}
+              <strong>{t.weAre}</strong> {t.weAreText}
             </p>
           </div>
 
@@ -180,7 +200,7 @@ export default function AboutPage() {
               color: '#0f0f0f',
             }}
           >
-            {language === 'sl' ? t.contactUs : 'Contact us'}
+            {t.contactUs}
           </h2>
 
           {/* Contact Info Box */}

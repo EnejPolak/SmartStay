@@ -90,10 +90,50 @@ const GiveGuestsEverythingSection = () => {
           icon: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm-1.5 4.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm3 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM12 9c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'
         }
       ]
+    },
+    hr: {
+      title: 'Dajte gostima sve što trebaju.',
+      features: [
+        {
+          title: 'Digitalna informacijska mapa',
+          description: 'Sve informacije o apartmanu, pravila i upute za uređaje na jednom interaktivnom mjestu.',
+          icon: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'
+        },
+        {
+          title: 'Kurirana lokalna vodnica',
+          description: 'Osobne preporuke za restorane, kafiće i skrivene dragulje.',
+          icon: 'M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.65l4.19 4.19zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.89-6.03-1.4-1.4-4.12-1.02-6.03.89-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z'
+        },
+        {
+          title: 'Dodatne usluge',
+          description: 'Povećajte svoj prihod s lakoćom. Predstavite izlete, doručke i druge dodatne ponude.',
+          icon: 'M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z'
+        },
+        {
+          title: 'Upute do apartmana',
+          description: 'Jasna, korak po korak navigacija ravno do vašeg apartmana, bez kasno noćnih poziva.',
+          icon: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'
+        },
+        {
+          title: 'Prijevoz',
+          description: 'Pomozite gostima putovati kao domaćini. Objasnite autobuse, taksije ili parkiranje, tako da gosti nikada ne izgube.',
+          icon: 'M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z'
+        },
+        {
+          title: 'Održivost',
+          description: 'Ponosno dijelite svoje ekološke vrijednosti i informirajte goste kako ostati zeleni tijekom boravka.',
+          icon: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'
+        },
+        {
+          title: 'GPX rute',
+          description: 'Dajte planinarima i biciklistima unaprijed pripremljene GPX staze za bezbrižne, nezaboravne avanture.',
+          icon: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm-1.5 4.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm3 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM12 9c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'
+        }
+      ]
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   const features = t.features;
   const totalCards = features.length;
   const radius = 350; // Polmer kroga

@@ -176,10 +176,95 @@ export default function PricesPage() {
           'Napredna analitika'
         ]
       }
+    },
+    hr: {
+      packagesModules: 'Paketi i Moduli',
+      title: 'Pametnije digitalno iskustvo za',
+      yourGuests: 'vaše goste',
+      subtitle: 'Odaberite SmartxStay paket koji raste s vašim potrebama.',
+      description: 'Od osnovne digitalne dobrodošlice do napredne automatizacije i integracija - SmartxStay vam omogućava stvaranje iskustva koje oduševljava svakog gosta.',
+      comparePackages: 'Usporedi pakete',
+      freeConsultation: 'Besplatna konzultacija',
+      recommended: 'Preporučeno',
+      smartxWelcome: 'SmartxWelcome',
+      smartxPro: 'SmartxPro',
+      smartxElite: 'SmartxElite',
+      perMonth: '/mjesec',
+      forTesting: 'Za testiranje i osnovnu digitalizaciju.',
+      timeSaving: 'Štednja vremena i automatizacija komunikacije.',
+      forProfessionals: 'Za profesionalce s potrebama za integraciju i rast prihoda.',
+      selectPackage: 'Odaberi paket',
+      startNow: 'Počni sada',
+      additionalModules: 'Dodatni moduli za',
+      greaterValue: 'veću vrijednost',
+      modulesDescription: 'Nadogradite svoje SmartStay iskustvo s modulima koji povećavaju prihod i poboljšavaju zadovoljstvo gostiju.',
+      sportMode: 'Sportski način',
+      sportModeDesc: 'GPX rute za aktivne goste',
+      eventsMode: 'Način događaja',
+      eventsModeDesc: 'Automatski prikaz trenutnih događaja',
+      salesMode: 'Način prodaje',
+      salesModeDesc: 'Upsell usluge (doručak, vino, suveniri)',
+      perService: '/usluga',
+      reservationsMode: 'Način rezervacija',
+      reservationsModeDesc: 'Rezervacije za dodatne usluge',
+      byAgreement: 'Po dogovoru',
+      placesKulturaMode: 'Način mjesta i kulture',
+      placesKulturaModeDesc: 'Pokažite gostima lokalno iskustvo',
+      receptionCare: 'Recepcija/Njega',
+      receptionCareDesc: 'Zahtjev za promjenu posteljine, ručnika itd.',
+      additionalLanguage: 'Dodatni jezik',
+      additionalLanguageDesc: 'Svaki dodatni jezik',
+      perLanguage: '/jezik',
+      transportMode: 'Način prijevoza',
+      transportModeDesc: 'Dajte gostima sve informacije o lokalnom prijevozu',
+      ecoLabel: 'Eko oznaka',
+      ecoLabelDesc: 'Pokažite svoje certifikate održivosti',
+      weatherMode: 'Način vremena',
+      weatherModeDesc: 'Omogućite turistima da vide vrijeme',
+      ratingMode: 'Način ocjenjivanja',
+      ratingModeDesc: 'Omogućite gostima da ostave ocjenu',
+      surveysForms: 'Ankete i formulari',
+      surveysFormsDesc: 'Umetnite ankete, formulare...',
+      features: {
+        welcome: [
+          'Logo i CGP',
+          'Sve osnovne informacije o smještaju',
+          'Upute za parkiranje i pristup',
+          'Upute za uređaje',
+          'Kontakt',
+          'Check in / check out',
+          'WiFi pristup',
+          '2 jezika',
+          'Podrška',
+          'Integracija chata - Viber, WhatsApp',
+          'Osnovna analitika'
+        ],
+        pro: [
+          'Sve iz SmartxWelcome paketa',
+          '4 jezika',
+          'Modul mjesta',
+          'Modul kulturne baštine',
+          'Modul održivosti',
+          'Modul vremena',
+          'Modul ocjenjivanja',
+          'Salesmode (1)'
+        ],
+        elite: [
+          'Sve iz SmartxPro paketa',
+          '6 jezika',
+          'Salesmode (3)',
+          'Sportsmode',
+          'Događaji',
+          'Njega sobe',
+          'Ankete/Formulari',
+          'Privatna povratna informacija',
+          'Napredna analitika'
+        ]
+      }
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   // Funkcija za določanje barve glede na pozicijo v gridu (šahovnica)
   const getCardColor = (index: number) => {
     const row = Math.floor(index / 4);
@@ -288,7 +373,7 @@ export default function PricesPage() {
               maxWidth: '900px',
             }}
           >
-            <span style={{ color: '#0f0f0f' }}>{language === 'sl' ? t.title : 'Smarter digital experience for'}</span>{' '}
+            <span style={{ color: '#0f0f0f' }}>{t.title}</span>{' '}
             <span 
               className="animated-gradient-text"
               style={{ 
@@ -298,7 +383,7 @@ export default function PricesPage() {
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}
-            >{language === 'sl' ? t.yourGuests : 'your guests'}</span>
+            >{t.yourGuests}</span>
           </h1>
 
           {/* Sub-headline */}
@@ -313,7 +398,7 @@ export default function PricesPage() {
               maxWidth: '700px',
             }}
           >
-            {language === 'sl' ? t.subtitle : 'Choose a SmartStay package that grows with your needs.'}
+            {t.subtitle}
           </p>
 
           {/* Description */}
@@ -328,7 +413,7 @@ export default function PricesPage() {
               maxWidth: '800px',
             }}
           >
-            {language === 'sl' ? t.description : 'From basic digital welcome to advanced automation and integrations - SmartStay lets you create an experience that delights every guest.'}
+            {t.description}
           </p>
 
           {/* CTA Buttons */}
@@ -439,7 +524,7 @@ export default function PricesPage() {
                   style={{
                     fontSize: '20px',
                     fontWeight: 500,
-                    color: '#9ca3af',
+                    color: '#7db8ff',
                     textDecoration: 'line-through',
                     marginBottom: '4px',
                   }}
@@ -448,14 +533,13 @@ export default function PricesPage() {
                 </div>
                 {/* Current Price */}
               <div
-                className="price-amount"
+                className="price-amount animated-gradient-text"
                 style={{
                   fontSize: '48px',
                   fontWeight: 900,
-                  color: '#1e40af',
                 }}
               >
-                  14,90€{language === 'sl' ? t.perMonth : '/month'}
+                14,90€{language === 'sl' ? t.perMonth : '/month'}
                 </div>
               </div>
 
@@ -605,7 +689,7 @@ export default function PricesPage() {
                   style={{
                     fontSize: '20px',
                     fontWeight: 500,
-                    color: '#9ca3af',
+                    color: '#7db8ff',
                     textDecoration: 'line-through',
                     marginBottom: '4px',
                   }}
@@ -614,15 +698,13 @@ export default function PricesPage() {
                 </div>
                 {/* Current Price */}
               <div
-                className="price-amount"
+                className="price-amount animated-gradient-text"
                 style={{
                   fontSize: '48px',
                   fontWeight: 900,
-                  color: '#1e40af',
-                  textShadow: '0 2px 4px rgba(255, 255, 255, 0.5)',
                 }}
               >
-                  34,90€{language === 'sl' ? t.perMonth : '/month'}
+                34,90€{language === 'sl' ? t.perMonth : '/month'}
                 </div>
               </div>
 
@@ -750,7 +832,7 @@ export default function PricesPage() {
                   style={{
                     fontSize: '20px',
                     fontWeight: 500,
-                    color: '#9ca3af',
+                    color: '#7db8ff',
                     textDecoration: 'line-through',
                     marginBottom: '4px',
                   }}
@@ -759,14 +841,13 @@ export default function PricesPage() {
                 </div>
                 {/* Current Price */}
               <div
-                className="price-amount"
+                className="price-amount animated-gradient-text"
                 style={{
                   fontSize: '48px',
                   fontWeight: 900,
-                  color: '#1e40af',
                 }}
               >
-                  59,90€{language === 'sl' ? t.perMonth : '/month'}
+                59,90€{language === 'sl' ? t.perMonth : '/month'}
                 </div>
               </div>
 
@@ -1686,6 +1767,28 @@ export default function PricesPage() {
             box-shadow: 0 8px 40px rgba(162, 158, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 0 0 1px rgba(162, 158, 255, 0.2);
           }
         }
+
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
 
         .pricing-card {
           animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;

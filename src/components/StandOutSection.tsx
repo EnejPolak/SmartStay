@@ -20,10 +20,17 @@ const StandOutSection = () => {
       paragraph1: 'Gostje se ne vračajo zaradi lepe nastanitve. Vračajo se zaradi izkušnje.',
       paragraph2: 'Dvignite izkušnjo vaših gostov na najvišji nivo in postanite gostitelj, h kateremu se gosti vračajo in ga priporočajo naprej.',
       paragraph3: ''
+    },
+    hr: {
+      standOut: 'Izdvojite se',
+      inWorld: 'u svijetu punom smještaja!',
+      paragraph1: 'Gosti se ne vraćaju zbog lijepog smještaja. Vraćaju se zbog iskustva.',
+      paragraph2: 'Podignite iskustvo svojih gostiju na najvišu razinu i postanite domaćin kojem se gosti vraćaju i preporučuju dalje.',
+      paragraph3: ''
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   return (
     <section
       style={{

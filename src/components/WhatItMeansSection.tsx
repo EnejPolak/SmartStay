@@ -1,8 +1,34 @@
 'use client';
 
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const WhatItMeansSection = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      title: 'What it means to be a',
+      smartxStay: 'SmartxStay',
+      host: 'Host',
+      description: 'Being a SmartxStay Host means elevating every aspect of the guest experience, turning simple stays into memorable journeys. It\'s about anticipating needs, offering personalized touches, and using technology to create a seamless and welcoming environment. You\'re not just providing a place to sleep; you\'re curating an experience that guests will cherish and share.'
+    },
+    sl: {
+      title: 'Kaj pomeni biti',
+      smartxStay: 'SmartxStay',
+      host: 'gostitelj',
+      description: 'Biti SmartxStay gostitelj pomeni dvigniti vsak vidik gostovske izkušnje, preoblikovati preproste bivanja v nepozabna potovanja. Gre za predvidevanje potreb, ponujanje osebnih dotikov in uporabo tehnologije za ustvarjanje brezhibnega in gostoljubnega okolja. Ne zagotavljate le kraja za spanje; kurirate izkušnjo, ki si jo bodo gosti cenili in delili.'
+    },
+    hr: {
+      title: 'Što znači biti',
+      smartxStay: 'SmartxStay',
+      host: 'domaćin',
+      description: 'Biti SmartxStay domaćin znači podići svaki aspekt gostujućeg iskustva, pretvoriti jednostavne boravke u nezaboravna putovanja. Riječ je o predviđanju potreba, nuditi personalizirane dodire i koristiti tehnologiju za stvaranje besprijekornog i gostoljubnog okruženja. Ne pružate samo mjesto za spavanje; kurirate iskustvo koje će gosti cijeniti i dijeliti.'
+    }
+  };
+
+  const t = translations[language] || translations.en;
+
   return (
     <section
       style={{
@@ -33,8 +59,8 @@ const WhatItMeansSection = () => {
             lineHeight: '1.3'
           }}
         >
-          What it means to be a<br />
-          Smart<span style={{ color: '#b8a1ff' }}>x</span>Stay Host
+          {t.title}<br />
+          <span style={{ color: '#b8a1ff' }}>{t.smartxStay}</span> {t.host}
         </h2>
 
         {/* Description */}
@@ -50,7 +76,7 @@ const WhatItMeansSection = () => {
             marginRight: 'auto'
           }}
         >
-          Being a SmartxStay Host means elevating every aspect of the guest experience, turning simple stays into memorable journeys. It&apos;s about anticipating needs, offering personalized touches, and using technology to create a seamless and welcoming environment. You&apos;re not just providing a place to sleep; you&apos;re curating an experience that guests will cherish and share.
+          {t.description}
         </p>
       </div>
 

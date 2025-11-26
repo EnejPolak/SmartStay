@@ -33,7 +33,7 @@ const CTAContactSection = () => {
     },
     sl: {
       title: 'Pripravljeni dvigniti vašo gostoljubnost?',
-      description: 'Povežimo se in prinesimo digitalno gostoljubnost vašim gostom. Rezervirajte brezplačen, brezobvezen video sestanek, da vidite, kako lahko SmartxStay deluje za vas.',
+      description: 'Rezervirajte brezplačen, video sestanek, da vidite, kako lahko SmartxStay deluje za vas.',
       button: 'Rezervirajte brezplačno predstavitev',
       formTitle: 'Kontaktirajte nas',
       accommodationName: 'Ime nastanitve',
@@ -47,10 +47,27 @@ const CTAContactSection = () => {
         guest: 'Gost',
         other: 'Drugo'
       }
+    },
+    hr: {
+      title: 'Spremni podići vašu gostoljubnost?',
+      description: 'Rezervirajte besplatan video sastanak da vidite kako SmartxStay može raditi za vas.',
+      button: 'Rezervirajte besplatnu prezentaciju',
+      formTitle: 'Kontaktirajte nas',
+      accommodationName: 'Ime smještaja',
+      emailAddress: 'Email adresa',
+      vacationRentalHost: 'Domaćin najma za odmor',
+      yourMessage: 'Vaša poruka',
+      sendMessage: 'Pošalji poruku',
+      selectOptions: {
+        host: 'Domaćin najma za odmor',
+        propertyManager: 'Upravitelj nekretnina',
+        guest: 'Gost',
+        other: 'Drugo'
+      }
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);

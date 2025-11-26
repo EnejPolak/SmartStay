@@ -19,15 +19,22 @@ const LocalExperienceSection = () => {
       partnersTitle: 'Our local partners'
     },
     sl: {
-      title: 'Lokalna izkušnja.',
-      subtitle: 'Poganjajo gostitelji.',
+      title: 'Lokalno izkušnjo',
+      subtitle: 'poganjajo gostitelji.',
       paragraph1: 'Verjamemo, da najboljša priporočila prihajajo od tistih, ki območje najbolje poznajo: gostiteljev.',
       paragraph2: 'Mi zagotavljamo platformo, vi prinašate lokalno dušo, podprto s partnerji, ki dvigujejo vsak nasvet.',
       partnersTitle: 'Naši lokalni partnerji'
+    },
+    hr: {
+      title: 'Lokalno iskustvo.',
+      subtitle: 'Pokreću domaćini.',
+      paragraph1: 'Vjerujemo da najbolje preporuke dolaze od onih koji najbolje poznaju područje: domaćina.',
+      paragraph2: 'Mi osiguravamo platformu, vi donosite lokalnu dušu, podržanu partnerima koji podižu svaki savjet.',
+      partnersTitle: 'Naši lokalni partneri'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   useEffect(() => {
     const handleScroll = () => {

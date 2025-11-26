@@ -105,10 +105,51 @@ const FeaturesOverviewSection = () => {
           description: 'Naj se vaši turisti počutijo kot domačini. Vse informacije o javnih prevozih, taksijih, vlakih, ter navodila za nakup kart – zbrane na enem mestu.'
         }
       ]
+    },
+    hr: {
+      title: 'Sve što trebate na jednom mjestu',
+      subtitle: 'Funkcije dizajnirane za povezivanje, ne samo za udobnost.',
+      features: [
+        {
+          id: 1,
+          title: 'Digitalna informacijska mapa',
+          description: 'Sve informacije o apartmanu, pravila i upute za uređaje na jednom interaktivnom mjestu.'
+        },
+        {
+          id: 2,
+          title: 'Lokalno iskustvo',
+          description: 'Lokalni vodič koji vas stvarno vodi do svih vaših osobnih preporuka za restorane, kafiće i skrivene dragulje.'
+        },
+        {
+          id: 3,
+          title: 'Pametne rezervacije',
+          description: 'Integrirajte usluge kao što su rezervacija jacuzzija, sauna, taksi, dostava hrane ili lokalni izleti.'
+        },
+        {
+          id: 4,
+          title: 'Jednostavna postavka',
+          description: 'Počnite za nekoliko minuta. Naša intuitivna nadzorna ploča čini postavku dječje jednostavnom.'
+        },
+        {
+          id: 5,
+          title: 'Dodatne usluge',
+          description: 'Predstavite gostima svoje dodatne usluge i proizvode te povećajte svoj prihod.'
+        },
+        {
+          id: 6,
+          title: 'Upute do apartmana',
+          description: 'Navigacija koja jasno vodi goste ravno do vašeg apartmana. Bez traženja i stresa!'
+        },
+        {
+          id: 7,
+          title: 'Prijevoz',
+          description: 'Neka se vaši turisti osjećaju kao domaćini. Sve informacije o javnom prijevozu, taksijima, vlakovima i upute za kupnju karata – sve na jednom mjestu.'
+        }
+      ]
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   const features = t.features.map((feature, index) => {
     // Keep original icons

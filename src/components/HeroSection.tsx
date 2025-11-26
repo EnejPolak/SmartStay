@@ -101,10 +101,29 @@ const HeroSection = () => {
       hostsButton: 'Rezervirajte brezplačno predstavitev',
       guestsButton: 'Poiščite vaš naslednji bivališče',
       readMore: 'Preberite več'
+    },
+    hr: {
+      forHosts: 'Za domaćine',
+      forGuests: 'Za goste',
+      hostsHeading: {
+        line1: 'Aplikacija prilagođena',
+        line2: 'za vaš smještaj.',
+        line3: 'Za domaćine koji obožavaju',
+        line4: 'svoje goste.'
+      },
+      guestsHeading: {
+        line1: 'Putovanje bez stresa',
+        line2: 's lokalnim savjetima.',
+        line3: 'Za goste koji',
+        line4: 'ne vole stres.'
+      },
+      hostsButton: 'Rezervirajte besplatnu prezentaciju',
+      guestsButton: 'Pronađite svoj sljedeći smještaj',
+      readMore: 'Pročitajte više'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   // Animate heading when tab changes
   useEffect(() => {

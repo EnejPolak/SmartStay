@@ -83,10 +83,18 @@ const ForHostsPage = () => {
       bookPresentation: 'Rezervirajte brezplačno predstavitev',
       askQuestion: 'Postavite vprašanje',
       loading: 'Nalaganje...'
+    },
+    hr: {
+      welcome: 'Dobrodošli,',
+      stay: 'Domaćini.',
+      subtitle: 'Niste samo domaćin; vi ste kreator iskustava. Ovdje smo da vam pomognemo učiniti svaki gostujući boravak nezaboravnim kroz brigu, povezivanje i besprijekornu tehnologiju.',
+      bookPresentation: 'Rezervirajte besplatnu prezentaciju',
+      askQuestion: 'Postavite pitanje',
+      loading: 'Učitavanje...'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   return (
     <main>

@@ -41,10 +41,27 @@ const FinalCTASection = () => {
       other: 'Drugo',
       yourMessage: 'Vaše sporočilo',
       sendMessage: 'Pošlji sporočilo'
+    },
+    hr: {
+      title: 'Spremni podići razinu vašeg iznajmljivanja?',
+      subtitle: 'Ne budite samo jedan od smještaja. Budite iznad standarda.',
+      description: 'Rezervirajte 15-minutni pregled rješenja. Pokažite nam svoje imanje i mi ćemo vam pokazati kako SmartxStay može podići vašu gostoljubnost na najvišu razinu i osigurati vašu konkurentsku prednost.',
+      bookPresentation: 'Kliknite ovdje za besplatni uvodni sastanak.',
+      getInTouch: 'Kontaktirajte nas',
+      yourName: 'Vaše ime',
+      emailAddress: 'Email adresa',
+      iAmA: 'Ja sam...',
+      select: 'Odaberite...',
+      vacationRental: 'Domaćin najma za odmor',
+      hotelManager: 'Upravitelj hotela',
+      propertyManager: 'Upravitelj nekretnina',
+      other: 'Drugo',
+      yourMessage: 'Vaša poruka',
+      sendMessage: 'Pošalji poruku'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   const [formData, setFormData] = useState({
     name: '',
     email: '',

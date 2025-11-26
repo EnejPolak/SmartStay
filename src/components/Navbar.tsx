@@ -46,10 +46,18 @@ const Navbar = () => {
       pricing: 'Cenik',
       aboutUs: 'O nas',
       contact: 'Kontakt'
+    },
+    hr: {
+      home: 'Početna',
+      forHosts: 'Za domaćine',
+      forGuests: 'Za goste',
+      pricing: 'Cijene',
+      aboutUs: 'O nama',
+      contact: 'Kontakt'
     }
   };
 
-  const t = navText[language];
+  const t = navText[language] || navText.en;
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -207,7 +215,7 @@ const Navbar = () => {
             justifyContent: 'center'
           }}
         >
-          <span>{language === 'en' ? '🇬🇧' : '🇸🇮'}</span>
+          <span>{language === 'en' ? '🇬🇧' : language === 'sl' ? '🇸🇮' : '🇭🇷'}</span>
           <svg 
             width="12" 
             height="12" 
@@ -319,6 +327,42 @@ const Navbar = () => {
               <span style={{ fontSize: '20px' }}>🇸🇮</span>
               <span>Slovenščina</span>
             </button>
+            <button
+              onClick={() => {
+                setLanguage('hr');
+                setIsLangDropdownOpen(false);
+              }}
+              style={{
+                width: '100%',
+                padding: '10px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                backgroundColor: language === 'hr' ? 'rgba(184, 161, 255, 0.1)' : 'transparent',
+                border: 'none',
+                borderTop: '1px solid rgba(184, 161, 255, 0.1)',
+                cursor: 'pointer',
+                fontSize: '15px',
+                color: language === 'hr' ? '#b8a1ff' : '#333',
+                fontWeight: language === 'hr' ? 600 : 400,
+                transition: 'all 0.2s ease',
+                fontFamily: 'Inter, sans-serif',
+                textAlign: 'left'
+              }}
+              onMouseEnter={(e) => {
+                if (language !== 'hr') {
+                  e.currentTarget.style.backgroundColor = 'rgba(184, 161, 255, 0.05)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (language !== 'hr') {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
+              }}
+            >
+              <span style={{ fontSize: '20px' }}>🇭🇷</span>
+              <span>Hrvatski</span>
+            </button>
           </div>
         )}
       </div>
@@ -422,7 +466,7 @@ const Navbar = () => {
         }}
       >
         <span style={{ fontSize: '16px', fontWeight: 600, color: '#333', marginRight: '8px' }}>
-          {language === 'en' ? 'Language:' : 'Jezik:'}
+          {language === 'en' ? 'Language:' : language === 'sl' ? 'Jezik:' : 'Jezik:'}
         </span>
         <button
           onClick={() => {
@@ -473,6 +517,31 @@ const Navbar = () => {
           }}
         >
           🇸🇮
+        </button>
+        <button
+          onClick={() => {
+            setLanguage('hr');
+            setIsMenuOpen(false);
+          }}
+          style={{ 
+            padding: '8px 16px',
+            border: language === 'hr' ? '2px solid #b8a1ff' : '2px solid transparent',
+            borderRadius: '6px',
+            backgroundColor: language === 'hr' ? 'rgba(184, 161, 255, 0.1)' : 'transparent',
+            color: language === 'hr' ? '#b8a1ff' : '#333',
+            fontWeight: language === 'hr' ? 600 : 400,
+            cursor: 'pointer',
+            fontSize: '20px',
+            transition: 'all 0.2s ease',
+            fontFamily: 'Inter, sans-serif',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minWidth: '50px',
+            height: '40px'
+          }}
+        >
+          🇭🇷
         </button>
       </div>
     </div>

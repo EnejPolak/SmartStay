@@ -19,10 +19,15 @@ const WhatIsSmartxStay = () => {
       titlePrefix: 'Kaj je ',
       titleSmartxStay: 'SmartxStay',
       description: 'SmartxStay je digitalna platforma, ki omogoča vsem ponudnikom nastanitev – od manjših enot in property managerjev do večjih hotelov – zbiranje in deljenje vseh ključnih informacij, priporočil in storitev na enem mestu. Zasnovana je za gostitelje, ki jim je resnično mar za izkušnjo svojih gostov, saj zagotavlja gladko, osebno in povezano bivanje. Z SmartxStay se vsak gost takoj počuti informirano, dobrodošlo in kot doma.'
+    },
+    hr: {
+      titlePrefix: 'Što je ',
+      titleSmartxStay: 'SmartxStay',
+      description: 'SmartxStay je digitalna platforma koja omogućava svim ponuditeljima smještaja – od manjih jedinica i property managera do većih hotela – prikupljanje i dijeljenje svih ključnih informacija, preporuka i usluga na jednom mjestu. Dizajnirana je za domaćine kojima je stvarno stalo do iskustva svojih gostiju, jer osigurava glatko, osobno i povezano boravak. Sa SmartxStay se svaki gost odmah osjeća informirano, dobrodošlo i kao kod kuće.'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   useEffect(() => {
     // Počakaj da uporabnik začne scrollati

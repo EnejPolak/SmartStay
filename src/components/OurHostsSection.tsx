@@ -144,7 +144,7 @@ const OurHostsSection = () => {
       ]
     },
     sl: {
-      title: 'Kaj Naše Stranke Pravijo O Nas',
+      title: 'Kaj naše stranke pravijo o nas',
       subtitle: 'Poslušajte neposredno iz srca skupnosti.',
       readMore: 'Več',
       readLess: 'Manj',
@@ -238,10 +238,106 @@ const OurHostsSection = () => {
           image: '/images/hosts/ipsima.jpg'
     }
       ]
+    },
+    hr: {
+      title: 'Što naši klijenti kažu o nama',
+      subtitle: 'Slušajte izravno iz srca zajednice.',
+      readMore: 'Više',
+      readLess: 'Manje',
+      testimonials: [
+        {
+          id: 1,
+          name: 'Kamp Savinja',
+          role: 'Kamp',
+          rating: 5,
+          text: "S organizacijom SmartxStay smo odlično surađivali pri uvođenju QR koda koji našim gostima omogućava brz i jednostavan pristup svim važnim informacijama o našem kampu i njegovoj okolici. Usluga je izvedena brzo, profesionalno i u skladu s našim željama. QR kod je postao nezaobilazan dio naše komunikacije s gostima – preko njega mogu pronaći informacije o kampu, kartu, lokalne znamenitosti, preporuke za restorane i aktivnosti u blizini. Time smo poboljšali korisničko iskustvo i omogućili gostima ugodniji boravak. Cijenimo stručan i odzivan pristup tima SmartxStay te ih rado preporučujemo svima koji žele digitalno nadograditi svoju ponudu i poboljšati kontakt sa svojim gostima.",
+          image: '/images/hosts/kamp-savinja.jpg'
+        },
+        {
+          id: 2,
+          name: 'Apartments Irena',
+          role: 'Apartmani',
+          rating: 5,
+          text: "Stvarno super jednostavno i praktično. Preko video poziva sve lijepo objasnili i uredili u kratkom vremenu i bez komplikacija. Hana i Nik su stvarno ljubazni i uredili su sve kako smo se dogovorili. Ako imate apartmane, ovo je stvarno must-have stvar. Preporučujem!",
+          image: '/images/hosts/apartments-irena.jpg'
+        },
+        {
+          id: 3,
+          name: 'Rok Veznaver',
+          role: 'Apartmani Vila Cvetka Bled',
+          rating: 5,
+          text: "Poštovani, s obzirom na odgovor gostiju, SmartxStay je vrhunski proizvod koji olakšava svakodnevni rad s gostima. Velika prednost ovog proizvoda je podrška SmartxStay-a, jer tim zaposlenika prisluhne čak i tako nemogućim željama ponuditelja i realizira ih u stvarno kratkom vremenu. Druga prednost ovog proizvoda je personalizacija istog. U osnovi imaju krasan proizvod koji smo mi osobno nadograđivali i time postigli da preko njega gost postigne sve što želimo reći svakom gostu posebno, a za to bi trebali sat ili više. Još jedan naglasak ovog proizvoda je da nije samo na slovenskom i engleskom jeziku, kao što su na primjer usporedivi proizvodi, već je proizvod na više jezika, što je za sve naše goste neprocjenjivo, razgovaramo i o tome da bi proizvod bio podržan i drugim jezicima, kao što su na primjer azijske države... što bi svemu što trenutno nude dodalo jednu dodatnu vrijednost i vodeću poziciju na ovom području usluga koje nudi SmartxStay.",
+          image: '/images/hosts/rok-veznaver.jpg'
+        },
+        {
+          id: 4,
+          name: 'Lucija',
+          role: 'Škantar apartments',
+          rating: 5,
+          text: "Tvrtka QR Space nudi odlično rješenje za sve koji iznajmljuju smještaj. Njihov e-vodič, pripremljen potpuno individualno, uštedi ogromno vremena, jer gosti na jednom mjestu brzo pronalaze sve važne informacije – od uputa za dolazak do preporuka za izlete. Manje pitanja, više zadovoljnih gostiju i jednostavnija komunikacija. Stvarno super usluga! Toplo preporučujem!",
+          image: '/images/hosts/lucija.jpg'
+        },
+        {
+          id: 5,
+          name: 'Ksenija',
+          role: 'Apartman Bled',
+          rating: 5,
+          text: "SmartxStay mi je stvarno olakšao svakodnevno upravljanje apartmanima. Gosti primaju sve potrebne informacije na vrijeme, bez da moram brinuti za svaki detalj posebno. Podrška tima je uvijek brza i ljubazna – stvarno imam osjećaj da nisam sama. Jako sam zahvalna za ovu suradnju!",
+          image: '/images/hosts/ksenija.jpg'
+        },
+        {
+          id: 6,
+          name: 'Počitniška hiša Koča Dobnik',
+          role: 'Počitniška hiša',
+          rating: 5,
+          text: "Suradnja s tvrtkom QR space pri osmišljavanju naše prezentacije za Smart Stay bila je odlična i vrlo ugodna. Za sve su se pobrinuli ažurno i profesionalno. Preporučujem svima koji se bave turizmom.",
+          image: '/images/hosts/koca-dobnik.jpg'
+        },
+        {
+          id: 7,
+          name: 'Farm holidays Povsin',
+          role: 'Farm Holidays',
+          rating: 5,
+          text: "Top stvar. Prije smo stalno objašnjavali gostima gdje je koja restauracija, aktivnosti... Odkad imamo Smart Stay, nitko više ne pita za restauracije i aktivnosti u blizini.",
+          image: '/images/hosts/povsin.jpg'
+        },
+        {
+          id: 8,
+          name: 'Panorama B&B',
+          role: 'Bed & Breakfast',
+          rating: 5,
+          text: "Dobro, brzo i kvalitetno.",
+          image: '/images/hosts/panorama.jpg'
+        },
+        {
+          id: 9,
+          name: 'Apartma pri Ajheci',
+          role: 'Apartman',
+          rating: 5,
+          text: "Super korisna stvar koja meni olakšava posao i gostu daje sve informacije koje treba.",
+          image: '/images/hosts/ajheca.jpg'
+        },
+        {
+          id: 10,
+          name: 'Maravida',
+          role: 'Smještaj',
+          rating: 5,
+          text: "Top",
+          image: '/images/hosts/maravida.jpg'
+        },
+        {
+          id: 11,
+          name: 'IPSIMA I.P.D.O.O.',
+          role: 'HIŠA ANČKA BOUTIQUE HOTEL',
+          rating: 5,
+          text: "RADI DOBRO.",
+          image: '/images/hosts/ipsima.jpg'
+        }
+      ]
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   const testimonials = t.testimonials;
 
   // Calculate how many slides we can show (3 at a time)
@@ -341,8 +437,8 @@ const OurHostsSection = () => {
             <span className="title-en">{t.title}</span>
           ) : (
             <>
-              <span className="title-sl-line1">Kaj Naše Stranke</span>
-              <span className="title-sl-line2">Pravijo O Nas</span>
+              <span className="title-sl-line1">Kaj naše stranke </span>
+              <span className="title-sl-line2">pravijo o nas</span>
             </>
           )}
         </h2>
@@ -453,35 +549,11 @@ const OurHostsSection = () => {
                   position: 'relative'
                 }}
               >
-                {/* Profile Section */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                  {/* Profile Image Placeholder */}
-                  <div
-                    style={{
-                      width: '50px',
-                      height: '50px',
-                      borderRadius: '50%',
-                      backgroundColor: '#a898d8',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#ffffff',
-                      fontWeight: 700,
-                      fontSize: '20px'
-                    }}
-                  >
-                    {testimonial.name.charAt(0)}
-                  </div>
-
-                  {/* Name and Role */}
-                  <div>
-                    <h4 style={{ margin: 0, fontWeight: 700, color: '#0f0f0f', fontSize: '16px' }}>
-                      {testimonial.name}
-                    </h4>
-                    <p style={{ margin: 0, fontSize: '14px', color: '#4a4a4a' }}>
-                      {testimonial.role}
-                    </p>
-                  </div>
+                {/* Profile Section - Only Role (Property Name) */}
+                <div style={{ marginBottom: '16px' }}>
+                  <h4 style={{ margin: 0, fontWeight: 700, color: '#0f0f0f', fontSize: '16px' }}>
+                    {testimonial.role}
+                  </h4>
                 </div>
 
                 {/* Rating */}

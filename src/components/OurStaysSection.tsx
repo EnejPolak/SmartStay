@@ -20,12 +20,20 @@ const OurStaysSection = () => {
       titleSmartxStay: 'SmartxStay',
       titleSuffix: 'gostitelji',
       subtitle: 'Prebrskajte seznam in najdite svoje naslednje potovanje',
-      exploreMore: 'Raziščite več SmartxStay domov',
+      exploreMore: 'Raziščite več SmartxStay nastavitev',
       imageComingSoon: 'Slika kmalu'
+    },
+    hr: {
+      title: '',
+      titleSmartxStay: 'SmartxStay',
+      titleSuffix: 'domaćini',
+      subtitle: 'Pregledajte popis i pronađite svoje sljedeće putovanje',
+      exploreMore: 'Istražite više SmartxStay smještaja',
+      imageComingSoon: 'Slika uskoro'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   // Sample stays data with placeholders
   const stays = [
     { id: 1, title: 'Chic Parisian Flat', location: 'Paris, France', emoji: '🇫🇷' },

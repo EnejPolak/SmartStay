@@ -11,20 +11,30 @@ const FindYourStaySection = () => {
     en: {
       title: 'Find your next stay with ',
       titleSmartxStay: 'SmartxStay',
+      titleHighlight: '',
       stay: '',
       description: 'Our hosts are passionate about creating amazing experiences. Discover unique homes around the world where hospitality meets innovation.',
       bottomText: 'Let your next trip be the best experience - Book with a SmartxStay host'
     },
     sl: {
-      title: 'Naj bo vaše naslednje potovanje najboljša izkušnja Rezervirajte pri ',
-      titleSmartxStay: 'SmartxStay',
+      title: 'Naj bo vaše naslednje potovanje, ',
+      titleSmartxStay: '',
+      titleHighlight: 'najboljša izkušnja!',
+      stay: '',
+      description: '',
+      bottomText: ''
+    },
+    hr: {
+      title: 'Neka vaše sljedeće putovanje bude, ',
+      titleSmartxStay: '',
+      titleHighlight: 'najbolje iskustvo!',
       stay: '',
       description: '',
       bottomText: ''
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   return (
     <section
       style={{
@@ -56,7 +66,18 @@ const FindYourStaySection = () => {
             lineHeight: '1.2'
           }}
         >
-          {t.title}<span className="animated-gradient-text">{t.titleSmartxStay || 'SmartxStay'}</span>
+          {language === 'sl' ? (
+            <>
+              {t.title}
+              <br />
+              <span className="animated-gradient-text">{t.titleHighlight}</span>
+            </>
+          ) : (
+            <>
+              {t.title}
+              <span className="animated-gradient-text">{t.titleSmartxStay}</span>
+            </>
+          )}
         </h2>
 
         {/* Description */}

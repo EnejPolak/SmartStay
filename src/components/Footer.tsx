@@ -34,10 +34,23 @@ const Footer = () => {
       contactLink: 'Kontakt',
       terms: 'Pogoji uporabe',
       privacy: 'Pravilnik o zasebnosti'
+    },
+    hr: {
+      contact: 'Kontakt',
+      followUs: 'Pratite nas',
+      menu: 'Izbornik',
+      home: 'Početna',
+      forGuests: 'Za goste',
+      forHosts: 'Za domaćine',
+      pricing: 'Cijene',
+      aboutUs: 'O nama',
+      contactLink: 'Kontakt',
+      terms: 'Uvjeti korištenja',
+      privacy: 'Pravilnik o privatnosti'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   return (
     <footer

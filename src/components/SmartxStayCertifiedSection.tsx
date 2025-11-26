@@ -12,6 +12,7 @@ const SmartxStayCertifiedSection = () => {
       titleSmartxStay: 'SmartxStay',
       certified: 'Certified',
       subtitle: 'Showcase your commitment to exceptional hospitality. Our certification highlights your dedication to guest care and quality, providing a trusted benchmark that helps you stand out.',
+      subtitle2: '',
       buildTrust: 'Build Trust',
       buildTrustDesc: 'Gain a competitive edge with a badge that signals quality and reliability to potential guests, assuring them of a superior stay.',
       elevateListing: 'Elevate Your Listing',
@@ -22,18 +23,32 @@ const SmartxStayCertifiedSection = () => {
     sl: {
       title: '',
       titleSmartxStay: 'SmartxStay',
-      certified: 'Certificirano',
-      subtitle: 'Potrdite svojo premium gostoljubnost. Ne govorite o kakovosti, dokažite jo! SmartxStay Certifikat ni le plaketa. Je vaš uradni dokaz, da ponujate najbolj avtomatizirano in brezhibno izkušnjo na trgu. Ta status poudarja vašo predanost skrbi za goste, gradi neposredno zaupanje pri popotnikih in vas postavlja korak pred konkurenco, ki se še vedno zanaša.',
+      certified: 'Certif',
+      subtitle: 'Potrdite svojo premium gostoljubnost. Ne govorite o kakovosti, dokažite jo!',
+      subtitle2: 'SmartxStay Certifikat ni le plaketa. Je vaš uradni dokaz, da ponujate najbolj avtomatizirano in brezhibno izkušnjo na trgu. Ta status poudarja vašo predanost skrbi za goste, gradi neposredno zaupanje pri popotnikih in vas postavlja korak pred konkurenco, ki se še vedno zanaša.',
       buildTrust: 'Zgradite zaupanje',
       buildTrustDesc: 'Pridobite konkurenčno prednost z značko, ki potencialnim gostom sporoča kakovost in zanesljivost ter jim zagotavlja vrhunski bivanje.',
-      elevateListing: 'Dvignite svoj oglas',
+      elevateListing: 'Povečajte svoje rezervacije',
       elevateListingDesc: 'Certificirani gostitelji dobijo prednostno umestitev in večjo vidnost na naši platformi in pri partnerjih, kar pritegne več rezervacij.',
       accessResources: 'Dostop do strokovnih virov',
       accessResourcesDesc: 'Odklenite ekskluzivne vodnike, delavnice in orodja, ki vam pomagajo izboljšati svoje gostiteljske spretnosti in povečati zadovoljstvo gostov.'
+    },
+    hr: {
+      title: '',
+      titleSmartxStay: 'SmartxStay',
+      certified: 'Certif',
+      subtitle: 'Potvrdite svoju premium gostoljubnost. Ne govorite o kvaliteti, dokažite je!',
+      subtitle2: 'SmartxStay Certifikat nije samo plaketa. Vaš je službeni dokaz da nudite najautomatiziranije i besprijekorno iskustvo na tržištu. Ovaj status naglašava vašu predanost brizi za goste, gradi izravno povjerenje kod putnika i postavlja vas korak ispred konkurencije koja se još uvijek oslanja.',
+      buildTrust: 'Izgradite povjerenje',
+      buildTrustDesc: 'Steknite konkurentsku prednost s značkom koja potencijalnim gostima prenosi kvalitetu i pouzdanost te im osigurava vrhunski boravak.',
+      elevateListing: 'Povećajte svoje rezervacije',
+      elevateListingDesc: 'Certificirani domaćini dobivaju prioritetno postavljanje i veću vidljivost na našoj platformi i kod partnera, što privlači više rezervacija.',
+      accessResources: 'Pristup stručnim resursima',
+      accessResourcesDesc: 'Otključajte ekskluzivne vodiče, radionice i alate koji vam pomažu poboljšati svoje domaćinske vještine i povećati zadovoljstvo gostiju.'
     }
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
   return (
     <section
       style={{
@@ -167,6 +182,13 @@ const SmartxStayCertifiedSection = () => {
           }}
         >
           {t.subtitle}
+          {t.subtitle2 && (
+            <>
+              <br />
+              <br />
+              {t.subtitle2}
+            </>
+          )}
         </p>
 
         {/* Benefits Cards */}
