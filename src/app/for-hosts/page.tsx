@@ -29,7 +29,7 @@ function IPhoneModel() {
       gltf.scene.scale.multiplyScalar(scale);
       gltf.scene.position.sub(center.multiplyScalar(scale));
       
-      // Ensure materials are visible
+      // Ensure materials are visible and bright
       gltf.scene.traverse((child: THREE.Object3D) => {
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh;
@@ -40,10 +40,18 @@ function IPhoneModel() {
               mesh.material.forEach((mat: THREE.Material) => {
                 mat.transparent = false;
                 mat.opacity = 1;
+                if ((mat as THREE.MeshStandardMaterial).isMeshStandardMaterial || 
+                    (mat as THREE.MeshPhysicalMaterial).isMeshPhysicalMaterial) {
+                  (mat as THREE.MeshStandardMaterial | THREE.MeshPhysicalMaterial).emissiveIntensity = 1.2;
+                }
               });
             } else {
               (mesh.material as THREE.Material).transparent = false;
               (mesh.material as THREE.Material).opacity = 1;
+              if ((mesh.material as THREE.MeshStandardMaterial).isMeshStandardMaterial || 
+                  (mesh.material as THREE.MeshPhysicalMaterial).isMeshPhysicalMaterial) {
+                (mesh.material as THREE.MeshStandardMaterial | THREE.MeshPhysicalMaterial).emissiveIntensity = 1.2;
+              }
             }
           }
         }
@@ -211,6 +219,8 @@ const ForHostsPage = () => {
             height: '800px',
             position: 'relative',
             animation: 'fadeInSlideUp 0.8s ease-out 0.8s both',
+            zIndex: 2,
+            isolation: 'isolate',
           }}
         >
           <Suspense fallback={
@@ -227,17 +237,49 @@ const ForHostsPage = () => {
             </div>
           }>
             <Canvas
-              camera={{ position: [0, 0, 5], fov: 50 }}
-              style={{ width: '100%', height: '100%' }}
+              camera={{ position: [0, 0, 5], fov: 45 }}
+              style={{ width: '100%', height: '100%', background: 'transparent' }}
+              gl={{ 
+                antialias: true, 
+                alpha: true,
+                powerPreference: 'high-performance',
+                stencil: false,
+                depth: true,
+                logarithmicDepthBuffer: false,
+                preserveDrawingBuffer: true,
+                premultipliedAlpha: false,
+              }}
+              dpr={[2, 3]}
+              onCreated={({ gl, scene, camera }) => {
+                gl.toneMapping = THREE.ACESFilmicToneMapping;
+                gl.toneMappingExposure = 1.2;
+                // Force maximum pixel ratio for sharpest rendering
+                const maxPixelRatio = Math.min(window.devicePixelRatio || 2, 3);
+                gl.setPixelRatio(maxPixelRatio);
+                // Force higher resolution rendering
+                const setSize = () => {
+                  const container = gl.domElement.parentElement;
+                  if (container) {
+                    const width = container.clientWidth;
+                    const height = container.clientHeight;
+                    gl.setSize(width * maxPixelRatio, height * maxPixelRatio, false);
+                    gl.domElement.style.width = width + 'px';
+                    gl.domElement.style.height = height + 'px';
+                  }
+                };
+                setSize();
+                window.addEventListener('resize', setSize);
+                return () => window.removeEventListener('resize', setSize);
+              }}
             >
-              <ambientLight intensity={5} />
-              <directionalLight position={[5, 5, 5]} intensity={10} />
-              <directionalLight position={[-5, 5, 5]} intensity={8} />
-              <directionalLight position={[0, 0, 10]} intensity={10} />
-              <pointLight position={[0, 3, 5]} intensity={8} />
+              <ambientLight intensity={6} />
+              <directionalLight position={[5, 5, 5]} intensity={12} />
+              <directionalLight position={[-5, 5, 5]} intensity={10} />
+              <directionalLight position={[0, 0, 10]} intensity={12} />
+              <pointLight position={[0, 3, 5]} intensity={10} />
               <pointLight position={[0, 0, 8]} intensity={6} />
-              <spotLight position={[5, 5, 5]} angle={0.3} penumbra={1} intensity={10} />
-              <directionalLight position={[0, -2, 5]} intensity={4} />
+              <spotLight position={[5, 5, 5]} angle={0.3} penumbra={1} intensity={12} />
+              <directionalLight position={[0, -2, 5]} intensity={5} />
               <Suspense fallback={null}>
                 <IPhoneModel />
               </Suspense>
@@ -283,6 +325,25 @@ const ForHostsPage = () => {
 
         .animated-gradient-text {
           animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .phone-model-container {
+          transform: translateZ(0);
+          will-change: transform;
+          backface-visibility: hidden;
+          filter: none;
+          -webkit-filter: none;
+        }
+
+        .phone-model-container canvas {
+          image-rendering: -webkit-optimize-contrast !important;
+          -webkit-font-smoothing: antialiased !important;
+          -moz-osx-font-smoothing: grayscale !important;
+          filter: none !important;
+          -webkit-filter: none !important;
+          transform: translateZ(0) !important;
+          will-change: transform !important;
+          backface-visibility: hidden !important;
         }
 
         @media (max-width: 1024px) {

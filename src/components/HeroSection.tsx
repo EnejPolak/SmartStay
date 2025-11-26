@@ -23,7 +23,7 @@ function IPhoneModel() {
       gltf.scene.scale.multiplyScalar(scale);
       gltf.scene.position.sub(center.multiplyScalar(scale));
       
-      // Ensure materials are visible
+      // Ensure materials are visible and bright
       gltf.scene.traverse((child: THREE.Object3D) => {
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh;
@@ -34,10 +34,29 @@ function IPhoneModel() {
               mesh.material.forEach((mat: THREE.Material) => {
                 mat.transparent = false;
                 mat.opacity = 1;
+                // Enhance brightness for MeshStandardMaterial and MeshPhysicalMaterial
+                if ((mat as THREE.MeshStandardMaterial).isMeshStandardMaterial || 
+                    (mat as THREE.MeshPhysicalMaterial).isMeshPhysicalMaterial) {
+                  const standardMat = mat as THREE.MeshStandardMaterial | THREE.MeshPhysicalMaterial;
+                  if (standardMat.emissive) {
+                    standardMat.emissive.multiplyScalar(1.2);
+                  }
+                  standardMat.needsUpdate = true;
+                }
               });
             } else {
-              (mesh.material as THREE.Material).transparent = false;
-              (mesh.material as THREE.Material).opacity = 1;
+              const mat = mesh.material as THREE.Material;
+              mat.transparent = false;
+              mat.opacity = 1;
+              // Enhance brightness for MeshStandardMaterial and MeshPhysicalMaterial
+              if ((mat as THREE.MeshStandardMaterial).isMeshStandardMaterial || 
+                  (mat as THREE.MeshPhysicalMaterial).isMeshPhysicalMaterial) {
+                const standardMat = mat as THREE.MeshStandardMaterial | THREE.MeshPhysicalMaterial;
+                if (standardMat.emissive) {
+                  standardMat.emissive.multiplyScalar(1.2);
+                }
+                standardMat.needsUpdate = true;
+              }
             }
           }
         }
@@ -167,16 +186,17 @@ const HeroSection = () => {
         position: 'relative',
       }}
     >
-      {/* Overlay for better text readability - gradient from left (white) to right (transparent) */}
+      {/* Overlay for better text readability - gradient from left (white) to center, stops before phone area */}
       <div
         style={{
           position: 'absolute',
           top: 0,
           left: 0,
-          right: 0,
+          right: '30%',
           bottom: 0,
-          background: 'linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0.8) 55%, rgba(255, 255, 255, 0.5) 70%, rgba(255, 255, 255, 0.2) 80%, transparent 100%)',
+          background: 'linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.4) 80%, transparent 100%)',
           zIndex: 0,
+          pointerEvents: 'none',
         }}
       />
       {/* Main Content Row - Text Left, iPhone Right */}
@@ -370,6 +390,8 @@ const HeroSection = () => {
           height: '800px',
           position: 'relative',
           animation: 'fadeInSlideUp 0.8s ease-out 0.8s both',
+          zIndex: 2,
+          isolation: 'isolate',
         }}
       >
         <Suspense fallback={
@@ -388,18 +410,49 @@ const HeroSection = () => {
           </div>
         }>
           <Canvas
-            camera={{ position: [0, 0, 5], fov: 50 }}
+            camera={{ position: [0, 0, 5], fov: 45 }}
             style={{ width: '100%', height: '100%', background: 'transparent' }}
-            gl={{ antialias: true, alpha: true }}
+            gl={{ 
+              antialias: true, 
+              alpha: true,
+              powerPreference: 'high-performance',
+              stencil: false,
+              depth: true,
+              logarithmicDepthBuffer: false,
+              preserveDrawingBuffer: true,
+              premultipliedAlpha: false,
+            }}
+            dpr={[2, 3]}
+            onCreated={({ gl, scene, camera }) => {
+              gl.toneMapping = THREE.ACESFilmicToneMapping;
+              gl.toneMappingExposure = 1.2;
+              // Force maximum pixel ratio for sharpest rendering
+              const maxPixelRatio = Math.min(window.devicePixelRatio || 2, 3);
+              gl.setPixelRatio(maxPixelRatio);
+              // Force higher resolution rendering
+              const setSize = () => {
+                const container = gl.domElement.parentElement;
+                if (container) {
+                  const width = container.clientWidth;
+                  const height = container.clientHeight;
+                  gl.setSize(width * maxPixelRatio, height * maxPixelRatio, false);
+                  gl.domElement.style.width = width + 'px';
+                  gl.domElement.style.height = height + 'px';
+                }
+              };
+              setSize();
+              window.addEventListener('resize', setSize);
+              return () => window.removeEventListener('resize', setSize);
+            }}
           >
-            <ambientLight intensity={5} />
-            <directionalLight position={[0, 0, 10]} intensity={10} />
-            <directionalLight position={[5, 5, 5]} intensity={8} />
-            <directionalLight position={[-5, 5, -5]} intensity={6} />
-            <pointLight position={[0, 0, 8]} intensity={8} />
-            <pointLight position={[0, 5, 0]} intensity={5} />
-            <spotLight position={[0, 0, 10]} angle={0.8} intensity={10} penumbra={0.3} />
-            <directionalLight position={[0, -2, 5]} intensity={4} />
+            <ambientLight intensity={6} />
+            <directionalLight position={[0, 0, 10]} intensity={12} />
+            <directionalLight position={[5, 5, 5]} intensity={10} />
+            <directionalLight position={[-5, 5, -5]} intensity={8} />
+            <pointLight position={[0, 0, 8]} intensity={10} />
+            <pointLight position={[0, 5, 0]} intensity={6} />
+            <spotLight position={[0, 0, 10]} angle={0.8} intensity={12} penumbra={0.3} />
+            <directionalLight position={[0, -2, 5]} intensity={5} />
             <Suspense fallback={null}>
               <IPhoneModel />
             </Suspense>
@@ -465,6 +518,25 @@ const HeroSection = () => {
 
         .animated-gradient-text {
           animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .phone-model-container {
+          transform: translateZ(0);
+          will-change: transform;
+          backface-visibility: hidden;
+          filter: none;
+          -webkit-filter: none;
+        }
+
+        .phone-model-container canvas {
+          image-rendering: -webkit-optimize-contrast !important;
+          -webkit-font-smoothing: antialiased !important;
+          -moz-osx-font-smoothing: grayscale !important;
+          filter: none !important;
+          -webkit-filter: none !important;
+          transform: translateZ(0) !important;
+          will-change: transform !important;
+          backface-visibility: hidden !important;
         }
 
         .hero-heading {
