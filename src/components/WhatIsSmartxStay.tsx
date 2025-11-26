@@ -18,7 +18,7 @@ const WhatIsSmartxStay = () => {
     sl: {
       titlePrefix: 'Kaj je ',
       titleSmartxStay: 'SmartxStay',
-      description: 'SmartxStay je digitalna platforma, ki pomaga vsem gostiteljem od manjših nastanitev do večjih hotelov, do property managerjem, deliti vse ključne informacije, priporočila in storitve na enem mestu. Zasnovana je za gostitelje, ki jim je resnično mar za svoje goste, in ponuja gladko, osebno in povezano bivanje. Z SmartxStay se vsak gost takoj počuti informirano, dobrodošlo in kot doma.'
+      description: 'SmartxStay je digitalna platforma, ki omogoča vsem ponudnikom nastanitev – od manjših enot in property managerjev do večjih hotelov – zbiranje in deljenje vseh ključnih informacij, priporočil in storitev na enem mestu. Zasnovana je za gostitelje, ki jim je resnično mar za izkušnjo svojih gostov, saj zagotavlja gladko, osebno in povezano bivanje. Z SmartxStay se vsak gost takoj počuti informirano, dobrodošlo in kot doma.'
     }
   };
 
