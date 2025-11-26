@@ -9,13 +9,15 @@ const CommunitySection = () => {
 
   const translations = {
     en: {
-      title: 'Become a Part of Smart',
-      community: 'Stay Community',
+      title: 'Become a Part of ',
+      titleSmartxStay: 'SmartxStay',
+      community: 'Community',
       description: 'Connect with a global network of hosts who share your passion for hospitality. Share insights, find support, and grow together in a community dedicated to creating unforgettable guest experiences worldwide.'
     },
     sl: {
-      title: 'Postanite del Smart',
-      community: 'Stay skupnosti',
+      title: 'Postanite del ',
+      titleSmartxStay: 'SmartxStay',
+      community: 'skupnosti',
       description: 'Povežite se z globalno mrežo gostiteljev, ki delijo vašo strast do gostoljubja. Delite vpoglede, poiščite podporo in rastite skupaj v skupnosti, posvečeni ustvarjanju nepozabnih gostovskih izkušenj po vsem svetu.'
     }
   };
@@ -76,7 +78,7 @@ const CommunitySection = () => {
             lineHeight: '1.2'
           }}
         >
-          {t.title}<span style={{ color: '#b8a1ff' }}>x</span>{t.community}
+          {t.title}<span className="animated-gradient-text">{t.titleSmartxStay || 'SmartxStay'}</span> {t.community}
         </h2>
 
         {/* Description */}
@@ -226,6 +228,27 @@ const CommunitySection = () => {
 
       {/* Keyframe Animation */}
       <style jsx>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
         @keyframes scroll {
           0% {
             transform: translateX(calc(-140px * 19 - 24px * 19));

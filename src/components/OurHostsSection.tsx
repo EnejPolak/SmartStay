@@ -144,7 +144,7 @@ const OurHostsSection = () => {
       ]
     },
     sl: {
-      title: 'Naši gostitelji. Naš ponos.',
+      title: 'Kaj Naše Stranke Pravijo O Nas',
       subtitle: 'Poslušajte neposredno iz srca skupnosti.',
       readMore: 'Več',
       readLess: 'Manj',

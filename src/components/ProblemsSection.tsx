@@ -9,7 +9,8 @@ const ProblemsSection = () => {
 
   const translations = {
     en: {
-      title: 'Problems Smart',
+      titlePrefix: 'Problems ',
+      titleSmartxStay: 'SmartxStay',
       solves: 'solves',
       subtitle: 'Transforming challenges into seamless experiences.',
       forHosts: 'For hosts',
@@ -68,7 +69,8 @@ const ProblemsSection = () => {
       ]
     },
     sl: {
-      title: 'Težave, ki jih Smart',
+      titlePrefix: 'Težave, ki jih ',
+      titleSmartxStay: 'SmartxStay',
       solves: 'rešuje',
       subtitle: 'Preoblikovanje izzivov v brezhibne izkušnje.',
       forHosts: 'Za gostitelje',
@@ -94,29 +96,29 @@ const ProblemsSection = () => {
         },
         {
           id: 4,
-          title: 'Izgubljene priložnosti za dodatne storitve',
-          description: 'Gosti ne najdejo vaših dodatnih storitev',
+          title: 'Izgubljene priložnosti za dodatno prodajo',
+          description: 'Večina turistov sploh ne izve za dodatne storitve, ki jih namestitev ponuja.',
           icon: 'star'
         }
       ],
       guestsProblems: [
         {
           id: 1,
-          title: 'Izgubljene informacije',
-          description: 'Težko najti lokalne vodnike, pravila ali opremo',
-          icon: 'info'
+          title: 'Izgubljene ure pri načrtovanju potovanja',
+          description: 'Povprečna oseba porabi več kot 10 ur za načrtovanje počitnic',
+          icon: 'star'
         },
         {
           id: 2,
           title: 'Izgubljeni pred prihodom',
-          description: 'Slabe navodila za smer od vašega gostitelja',
+          description: 'Slaba navodila / Čakalne vrste, dolge minute ob prihodu. Raziskava Cornellove univerze: Čakanje, daljše od 5 minut, zmanjša zadovoljstvo gosta za 50 %.',
           icon: 'message'
         },
         {
           id: 3,
-          title: 'Izgubljene ure pri raziskovanju za izlete',
-          description: 'Povprečen popotnik načrtuje vsaj 4 ure za izlet',
-          icon: 'star'
+          title: 'Stres v tuji državi',
+          description: 'Jezikovne ovire. Zaradi jezikovnih ovir hitro pride do pomanjkanja informacij, nezdovoljstva in ne gotovosti.',
+          icon: 'info'
         },
         {
           id: 4,
@@ -232,7 +234,7 @@ const ProblemsSection = () => {
             letterSpacing: '-0.02em'
           }}
         >
-          {t.title}<span className="accent-x">x</span>Stay {t.solves}
+          {t.titlePrefix}<span className="animated-gradient-text">{t.titleSmartxStay}</span> {t.solves}
         </h2>
 
         {/* Subtitle */}
@@ -266,32 +268,32 @@ const ProblemsSection = () => {
             <button
             onClick={() => setActiveTab('hosts')}
               style={{
-              backgroundColor: activeTab === 'hosts' ? '#a29eff' : '#ffffff',
-              color: activeTab === 'hosts' ? '#ffffff' : '#a29eff',
+              backgroundColor: activeTab === 'hosts' ? '#3b82f6' : '#ffffff',
+              color: activeTab === 'hosts' ? '#ffffff' : '#3b82f6',
                 borderRadius: '24px',
                 padding: '14px 32px',
                 fontWeight: 600,
-                border: 'none',
+                border: activeTab === 'hosts' ? 'none' : '2px solid #3b82f6',
                 cursor: 'pointer',
                 fontSize: '16px',
                 transition: 'all 0.3s ease',
                 fontFamily: 'Inter, sans-serif',
-              boxShadow: activeTab === 'hosts' ? '0 4px 12px rgba(162, 158, 255, 0.3)' : '0 4px 12px rgba(162, 158, 255, 0.15)'
+              boxShadow: activeTab === 'hosts' ? '0 4px 12px rgba(59, 130, 246, 0.3)' : '0 4px 12px rgba(59, 130, 246, 0.15)'
               }}
               onMouseEnter={(e) => {
               if (activeTab === 'hosts') {
-                e.currentTarget.style.backgroundColor = '#9383ee';
+                e.currentTarget.style.backgroundColor = '#2563eb';
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(162, 158, 255, 0.4)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(59, 130, 246, 0.4)';
               } else {
-                e.currentTarget.style.backgroundColor = '#f4f1fe';
+                e.currentTarget.style.backgroundColor = '#eff6ff';
               }
               }}
               onMouseLeave={(e) => {
               if (activeTab === 'hosts') {
-                e.currentTarget.style.backgroundColor = '#a29eff';
+                e.currentTarget.style.backgroundColor = '#3b82f6';
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 158, 255, 0.3)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.3)';
               } else {
                 e.currentTarget.style.backgroundColor = '#ffffff';
               }
@@ -302,32 +304,32 @@ const ProblemsSection = () => {
             <button
             onClick={() => setActiveTab('guests')}
               style={{
-              backgroundColor: activeTab === 'guests' ? '#a29eff' : '#ffffff',
-              color: activeTab === 'guests' ? '#ffffff' : '#a29eff',
+              backgroundColor: activeTab === 'guests' ? '#3b82f6' : '#ffffff',
+              color: activeTab === 'guests' ? '#ffffff' : '#3b82f6',
                 borderRadius: '24px',
                 padding: '14px 32px',
                 fontWeight: 600,
-                border: 'none',
+                border: activeTab === 'guests' ? 'none' : '2px solid #3b82f6',
                 cursor: 'pointer',
                 fontSize: '16px',
                 transition: 'all 0.3s ease',
                 fontFamily: 'Inter, sans-serif',
-              boxShadow: activeTab === 'guests' ? '0 4px 12px rgba(162, 158, 255, 0.3)' : '0 4px 12px rgba(162, 158, 255, 0.15)'
+              boxShadow: activeTab === 'guests' ? '0 4px 12px rgba(59, 130, 246, 0.3)' : '0 4px 12px rgba(59, 130, 246, 0.15)'
               }}
               onMouseEnter={(e) => {
               if (activeTab === 'guests') {
-                e.currentTarget.style.backgroundColor = '#9383ee';
+                e.currentTarget.style.backgroundColor = '#2563eb';
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(162, 158, 255, 0.4)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(59, 130, 246, 0.4)';
               } else {
-                e.currentTarget.style.backgroundColor = '#f4f1fe';
+                e.currentTarget.style.backgroundColor = '#eff6ff';
               }
               }}
               onMouseLeave={(e) => {
               if (activeTab === 'guests') {
-                e.currentTarget.style.backgroundColor = '#a29eff';
+                e.currentTarget.style.backgroundColor = '#3b82f6';
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 158, 255, 0.3)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.3)';
               } else {
                 e.currentTarget.style.backgroundColor = '#ffffff';
               }
@@ -395,14 +397,16 @@ const ProblemsSection = () => {
 
               {/* Title */}
               <h3 
+                className={`problem-title ${isBlue ? 'title-blue' : 'title-purple'}`}
                 style={{
-                  color: isBlue ? '#1e40af' : '#7c3aed', // Temno moder ali temno vijoličen
+                  color: '#0f0f0f', // Črna barva
                   fontSize: '20px',
                   fontWeight: 700,
                   margin: 0,
                   marginBottom: '8px',
                   lineHeight: '1.3',
-                  letterSpacing: '-0.01em'
+                  letterSpacing: '-0.01em',
+                  transition: 'color 0.3s ease'
                 }}
               >
                 {problem.title}
@@ -427,8 +431,25 @@ const ProblemsSection = () => {
       </div>
 
       <style jsx>{`
-        .accent-x {
-          color: #a29eff;
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
         }
 
         @keyframes fadeIn {
@@ -452,7 +473,7 @@ const ProblemsSection = () => {
         }
 
         .problem-card:hover {
-          transform: translateY(-4px);
+          transform: scale(1.05);
           box-shadow: 0 8px 24px rgba(162, 158, 255, 0.2) !important;
           border-color: rgba(162, 158, 255, 0.3) !important;
         }
@@ -491,6 +512,17 @@ const ProblemsSection = () => {
         .problem-card:nth-child(3):hover .icon-container svg path,
         .problem-card:nth-child(3):hover .icon-container svg circle {
           stroke: #b8a1ff !important;
+        }
+
+        /* Title hover effects */
+        .problem-card:nth-child(1):hover .problem-title.title-blue,
+        .problem-card:nth-child(4):hover .problem-title.title-blue {
+          color: #1e40af !important;
+        }
+        
+        .problem-card:nth-child(2):hover .problem-title.title-purple,
+        .problem-card:nth-child(3):hover .problem-title.title-purple {
+          color: #7c3aed !important;
         }
 
         .problem-card:focus-visible {

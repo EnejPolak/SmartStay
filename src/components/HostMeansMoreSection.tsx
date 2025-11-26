@@ -20,7 +20,7 @@ const HostMeansMoreSection = () => {
       because: 'Ker biti ',
       smartxStay: 'SmartxStay',
       hostMeans: 'gostitelj pomeni več',
-      moreTrust: 'več zaupanja, več vidnosti, več rezervacij in srečnejših gostov.',
+      moreTrust: 'Več zaupanja, več vidnosti, več rezervacij in srečnejših gostov.',
       paragraph1: 'Biti SmartxStay gostitelj pomeni dati gostom več kot le kraj za spanje.',
       paragraph2: 'Pomeni narediti njihov obisk enostaven, oseben in nepozaben.',
       paragraph3: 'Predvidite, kaj potrebujejo, vodite jih s skrbjo in uporabljajte preprosta orodja za ustvarjanje gladke, gostoljubne izkušnje, ki si jo bodo zapomnili in o njej govorili.'
@@ -79,9 +79,9 @@ const HostMeansMoreSection = () => {
         {/* Benefit List */}
         <p
           style={{
-            fontSize: 'clamp(18px, 2.5vw, 24px)',
-            fontWeight: 400,
-            color: '#737373',
+            fontSize: 'clamp(20px, 2.8vw, 28px)',
+            fontWeight: 700,
+            color: '#0f0f0f',
             lineHeight: '1.6',
             margin: '0 0 60px 0',
             textAlign: 'center',

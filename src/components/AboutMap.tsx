@@ -17,18 +17,23 @@ const AboutMap = () => {
     address: 'C. 24. Junija 23, 1231 Ljubljana - Črnuče'
   };
 
+  // Center za Slovenijo (Ljubljana)
+  const SLOVENIA_CENTER: [number, number] = [14.5058, 46.0569];
+
   useEffect(() => {
     if (!mapContainer.current || map.current) return;
 
     try {
-      // Initialize map centered on Slovenia
+      // Initialize map centered on Ljubljana with better style
       map.current = new maplibregl.Map({
         container: mapContainer.current,
-        style: MAPBOX_CONFIG.STYLE_URL,
-        center: [14.5058, 46.0569], // Slovenia center
-        zoom: 8, // Zoom level to show Slovenia
-        minZoom: 7,
-        maxZoom: 15,
+        style: 'https://api.maptiler.com/maps/bright/style.json?key=' + MAPBOX_CONFIG.ACCESS_TOKEN,
+        center: SLOVENIA_CENTER,
+        zoom: 10, // Closer zoom to focus on Ljubljana area
+        minZoom: 8,
+        maxZoom: 18,
+        pitch: 0,
+        bearing: 0,
         attributionControl: false,
       });
 
@@ -132,6 +137,16 @@ const AboutMap = () => {
 
       map.current.on('load', () => {
         setMapLoaded(true);
+        // Fit bounds to show Slovenia with padding, then zoom to location
+        if (map.current) {
+          // First show Slovenia, then zoom to location
+          map.current.flyTo({
+            center: [LOCATION.lng, LOCATION.lat],
+            zoom: 13,
+            duration: 1500,
+            essential: true
+          });
+        }
       });
 
     } catch (error) {

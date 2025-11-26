@@ -76,13 +76,13 @@ const FeaturesOverviewSection = () => {
         },
         {
           id: 2,
-          title: 'Kurirana lokalna vodnica',
-          description: 'Osebna priporočila za restavracije, kavarne in skrite biserke.'
+          title: 'Lokalna izkušnja',
+          description: 'Lokalni vodič, ki vas dejansko vodi do vseh vaših sebnih priporočil za restavracije, kavarne in skrite biserke.'
         },
         {
           id: 3,
           title: 'Pametne rezervacije',
-          description: 'Integrirajte storitve, kot so rezervacija taksija, dostava hrane ali lokalni izleti.'
+          description: 'Integrirajte storitve, kot so rezervacija jakuzzija, savne, taksija, dostava hrane ali lokalni izleti.'
         },
         {
           id: 4,
@@ -92,17 +92,17 @@ const FeaturesOverviewSection = () => {
         {
           id: 5,
           title: 'Dodatne storitve',
-          description: 'Povečajte svoj prihodek z dodatnimi storitvami, kot so izleti in ponudbe.'
+          description: 'Predstavite gostom svoje dodatne storitve in produkte ter povečajte svoj prihodek.'
         },
         {
           id: 6,
           title: 'Navodila do apartmaja',
-          description: 'Jasna, korak za korakom navigacija naravnost do vašega apartmaja.'
+          description: 'Navigacija, ki jasno vodi goste naravnost do vašega apartmaja. Brez iskanja in stresa!'
         },
         {
           id: 7,
           title: 'Prevoz',
-          description: 'Pomagajte gostom potovati kot domačini z informacijami o taksijih ali parkiranju.'
+          description: 'Naj se vaši turisti počutijo kot domačini. Vse informacije o javnih prevozih, taksijih, vlakih, ter navodila za nakup kart – zbrane na enem mestu.'
         }
       ]
     }

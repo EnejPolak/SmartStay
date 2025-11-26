@@ -9,13 +9,17 @@ const OurStaysSection = () => {
   const translations = {
     en: {
       title: 'Our stays around the World',
+      titleSmartxStay: '',
+      titleSuffix: '',
       subtitle: 'Browse the full list below to find your next perfect SmartxStay.',
       exploreMore: 'Explore more SmartxStay homes',
       imageComingSoon: 'Image coming soon'
     },
     sl: {
-      title: 'Naši obiski po vsem svetu',
-      subtitle: 'Prebrskajte celoten seznam spodaj, da najdete svoj naslednji popoln SmartxStay.',
+      title: '',
+      titleSmartxStay: 'SmartxStay',
+      titleSuffix: 'gostitelji',
+      subtitle: 'Prebrskajte seznam in najdite svoje naslednje potovanje',
       exploreMore: 'Raziščite več SmartxStay domov',
       imageComingSoon: 'Slika kmalu'
     }
@@ -65,7 +69,13 @@ const OurStaysSection = () => {
             lineHeight: '1.2'
           }}
         >
-          {t.title}
+          {language === 'sl' && t.titleSmartxStay ? (
+            <>
+              <span className="animated-gradient-text">{t.titleSmartxStay}</span> {t.titleSuffix}
+            </>
+          ) : (
+            t.title
+          )}
         </h2>
 
         {/* Subtitle */}
@@ -226,6 +236,27 @@ const OurStaysSection = () => {
 
       {/* Responsive Styles */}
       <style jsx>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
         @media (max-width: 1024px) {
           .stays-grid {
             grid-template-columns: repeat(2, 1fr) !important;

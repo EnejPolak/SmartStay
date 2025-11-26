@@ -176,9 +176,15 @@ const ForHostsPage = () => {
             }}
           >
             {/* Primary Button */}
-            <button className="btn-primary">
+            <Link 
+              href="https://hanakucej-qr-space.zohobookings.eu/#/242002000000052012"
+              className="btn-primary"
+              style={{ textDecoration: 'none' }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {t.bookPresentation}
-            </button>
+            </Link>
 
             {/* Secondary Button */}
             <Link href="/contact" className="btn-secondary" style={{ textDecoration: 'none' }}>

@@ -107,8 +107,8 @@ const LocalExperienceSection = () => {
         >
           <div
             style={{
-              background: 'none',
-              backgroundColor: 'transparent',
+              background: '#ffffff',
+              backgroundColor: '#ffffff',
               borderRadius: '14px',
               padding: '60px 40px',
               width: '100%',
@@ -127,7 +127,7 @@ const LocalExperienceSection = () => {
             }}
           >
                 <span style={{ color: '#0f0f0f', display: 'block', marginBottom: '6px' }}>{t.title}</span>
-                <span style={{ color: '#0f0f0f', display: 'block' }}>{t.subtitle}</span>
+                <span className="animated-gradient-text" style={{ display: 'block' }}>{t.subtitle}</span>
           </h2>
         </div>
 
@@ -173,11 +173,11 @@ const LocalExperienceSection = () => {
         {/* Our Local Partners Section */}
             <div style={{ marginTop: '100px', textAlign: 'center', background: 'none', backgroundColor: 'transparent' }}>
           <h3
+            className="animated-gradient-text"
             style={{
               fontSize: 'clamp(28px, 4vw, 40px)',
               fontWeight: 800,
-                  marginBottom: '48px',
-                  color: '#0f0f0f'
+              marginBottom: '48px'
             }}
           >
                 {t.partnersTitle}
@@ -245,12 +245,17 @@ const LocalExperienceSection = () => {
         }
 
         .animated-gradient-text {
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
           animation: gradientShift 3s ease-in-out infinite;
         }
 
         .section-border-wrapper > div {
-          background: none !important;
-          background-color: transparent !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
         }
 
         .content-wrapper {

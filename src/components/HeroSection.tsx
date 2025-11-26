@@ -87,9 +87,9 @@ const HeroSection = () => {
       forHosts: 'Za gostitelje',
       forGuests: 'Za goste',
       hostsHeading: {
-        line1: 'Prilagojena aplikacija',
-        line2: 'za vašo nepremičnino.',
-        line3: 'Za gostitelje, ki ljubijo',
+        line1: 'Aplikacija prilagojena',
+        line2: 'za vašo nastanitev.',
+        line3: 'Za gostitelje, ki obožujejo',
         line4: 'svoje goste.'
       },
       guestsHeading: {
@@ -141,8 +141,25 @@ const HeroSection = () => {
         overflow: 'visible',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundImage: 'url(/heroPicture.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        position: 'relative',
       }}
     >
+      {/* Overlay for better text readability - gradient from left (white) to right (transparent) */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0.8) 55%, rgba(255, 255, 255, 0.5) 70%, rgba(255, 255, 255, 0.2) 80%, transparent 100%)',
+          zIndex: 0,
+        }}
+      />
       {/* Main Content Row - Text Left, iPhone Right */}
       <div
         style={{
@@ -154,6 +171,8 @@ const HeroSection = () => {
           width: '100%',
           flexWrap: 'wrap',
           overflow: 'visible',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {/* Text Content - Left Aligned */}
@@ -162,10 +181,10 @@ const HeroSection = () => {
           style={{
             flex: '1 1 60%',
             minWidth: '300px',
-            maxWidth: '900px',
+            maxWidth: '2000px',
             textAlign: 'left',
             position: 'relative',
-            paddingLeft: '60px',
+            paddingLeft: '20px',
             paddingRight: '60px',
             overflow: 'visible',
             width: '100%',
@@ -297,12 +316,21 @@ const HeroSection = () => {
             width: '100%',
           }}
         >
+          {activeTab === 'hosts' ? (
+            <Link 
+              href="https://hanakucej-qr-space.zohobookings.eu/#/242002000000052012"
+              className="btn-primary"
+              style={{ textDecoration: 'none' }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t.hostsButton}
+            </Link>
+          ) : (
           <button className="btn-primary">
-            {activeTab === 'hosts' 
-              ? t.hostsButton
-              : t.guestsButton
-            }
+              {t.guestsButton}
           </button>
+          )}
           <Link 
             href={activeTab === 'hosts' ? '/for-hosts' : '/for-guests'}
             className="btn-secondary"
@@ -318,8 +346,8 @@ const HeroSection = () => {
         className="fade-in-slide-up phone-model-container"
         style={{
           flex: '1',
-          minWidth: '400px',
-          maxWidth: '800px',
+          minWidth: '350px',
+          maxWidth: '600px',
           height: '800px',
           position: 'relative',
           animation: 'fadeInSlideUp 0.8s ease-out 0.8s both',
@@ -423,14 +451,15 @@ const HeroSection = () => {
         .hero-heading {
           font-size: clamp(40px, 5vw, 72px);
           font-weight: 900;
-          line-height: 1.15;
+          line-height: 1.3;
           margin-bottom: 0px;
           letter-spacing: -0.02em;
           text-align: left;
           overflow: visible;
-          padding: 2px 8px 2px 0;
+          padding: 8px 8px 16px 0;
           width: 100%;
           max-width: 100%;
+          min-width: 0;
         }
 
         .hero-line {

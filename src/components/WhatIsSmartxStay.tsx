@@ -11,12 +11,14 @@ const WhatIsSmartxStay = () => {
 
   const translations = {
     en: {
-      title: 'What is Smart',
+      titlePrefix: 'What is ',
+      titleSmartxStay: 'SmartxStay',
       description: 'SmartxStay is a digital guest experience platform that helps vacation rental hosts share all essential information, recommendations, and services in one place by simply scanning a QR code or tapping an NFC tag. It\'s designed for hosts who care deeply about their guests, offering a smooth, personal, and connected stay. With SmartxStay, every guest instantly feels informed, welcomed, and at home.'
     },
     sl: {
-      title: 'Kaj je Smart',
-      description: 'SmartxStay je digitalna platforma za izkušnjo gostov, ki pomaga gostiteljem najemov za počitnice deliti vse ključne informacije, priporočila in storitve na enem mestu s preprostim skeniranjem QR kode ali dotikom NFC oznake. Zasnovana je za gostitelje, ki jim je resnično mar za svoje goste, in ponuja gladko, osebno in povezano bivanje. Z SmartxStay se vsak gost takoj počuti informirano, dobrodošlo in kot doma.'
+      titlePrefix: 'Kaj je ',
+      titleSmartxStay: 'SmartxStay',
+      description: 'SmartxStay je digitalna platforma, ki pomaga vsem gostiteljem od manjših nastanitev do večjih hotelov, do property managerjem, deliti vse ključne informacije, priporočila in storitve na enem mestu. Zasnovana je za gostitelje, ki jim je resnično mar za svoje goste, in ponuja gladko, osebno in povezano bivanje. Z SmartxStay se vsak gost takoj počuti informirano, dobrodošlo in kot doma.'
     }
   };
 
@@ -97,7 +99,7 @@ const WhatIsSmartxStay = () => {
             margin: 0
           }}
         >
-          {t.title}<span className="accent-x">x</span>Stay?
+          {t.titlePrefix}<span className="animated-gradient-text">{t.titleSmartxStay}</span>?
         </h2>
 
         {/* Description */}
@@ -118,8 +120,25 @@ const WhatIsSmartxStay = () => {
       </div>
 
       <style jsx>{`
-        .accent-x {
-          color: #a29eff;
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
         }
 
         @media (max-width: 768px) {

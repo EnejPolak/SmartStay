@@ -8,8 +8,9 @@ const SmartxStayCertifiedSection = () => {
 
   const translations = {
     en: {
-      title: 'Smart',
-      certified: 'Stay Certified',
+      title: '',
+      titleSmartxStay: 'SmartxStay',
+      certified: 'Certified',
       subtitle: 'Showcase your commitment to exceptional hospitality. Our certification highlights your dedication to guest care and quality, providing a trusted benchmark that helps you stand out.',
       buildTrust: 'Build Trust',
       buildTrustDesc: 'Gain a competitive edge with a badge that signals quality and reliability to potential guests, assuring them of a superior stay.',
@@ -19,9 +20,10 @@ const SmartxStayCertifiedSection = () => {
       accessResourcesDesc: 'Unlock exclusive guides, workshops, and tools to help you refine your hosting skills and enhance guest satisfaction.'
     },
     sl: {
-      title: 'Smart',
-      certified: 'Stay Certificirano',
-      subtitle: 'Pokažite svojo zavezanost izjemnemu gostoljubju. Naša certificacija poudarja vašo predanost skrbi za goste in kakovosti, kar zagotavlja zaupanja vreden standard, ki vam pomaga izstopati.',
+      title: '',
+      titleSmartxStay: 'SmartxStay',
+      certified: 'Certificirano',
+      subtitle: 'Potrdite svojo premium gostoljubnost. Ne govorite o kakovosti, dokažite jo! SmartxStay Certifikat ni le plaketa. Je vaš uradni dokaz, da ponujate najbolj avtomatizirano in brezhibno izkušnjo na trgu. Ta status poudarja vašo predanost skrbi za goste, gradi neposredno zaupanje pri popotnikih in vas postavlja korak pred konkurenco, ki se še vedno zanaša.',
       buildTrust: 'Zgradite zaupanje',
       buildTrustDesc: 'Pridobite konkurenčno prednost z značko, ki potencialnim gostom sporoča kakovost in zanesljivost ter jim zagotavlja vrhunski bivanje.',
       elevateListing: 'Dvignite svoj oglas',
@@ -95,7 +97,7 @@ const SmartxStayCertifiedSection = () => {
             lineHeight: '1.2'
           }}
         >
-          {t.title}<span style={{ color: '#b8a1ff' }}>x</span>{t.certified}
+          <span className="animated-gradient-text">{t.titleSmartxStay}</span> {t.certified}
         </h2>
 
         {/* Host Badges */}
@@ -439,6 +441,27 @@ const SmartxStayCertifiedSection = () => {
 
       {/* Responsive Styles */}
       <style jsx>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
         @media (max-width: 1024px) {
           .benefits-grid {
             grid-template-columns: repeat(2, 1fr) !important;

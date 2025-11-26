@@ -87,20 +87,22 @@ const ForGuestsPage = () => {
       easyDecisionsDesc: 'Spend less time planning, more time creating memories',
       greatTrip: 'Because a great trip starts with',
       someoneOnYourSide: 'someone who\'s on your side.',
-      greatTripDesc: 'When you book with a SmartxStay host, you\'re not just getting a place to sleep, you\'re getting someone who genuinely cares about your experience. SmartxStay hosts don\'t leave you guessing, googling, or stressing. They guide you, support you, and make sure your stay feels effortless.',
+      greatTripDesc: 'When you book with a SmartxStay host, you\'re not just getting a place to sleep, you\'re getting someone who genuinely cares about your experience.',
+      greatTripDesc2: 'SmartxStay hosts don\'t leave you guessing, googling, or stressing.',
+      greatTripDesc3: 'They guide you, support you, and make sure your stay feels effortless.',
       travelWithHosts: 'Travel with hosts who go the extra mile. Travel with SmartxStay.'
     },
     sl: {
-      yourStay: 'Vaš obisk,',
-      madeSmarter: 'narejen pametneje.',
-      subtitle: 'Raziščite več, sproščajte se bolje in se počutite povezane, kamor koli greste. Z SmartxStay je vse, kar potrebujete za popoln obisk, na dosegu roke.',
+      yourStay: 'Vaše potovanje,',
+      madeSmarter: 'načrtovano pametneje.',
+      subtitle: 'Raziščite več, sprostite se bolje in se počutite povezani, kamor koli greste. Z SmartxStay je vse, kar potrebujete za popolno potovanje – od navodil do lokalnih biserov – na dosegu roke.',
       findYourStay: 'Poiščite svoj obisk',
       askQuestion: 'Postavite vprašanje',
       loading: 'Nalaganje iPhone...',
-      hostCurated: 'Vaš gostitelj je pripravil',
+      hostCurated: 'Vaš gostitelj je poskrbel za',
       everything: 'vse.',
       youJust: 'Vi samo',
-      enjoy: 'uživate.',
+      enjoy: 'ustvarjate spomine.',
       curatedSubtitle: 'Lokalne izkušnje, pripravljene s strani nekoga, ki res ve. Ni več ugibanja, ni več googlanja—samo pristni trenutki, ki vas čakajo.',
       noTouristTraps: 'Ni več turističnih pasti',
       noTouristTrapsDesc: 'Odkrijte pristne lokalne kraje, ki jih vaš gostitelj osebno priporoča',
@@ -110,9 +112,11 @@ const ForGuestsPage = () => {
       hiddenGemsDesc: 'Dostop do skritih krajev, ki jih poznajo le domačini',
       easyDecisions: 'Enostavne odločitve, nepozabni trenutki',
       easyDecisionsDesc: 'Porabite manj časa za načrtovanje, več časa za ustvarjanje spominov',
-      greatTrip: 'Ker se odličen izlet začne z',
-      someoneOnYourSide: 'nečim, ki je na vaši strani.',
-      greatTripDesc: 'Ko rezervirate pri SmartxStay gostitelju, ne dobite le kraja za spanje, ampak nekoga, ki mu resnično mar za vašo izkušnjo. SmartxStay gostitelji vas ne puščajo ugibati, googlati ali se stresati. Vodijo vas, podpirajo vas in poskrbijo, da se vaš obisk počuti brez napora.',
+      greatTrip: 'Vaše potovanje se začne z',
+      someoneOnYourSide: 'zaupanjem in brezskrbnostjo.',
+      greatTripDesc: 'Ko rezervirate pri SmartxStay gostitelju, ne dobite le kraja za spanje, ampak nekoga, ki mu je mar in je za vas pripravil vse.',
+      greatTripDesc2: 'SmartxStay gostitelji vas ne puščajo ugibati, iskati po Googlu in se stresirati.',
+      greatTripDesc3: 'Z našo tehnologijo celostno poskrbijo za vašo izkušnjo.',
       travelWithHosts: 'Potujte z gostitelji, ki grejo korak dlje. Potujte z SmartxStay.'
     }
   };
@@ -165,7 +169,8 @@ const ForGuestsPage = () => {
               animation: 'fadeInSlideUp 0.5s ease-out both',
             }}
           >
-            <span style={{ color: '#0f0f0f' }}>{t.yourStay}</span>{' '}
+            <span style={{ color: '#0f0f0f', whiteSpace: 'nowrap' }}>{t.yourStay}</span>
+            <br />
             <span 
               className="animated-gradient-text"
               style={{ 
@@ -174,6 +179,7 @@ const ForGuestsPage = () => {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
+                whiteSpace: 'nowrap',
               }}
             >{t.madeSmarter}</span>
           </h1>
@@ -449,7 +455,7 @@ const ForGuestsPage = () => {
             lineHeight: '1.1',
             margin: '0 0 24px 0',
             textAlign: 'center',
-            maxWidth: '900px',
+            maxWidth: '1600px',
             letterSpacing: '-0.02em',
           }}
         >
@@ -463,7 +469,7 @@ const ForGuestsPage = () => {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
             }}
-          >{t.everything}</span>{' '}
+          >{t.everything}</span>
           <br />
           <span style={{ color: '#0f0f0f' }}>{t.youJust}</span>{' '}
           <span 
@@ -858,19 +864,49 @@ const ForGuestsPage = () => {
         </h2>
 
         {/* Description */}
-        <p
+        <div
           style={{
-            fontSize: 'clamp(16px, 2vw, 18px)',
-            fontWeight: 400,
-            color: '#737373',
-            lineHeight: '1.8',
             margin: '0 0 48px 0',
             textAlign: 'center',
             maxWidth: '800px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
           }}
         >
-          {t.greatTripDesc}
-        </p>
+          <p
+            style={{
+              fontSize: 'clamp(16px, 2vw, 18px)',
+              fontWeight: 400,
+              color: '#737373',
+              lineHeight: '1.8',
+              margin: '0 0 16px 0',
+            }}
+          >
+            {t.greatTripDesc}
+          </p>
+          <p
+            style={{
+              fontSize: 'clamp(16px, 2vw, 18px)',
+              fontWeight: 400,
+              color: '#737373',
+              lineHeight: '1.8',
+              margin: '0 0 16px 0',
+            }}
+          >
+            {t.greatTripDesc2}
+          </p>
+          <p
+            style={{
+              fontSize: 'clamp(16px, 2vw, 18px)',
+              fontWeight: 400,
+              color: '#737373',
+              lineHeight: '1.8',
+              margin: '0',
+            }}
+          >
+            {t.greatTripDesc3}
+          </p>
+        </div>
 
         {/* Tagline */}
         <p

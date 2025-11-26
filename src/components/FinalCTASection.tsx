@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const FinalCTASection = () => {
@@ -10,6 +11,7 @@ const FinalCTASection = () => {
     en: {
       title: 'Ready to elevate your hospitality?',
       subtitle: 'Let\'s connect and bring digital hospitality to your guests. Book a free, no-obligation video meeting to see how SmartxStay can work for you.',
+      description: '',
       bookPresentation: 'Book a free presentation',
       getInTouch: 'Get in Touch',
       yourName: 'Your Name',
@@ -24,9 +26,10 @@ const FinalCTASection = () => {
       sendMessage: 'Send Message'
     },
     sl: {
-      title: 'Pripravljeni dvigniti svoje gostoljubje?',
-      subtitle: 'Povežimo se in prinesimo digitalno gostoljubje vašim gostom. Rezervirajte brezplačen, brezobvezen video sestanek, da vidite, kako SmartxStay lahko deluje za vas.',
-      bookPresentation: 'Rezervirajte brezplačno predstavitev',
+      title: 'Pripravljeni dvigniti nivo vašega oddajanja?',
+      subtitle: 'Ne bodite le ena izmed nastanitev. Bodite nadstandardni.',
+      description: 'Rezervirajte 15-minutni pregled rešitve. Pokažite nam svoje posestvo in mi vam pokažemo, kako lahko SmartxStay dvigne vaše gostoljubje na najvišji nivo in zagotovi vašo konkurenčno prednost.',
+      bookPresentation: 'Kliknite tukaj za brezplačen uvodni sestanek.',
       getInTouch: 'Kontaktirajte nas',
       yourName: 'Vaše ime',
       emailAddress: 'E-poštni naslov',
@@ -114,6 +117,21 @@ const FinalCTASection = () => {
             {/* Subtitle */}
             <p
               style={{
+                fontSize: 'clamp(18px, 2.2vw, 22px)',
+                fontWeight: 600,
+                color: '#0f0f0f',
+                margin: '0 0 20px 0',
+                maxWidth: '520px',
+                lineHeight: '1.5'
+              }}
+            >
+              {t.subtitle}
+            </p>
+
+            {/* Description */}
+            {t.description && (
+            <p
+              style={{
                 fontSize: 'clamp(16px, 2vw, 18px)',
                 fontWeight: 400,
                 color: '#737373',
@@ -122,13 +140,20 @@ const FinalCTASection = () => {
                 lineHeight: '1.6'
               }}
             >
-              {t.subtitle}
+                {t.description}
             </p>
+            )}
 
             {/* CTA Button */}
-            <button className="btn-primary">
+            <Link 
+              href="https://hanakucej-qr-space.zohobookings.eu/#/242002000000052012"
+              className="btn-primary"
+              style={{ textDecoration: 'none' }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {t.bookPresentation}
-            </button>
+            </Link>
           </div>
 
           {/* Right Side - Contact Form */}
@@ -364,20 +389,65 @@ const FinalCTASection = () => {
         @media (max-width: 768px) {
           .cta-grid {
             grid-template-columns: 1fr !important;
-            gap: 48px !important;
+            gap: 40px !important;
           }
 
           .text-content {
+            text-align: left !important;
+            width: 100% !important;
+          }
+
+          .text-content h2 {
+            font-size: clamp(20px, 5.5vw, 28px) !important;
+            line-height: 1.3 !important;
+            margin-bottom: 14px !important;
             text-align: center !important;
           }
 
           .text-content p {
-            margin-left: auto !important;
-            margin-right: auto !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            max-width: 100% !important;
+            font-size: clamp(14px, 3.8vw, 16px) !important;
+            line-height: 1.5 !important;
+            text-align: left !important;
+          }
+
+          .text-content p[style*="fontWeight: 600"] {
+            font-size: clamp(15px, 4vw, 18px) !important;
+            margin-bottom: 14px !important;
+            text-align: center !important;
           }
 
           section {
-            padding: 80px 16px !important;
+            padding: 60px 16px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .cta-grid {
+            gap: 32px !important;
+          }
+
+          .text-content h2 {
+            font-size: clamp(18px, 6.5vw, 24px) !important;
+            line-height: 1.25 !important;
+            margin-bottom: 12px !important;
+          }
+
+          .text-content p {
+            font-size: clamp(13px, 4.2vw, 15px) !important;
+            line-height: 1.5 !important;
+            margin-bottom: 16px !important;
+          }
+
+          .text-content p[style*="fontWeight: 600"] {
+            font-size: clamp(14px, 4.5vw, 16px) !important;
+            margin-bottom: 12px !important;
+          }
+
+          section {
+            padding: 50px 12px !important;
           }
         }
       `}</style>

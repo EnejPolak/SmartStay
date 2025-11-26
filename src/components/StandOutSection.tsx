@@ -15,11 +15,11 @@ const StandOutSection = () => {
       paragraph3: 'SmartxStay helps you become the host guests remember.'
     },
     sl: {
-      standOut: 'Izdite',
-      inWorld: 'v svetu polnem nastanitev',
-      paragraph1: 'Vsak apartma izgleda dobro na spletu.',
-      paragraph2: 'Vendar vsak gostitelj ne ponudi nepozabne izkušnje.',
-      paragraph3: 'SmartxStay vam pomaga postati gostitelj, ki ga gostje ne pozabijo.'
+      standOut: 'Izstopajte',
+      inWorld: 'v svetu polnem nastanitev!',
+      paragraph1: 'Gostje se ne vračajo zaradi lepe nastanitve. Vračajo se zaradi izkušnje.',
+      paragraph2: 'Dvignite izkušnjo vaših gostov na najvišji nivo in postanite gostitelj, h kateremu se gosti vračajo in ga priporočajo naprej.',
+      paragraph3: ''
     }
   };
 
@@ -100,6 +100,7 @@ const StandOutSection = () => {
           >
             {t.paragraph2}
           </p>
+          {t.paragraph3 && (
           <p
             style={{
               fontSize: 'clamp(18px, 2.5vw, 24px)',
@@ -111,6 +112,7 @@ const StandOutSection = () => {
           >
             {t.paragraph3}
           </p>
+          )}
         </div>
       </div>
 

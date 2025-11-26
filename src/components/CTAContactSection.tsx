@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const CTAContactSection = () => {
@@ -107,7 +108,7 @@ const CTAContactSection = () => {
       ref={sectionRef}
       id="cta-contact"
       style={{
-        backgroundColor: 'transparent',
+        background: 'linear-gradient(to bottom, rgba(237, 233, 254, 0.8) 0%, rgba(219, 234, 254, 0.8) 100%)',
         width: '100%',
         padding: '60px 20px',
         marginTop: '0px',
@@ -162,9 +163,15 @@ const CTAContactSection = () => {
           </p>
 
           {/* CTA Button */}
-          <button className="btn-primary">
+          <Link 
+            href="https://hanakucej-qr-space.zohobookings.eu/#/242002000000052012"
+            className="btn-primary"
+            style={{ textDecoration: 'none' }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {t.button}
-          </button>
+          </Link>
         </div>
 
         {/* Right Side - Contact Form */}

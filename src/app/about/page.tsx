@@ -197,16 +197,64 @@ export default function AboutPage() {
               textAlign: 'center',
             }}
           >
+            {/* Email */}
+            <div style={{ marginBottom: '24px' }}>
+              <p style={{ fontSize: '18px', color: '#4a4a4a', margin: '0 0 16px 0' }}>
+                <a 
+                  href="mailto:info@qr-space.si" 
+                  style={{ color: '#7c5fd9', textDecoration: 'none', fontWeight: 600 }}
+                >
+                  info@qr-space.si
+                </a>
+              </p>
+            </div>
+
             {/* Phone Numbers */}
             <div style={{ marginBottom: '40px' }}>
               <p style={{ fontSize: '18px', color: '#4a4a4a', margin: '0 0 8px 0' }}>
-                000 000 000 (3 telefonske, more mi jih hana še at)
+                <a 
+                  href="tel:+38669413494" 
+                  style={{ color: '#4a4a4a', textDecoration: 'none' }}
+                >
+                  SLO: +386 69 413 494
+                </a>
+                {' '}
+                <a 
+                  href="mailto:eva@smartxstay.com" 
+                  style={{ color: '#7c5fd9', textDecoration: 'none', marginLeft: '8px' }}
+                >
+                  (eva@smartxstay.com)
+                </a>
               </p>
               <p style={{ fontSize: '18px', color: '#4a4a4a', margin: '0 0 8px 0' }}>
-                000 000 000
+                <a 
+                  href="tel:+38670614341" 
+                  style={{ color: '#4a4a4a', textDecoration: 'none' }}
+                >
+                  SLO: +386 70 614 341
+                </a>
+                {' '}
+                <a 
+                  href="mailto:monika@smartxstay.com" 
+                  style={{ color: '#7c5fd9', textDecoration: 'none', marginLeft: '8px' }}
+                >
+                  (monika@smartxstay.com)
+                </a>
               </p>
               <p style={{ fontSize: '18px', color: '#4a4a4a', margin: '0' }}>
-                000 000 000
+                <a 
+                  href="tel:+385957728882" 
+                  style={{ color: '#4a4a4a', textDecoration: 'none' }}
+                >
+                  HR: +385 957 728 882
+                </a>
+                {' '}
+                <a 
+                  href="mailto:neda@smartxstay.com" 
+                  style={{ color: '#7c5fd9', textDecoration: 'none', marginLeft: '8px' }}
+                >
+                  (neda@smartxstay.com)
+                </a>
               </p>
             </div>
 

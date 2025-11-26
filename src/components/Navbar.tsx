@@ -143,38 +143,38 @@ const Navbar = () => {
         }
       `}</style>
       {/* Logo */}
-      <div className="flex items-center" style={{ width: '90px', minWidth: '90px' }}>
+      <div className="flex items-center" style={{ width: '75px', minWidth: '75px' }}>
         <Link href="/">
-          <Image 
-            src="/logo__1__720.png" 
-            alt="SmartStay Logo" 
-            width={90} 
-            height={45}
-            className="object-contain"
-            priority
+        <Image 
+          src="/logo__1__720.png" 
+          alt="SmartStay Logo" 
+            width={75} 
+            height={38}
+          className="object-contain"
+          priority
             style={{ maxWidth: '100%', height: 'auto' }}
-          />
+        />
         </Link>
       </div>
 
       {/* Desktop Navigation Links */}
-      <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, gap: '40px', marginLeft: '-90px' }}>
+      <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, gap: '40px', marginLeft: '-75px' }}>
         {navLinks.map((link) => (
-          <Link 
+        <Link 
             key={link.href}
             href={link.href} 
-            className="transition-colors duration-200"
-            style={{ 
+          className="transition-colors duration-200"
+          style={{ 
               color: pathname === link.href ? '#b8a1ff' : '#333',
-              fontWeight: 500,
+            fontWeight: 500,
               textDecoration: 'none',
               fontSize: '15px'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#b8a1ff'}
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.color = '#b8a1ff'}
             onMouseLeave={(e) => e.currentTarget.style.color = pathname === link.href ? '#b8a1ff' : '#333'}
-          >
+        >
             {link.label}
-          </Link>
+        </Link>
         ))}
       </div>
 
@@ -191,9 +191,9 @@ const Navbar = () => {
       >
         <button
           onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-          style={{
+          style={{ 
             padding: '6px 12px',
-            border: '2px solid #b8a1ff',
+            border: 'none',
             borderRadius: '6px',
             backgroundColor: 'rgba(184, 161, 255, 0.1)',
             cursor: 'pointer',
@@ -268,7 +268,7 @@ const Navbar = () => {
                 transition: 'all 0.2s ease',
                 fontFamily: 'Inter, sans-serif',
                 textAlign: 'left'
-              }}
+          }}
               onMouseEnter={(e) => {
                 if (language !== 'en') {
                   e.currentTarget.style.backgroundColor = 'rgba(184, 161, 255, 0.05)';
@@ -358,7 +358,7 @@ const Navbar = () => {
           }}
         />
         <span
-          style={{
+          style={{ 
             width: '24px',
             height: '2px',
             backgroundColor: '#333',
@@ -387,11 +387,11 @@ const Navbar = () => {
         overflowY: 'auto',
         padding: '40px 24px'
       }}
-    >
+        >
       {/* Mobile Navigation Links */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {navLinks.map((link) => (
-          <Link
+        <Link 
             key={link.href}
             href={link.href}
             onClick={() => setIsMenuOpen(false)}
@@ -412,7 +412,7 @@ const Navbar = () => {
 
       {/* Mobile Language Toggle */}
       <div 
-        style={{ 
+          style={{ 
           display: 'flex', 
           gap: '12px', 
           alignItems: 'center',
@@ -429,7 +429,7 @@ const Navbar = () => {
             setLanguage('en');
             setIsMenuOpen(false);
           }}
-          style={{
+          style={{ 
             padding: '8px 16px',
             border: language === 'en' ? '2px solid #b8a1ff' : '2px solid transparent',
             borderRadius: '6px',
@@ -454,7 +454,7 @@ const Navbar = () => {
             setLanguage('sl');
             setIsMenuOpen(false);
           }}
-          style={{
+          style={{ 
             padding: '8px 16px',
             border: language === 'sl' ? '2px solid #b8a1ff' : '2px solid transparent',
             borderRadius: '6px',

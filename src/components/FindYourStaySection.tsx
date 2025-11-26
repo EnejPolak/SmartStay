@@ -9,14 +9,18 @@ const FindYourStaySection = () => {
 
   const translations = {
     en: {
-      title: 'Find your next stay with Smart',
-      stay: 'Stay',
-      description: 'Our hosts are passionate about creating amazing experiences. Discover unique homes around the world where hospitality meets innovation.'
+      title: 'Find your next stay with ',
+      titleSmartxStay: 'SmartxStay',
+      stay: '',
+      description: 'Our hosts are passionate about creating amazing experiences. Discover unique homes around the world where hospitality meets innovation.',
+      bottomText: 'Let your next trip be the best experience - Book with a SmartxStay host'
     },
     sl: {
-      title: 'Poiščite svoj naslednji obisk pri Smart',
-      stay: 'Stay',
-      description: 'Naši gostitelji so strastni do ustvarjanja neverjetnih izkušenj. Odkrijte edinstvene domove po vsem svetu, kjer se gostoljubje sreča z inovacijami.'
+      title: 'Naj bo vaše naslednje potovanje najboljša izkušnja Rezervirajte pri ',
+      titleSmartxStay: 'SmartxStay',
+      stay: '',
+      description: '',
+      bottomText: ''
     }
   };
 
@@ -52,29 +56,69 @@ const FindYourStaySection = () => {
             lineHeight: '1.2'
           }}
         >
-          {t.title}<span style={{ color: '#a29eff' }}>x</span>{t.stay}
+          {t.title}<span className="animated-gradient-text">{t.titleSmartxStay || 'SmartxStay'}</span>
         </h2>
 
         {/* Description */}
-        <p
-          style={{
-            fontSize: 'clamp(16px, 2vw, 18px)',
-            fontWeight: 400,
-            color: '#737373',
-            margin: '0 auto 60px auto',
-            maxWidth: '640px',
-            lineHeight: '1.6'
-          }}
-        >
-          {t.description}
-        </p>
+        {t.description && (
+          <p
+            style={{
+              fontSize: 'clamp(16px, 2vw, 18px)',
+              fontWeight: 400,
+              color: '#737373',
+              margin: '0 auto 60px auto',
+              maxWidth: '640px',
+              lineHeight: '1.6'
+            }}
+          >
+            {t.description}
+          </p>
+        )}
 
         {/* SmartxStay Interactive Map */}
         <SmartxStayMap />
+
+        {/* Bottom Text */}
+        {t.bottomText && (
+          <p
+            style={{
+              fontSize: 'clamp(18px, 2.2vw, 22px)',
+              fontWeight: 600,
+              color: '#0f0f0f',
+              margin: '40px auto 0 auto',
+              maxWidth: '800px',
+              lineHeight: '1.5',
+              textAlign: 'center'
+            }}
+          >
+            {t.bottomText}
+          </p>
+        )}
       </div>
 
       {/* Responsive Styles */}
       <style jsx>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-gradient-text {
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
         @media (max-width: 1024px) {
           section {
             padding: 60px 20px !important;
