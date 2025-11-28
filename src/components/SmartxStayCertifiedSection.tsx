@@ -23,7 +23,7 @@ const SmartxStayCertifiedSection = () => {
     sl: {
       title: '',
       titleSmartxStay: 'SmartxStay',
-      certified: 'Certif',
+      certified: 'Certifikat',
       subtitle: 'Potrdite svojo premium gostoljubnost. Ne govorite o kakovosti, dokažite jo!',
       subtitle2: 'SmartxStay Certifikat ni le plaketa. Je vaš uradni dokaz, da ponujate najbolj avtomatizirano in brezhibno izkušnjo na trgu. Ta status poudarja vašo predanost skrbi za goste, gradi neposredno zaupanje pri popotnikih in vas postavlja korak pred konkurenco, ki se še vedno zanaša.',
       buildTrust: 'Zgradite zaupanje',
@@ -36,7 +36,7 @@ const SmartxStayCertifiedSection = () => {
     hr: {
       title: '',
       titleSmartxStay: 'SmartxStay',
-      certified: 'Certif',
+      certified: 'Certifikat',
       subtitle: 'Potvrdite svoju premium gostoljubnost. Ne govorite o kvaliteti, dokažite je!',
       subtitle2: 'SmartxStay Certifikat nije samo plaketa. Vaš je službeni dokaz da nudite najautomatiziranije i besprijekorno iskustvo na tržištu. Ovaj status naglašava vašu predanost brizi za goste, gradi izravno povjerenje kod putnika i postavlja vas korak ispred konkurencije koja se još uvijek oslanja.',
       buildTrust: 'Izgradite povjerenje',
@@ -104,6 +104,7 @@ const SmartxStayCertifiedSection = () => {
 
         {/* Main Title */}
         <h2
+          className={`certified-title ${language === 'sl' || language === 'hr' ? 'certif-break' : ''}`}
           style={{
             fontSize: 'clamp(36px, 4.5vw, 52px)',
             fontWeight: 800,
@@ -112,7 +113,8 @@ const SmartxStayCertifiedSection = () => {
             lineHeight: '1.2'
           }}
         >
-          <span className="animated-gradient-text">{t.titleSmartxStay}</span> {t.certified}
+          <span className="animated-gradient-text">{t.titleSmartxStay}</span>{' '}
+          <span className="certified-word">{t.certified}</span>
         </h2>
 
         {/* Host Badges */}
@@ -532,6 +534,22 @@ const SmartxStayCertifiedSection = () => {
         @media (max-width: 480px) {
           section {
             padding: 50px 12px !important;
+          }
+          
+          .certified-title.certif-break .certified-word {
+            display: block !important;
+            margin-top: 0.2em !important;
+            white-space: nowrap !important;
+            word-break: keep-all !important;
+          }
+          
+          .certified-title.certif-break .animated-gradient-text {
+            white-space: nowrap !important;
+          }
+          
+          .certified-title.certif-break {
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
           }
           
           .benefit-card {

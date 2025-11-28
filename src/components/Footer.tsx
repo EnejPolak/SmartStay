@@ -69,18 +69,18 @@ const Footer = () => {
         className="footer-container"
         style={{
           maxWidth: '1200px',
-          margin: '0 0 0 auto',
+          margin: '0 auto',
           padding: '64px 24px',
           display: 'grid',
-          gridTemplateColumns: '1.2fr 1fr 1fr',
+          gridTemplateColumns: '1fr 1fr 1fr',
           gap: '64px',
           alignItems: 'start'
         }}
       >
         {/* Brand & Contact - Left Column */}
         <div className="footer-brand-contact">
-          {/* Logo - na mobilnih bo na sredini zgoraj */}
-          <div className="footer-logo" style={{ marginBottom: '32px', width: '100%', gridColumn: '1 / -1' }}>
+          {/* Logo */}
+          <div className="footer-logo" style={{ marginBottom: '32px' }}>
             <Image
               src="/logo__1__720.png"
               alt="SmartxStay Logo"
@@ -153,7 +153,7 @@ const Footer = () => {
             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
               {/* LinkedIn */}
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/smartxstay/posts/?feedView=all"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="SmartxStay on LinkedIn"
@@ -179,7 +179,7 @@ const Footer = () => {
 
               {/* Instagram */}
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/smartxstay.si/?hl=am-et"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="SmartxStay on Instagram"
@@ -205,7 +205,7 @@ const Footer = () => {
 
               {/* Facebook */}
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/SmartxStay?locale=sl_SI"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="SmartxStay on Facebook"
@@ -357,6 +357,27 @@ const Footer = () => {
           margin-top: 0 !important;
         }
 
+        /* Desktop: Menu na sredini */
+        @media (min-width: 769px) {
+          .footer-menu {
+            text-align: center !important;
+          }
+          
+          .footer-menu h3 {
+            text-align: center !important;
+          }
+          
+          .footer-menu ul {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+          }
+          
+          .footer-menu ul li {
+            text-align: center !important;
+          }
+        }
+
         @media (max-width: 1024px) {
           .footer-container {
             grid-template-columns: 1fr 1fr !important;
@@ -390,10 +411,14 @@ const Footer = () => {
 
         @media (max-width: 768px) {
           .footer-container {
-            grid-template-columns: 1fr 1fr !important;
+            grid-template-columns: 1fr !important;
             gap: 24px !important;
             padding: 48px 20px !important;
             display: grid !important;
+          }
+          
+          .footer-menu {
+            display: none !important;
           }
 
           /* Logo na sredini zgoraj */
@@ -402,22 +427,17 @@ const Footer = () => {
             justify-content: center !important;
             margin-bottom: 32px !important;
             width: 100% !important;
-            grid-column: 1 / -1 !important;
           }
           
           .footer-brand-contact {
-            grid-column: 1;
+            grid-column: 1 !important;
             display: block !important;
             margin-bottom: 0 !important;
             width: 100% !important;
           }
-          
-          .footer-brand-contact > div:nth-child(2) {
-            grid-column: auto;
-          }
 
           .footer-brand-contact h3 {
-            text-align: left !important;
+            text-align: center !important;
             margin-bottom: 12px !important;
             margin-top: 0 !important;
           }
@@ -425,57 +445,28 @@ const Footer = () => {
           .footer-brand-contact > div:nth-child(3) {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 24px !important;
           }
 
           .footer-brand-contact > div:nth-child(3) a {
-            text-align: left !important;
+            text-align: center !important;
           }
 
-          /* Follow us pod Contact, na levi */
+          /* Follow us pod Contact, na sredini */
           .footer-brand-contact > div:last-child {
             display: block !important;
-            text-align: left !important;
+            text-align: center !important;
             margin-top: 0 !important;
           }
 
           .footer-brand-contact > div:last-child > p {
-            text-align: left !important;
+            text-align: center !important;
           }
 
           .footer-brand-contact > div:last-child > div {
-            justify-content: flex-start !important;
+            justify-content: center !important;
             margin-top: 12px !important;
-          }
-
-          .footer-menu {
-            grid-column: 2;
-            text-align: right !important;
-            margin-bottom: 0 !important;
-            align-self: start !important;
-          }
-
-          .footer-menu h3 {
-            text-align: right !important;
-            margin-bottom: 12px !important;
-            margin-top: 0 !important;
-          }
-          
-          /* Poravnaj naslova na isto višino */
-          .footer-section-title {
-            margin-top: 0 !important;
-            margin-bottom: 12px !important;
-          }
-
-          .footer-menu ul {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-          }
-
-          .footer-menu ul li {
-            text-align: right !important;
           }
 
           /* Legal na sredini spodaj */
@@ -513,13 +504,11 @@ const Footer = () => {
           }
 
           .footer-brand-contact h3,
-          .footer-menu h3,
           .footer-legal h3 {
             font-size: 15px !important;
           }
 
           .footer-brand-contact > div:nth-child(3) a,
-          .footer-menu ul li a,
           .footer-legal > div a {
             font-size: 14px !important;
           }
