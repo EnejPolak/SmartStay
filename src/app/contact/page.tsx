@@ -85,10 +85,45 @@ export default function ContactPage() {
 
   const t = translations[language] || translations.en;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add form submission logic
-    alert(t.messageSent);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          userType: formData.userType,
+          subject: `New contact form submission from ${formData.name || 'Website visitor'}`,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          userType: '',
+          message: ''
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -604,13 +639,53 @@ export default function ContactPage() {
                   />
                 </div>
 
+                {/* Status Messages */}
+                {submitStatus === 'success' && (
+                  <div
+                    style={{
+                      padding: '12px 16px',
+                      borderRadius: '12px',
+                      backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                      color: '#16a34a',
+                      marginTop: '16px',
+                      fontSize: '14px',
+                    }}
+                  >
+                    {t.messageSent}
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div
+                    style={{
+                      padding: '12px 16px',
+                      borderRadius: '12px',
+                      backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                      color: '#dc2626',
+                      marginTop: '16px',
+                      fontSize: '14px',
+                    }}
+                  >
+                    {language === 'sl' ? 'Pošiljanje sporočila ni uspelo. Poskusite znova.' : language === 'hr' ? 'Slanje poruke nije uspjelo. Pokušajte ponovno.' : 'Failed to send message. Please try again.'}
+                  </div>
+                )}
+
                 {/* Submit Button */}
                 <button
                   type="submit"
                   className="btn-primary"
-                  style={{ width: '100%', marginTop: '8px' }}
+                  disabled={isSubmitting}
+                  style={{ 
+                    width: '100%', 
+                    marginTop: '8px',
+                    opacity: isSubmitting ? 0.7 : 1,
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                  }}
                 >
-                  {t.sendButton}
+                  {isSubmitting 
+                    ? (language === 'sl' ? 'Pošiljanje...' : language === 'hr' ? 'Slanje...' : 'Sending...')
+                    : t.sendButton
+                  }
                 </button>
               </form>
             </div>

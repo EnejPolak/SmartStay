@@ -69,10 +69,46 @@ const FinalCTASection = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          userType: formData.hostType,
+          subject: `New contact form submission from ${formData.name || 'Website visitor'}`,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          hostType: '',
+          message: ''
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -163,7 +199,9 @@ const FinalCTASection = () => {
 
             {/* CTA Button */}
             <Link 
-              href="https://meetings-smartxstay.zohobookings.eu/#/242002000000041016"
+              href={language === 'hr' 
+                ? "https://meetings-smartxstay.zohobookings.eu/#/242002000000057014"
+                : "https://meetings-smartxstay.zohobookings.eu/#/242002000000041016"}
               className="btn-primary"
               style={{ textDecoration: 'none' }}
               target="_blank"
@@ -382,13 +420,52 @@ const FinalCTASection = () => {
                 />
               </div>
 
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div
+                  style={{
+                    padding: '12px 16px',
+                    borderRadius: '12px',
+                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                    color: '#16a34a',
+                    marginBottom: '16px',
+                    fontSize: '14px',
+                  }}
+                >
+                  {language === 'sl' ? 'Sporočilo uspešno poslano!' : language === 'hr' ? 'Poruka uspješno poslana!' : 'Message sent successfully!'}
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div
+                  style={{
+                    padding: '12px 16px',
+                    borderRadius: '12px',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    color: '#dc2626',
+                    marginBottom: '16px',
+                    fontSize: '14px',
+                  }}
+                >
+                  {language === 'sl' ? 'Pošiljanje sporočila ni uspelo. Poskusite znova.' : language === 'hr' ? 'Slanje poruke nije uspjelo. Pokušajte ponovno.' : 'Failed to send message. Please try again.'}
+                </div>
+              )}
+
               {/* Submit Button */}
               <button
                 type="submit"
                 className="btn-primary"
-                style={{ width: '100%' }}
+                disabled={isSubmitting}
+                style={{ 
+                  width: '100%',
+                  opacity: isSubmitting ? 0.7 : 1,
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                }}
               >
-                {t.sendMessage}
+                {isSubmitting 
+                  ? (language === 'sl' ? 'Pošiljanje...' : language === 'hr' ? 'Slanje...' : 'Sending...')
+                  : t.sendMessage
+                }
               </button>
             </form>
           </div>

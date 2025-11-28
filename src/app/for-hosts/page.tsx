@@ -193,7 +193,9 @@ const ForHostsPage = () => {
           >
             {/* Primary Button */}
             <Link 
-              href="https://meetings-smartxstay.zohobookings.eu/#/242002000000041016"
+              href={language === 'hr' 
+                ? "https://meetings-smartxstay.zohobookings.eu/#/242002000000057014"
+                : "https://meetings-smartxstay.zohobookings.eu/#/242002000000041016"}
               className="btn-primary"
               style={{ textDecoration: 'none' }}
               target="_blank"
