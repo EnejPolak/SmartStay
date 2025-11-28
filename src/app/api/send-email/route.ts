@@ -102,11 +102,12 @@ This email was sent from the SmartxStay website contact form.
     try {
       await transporter.verify();
       console.log('SMTP connection verified successfully');
-    } catch (verifyError: any) {
+    } catch (verifyError: unknown) {
+      const error = verifyError as { message?: string; code?: string; command?: string };
       console.error('SMTP verification failed:', {
-        message: verifyError.message,
-        code: verifyError.code,
-        command: verifyError.command,
+        message: error.message,
+        code: error.code,
+        command: error.command,
       });
       // Continue anyway - sometimes verification fails but sending works
       console.warn('Continuing with email send despite verification failure...');
@@ -120,25 +121,26 @@ This email was sent from the SmartxStay website contact form.
       { message: 'Email sent successfully' },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as { message?: string; code?: string; command?: string; response?: string };
     console.error('Error sending email:', {
-      message: error.message,
-      code: error.code,
-      command: error.command,
-      response: error.response,
+      message: err.message,
+      code: err.code,
+      command: err.command,
+      response: err.response,
     });
 
     // Check if it's a Mailgun sandbox authorization error
-    const isSandboxError = error.response?.includes('not allowed to send') || 
-                          error.message?.includes('not allowed to send') ||
-                          error.message?.includes('Free accounts are for test purposes');
+    const isSandboxError = err.response?.includes('not allowed to send') || 
+                          err.message?.includes('not allowed to send') ||
+                          err.message?.includes('Free accounts are for test purposes');
 
     if (isSandboxError) {
       return NextResponse.json(
         { 
           error: 'Mailgun Sandbox Limitation', 
           details: 'The recipient email address must be authorized in your Mailgun dashboard. Free sandbox accounts can only send to authorized recipients. Please add the recipient email in Mailgun dashboard under "Authorized Recipients" or upgrade your Mailgun account.',
-          code: error.code,
+          code: err.code,
         },
         { status: 500 }
       );
@@ -147,8 +149,8 @@ This email was sent from the SmartxStay website contact form.
     return NextResponse.json(
       { 
         error: 'Failed to send email', 
-        details: error.message || 'Unknown error',
-        code: error.code,
+        details: err.message || 'Unknown error',
+        code: err.code,
       },
       { status: 500 }
     );
