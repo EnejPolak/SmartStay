@@ -719,7 +719,7 @@ export default function PricesPage() {
               </ul>
 
               {/* Button */}
-              <button 
+              <button
                 className="btn-tertiary" 
                 style={{ width: '100%' }}
                 onClick={() => handlePackageSelect('SmartxWelcome')}
@@ -890,7 +890,7 @@ export default function PricesPage() {
               </ul>
 
               {/* Button */}
-              <button 
+              <button
                 className="btn-primary" 
                 style={{ width: '100%' }}
                 onClick={() => handlePackageSelect('SmartxPro')}
@@ -1037,7 +1037,7 @@ export default function PricesPage() {
               </ul>
 
               {/* Button */}
-              <button 
+              <button
                 className="btn-tertiary" 
                 style={{ width: '100%' }}
                 onClick={() => handlePackageSelect('SmartxElite')}

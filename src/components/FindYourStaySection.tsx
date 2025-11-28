@@ -82,18 +82,18 @@ const FindYourStaySection = () => {
 
         {/* Description */}
         {t.description && (
-          <p
-            style={{
-              fontSize: 'clamp(16px, 2vw, 18px)',
-              fontWeight: 400,
-              color: '#737373',
-              margin: '0 auto 60px auto',
-              maxWidth: '640px',
-              lineHeight: '1.6'
-            }}
-          >
-            {t.description}
-          </p>
+        <p
+          style={{
+            fontSize: 'clamp(16px, 2vw, 18px)',
+            fontWeight: 400,
+            color: '#737373',
+            margin: '0 auto 60px auto',
+            maxWidth: '640px',
+            lineHeight: '1.6'
+          }}
+        >
+          {t.description}
+        </p>
         )}
 
         {/* SmartxStay Interactive Map */}

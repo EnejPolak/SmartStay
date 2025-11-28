@@ -71,24 +71,24 @@ const OurHostsSection = () => {
     },
     {
       id: 3,
-          name: 'Rok Veznaver',
-          role: 'Apartmaji Vila Cvetka Bled',
+          name: 'Apartmaji Vila Cvetka Bled',
+          role: 'Apartments',
           rating: 5,
           text: "Dear Sir/Madam, based on guest feedback, SmartxStay is an excellent product that simplifies daily work with guests. A great advantage of this product is SmartxStay's support, as the team of employees listens to even the most impossible wishes of the provider and implements them in a very short time. Another advantage of this product is its personalization. Basically, they have a great product that we personally upgraded and thus achieved that through it, the guest reaches everything we want to tell each guest individually, for which we would need an hour or more. Another emphasis of this product is that it is not only in Slovenian and English, like comparable products, but the product is in multiple languages, which is invaluable for all our guests. We are talking about the product being supported by other languages as well, such as Asian countries... which would add one additional value and a leading position in this area of services that SmartxStay offers.",
           image: '/images/hosts/rok-veznaver.jpg'
         },
         {
           id: 4,
-          name: 'Lucija',
-          role: 'Škantar apartments',
+          name: 'Škantar Apartments',
+          role: 'Apartments',
           rating: 5,
           text: "QR Space company offers an excellent solution for everyone who rents accommodations. Their e-guide, prepared completely individually, saves a lot of time, as guests quickly find all important information in one place – from arrival instructions to trip recommendations. Fewer questions, more satisfied guests, and simpler communication. Really super service! I warmly recommend!",
           image: '/images/hosts/lucija.jpg'
         },
         {
           id: 5,
-          name: 'Ksenija',
-          role: 'Apartma Bled',
+          name: 'Apartma Bled',
+          role: 'Apartment',
           rating: 5,
           text: "SmartxStay has really made my daily apartment management easier. Guests receive all necessary information on time, without me having to worry about every detail separately. The team's support is always quick and friendly – I really feel like I'm not alone. I am very grateful for this collaboration!",
           image: '/images/hosts/ksenija.jpg'
@@ -103,10 +103,10 @@ const OurHostsSection = () => {
         },
         {
           id: 7,
-          name: 'Farm holidays Povsin',
+          name: 'Farm Holidays Povšin',
           role: 'Farm Holidays',
           rating: 5,
-          text: "Top thing. Before, we kept explaining to guests where this or that restaurant is, activities... Since we have Smart Stay, no one asks about restaurants and activities nearby anymore.",
+          text: "Top thing. Before, we kept explaining to guests where this or that restaurant is, activities... Since we have SmartxStay, no one asks about restaurants and activities nearby anymore.",
           image: '/images/hosts/povsin.jpg'
         },
         {
@@ -135,8 +135,8 @@ const OurHostsSection = () => {
         },
         {
           id: 11,
-          name: 'IPSIMA I.P.D.O.O.',
-          role: 'HIŠA ANČKA BOUTIQUE HOTEL',
+          name: 'Hiša Ančka Boutique Hotel',
+          role: 'Boutique Hotel',
           rating: 5,
           text: "WORKS WELL.",
           image: '/images/hosts/ipsima.jpg'
@@ -162,29 +162,29 @@ const OurHostsSection = () => {
           name: 'Apartments Irena',
           role: 'Apartmaji',
           rating: 5,
-          text: "Res super enostavno in praktično. Preko videoklica vse lepo razložili in uredili v kratkem času in brez komplikacij. Hana in Nik sta rees prijazna in sta uredila vse, kot smo se zmenili. Če imate apartmaje je to res must-have zadeva. Priporočam!",
+          text: "Res super enostavno in praktično. Preko videoklica vse lepo razložili in uredili v kratkem času in brez komplikacij. Hana in Nik sta res prijazna in sta uredila vse, kot smo se zmenili. Če imate apartmaje je to res must-have zadeva. Priporočam!",
           image: '/images/hosts/apartments-irena.jpg'
         },
         {
           id: 3,
-          name: 'Rok Veznaver',
-          role: 'Apartmaji Vila Cvetka Bled',
+          name: 'Apartmaji Vila Cvetka Bled',
+          role: 'Apartmaji',
           rating: 5,
-          text: "Spoštovani, glede na odziv gostov, je SmartxStay vrhunski produkt, ki oljaša vsakodnevno delo z gosti. Velika prednost tega produkta, je podpora SmartxStay-a, kajti team zaposlenih prisluhne še tako nemogočim željam ponudnika in jih realizira v res kratkem času. Druga prednost tega produkta je personalizacija le tega. V osnovi imajo krasen produkt, ki smo ga mi osebno dograjevali in s tem dosegli, da preko njega gost  doseže vse kar mi želimo povedati vsakemu gostu posebaj, pa bi le za to potrebovali uro ali več. Še en poudarek tega produkta pa je, da ni samo v Slovenskem in Angleškem jeziku, kot so naprimer primerljivi produkti, ampak je produkt v več jezikih, kar je za vse naše goste neprecenljivo, pogovarjamo pa se, da bi bil produkt podprt tudi z drugimi jeziki, kot naprimer Azijske države..kar bi na vse kar Trenutno ponujajo, dodalo eno dodatno vrednost in vodilni položaj na tem področju storitev, ki jih ponuja SmartxStay.",
+          text: "Spoštovani, glede na odziv gostov, je SmartxStay vrhunski produkt, ki olajša vsakodnevno delo z gosti. Velika prednost tega produkta, je podpora SmartxStay-a, kajti team zaposlenih prisluhne še tako nemogočim željam ponudnika in jih realizira v res kratkem času. Druga prednost tega produkta je personalizacija le tega. V osnovi imajo krasen produkt, ki smo ga mi osebno dograjevali in s tem dosegli, da preko njega gost doseže vse kar mi želimo povedati vsakemu gostu posebaj, pa bi le za to potrebovali uro ali več. Še en poudarek tega produkta pa je, da ni samo v Slovenskem in Angleškem jeziku, kot so naprimer primerljivi produkti, ampak je produkt v več jezikih, kar je za vse naše goste neprecenljivo, pogovarjamo pa se, da bi bil produkt podprt tudi z drugimi jeziki, kot naprimer Azijske države...kar bi na vse kar trenutno ponujajo, dodalo eno dodatno vrednost in vodilni položaj na tem področju storitev, ki jih ponuja SmartxStay.",
           image: '/images/hosts/rok-veznaver.jpg'
         },
         {
           id: 4,
-          name: 'Lucija',
-          role: 'Škantar apartments',
+          name: 'Škantar Apartments',
+          role: 'Apartmaji',
           rating: 5,
-          text: "Podjetje QR Space ponuja odlično rešitev za vse, ki oddajajo nastanitve. Njihov e-vodnik, pripravljen povsem individualno, prihrani ogromno časa, saj gostje na enem mestu hitro najdejo vse pomembne informacije-od navodil za prihod do priporočil za izlete. Manj vprašanj, več zadovoljnih gostov in enostavnejša komunikacija. Res super storitev! Toplo priporočam!",
+          text: "Podjetje QR Space ponuja odlično rešitev za vse, ki oddajajo nastanitve. Njihov e-vodnik, pripravljen povsem individualno, prihrani ogromno časa, saj gostje na enem mestu hitro najdejo vse pomembne informacije – od navodil za prihod do priporočil za izlete. Manj vprašanj, več zadovoljnih gostov in enostavnejša komunikacija. Res super storitev! Toplo priporočam!",
           image: '/images/hosts/lucija.jpg'
         },
         {
           id: 5,
-          name: 'Ksenija',
-          role: 'Apartma Bled',
+          name: 'Apartma Bled',
+          role: 'Apartma',
           rating: 5,
           text: "SmartxStay mi je res olajšal vsakodnevno upravljanje z apartmaji. Gostje prejmejo vse potrebne informacije pravočasno, brez da bi morala skrbeti za vsak detajl posebej. Podpora ekipe je vedno hitra in prijazna – res imam občutek, da nisem sama. Zelo sem hvaležna za to sodelovanje!",
           image: '/images/hosts/ksenija.jpg'
@@ -199,10 +199,10 @@ const OurHostsSection = () => {
         },
         {
           id: 7,
-          name: 'Farm holidays Povsin',
-          role: 'Farm Holidays',
+          name: 'Farm Holidays Povšin',
+          role: 'Kmetijski turizem',
           rating: 5,
-          text: "Top zadeva. Prej smo skoz razlagal gostom pa kje je kakšna restavracija, aktivnostih.. . Odkar mamo smart stay nobeden več ne vpraša po restavracijah in aktivnostih v bližini.",
+          text: "Top zadeva. Prej smo skoz razlagal gostom kje je kakšna restavracija, aktivnostih... Odkar mamo SmartxStay nobeden več ne vpraša po restavracijah in aktivnostih v bližini.",
           image: '/images/hosts/povsin.jpg'
         },
         {
@@ -231,12 +231,12 @@ const OurHostsSection = () => {
         },
         {
           id: 11,
-          name: 'IPSIMA I.P.D.O.O.',
-          role: 'HIŠA ANČKA BOUTIQUE HOTEL',
+          name: 'Hiša Ančka Boutique Hotel',
+          role: 'Boutique Hotel',
           rating: 5,
           text: "DELUJE DOBRO.",
           image: '/images/hosts/ipsima.jpg'
-    }
+        }
       ]
     },
     hr: {
@@ -263,24 +263,24 @@ const OurHostsSection = () => {
         },
         {
           id: 3,
-          name: 'Rok Veznaver',
-          role: 'Apartmani Vila Cvetka Bled',
+          name: 'Apartmaji Vila Cvetka Bled',
+          role: 'Apartmani',
           rating: 5,
           text: "Poštovani, s obzirom na odgovor gostiju, SmartxStay je vrhunski proizvod koji olakšava svakodnevni rad s gostima. Velika prednost ovog proizvoda je podrška SmartxStay-a, jer tim zaposlenika prisluhne čak i tako nemogućim željama ponuditelja i realizira ih u stvarno kratkom vremenu. Druga prednost ovog proizvoda je personalizacija istog. U osnovi imaju krasan proizvod koji smo mi osobno nadograđivali i time postigli da preko njega gost postigne sve što želimo reći svakom gostu posebno, a za to bi trebali sat ili više. Još jedan naglasak ovog proizvoda je da nije samo na slovenskom i engleskom jeziku, kao što su na primjer usporedivi proizvodi, već je proizvod na više jezika, što je za sve naše goste neprocjenjivo, razgovaramo i o tome da bi proizvod bio podržan i drugim jezicima, kao što su na primjer azijske države... što bi svemu što trenutno nude dodalo jednu dodatnu vrijednost i vodeću poziciju na ovom području usluga koje nudi SmartxStay.",
           image: '/images/hosts/rok-veznaver.jpg'
         },
         {
           id: 4,
-          name: 'Lucija',
-          role: 'Škantar apartments',
+          name: 'Škantar Apartments',
+          role: 'Apartmani',
           rating: 5,
           text: "Tvrtka QR Space nudi odlično rješenje za sve koji iznajmljuju smještaj. Njihov e-vodič, pripremljen potpuno individualno, uštedi ogromno vremena, jer gosti na jednom mjestu brzo pronalaze sve važne informacije – od uputa za dolazak do preporuka za izlete. Manje pitanja, više zadovoljnih gostiju i jednostavnija komunikacija. Stvarno super usluga! Toplo preporučujem!",
           image: '/images/hosts/lucija.jpg'
         },
         {
           id: 5,
-          name: 'Ksenija',
-          role: 'Apartman Bled',
+          name: 'Apartma Bled',
+          role: 'Apartman',
           rating: 5,
           text: "SmartxStay mi je stvarno olakšao svakodnevno upravljanje apartmanima. Gosti primaju sve potrebne informacije na vrijeme, bez da moram brinuti za svaki detalj posebno. Podrška tima je uvijek brza i ljubazna – stvarno imam osjećaj da nisam sama. Jako sam zahvalna za ovu suradnju!",
           image: '/images/hosts/ksenija.jpg'
@@ -295,10 +295,10 @@ const OurHostsSection = () => {
         },
         {
           id: 7,
-          name: 'Farm holidays Povsin',
-          role: 'Farm Holidays',
+          name: 'Farm Holidays Povšin',
+          role: 'Kmetijski turizem',
           rating: 5,
-          text: "Top stvar. Prije smo stalno objašnjavali gostima gdje je koja restauracija, aktivnosti... Odkad imamo Smart Stay, nitko više ne pita za restauracije i aktivnosti u blizini.",
+          text: "Top stvar. Prije smo stalno objašnjavali gostima gdje je koja restauracija, aktivnosti... Odkad imamo SmartxStay, nitko više ne pita za restauracije i aktivnosti u blizini.",
           image: '/images/hosts/povsin.jpg'
         },
         {
@@ -327,12 +327,12 @@ const OurHostsSection = () => {
         },
         {
           id: 11,
-          name: 'IPSIMA I.P.D.O.O.',
-          role: 'HIŠA ANČKA BOUTIQUE HOTEL',
+          name: 'Hiša Ančka Boutique Hotel',
+          role: 'Boutique Hotel',
           rating: 5,
-          text: "RADI DOBRO.",
+          text: "DELUJE DOBRO.",
           image: '/images/hosts/ipsima.jpg'
-        }
+    }
       ]
     }
   };
@@ -549,11 +549,14 @@ const OurHostsSection = () => {
                   position: 'relative'
                 }}
               >
-                {/* Profile Section - Only Role (Property Name) */}
+                {/* Profile Section - Name (Property Name) */}
                 <div style={{ marginBottom: '16px' }}>
-                  <h4 style={{ margin: 0, fontWeight: 700, color: '#0f0f0f', fontSize: '16px' }}>
-                    {testimonial.role}
-                  </h4>
+                    <h4 style={{ margin: 0, marginBottom: '4px', fontWeight: 700, color: '#0f0f0f', fontSize: '16px' }}>
+                    {testimonial.name}
+                    </h4>
+                    <p style={{ margin: 0, fontWeight: 400, color: '#737373', fontSize: '14px' }}>
+                      {testimonial.role}
+                    </p>
                 </div>
 
                 {/* Rating */}

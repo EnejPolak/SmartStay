@@ -463,7 +463,7 @@ const Navbar = () => {
           marginTop: '40px',
           paddingTop: '24px',
           borderTop: '1px solid rgba(0, 0, 0, 0.1)'
-        }}
+          }}
       >
         <span style={{ fontSize: '16px', fontWeight: 600, color: '#333', marginRight: '8px' }}>
           {language === 'en' ? 'Language:' : language === 'sl' ? 'Jezik:' : 'Jezik:'}

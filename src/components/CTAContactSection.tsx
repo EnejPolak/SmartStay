@@ -429,7 +429,7 @@ const CTAContactSection = () => {
               type="submit"
               className="btn-primary"
               disabled={isSubmitting}
-              style={{ 
+              style={{
                 width: '100%',
                 opacity: isSubmitting ? 0.7 : 1,
                 cursor: isSubmitting ? 'not-allowed' : 'pointer',
