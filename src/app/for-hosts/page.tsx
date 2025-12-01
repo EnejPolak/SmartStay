@@ -195,6 +195,8 @@ const ForHostsPage = () => {
             <Link 
               href={language === 'hr' 
                 ? "https://meetings-smartxstay.zohobookings.eu/#/242002000000057014"
+                : language === 'sl'
+                ? "https://meetings-smartxstay.zohobookings.eu/#/242002000000063002"
                 : "https://meetings-smartxstay.zohobookings.eu/#/242002000000041016"}
               className="btn-primary"
               style={{ textDecoration: 'none' }}
