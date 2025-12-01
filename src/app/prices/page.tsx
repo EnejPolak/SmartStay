@@ -631,18 +631,6 @@ export default function PricesPage() {
 
               {/* Price */}
               <div style={{ marginBottom: '8px' }}>
-                {/* Original Price - Strikethrough */}
-                <div
-                  style={{
-                    fontSize: '20px',
-                    fontWeight: 500,
-                    color: '#7db8ff',
-                    textDecoration: 'line-through',
-                    marginBottom: '4px',
-                  }}
-                >
-                  17,88€
-                </div>
                 {/* Current Price */}
               <div
                 className="price-amount animated-gradient-text"
@@ -800,18 +788,6 @@ export default function PricesPage() {
 
               {/* Price */}
               <div style={{ marginBottom: '8px' }}>
-                {/* Original Price - Strikethrough */}
-                <div
-                  style={{
-                    fontSize: '20px',
-                    fontWeight: 500,
-                    color: '#7db8ff',
-                    textDecoration: 'line-through',
-                    marginBottom: '4px',
-                  }}
-                >
-                  41,88€
-                </div>
                 {/* Current Price */}
               <div
                 className="price-amount animated-gradient-text"
@@ -947,18 +923,6 @@ export default function PricesPage() {
 
               {/* Price */}
               <div style={{ marginBottom: '8px' }}>
-                {/* Original Price - Strikethrough */}
-                <div
-                  style={{
-                    fontSize: '20px',
-                    fontWeight: 500,
-                    color: '#7db8ff',
-                    textDecoration: 'line-through',
-                    marginBottom: '4px',
-                  }}
-                >
-                  71,88€
-                </div>
                 {/* Current Price */}
               <div
                 className="price-amount animated-gradient-text"
