@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import AboutMap from '@/components/AboutMap';
+import AboutMap from '@/components/about/AboutMap';
 
 export default function AboutPage() {
   const { language } = useLanguage();

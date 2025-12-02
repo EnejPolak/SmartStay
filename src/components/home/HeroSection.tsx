@@ -427,7 +427,7 @@ const HeroSection = () => {
               premultipliedAlpha: false,
             }}
             dpr={[2, 3]}
-            onCreated={({ gl, scene, camera }) => {
+            onCreated={({ gl }) => {
               gl.toneMapping = THREE.ACESFilmicToneMapping;
               gl.toneMappingExposure = 1.2;
               // Force maximum pixel ratio for sharpest rendering

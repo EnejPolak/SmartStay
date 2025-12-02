@@ -229,3 +229,10 @@ body {
   outline-offset: 3px;
 }
 
+/* Blog Grid Responsive */
+@media (max-width: 768px) {
+  .blog-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+

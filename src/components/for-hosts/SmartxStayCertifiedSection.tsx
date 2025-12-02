@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const SmartxStayCertifiedSection = () => {
@@ -137,9 +138,11 @@ const SmartxStayCertifiedSection = () => {
               gap: '12px'
             }}
           >
-            <img
+            <Image
               src="/images/hosts/ProHost.png"
               alt="Smart Pro Host"
+              width={200}
+              height={200}
               style={{
                 maxWidth: '200px',
                 width: '100%',
@@ -158,9 +161,11 @@ const SmartxStayCertifiedSection = () => {
               gap: '12px'
             }}
           >
-            <img
+            <Image
               src="/images/hosts/EliteHost.png"
               alt="Smart Elite Host"
+              width={200}
+              height={200}
               style={{
                 maxWidth: '200px',
                 width: '100%',

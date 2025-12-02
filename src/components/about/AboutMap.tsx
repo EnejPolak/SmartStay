@@ -6,6 +6,16 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { MAPBOX_CONFIG } from '@/config/mapbox';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+// Koordinate za Ljubljana - Črnuče (Pisarna Coworking)
+const LOCATION = {
+  lng: 14.5364,
+  lat: 46.0975,
+  address: 'C. 24. Junija 23, 1231 Ljubljana - Črnuče'
+} as const;
+
+// Center za Slovenijo (Ljubljana)
+const SLOVENIA_CENTER: [number, number] = [14.5058, 46.0569];
+
 const AboutMap = () => {
   const { language } = useLanguage();
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -28,16 +38,6 @@ const AboutMap = () => {
   };
 
   const t = translations[language] || translations.en;
-
-  // Koordinate za Ljubljana - Črnuče (Pisarna Coworking)
-  const LOCATION = {
-    lng: 14.5364,
-    lat: 46.0975,
-    address: 'C. 24. Junija 23, 1231 Ljubljana - Črnuče'
-  };
-
-  // Center za Slovenijo (Ljubljana)
-  const SLOVENIA_CENTER: [number, number] = [14.5058, 46.0569];
 
   useEffect(() => {
     if (!mapContainer.current || map.current) return;
@@ -179,7 +179,7 @@ const AboutMap = () => {
         map.current = null;
       }
     };
-  }, []);
+  }, [t.navigation, language]);
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '450px', borderRadius: '16px', overflow: 'hidden' }}>

@@ -1,10 +1,10 @@
-import HeroSection from '@/components/HeroSection';
-import WhatIsSmartxStay from '@/components/WhatIsSmartxStay';
-import ProblemsSection from '@/components/ProblemsSection';
-import FeaturesOverviewSection from '@/components/FeaturesOverviewSection';
-import OurHostsSection from '@/components/OurHostsSection';
-import LocalExperienceSection from '@/components/LocalExperienceSection';
-import CTAContactSection from '@/components/CTAContactSection';
+import HeroSection from '@/components/home/HeroSection';
+import WhatIsSmartxStay from '@/components/home/WhatIsSmartxStay';
+import ProblemsSection from '@/components/home/ProblemsSection';
+import FeaturesOverviewSection from '@/components/home/FeaturesOverviewSection';
+import OurHostsSection from '@/components/home/OurHostsSection';
+import LocalExperienceSection from '@/components/home/LocalExperienceSection';
+import CTAContactSection from '@/components/home/CTAContactSection';
 
 export default function Home() {
   return (
