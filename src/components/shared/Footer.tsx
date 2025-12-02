@@ -87,6 +87,7 @@ const Footer = () => {
               width={120}
               height={32}
               style={{ height: '32px', width: 'auto', maxWidth: '180px' }}
+              sizes="(max-width: 768px) 100px, 120px"
             />
           </div>
 

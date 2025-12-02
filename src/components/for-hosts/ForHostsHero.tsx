@@ -155,19 +155,50 @@ export default function ForHostsHero() {
               gl.toneMappingExposure = 1.2;
               const maxPixelRatio = Math.min(window.devicePixelRatio || 2, 3);
               gl.setPixelRatio(maxPixelRatio);
+              
+              // Handle WebGL context loss
+              const handleContextLost = (event: Event) => {
+                event.preventDefault();
+              };
+              
+              const handleContextRestored = () => {
+                // Re-initialize WebGL settings after context is restored
+                gl.toneMapping = THREE.ACESFilmicToneMapping;
+                gl.toneMappingExposure = 1.2;
+                gl.setPixelRatio(maxPixelRatio);
+                setSize();
+              };
+              
+              const canvas = gl.domElement;
+              canvas.addEventListener('webglcontextlost', handleContextLost);
+              canvas.addEventListener('webglcontextrestored', handleContextRestored);
+              
               const setSize = () => {
                 const container = gl.domElement.parentElement;
                 if (container) {
                   const width = container.clientWidth;
                   const height = container.clientHeight;
-                  gl.setSize(width * maxPixelRatio, height * maxPixelRatio, false);
-                  gl.domElement.style.width = width + 'px';
-                  gl.domElement.style.height = height + 'px';
+                  // Prevent WebGL errors by checking for valid dimensions
+                  if (width > 0 && height > 0) {
+                    gl.setSize(width * maxPixelRatio, height * maxPixelRatio, false);
+                    gl.domElement.style.width = width + 'px';
+                    gl.domElement.style.height = height + 'px';
+                  }
                 }
               };
-              setSize();
-              window.addEventListener('resize', setSize);
-              return () => window.removeEventListener('resize', setSize);
+              // Use requestAnimationFrame to ensure container is ready
+              requestAnimationFrame(() => {
+                setSize();
+              });
+              const handleResize = () => {
+                requestAnimationFrame(setSize);
+              };
+              window.addEventListener('resize', handleResize);
+              return () => {
+                window.removeEventListener('resize', handleResize);
+                canvas.removeEventListener('webglcontextlost', handleContextLost);
+                canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+              };
             }}
           >
             <ambientLight intensity={6} />

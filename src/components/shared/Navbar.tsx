@@ -156,11 +156,11 @@ const Navbar = () => {
         <Image 
           src="/logo__1__720.png" 
           alt="SmartStay Logo" 
-            width={75} 
-            height={38}
+          width={75} 
+          height={38}
           className="object-contain"
           priority
-            style={{ maxWidth: '100%', height: 'auto' }}
+          style={{ maxWidth: '100%', height: 'auto', width: 'auto' }}
         />
         </Link>
       </div>

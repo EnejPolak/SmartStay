@@ -14,6 +14,13 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "SmartStay",
   description: "SmartStay application",
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/logo__1__720.png', type: 'image/png' },
+    ],
+    apple: '/logo__1__720.png',
+  },
 };
 
 export default function RootLayout({
