@@ -52,7 +52,7 @@ export default function CategoryNotFound() {
                 lineHeight: 1.6,
               }}
             >
-              The category you're looking for doesn't exist or has been removed.
+              The category you&apos;re looking for doesn&apos;t exist or has been removed.
             </p>
             <Link
               href="/blog"
