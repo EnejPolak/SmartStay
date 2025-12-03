@@ -37,6 +37,7 @@ const Navbar = () => {
       forGuests: 'For guests',
       pricing: 'Pricing',
       aboutUs: 'About us',
+      blog: 'Blog',
       contact: 'Contact'
     },
     sl: {
@@ -45,6 +46,7 @@ const Navbar = () => {
       forGuests: 'Za goste',
       pricing: 'Cenik',
       aboutUs: 'O nas',
+      blog: 'Blog',
       contact: 'Kontakt'
     },
     hr: {
@@ -53,6 +55,7 @@ const Navbar = () => {
       forGuests: 'Za goste',
       pricing: 'Cijene',
       aboutUs: 'O nama',
+      blog: 'Blog',
       contact: 'Kontakt'
     }
   };
@@ -69,6 +72,7 @@ const Navbar = () => {
     { href: '/for-guests', label: t.forGuests },
     { href: '/prices', label: t.pricing },
     { href: '/about', label: t.aboutUs },
+    { href: '/blog', label: t.blog },
     { href: '/contact', label: t.contact }
   ];
 

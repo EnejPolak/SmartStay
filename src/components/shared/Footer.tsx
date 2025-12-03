@@ -18,6 +18,7 @@ const Footer = () => {
       forHosts: 'For hosts',
       pricing: 'Pricing',
       aboutUs: 'About us',
+      blog: 'Blog',
       contactLink: 'Contact',
       terms: 'Terms and conditions',
       privacy: 'Privacy Policy'
@@ -31,6 +32,7 @@ const Footer = () => {
       forHosts: 'Za gostitelje',
       pricing: 'Cenik',
       aboutUs: 'O nas',
+      blog: 'Blog',
       contactLink: 'Kontakt',
       terms: 'Pogoji uporabe',
       privacy: 'Pravilnik o zasebnosti'
@@ -44,6 +46,7 @@ const Footer = () => {
       forHosts: 'Za domaćine',
       pricing: 'Cijene',
       aboutUs: 'O nama',
+      blog: 'Blog',
       contactLink: 'Kontakt',
       terms: 'Uvjeti korištenja',
       privacy: 'Pravilnik o privatnosti'
@@ -255,6 +258,7 @@ const Footer = () => {
                 { label: t.forHosts, href: '/for-hosts' },
                 { label: t.pricing, href: '/prices' },
                 { label: t.aboutUs, href: '/about' },
+                { label: t.blog, href: '/blog' },
                 { label: t.contactLink, href: '/contact' }
               ].map((link) => (
                 <li key={link.label} style={{ marginBottom: '8px' }}>

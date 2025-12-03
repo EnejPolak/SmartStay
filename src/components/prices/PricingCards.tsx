@@ -231,7 +231,7 @@ export default function PricingCards({ onPackageSelect }: PricingCardsProps) {
                 fontWeight: 900,
               }}
             >
-              14,90€{t.perMonth}
+              17,90€{t.perMonth}
             </div>
           </div>
 
@@ -369,7 +369,7 @@ export default function PricingCards({ onPackageSelect }: PricingCardsProps) {
                 fontWeight: 900,
               }}
             >
-              34,90€{t.perMonth}
+              41,90€{t.perMonth}
             </div>
           </div>
 
@@ -486,7 +486,7 @@ export default function PricingCards({ onPackageSelect }: PricingCardsProps) {
                 fontWeight: 900,
               }}
             >
-              59,90€{t.perMonth}
+              71,90€{t.perMonth}
             </div>
           </div>
 

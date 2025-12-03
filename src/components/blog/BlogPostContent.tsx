@@ -10,7 +10,7 @@ export default function BlogPostContent({ content }: BlogPostContentProps) {
   return (
     <>
       <div
-        className="post-content prose"
+        className="post-content prose blog-content"
         dangerouslySetInnerHTML={{ __html: content }}
       />
       <style jsx>{`
@@ -25,6 +25,16 @@ export default function BlogPostContent({ content }: BlogPostContentProps) {
           margin-top: 2em;
           margin-bottom: 1em;
           letter-spacing: -0.02em;
+          text-decoration: none !important;
+        }
+
+        .post-content :global(h1 a),
+        .post-content :global(h2 a),
+        .post-content :global(h3 a),
+        .post-content :global(h4 a),
+        .post-content :global(h5 a),
+        .post-content :global(h6 a) {
+          text-decoration: none !important;
         }
 
         .post-content :global(h1) {
@@ -60,14 +70,14 @@ export default function BlogPostContent({ content }: BlogPostContentProps) {
 
         .post-content :global(a) {
           color: #7c5fd9;
-          text-decoration: none;
+          text-decoration: none !important;
           font-weight: 600;
           transition: color 0.3s ease;
         }
 
         .post-content :global(a:hover) {
           color: #7db8ff;
-          text-decoration: underline;
+          text-decoration: none !important;
         }
 
         .post-content :global(img) {

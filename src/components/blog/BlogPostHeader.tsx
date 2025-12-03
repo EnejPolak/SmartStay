@@ -152,7 +152,11 @@ export default function BlogPostHeader({
           -webkit-text-fill-color: transparent;
           background-clip: text;
           animation: gradientShift 3s ease-in-out infinite;
-          text-decoration: none;
+          text-decoration: none !important;
+        }
+
+        .post-title a {
+          text-decoration: none !important;
         }
 
         @keyframes gradientShift {
