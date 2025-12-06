@@ -74,8 +74,13 @@ function IPhoneModel() {
   );
 }
 
-// Preload the model
-useGLTF.preload('/welcomeIphone.glb');
+// Lazy load model - only preload when needed
+if (typeof window !== 'undefined') {
+  // Only preload after initial page load
+  setTimeout(() => {
+    useGLTF.preload('/welcomeIphone.glb');
+  }, 2000);
+}
 
 const HeroSection = () => {
   const [activeTab, setActiveTab] = useState<'hosts' | 'guests'>('hosts');
@@ -446,10 +451,12 @@ const HeroSection = () => {
               stencil: false,
               depth: true,
               logarithmicDepthBuffer: false,
-              preserveDrawingBuffer: true,
+              preserveDrawingBuffer: false,
               premultipliedAlpha: false,
+              failIfMajorPerformanceCaveat: false,
             }}
-            dpr={[2, 3]}
+            dpr={[1, 2]}
+            performance={{ min: 0.5 }}
             onCreated={({ gl }) => {
               gl.toneMapping = THREE.ACESFilmicToneMapping;
               gl.toneMappingExposure = 1.2;

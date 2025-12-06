@@ -146,10 +146,12 @@ export default function ForHostsHero() {
               stencil: false,
               depth: true,
               logarithmicDepthBuffer: false,
-              preserveDrawingBuffer: true,
+              preserveDrawingBuffer: false,
               premultipliedAlpha: false,
+              failIfMajorPerformanceCaveat: false,
             }}
-            dpr={[2, 3]}
+            dpr={[1, 2]}
+            performance={{ min: 0.5 }}
             onCreated={({ gl }) => {
               gl.toneMapping = THREE.ACESFilmicToneMapping;
               gl.toneMappingExposure = 1.2;
