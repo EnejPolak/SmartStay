@@ -5,6 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 // iPhone Model Component
@@ -74,12 +75,24 @@ function IPhoneModel() {
   );
 }
 
-// Lazy load model - only preload when needed
+// Lazy load model - only preload when needed (client-side only)
 if (typeof window !== 'undefined') {
-  // Only preload after initial page load
-  setTimeout(() => {
-    useGLTF.preload('/welcomeIphone.glb');
+  // Only preload after initial page load to avoid hydration issues
+  const preloadTimer = setTimeout(() => {
+    try {
+      useGLTF.preload('/welcomeIphone.glb');
+    } catch (error) {
+      // Silently fail if preload fails
+      console.debug('GLB preload skipped');
+    }
   }, 2000);
+  
+  // Cleanup on unmount
+  if (typeof window !== 'undefined' && window.addEventListener) {
+    window.addEventListener('beforeunload', () => {
+      clearTimeout(preloadTimer);
+    });
+  }
 }
 
 const HeroSection = () => {
@@ -151,23 +164,42 @@ const HeroSection = () => {
 
   const t = translations[language] || translations.en;
 
-  // Check if container is visible and should render Canvas
+  // Check if container is visible and should render Canvas (skip on mobile)
   useEffect(() => {
+    // Skip on server-side
+    if (typeof window === 'undefined') return;
+    
     const checkVisibility = () => {
+      // Skip 3D models on mobile for performance
+      const isMobile = window.innerWidth < 1024;
+      if (isMobile) {
+        setShouldRenderCanvas(false);
+        return;
+      }
+      
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
         const isVisible = rect.width > 0 && rect.height > 0 && 
                          window.getComputedStyle(containerRef.current).display !== 'none';
-        setShouldRenderCanvas(isVisible);
+        // Add delay for better initial load performance
+        const timer = setTimeout(() => {
+          setShouldRenderCanvas(isVisible);
+        }, 2000);
+        return () => clearTimeout(timer);
       } else {
         // Wait for container to mount
-        setTimeout(checkVisibility, 100);
+        const timer = setTimeout(checkVisibility, 100);
+        return () => clearTimeout(timer);
       }
     };
     
-    checkVisibility();
-    window.addEventListener('resize', checkVisibility);
-    return () => window.removeEventListener('resize', checkVisibility);
+    const cleanup = checkVisibility();
+    const handleResize = () => checkVisibility();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (cleanup) cleanup();
+    };
   }, []);
 
   // Animate heading when tab changes
@@ -197,7 +229,8 @@ const HeroSection = () => {
       className="hero-content-section"
       style={{
         padding: '80px 40px 20px 80px',
-        minHeight: 'auto',
+        minHeight: '600px',
+        height: 'auto',
         marginTop: '0px',
         display: 'flex',
         flexDirection: 'column',
@@ -205,13 +238,39 @@ const HeroSection = () => {
         overflow: 'visible',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundImage: 'url(/heroPicture.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
         position: 'relative',
+        contain: 'layout style paint',
       }}
     >
+      {/* Optimized Background Image */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 0,
+          overflow: 'hidden',
+          aspectRatio: '16/9',
+          minHeight: '600px',
+        }}
+      >
+        <Image
+          src="/heroPicture.png"
+          alt="SmartxStay Hero Background"
+          fill
+          priority
+          quality={75}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1920px"
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+        />
+      </div>
       {/* Overlay for better text readability - gradient from left (white) to center, stops before phone area */}
       <div
         style={{
@@ -221,7 +280,7 @@ const HeroSection = () => {
           right: '30%',
           bottom: 0,
           background: 'linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.4) 80%, transparent 100%)',
-          zIndex: 0,
+          zIndex: 1,
           pointerEvents: 'none',
         }}
       />
@@ -271,7 +330,7 @@ const HeroSection = () => {
             style={{
               backgroundColor: 'transparent',
               border: 'none',
-              color: activeTab === 'hosts' ? '#a29eff' : '#9a9a9a',
+              color: activeTab === 'hosts' ? '#7c5fd9' : '#4a4a4a',
               fontSize: '18px',
               fontWeight: 600,
               cursor: 'pointer',
@@ -287,7 +346,7 @@ const HeroSection = () => {
             }}
             onMouseLeave={(e) => {
               if (activeTab !== 'hosts') {
-                e.currentTarget.style.color = '#9a9a9a';
+                e.currentTarget.style.color = '#4a4a4a';
               }
             }}
           >
@@ -311,7 +370,7 @@ const HeroSection = () => {
             style={{
               backgroundColor: 'transparent',
               border: 'none',
-              color: activeTab === 'guests' ? '#a29eff' : '#9a9a9a',
+              color: activeTab === 'guests' ? '#7c5fd9' : '#4a4a4a',
               fontSize: '18px',
               fontWeight: 600,
               cursor: 'pointer',
@@ -327,7 +386,7 @@ const HeroSection = () => {
             }}
             onMouseLeave={(e) => {
               if (activeTab !== 'guests') {
-                e.currentTarget.style.color = '#9a9a9a';
+                e.currentTarget.style.color = '#4a4a4a';
               }
             }}
           >
@@ -567,15 +626,14 @@ const HeroSection = () => {
           }
         }
 
-        @keyframes gradientShift {
-          0% {
-            background-position: 0% 50%;
+        @keyframes gradientShiftOpacity {
+          0%, 100% {
+            opacity: 1;
+            filter: hue-rotate(0deg);
           }
           50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
+            opacity: 0.9;
+            filter: hue-rotate(10deg);
           }
         }
 
@@ -584,7 +642,13 @@ const HeroSection = () => {
         }
 
         .animated-gradient-text {
-          animation: gradientShift 3s ease-in-out infinite;
+          background: linear-gradient(90deg, #7db8ff 0%, #a29eff 50%, #7c5fd9 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          will-change: opacity;
+          animation: gradientShiftOpacity 3s ease-in-out infinite;
         }
 
         .phone-model-container {
@@ -618,11 +682,16 @@ const HeroSection = () => {
           width: 100%;
           max-width: 100%;
           min-width: 0;
+          min-height: 200px;
+          contain: layout style;
         }
 
         .hero-line {
           display: block;
           color: #000000;
+          min-height: 1.3em;
+          contain: layout style;
+          will-change: auto;
         }
 
         .hero-line-black {
@@ -635,7 +704,20 @@ const HeroSection = () => {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          animation: gradientShift 3s ease-in-out infinite;
+          position: relative;
+          will-change: opacity;
+          animation: gradientShiftOpacity 3s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShiftOpacity {
+          0%, 100% {
+            opacity: 1;
+            filter: hue-rotate(0deg);
+          }
+          50% {
+            opacity: 0.9;
+            filter: hue-rotate(10deg);
+          }
         }
 
         /* Desktop: enforce nowrap to maintain 4-line layout */

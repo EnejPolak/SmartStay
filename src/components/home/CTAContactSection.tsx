@@ -328,11 +328,29 @@ const CTAContactSection = () => {
             />
 
             {/* User Type Select */}
+            <label 
+              htmlFor="userType" 
+              style={{ 
+                position: 'absolute',
+                width: '1px',
+                height: '1px',
+                padding: 0,
+                margin: '-1px',
+                overflow: 'hidden',
+                clip: 'rect(0, 0, 0, 0)',
+                whiteSpace: 'nowrap',
+                borderWidth: 0,
+              }}
+            >
+              {t.vacationRentalHost}
+            </label>
             <select
+              id="userType"
               name="userType"
               value={formData.userType}
               onChange={handleChange}
               required
+              aria-label={t.vacationRentalHost}
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 border: '1px solid rgba(255, 255, 255, 0.3)',

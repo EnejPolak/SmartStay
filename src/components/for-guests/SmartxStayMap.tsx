@@ -61,23 +61,38 @@ const SmartxStayMap: React.FC<SmartxStayMapProps> = ({ className = '' }) => {
     return () => observer.disconnect();
   }, []);
 
-  // Load stays data when in viewport
+  // Load stays data when in viewport (with AbortController for bfcache)
   useEffect(() => {
     if (!isInViewport) return;
 
-    console.log('Loading stays data...');
-    fetch('/data/stays.geojson')
-      .then(response => {
-        console.log('Response status:', response.status);
-        return response.json();
+    const abortController = new AbortController();
+    
+    // Delay fetch to avoid blocking initial render
+    const fetchTimer = setTimeout(() => {
+      fetch('/data/stays.geojson', {
+        signal: abortController.signal,
+        cache: 'force-cache',
       })
-      .then(data => {
-        console.log('Stays data loaded:', data);
-        setStaysData(data);
-      })
-      .catch(error => {
-        console.error('Error loading stays data:', error);
-      });
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to load');
+          return response.json();
+        })
+        .then(data => {
+          if (!abortController.signal.aborted) {
+            setStaysData(data);
+          }
+        })
+        .catch(error => {
+          if (error.name !== 'AbortError') {
+            console.error('Error loading stays data:', error);
+          }
+        });
+    }, 100);
+
+    return () => {
+      clearTimeout(fetchTimer);
+      abortController.abort();
+    };
   }, [isInViewport]);
 
   // Initialize map

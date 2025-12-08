@@ -552,9 +552,9 @@ const OurHostsSection = () => {
               >
                 {/* Profile Section - Name (Property Name) */}
                 <div style={{ marginBottom: '16px' }}>
-                    <h4 style={{ margin: 0, marginBottom: '4px', fontWeight: 700, color: '#0f0f0f', fontSize: '16px' }}>
+                    <h3 style={{ margin: 0, marginBottom: '4px', fontWeight: 700, color: '#0f0f0f', fontSize: '16px' }}>
                     {testimonial.name}
-                    </h4>
+                    </h3>
                     <p style={{ margin: 0, fontWeight: 400, color: '#737373', fontSize: '14px' }}>
                       {testimonial.role}
                     </p>

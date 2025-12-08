@@ -277,7 +277,8 @@ export default function ForHostsHero() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          animation: gradientShift 3s ease-in-out infinite;
+          will-change: opacity;
+          animation: gradientShiftOpacity 3s ease-in-out infinite;
         }
 
         .phone-model-container {
@@ -322,15 +323,14 @@ export default function ForHostsHero() {
           }
         }
 
-        @keyframes gradientShift {
-          0% {
-            background-position: 0% 50%;
+        @keyframes gradientShiftOpacity {
+          0%, 100% {
+            opacity: 1;
+            filter: hue-rotate(0deg);
           }
           50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
+            opacity: 0.9;
+            filter: hue-rotate(10deg);
           }
         }
 

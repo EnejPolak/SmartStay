@@ -103,11 +103,15 @@ body {
 
 /* Hero content section */
 .hero-content-section {
-  min-height: 100vh;
+  min-height: 600px;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  contain: layout style paint;
+  aspect-ratio: 16/9;
+  width: 100%;
 }
 
 /* Button System - 3 Core Styles */

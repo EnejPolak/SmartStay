@@ -420,20 +420,22 @@ const Navbar = () => {
     {/* Mobile Menu Overlay */}
     <div
       className="mobile-menu-overlay"
+      suppressHydrationWarning
       style={{
         position: 'fixed',
         top: '80px',
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.98)',
+        backgroundColor: '#ffffff',
         backdropFilter: 'blur(25px) saturate(180%)',
         WebkitBackdropFilter: 'blur(25px) saturate(180%)',
         zIndex: 40,
         transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)',
         transition: 'transform 0.3s ease-in-out',
         overflowY: 'auto',
-        padding: '40px 24px'
+        padding: '40px 24px',
+        display: isMenuOpen ? 'block' : 'none',
       }}
         >
       {/* Mobile Navigation Links */}
