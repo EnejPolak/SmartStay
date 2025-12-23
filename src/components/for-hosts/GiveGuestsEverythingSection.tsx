@@ -142,9 +142,20 @@ const GiveGuestsEverythingSection = () => {
     const carousel = carouselRef.current;
     if (!carousel) return;
 
+    // Določi hitrost rotacije glede na velikost zaslona
+    const getRotationSpeed = () => {
+      // Na desktop napravah (nad 768px) hitrejša rotacija
+      if (window.innerWidth > 768) {
+        return 0.20; // Hitrejša rotacija za desktop
+      }
+      // Na mobilnih napravah počasnejša rotacija
+      return 0.10;
+    };
+
     const rotate = () => {
       if (!isPausedRef.current) {
-        rotationRef.current += 0.08; // Počasnejša hitrost rotacije za lažje branje
+        const speed = getRotationSpeed();
+        rotationRef.current += speed;
         if (rotationRef.current >= 360) {
           rotationRef.current = 0;
         }

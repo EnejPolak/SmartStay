@@ -210,7 +210,7 @@ const LocalExperienceSection = () => {
               }}
             >
               <Image
-                src="/images/local-experience/cerklje-logo.png"
+                src="/images/local-experience/cerklje-logo.jpg"
                 alt="Cerklje pod Krvavcem"
                 fill
                 style={{ objectFit: 'contain' }}
@@ -227,7 +227,7 @@ const LocalExperienceSection = () => {
               }}
             >
               <Image
-                src="/images/local-experience/slovenia-outdoor-logo.png"
+                src="/images/local-experience/slovenia-outdoor-logo.webp"
                 alt="Slovenia Outdoor"
                 fill
                 style={{ objectFit: 'contain' }}

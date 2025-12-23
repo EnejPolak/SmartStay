@@ -6,9 +6,41 @@ import CategoryFilters from '@/components/blog/CategoryFilters';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = {
-  title: 'Blog | SmartxStay',
-  description: 'Read our latest blog posts about SmartxStay',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog',
+  description: 'Read our latest blog posts about vacation rental management, guest experience, hospitality technology, and SmartxStay platform tips and updates.',
+  keywords: [
+    'vacation rental blog',
+    'hospitality technology blog',
+    'guest experience tips',
+    'host management blog',
+    'tourism technology',
+    'QR code hospitality',
+  ],
+  openGraph: {
+    title: 'Blog | SmartxStay',
+    description: 'Read our latest blog posts about vacation rental management, guest experience, and hospitality technology.',
+    url: 'https://smartxstay.com/blog',
+    images: [
+      {
+        url: '/logo__1__720.png',
+        width: 1200,
+        height: 630,
+        alt: 'SmartxStay Blog',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | SmartxStay',
+    description: 'Read our latest blog posts about vacation rental management and hospitality technology.',
+    images: ['/logo__1__720.png'],
+  },
+  alternates: {
+    canonical: 'https://smartxstay.com/blog',
+  },
 };
 
 export default async function BlogPage() {

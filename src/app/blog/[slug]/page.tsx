@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import { getPostBySlug } from '@/lib/getPostBySlug';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
@@ -11,7 +12,7 @@ interface BlogPostPageProps {
   }>;
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps) {
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
@@ -21,9 +22,45 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     };
   }
 
+  // Extract description from content
+  const description = post.content 
+    ? post.content.replace(/<[^>]*>/g, '').substring(0, 160).trim() + '...' 
+    : 'Read our latest blog post about SmartxStay';
+  const imageUrl = post.featuredImage?.node?.sourceUrl || '/logo__1__720.png';
+
   return {
-    title: `${post.title} | SmartxStay Blog`,
-    description: 'Read our blog post',
+    title: post.title,
+    description,
+    keywords: [
+      'SmartxStay blog',
+      'vacation rental tips',
+      'hospitality technology',
+      'guest experience',
+    ],
+    openGraph: {
+      title: `${post.title} | SmartxStay Blog`,
+      description,
+      url: `https://smartxstay.com/blog/${slug}`,
+      type: 'article',
+      publishedTime: post.date,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${post.title} | SmartxStay Blog`,
+      description,
+      images: [imageUrl],
+    },
+    alternates: {
+      canonical: `https://smartxstay.com/blog/${slug}`,
+    },
   };
 }
 

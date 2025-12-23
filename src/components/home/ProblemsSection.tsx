@@ -79,19 +79,19 @@ const ProblemsSection = () => {
         {
           id: 1,
           title: 'Ponavljajoča se vprašanja gostov',
-          description: 'Nenehno odgovarjanje na ista vprašanja.',
+          description: 'Stalno odgovarjanje na ista vprašanja jemlje čas, povečuje vašo obremenitev in zmanjšuje fokus na tisto, kar je res pomembno - dobro izkušnjo gosta.',
           icon: 'question'
         },
         {
           id: 2,
           title: 'Zastareli papirnati vodniki',
-          description: 'Težko posodabljanje, enostavno izgubiti ali poškodovati.',
+          description: 'Težko jih je posodabljati, hitro se izgubijo ali poškodujejo, informacije pa pogosto zastarajo ravno takrat, ko jih gost najbolj potrebuje.',
           icon: 'document'
         },
         {
           id: 3,
           title: 'Zaostajanje v sodobnem turizmu',
-          description: 'Tehnologija se hitro razvija, ne zaostajajte.',
+          description: 'Tehnologija se razvija hitreje kot kdajkoli prej. Gostje pričakujejo sodobno, hitro in brezhibno izkušnjo – zaostajanje pa hitro pomeni izgubljene priložnosti.',
           icon: 'hourglass'
         },
         {
@@ -111,13 +111,13 @@ const ProblemsSection = () => {
         {
           id: 2,
           title: 'Izgubljeni pred prihodom',
-          description: 'Slaba navodila / Čakalne vrste, dolge minute ob prihodu. Raziskava Cornellove univerze: Čakanje, daljše od 5 minut, zmanjša zadovoljstvo gosta za 50 %.',
+          description: 'Nejasna navodila, čakalne vrste in dolge minute ob prihodu hitro pokvarijo prvi vtis. Raziskava Cornellove univerze kaže, da čakanje, daljše od 5 minut, zmanjša zadovoljstvo gosta za kar 50%',
           icon: 'message'
         },
         {
           id: 3,
           title: 'Stres v tuji državi',
-          description: 'Jezikovne ovire. Zaradi jezikovnih ovir hitro pride do pomanjkanja informacij, nezdovoljstva in ne gotovosti.',
+          description: 'Jezikovne ovire hitro vodijo v pomanjkanje informacij, nesporazume in občutek negotovosti. Gost se namesto sproščenosti znajde v stresu že ob osnovnih vprašanjih.',
           icon: 'info'
         },
         {

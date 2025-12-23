@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import { getPostsByCategory } from '@/lib/getPostsByCategory';
 import { getCategories } from '@/lib/getCategories';
 import BlogHero from '@/components/blog/BlogHero';
@@ -13,7 +14,7 @@ interface CategoryPageProps {
   }>;
 }
 
-export async function generateMetadata({ params }: CategoryPageProps) {
+export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
   const result = await getPostsByCategory(slug);
 
@@ -24,8 +25,37 @@ export async function generateMetadata({ params }: CategoryPageProps) {
   }
 
   return {
-    title: `${result.categoryName} | SmartxStay Blog`,
-    description: `Browse posts in the ${result.categoryName} category`,
+    title: `${result.categoryName}`,
+    description: `Browse blog posts in the ${result.categoryName} category on SmartxStay. Read articles about vacation rental management, hospitality technology, and guest experience.`,
+    keywords: [
+      'SmartxStay blog',
+      result.categoryName,
+      'vacation rental blog',
+      'hospitality technology',
+      'guest experience',
+    ],
+    openGraph: {
+      title: `${result.categoryName} | SmartxStay Blog`,
+      description: `Browse blog posts in the ${result.categoryName} category on SmartxStay.`,
+      url: `https://smartxstay.com/blog/category/${slug}`,
+      images: [
+        {
+          url: '/logo__1__720.png',
+          width: 1200,
+          height: 630,
+          alt: `${result.categoryName} - SmartxStay Blog`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${result.categoryName} | SmartxStay Blog`,
+      description: `Browse blog posts in the ${result.categoryName} category.`,
+      images: ['/logo__1__720.png'],
+    },
+    alternates: {
+      canonical: `https://smartxstay.com/blog/category/${slug}`,
+    },
   };
 }
 
