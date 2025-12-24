@@ -679,6 +679,11 @@ const HeroSection = () => {
             height: 100vh !important;
             height: 100dvh !important;
           }
+          
+          .hero-content-section {
+            min-height: 100vh !important;
+            min-height: 100dvh !important;
+          }
         }
 
         .hero-heading {
@@ -781,14 +786,16 @@ const HeroSection = () => {
 
         @media (max-width: 768px) {
           section {
-            padding: 100px 20px 60px 20px !important;
-            min-height: auto !important;
+            padding: 80px 20px 120px 20px !important;
+            min-height: 100vh !important;
+            min-height: 100dvh !important;
             align-items: center !important;
             justify-content: center !important;
           }
           
           .hero-content-section > div:first-child {
-            min-height: 400px !important;
+            min-height: calc(100vh - 150px) !important;
+            min-height: calc(100dvh - 150px) !important;
             gap: 40px !important;
             width: 100% !important;
             justify-content: center !important;
@@ -850,11 +857,14 @@ const HeroSection = () => {
         
         @media (max-width: 480px) {
           section {
-            padding: 90px 16px 50px 16px !important;
+            padding: 70px 16px 100px 16px !important;
+            min-height: 100vh !important;
+            min-height: 100dvh !important;
           }
           
           .hero-content-section > div:first-child {
-            min-height: 350px !important;
+            min-height: calc(100vh - 170px) !important;
+            min-height: calc(100dvh - 170px) !important;
           }
           
           .phone-model-container {
