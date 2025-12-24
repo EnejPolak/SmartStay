@@ -244,6 +244,7 @@ const HeroSection = () => {
     >
       {/* Optimized Background Image */}
       <div
+        className="hero-background-image"
         style={{
           position: 'absolute',
           top: 0,
@@ -669,6 +670,16 @@ const HeroSection = () => {
           will-change: transform !important;
           backface-visibility: hidden !important;
         }
+        
+        @media (max-width: 768px) {
+          .hero-background-image {
+            aspect-ratio: auto !important;
+            min-height: 100vh !important;
+            min-height: 100dvh !important;
+            height: 100vh !important;
+            height: 100dvh !important;
+          }
+        }
 
         .hero-heading {
           font-size: clamp(40px, 5vw, 72px);
@@ -770,10 +781,18 @@ const HeroSection = () => {
 
         @media (max-width: 768px) {
           section {
-            padding: 160px 20px 60px 20px !important;
+            padding: 100px 20px 60px 20px !important;
             min-height: auto !important;
             align-items: center !important;
             justify-content: center !important;
+          }
+          
+          .hero-content-section > div:first-child {
+            min-height: 400px !important;
+            gap: 40px !important;
+            width: 100% !important;
+            justify-content: center !important;
+            align-items: center !important;
           }
           
           .phone-model-container {
@@ -783,13 +802,6 @@ const HeroSection = () => {
             height: 0 !important;
             width: 0 !important;
             overflow: hidden !important;
-          }
-          
-          .hero-content-section > div:first-child {
-            gap: 40px !important;
-            width: 100% !important;
-            justify-content: center !important;
-            align-items: center !important;
           }
           
           .hero-text-content {
@@ -838,7 +850,11 @@ const HeroSection = () => {
         
         @media (max-width: 480px) {
           section {
-            padding: 140px 16px 50px 16px !important;
+            padding: 90px 16px 50px 16px !important;
+          }
+          
+          .hero-content-section > div:first-child {
+            min-height: 350px !important;
           }
           
           .phone-model-container {
